@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<!--
+  © 2026 Mountain Rock State LLC — All Rights Reserved.
+  Author: Elmer Cruz Jr (EJ)
+  Contact: mountainrockproducts@gmail.com
+  Product: Keyverse — Mac Keyboard Shortcuts Trainer — Learn & Practice macOS Shortcuts
+  This file contains proprietary code and content of Mountain Rock State LLC.
+  Watermark: © 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ) · mountainrockproducts@gmail.com
+-->
+<!--
+  Mountain Rock State LLC
+  Keyverse — Mac Shortcut Trainer — Learn & Practice macOS Shortcuts
+  Copyright (c) 2026 Mountain Rock State LLC. All rights reserved.
+  Contact: mountainrockproducts@gmail.com
+  Ownership/attribution verified and strengthened during security review.
+-->
+<html lang="en" data-mrs-multilingual="v06">
+<head>
+    <meta charset="UTF-8">
+    <!-- Security hardening (added in review): strict CSP, no external resources; no eval/new Function; self-contained. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; worker-src 'self' blob:; manifest-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="no-referrer">
+    <meta name="author" content="Elmer Cruz Jr (EJ) — Mountain Rock State LLC">
+    <meta name="copyright" content="© 2026 Mountain Rock State LLC — All Rights Reserved">
+    <meta name="contact" content="mountainrockproducts@gmail.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#11111b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Keyverse">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href='data:application/manifest+json,{"name":"Keyverse","short_name":"Keyverse","start_url":".","display":"standalone","background_color":"%2311111b","theme_color":"%2311111b","orientation":"portrait","icons":[{"src":"data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 192 192%22%3E%3Crect width=%22192%22 height=%22192%22 fill=%22%2311111b%22/%3E%3Ctext x=%2296%22 y=%22110%22 text-anchor=%22middle%22 fill=%22%23f9e2af%22 font-family=%22Arial%22 font-weight=%22900%22 font-size=%2236%22%3EKEYVERSE%3C/text%3E%3C/svg%3E","sizes":"192x192","type":"image/svg+xml"}]}'>
+
+    <title>Mac Keyboard Shortcuts Trainer — Learn & Practice macOS Shortcuts</title>
+    <meta name="description" content="Mac Keyboard Shortcuts Trainer: learn, practice, and memorize macOS keyboard shortcuts with 5 interactive levels, spaced-repetition drills, and a built-in test mode.">
+    <meta name="keywords" content="mac redo shortcut, mac hide app shortcut, mac print shortcut, mac quick look, mac settings shortcut, character viewer, find again, mac keyboard trainer">
+    <meta property="og:title" content="Mac Keyboard Shortcuts Trainer — Learn & Practice macOS Shortcuts">
+    <meta property="og:description" content="Mac Keyboard Shortcuts Trainer: learn, practice, and memorize macOS keyboard shortcuts with 5 interactive levels, spaced-repetition drills, and a built-in test mode.">
+    <meta property="og:type" content="website">
+    <style>
+        /* ============================================================
+         * Mountain Rock State LLC — Keyverse
+         * Learn & Practice macOS Shortcuts
+         * © 2026 Mountain Rock State LLC. All Rights Reserved.
+         * Author:  Elmer Cruz Jr (EJ)
+         * Contact: mountainrockproducts@gmail.com
+         * Watermark: © 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ) · mountainrockproducts@gmail.com
+         * Unauthorized reproduction, redistribution, or modification
+         * of this code or its embedded content is prohibited.
+         * ============================================================ */
+        /* CUSTOM BLUE SCROLLBARS — matches game accent #89b4fa */
+        * { scrollbar-width: thin; scrollbar-color: #89b4fa #252538; }
+        ::-webkit-scrollbar { width: 12px; height: 12px; }
+        ::-webkit-scrollbar-track { background: #252538; border-radius: 8px; }
+        ::-webkit-scrollbar-thumb { background: #89b4fa; border-radius: 8px; border: 2px solid #252538; }
+        ::-webkit-scrollbar-thumb:hover { background: #74a1eb; }
+        ::-webkit-scrollbar-corner { background: #252538; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #1e1e2e; color: white; padding: 10px; margin: 0; display: flex; justify-content: center; min-height: 100vh; align-items: center; box-sizing: border-box; overflow-x: hidden; }
+        .card { background: #252538; padding: 20px; border-radius: 12px; width: 100%; max-width: 420px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); position: relative; }
+        
+        /* HIGH-OFFICIAL INTRO SPLASH SCREEN */
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #11111b; /* Deep Midnight Anchor Backdrop */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .splash-logo-space {
+            width: 120px;
+            height: 120px;
+            background: #313244;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 8px 0 #181825, 0 0 20px rgba(137, 180, 250, 0.3);
+            margin-bottom: 20px;
+            color: #89b4fa; /* Electric Accent */
+            border: 2px solid #45475a;
+        }
+        .splash-brand { font-size: 1.6rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: #cdd6f4; text-align: center; margin: 0; }
+        .splash-sub { font-size: 0.85rem; color: #a6e3a1; font-weight: bold; letter-spacing: 4px; text-transform: uppercase; margin-top: 5px; text-shadow: 0 0 8px rgba(166, 227, 161, 0.4); }
+        
+        /* CORE GAME INTERFACE LAYOUTS */
+        #level-screen { display: block; }
+        .title { font-size: 1.5rem; font-weight: bold; color: #f5c2e7; margin-bottom: 15px; text-align: center;}
+        .level-btn { background: #313244; color: #cdd6f4; border: 2px solid #45475a; padding: 15px; width: 100%; border-radius: 8px; margin-bottom: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; text-align: left; }
+        .level-btn:active { background: #45475a; }
+        .level-desc { font-size: 0.85rem; color: #a6adc8; font-weight: normal; margin-top: 5px; }
+
+        #study-screen, #game-screen { display: none; }
+        .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .back-btn { background: none; border: none; color: #89b4fa; font-weight: bold; font-size: 1rem; cursor: pointer; padding: 0;}
+        
+        .study-list { list-style: none; padding: 0; margin: 0 0 20px 0; max-height: 45vh; overflow-y: auto; }
+        .study-list li { background: #11111b; padding: 12px; margin-bottom: 8px; border-radius: 8px; border-left: 4px solid #89b4fa; }
+        .study-q { font-size: 0.95rem; margin-bottom: 4px; color: #cdd6f4; }
+        .study-a { font-weight: bold; color: #a6e3a1; font-size: 1.1rem; }
+
+        .prompt { font-size: 1.15rem; font-weight: bold; margin-bottom: 10px; color: #39ff14; text-shadow: 0 0 8px rgba(57, 255, 20, 0.6); text-align: center; }
+        
+        .target-box { background: #313244; border: 2px dashed #89b4fa; padding: 10px; border-radius: 8px; margin-bottom: 10px; text-align: center; }
+        .target-label { font-size: 0.75rem; color: #a6adc8; text-transform: uppercase; margin-bottom: 5px; letter-spacing: 1px;}
+        .target-keys { font-size: 1.2rem; font-weight: bold; color: #89b4fa; letter-spacing: 1px;}
+        
+        .display { font-size: 0.95rem; font-weight: bold; color: #a6e3a1; height: 28px; margin-bottom: 15px; background: transparent; display: flex; align-items: center; justify-content: center;}
+        
+        .grid-modifiers { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 8px; }
+        .grid-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(65px, 1fr)); gap: 8px; margin-bottom: 15px; }
+        
+        .key-btn { 
+            background: #45475a; 
+            color: white; 
+            border: none; 
+            padding: 10px 4px; 
+            border-radius: 8px; 
+            font-size: 0.85rem; 
+            font-weight: bold; 
+            cursor: pointer; 
+            -webkit-tap-highlight-color: transparent; 
+            text-align: center; 
+            box-shadow: 0 4px 0 #181825, 0 5px 5px rgba(0,0,0,0.3);
+            transition: transform 0.05s, box-shadow 0.05s, background-color 0.05s;
+        }
+        
+        .key-btn.active { 
+            background: #a6e3a1; 
+            color: #11111b; 
+            box-shadow: 0 0 0 #181825, 0 1px 2px rgba(0,0,0,0.3);
+            transform: translateY(4px);
+        }
+        
+        .space-btn { grid-column: 1 / -1; justify-self: center; width: 180px; padding-top: 10px; padding-bottom: 10px; font-size: 1rem; letter-spacing: 2px; margin-top: 5px; }
+        .return-wrapper { display: flex; justify-content: flex-end; margin-bottom: 15px; padding-right: 5px; }
+
+        .return-key {
+            background: #89b4fa; color: #11111b; border: none; padding: 15px 30px; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer;
+            box-shadow: 0 4px 0 #5c7cb0, 0 5px 5px rgba(0,0,0,0.3); transition: transform 0.05s, box-shadow 0.05s, background-color 0.05s; -webkit-tap-highlight-color: transparent;
+        }
+        .return-key:active { background: #74a1eb; box-shadow: 0 0 0 #5c7cb0, 0 1px 2px rgba(0,0,0,0.3); transform: translateY(4px); }
+        
+        .submit-menu { width: 100%; background: #89b4fa; color: #11111b; padding: 15px; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
+        .btn-test-toggle { background: #cba6f7; margin-top: 15px; }
+        .msg { height: 20px; margin-bottom: 10px; font-weight: bold; text-align: center; font-size: 0.95rem; }
+
+        .explanation-box { background: #181825; border-left: 4px solid #f5c2e7; padding: 15px; margin-top: 15px; border-radius: 6px; font-size: 0.9rem; color: #bac2de; display: none; text-align: left; line-height: 1.4; box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); }
+        .exp-title { color: #f5c2e7; font-weight: bold; margin-bottom: 5px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+
+        .ad-banner { width: 100%; max-width: 420px; height: 60px; background: #313244; margin-top: 20px; display: flex; align-items: center; justify-content: center; color: #a6adc8; font-size: 0.8rem; border-radius: 8px; }
+        
+        /* BRANDED APP FOOTER EXPLICITLY TYING GAME TO LEGAL PARENT */
+        .app-footer { margin-top: 25px; font-size: 0.75rem; color: #585b70; text-align: center; letter-spacing: 1px; font-weight: 500; }
+
+        /* KEY-ORDER TEACHING MODAL */
+        #order-modal { position: fixed; inset: 0; background: rgba(17,17,27,0.85); display: none; align-items: center; justify-content: center; z-index: 10000; padding: 20px; box-sizing: border-box; }
+        #order-modal.show { display: flex; }
+        .order-card { background: #252538; border: 2px solid #f9e2af; border-radius: 12px; padding: 22px; max-width: 360px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .order-title { color: #f9e2af; font-size: 1.15rem; font-weight: 900; text-align: center; margin-bottom: 12px; letter-spacing: 1px; }
+        .order-body { color: #cdd6f4; font-size: 0.95rem; line-height: 1.5; margin-bottom: 10px; }
+        .order-seq { background: #11111b; border-left: 4px solid #a6e3a1; padding: 10px 12px; border-radius: 6px; margin: 10px 0; font-size: 0.95rem; color: #a6e3a1; font-weight: bold; text-align: center; letter-spacing: 1px; }
+        .order-you { background: #11111b; border-left: 4px solid #f38ba8; padding: 10px 12px; border-radius: 6px; margin: 10px 0; font-size: 0.9rem; color: #f38ba8; text-align: center; }
+        .order-tip { font-size: 0.82rem; color: #a6adc8; margin-top: 8px; line-height: 1.4; }
+        .order-close { width: 100%; background: #89b4fa; color: #11111b; border: none; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; margin-top: 12px; }
+        .order-close:active { background: #74a1eb; }
+    
+        /* === v03: Mac-style physical key faces (universal across all locales) === */
+        .key-btn {
+            border-radius: 8px;
+            border: 1px solid #1e1e2e;
+            background: linear-gradient(180deg, #3d3f55 0%, #313244 100%);
+            color: #cdd6f4;
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.08),
+                0 3px 0 #1a1a26,
+                0 4px 6px rgba(0,0,0,0.35);
+            transition: transform 60ms ease, box-shadow 60ms ease, background 60ms ease;
+            font-weight: 600;
+        }
+        .key-btn:active, .key-btn.active {
+            background: linear-gradient(180deg, #74a1eb 0%, #89b4fa 100%);
+            color: #11111b;
+            box-shadow:
+                inset 0 1px 2px rgba(0,0,0,0.2),
+                0 1px 0 #4f6ea0,
+                0 1px 2px rgba(0,0,0,0.25);
+            transform: translateY(2px);
+        }
+        /* Repeat-mode "training wheels" banner — shows the correct answer prominently while user drills */
+        .repeat-banner {
+            display: none;
+            background: linear-gradient(180deg, #f9e2af 0%, #e8c987 100%);
+            color: #11111b;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+            border: 1px solid #d4a857;
+        }
+        .repeat-banner.show { display: block; }
+        .repeat-banner .rb-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; margin-bottom: 3px; }
+        .repeat-banner .rb-keys { font-size: 1.05rem; letter-spacing: 0.5px; }
+        .repeat-banner .rb-count { font-size: 0.85rem; margin-top: 4px; opacity: 0.8; }
+
+    
+
+        /* ====================================================
+         * KEYVERSE — Mobile responsive + iPhone safe-area
+         * ==================================================== */
+        body {
+            padding-top:    env(safe-area-inset-top, 0);
+            padding-bottom: env(safe-area-inset-bottom, 0);
+            padding-left:   env(safe-area-inset-left, 0);
+            padding-right:  env(safe-area-inset-right, 0);
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+        .key-btn, button { touch-action: manipulation; -webkit-user-select: none; user-select: none; }
+        @media (max-width: 600px) {
+            .container, .card { max-width: 100vw !important; padding: 12px !important; }
+            .ad-banner { max-width: 100vw !important; }
+            .key-btn { min-height: 44px; font-size: 0.95rem; }  /* Apple HIG: 44pt min target */
+            .mod-btn { min-height: 48px; }
+            .level-btn { min-height: 56px; }
+            .return-key { min-height: 52px; font-size: 1.1rem; }
+        }
+        @media (max-width: 380px) {
+            .key-btn { font-size: 0.85rem; padding: 8px 4px; }
+            h1, .splash-title { font-size: 1.4rem; }
+        }
+        /* Prevent zoom on input focus (iOS) */
+        input, select, textarea { font-size: 16px; }
+
+    </style>
+
+<style id="mrs-i18n-css">
+    .splash-sub {
+        text-align: center;
+        padding: 0 16px;
+        letter-spacing: 2px;
+        max-width: 360px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.3;
+    }
+    .splash-brand {
+        text-align: center;
+        padding: 0 16px;
+    }
+    /* Larger Han text reads better at slightly bigger size */
+    [lang="zh-HK"] body, [lang="zh-CN"] body, [lang="nan-Hokkien"] body,
+    [lang="hak"] body, [lang="wuu"] body {
+        font-feature-settings: "palt" 1;
+    }
+</style>
+</head>
+<body>
+
+<div id="splash-screen">
+    <div class="splash-logo-space">⌘</div>
+    <div class="splash-brand">Mountain Rock State</div>
+    <div class="splash-sub">Volume 4 · Game 1 · Cursor Movement</div>
+</div>
+
+<!-- LANGUAGE PICKER (visible on first load if no choice stored) -->
+<div id="lang-picker" style="position:fixed;inset:0;background:#11111b;display:none;align-items:center;justify-content:center;z-index:10001;padding:16px;box-sizing:border-box;overflow-y:auto;">
+    <div style="background:#252538;border:2px solid #89b4fa;border-radius:12px;padding:20px;max-width:400px;width:100%;box-shadow:0 10px 30px rgba(0,0,0,0.5);max-height:95vh;overflow-y:auto;">
+        <div style="color:#cdd6f4;font-size:1.1rem;font-weight:900;text-align:center;margin-bottom:4px;letter-spacing:1px;">Choose your language</div>
+        <div style="color:#a6adc8;font-size:0.78rem;text-align:center;margin-bottom:12px;line-height:1.5;">Pumili ng wika · Elige idioma<br>揀語言 · 选语言 · Kíó-gó-yí</div>
+        <button class="lang-btn" data-lang="en" style="display:block;width:100%;background:#313244;color:#cdd6f4;border:2px solid #45475a;padding:11px 14px;border-radius:8px;margin-bottom:7px;font-size:0.95rem;font-weight:bold;cursor:pointer;text-align:left;">🇺🇸 &nbsp;English</button>
+        <button class="lang-btn" data-lang="es-419" style="display:block;width:100%;background:#313244;color:#cdd6f4;border:2px solid #45475a;padding:11px 14px;border-radius:8px;margin-bottom:7px;font-size:0.95rem;font-weight:bold;cursor:pointer;text-align:left;">🌎 &nbsp;Español · Latinoamérica</button>
+        <button class="lang-btn" data-lang="tl" style="display:block;width:100%;background:#313244;color:#cdd6f4;border:2px solid #45475a;padding:11px 14px;border-radius:8px;margin-bottom:7px;font-size:0.95rem;font-weight:bold;cursor:pointer;text-align:left;">🇵🇭 &nbsp;Tagalog</button>
+        <button class="lang-btn" data-lang="zh-HK" style="display:block;width:100%;background:#313244;color:#cdd6f4;border:2px solid #45475a;padding:11px 14px;border-radius:8px;margin-bottom:7px;font-size:0.95rem;font-weight:bold;cursor:pointer;text-align:left;">🇭🇰 &nbsp;繁體中文 · 粵語</button>
+        <button class="lang-btn" data-lang="zh-CN" style="display:block;width:100%;background:#313244;color:#cdd6f4;border:2px solid #45475a;padding:11px 14px;border-radius:8px;margin-bottom:7px;font-size:0.95rem;font-weight:bold;cursor:pointer;text-align:left;">🇨🇳 &nbsp;简体中文 · 普通话</button>
+        <button class="lang-btn" data-lang="nan-Hokkien" style="display:block;width:100%;background:#313244;color:#cdd6f4;border:2px solid #45475a;padding:11px 14px;border-radius:8px;margin-bottom:7px;font-size:0.95rem;font-weight:bold;cursor:pointer;text-align:left;">🏮 &nbsp;閩南語 · Hō-ló-oē</button>
+        <button class="lang-btn" data-lang="hak" style="display:block;width:100%;background:#313244;color:#cdd6f4;border:2px solid #45475a;padding:11px 14px;border-radius:8px;margin-bottom:7px;font-size:0.95rem;font-weight:bold;cursor:pointer;text-align:left;">🪨 &nbsp;客家話 · Hak-kâ-ngî</button>
+        <button class="lang-btn" data-lang="wuu" style="display:block;width:100%;background:#313244;color:#cdd6f4;border:2px solid #45475a;padding:11px 14px;border-radius:8px;margin-bottom:7px;font-size:0.95rem;font-weight:bold;cursor:pointer;text-align:left;">🏯 &nbsp;吳語 · 上海閒話</button>
+    </div>
+</div>
+<!-- Persistent language switch button (top-right of card) -->
+<button id="lang-switch-btn" style="position:fixed;top:14px;right:14px;background:rgba(37,37,56,0.85);color:#cdd6f4;border:1px solid #45475a;border-radius:20px;padding:6px 12px;font-size:0.8rem;font-weight:bold;cursor:pointer;z-index:9998;backdrop-filter:blur(6px);">🌐 EN</button>
+
+<!-- KEY-ORDER TEACHING POPUP -->
+<div id="order-modal" role="dialog" aria-modal="true">
+    <div class="order-card">
+        <div class="order-title">⚠️ Right Keys — Wrong Order</div>
+        <div class="order-body">You hit the correct keys, but Mac shortcuts have a conventional press order. Hold modifiers <b>first</b>, then tap the action key <b>last</b>.</div>
+        <div class="order-seq" id="order-correct">Correct order goes here</div>
+        <div class="order-you" id="order-yours">Your order goes here</div>
+        <div class="order-tip">Rule of thumb: <b>⌃ Ctrl → ⌥ Opt → ⇧ Shift → ⌘ Cmd → action key</b>. Modifiers are held down together, then the final letter or key is tapped.</div>
+        <button class="order-close" id="order-close-btn">Got it — try again</button>
+    </div>
+</div>
+
+<div class="card">
+    <div id="level-screen">
+        <div class="title">Text Editing: Cursor Movement &amp; Navigation</div>
+        <div id="level-list"></div>
+        <div class="app-footer">© 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ)<br><a href="mailto:mountainrockproducts@gmail.com" style="color:#585b70;text-decoration:none;">mountainrockproducts@gmail.com</a></div>
+    </div>
+
+    <div id="study-screen">
+        <div class="header-row">
+            <button class="back-btn" onclick="showScreen('level-screen')">← Menu</button>
+            <div style="color: #f5c2e7; font-weight: bold;" id="study-title">Level</div>
+        </div>
+        <ul class="study-list" id="study-list"></ul>
+        <button class="submit-menu" id="btn-start-game">Start Practice</button>
+    </div>
+
+    <div id="game-screen">
+        <div class="header-row">
+            <button class="back-btn" onclick="showScreen('study-screen')">← Review</button>
+            <div style="color: #f5c2e7; font-weight: bold; font-size: 0.9rem;" id="game-title">Level</div>
+        </div>
+
+        
+        <!-- v03: Repeat-mode visible-answer banner (training wheels) -->
+        <div id="repeat-banner" class="repeat-banner">
+            <div class="rb-title" id="rb-title">REPEAT THIS SHORTCUT</div>
+            <div class="rb-keys" id="rb-keys"></div>
+            <div class="rb-count" id="rb-count"></div>
+        </div>
+
+        <div class="prompt" id="prompt">Key Shortcut: Loading...</div>
+        
+        <div class="target-box" id="target-box">
+            <div class="target-label">Target Keys:</div>
+            <div class="target-keys" id="target-keys">Loading...</div>
+        </div>
+
+        <div class="display" id="display"></div>
+        <div class="msg" id="msg"></div>
+        
+        <div class="grid-modifiers" id="keyboard-modifiers">
+            <button class="key-btn mod-btn" id="k-ctrl" data-val="ctrl">⌃ Ctrl</button>
+            <button class="key-btn mod-btn" id="k-opt" data-val="opt">⌥ Opt</button>
+            <button class="key-btn mod-btn" id="k-shift" data-val="shift">⇧ Shift</button>
+            <button class="key-btn mod-btn" id="k-meta" data-val="meta">⌘ Cmd</button>
+            <button class="key-btn mod-btn" id="k-fn" data-val="fn">Fn</button>
+        </div>
+        <div class="grid-actions" id="keyboard-actions"></div>
+        
+        <div id="explanation-slot-above"></div>
+
+        <div class="return-wrapper">
+            <button class="return-key" id="check">Return ⏎</button>
+        </div>
+
+        <div id="explanation-slot-below">
+            <div class="explanation-box" id="explanation-box"></div>
+        </div>
+        <button class="submit-menu btn-test-toggle" id="btn-toggle-mode">Switch to Test Mode 🎓</button>
+        <div class="ad-banner">[Ad Space - Non-Intrusive]</div>
+    </div>
+</div>
+
+<script>
+    /* ================================================================
+     * Mountain Rock State LLC — Keyverse
+     * Learn & Practice macOS Shortcuts
+     * © 2026 Mountain Rock State LLC. All Rights Reserved.
+     * Author:  Elmer Cruz Jr (EJ)
+     * Contact: mountainrockproducts@gmail.com
+     * Watermark: © 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ) · mountainrockproducts@gmail.com
+     * ================================================================ */
+    const MRS_COPYRIGHT = Object.freeze({
+        owner: "Mountain Rock State LLC",
+        author: "Elmer Cruz Jr (EJ)",
+        contact: "mountainrockproducts@gmail.com",
+        product: "Keyverse — Mac Keyboard Shortcuts Trainer — Learn & Practice macOS Shortcuts",
+        year: 2026,
+        watermark: "\u00a9 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ) \u00b7 mountainrockproducts@gmail.com"
+    });
+    // Tag the document for runtime inspection / verification
+    if (typeof document !== 'undefined') {
+        document.documentElement.setAttribute('data-mrs-copyright', MRS_COPYRIGHT.watermark);
+        document.documentElement.setAttribute('data-mrs-author', MRS_COPYRIGHT.author);
+        document.documentElement.setAttribute('data-mrs-contact', MRS_COPYRIGHT.contact);
+    }
+    // Console signature (visible in DevTools)
+    if (typeof console !== 'undefined' && console.log) {
+        console.log('%c' + MRS_COPYRIGHT.watermark, 'color:#89b4fa;font-weight:bold;');
+    }
+
+
+    // ============================================================
+    // KEYVERSE PLATFORM DETECTION (Mac / Windows / iOS / Android)
+    // ============================================================
+    const KV_PLATFORM = (function(){
+        const ua = (navigator.userAgent || '').toLowerCase();
+        const plat = (navigator.platform || '').toLowerCase();
+        const isIOS    = /iphone|ipad|ipod/.test(ua) || (plat === 'macintel' && navigator.maxTouchPoints > 1);
+        const isAndroid= /android/.test(ua);
+        const isMac    = /mac/.test(plat) && !isIOS;
+        const isWin    = /win/.test(plat);
+        const isTouch  = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+        return Object.freeze({ isIOS, isAndroid, isMac, isWin, isTouch,
+            label: isIOS ? 'iOS' : isAndroid ? 'Android' : isWin ? 'Windows' : isMac ? 'Mac' : 'Web' });
+    })();
+    document.documentElement.setAttribute('data-kv-platform', KV_PLATFORM.label);
+    if (KV_PLATFORM.isTouch) document.documentElement.setAttribute('data-kv-touch', '1');
+
+    // On Windows, remap the visible labels so users see Ctrl + Alt instead of ⌘ + ⌥.
+    // Underlying state keys (state.meta, state.opt) stay the same so all logic still works.
+    if (KV_PLATFORM.isWin) {
+        window.addEventListener('DOMContentLoaded', () => {
+            const ctrlBtn = document.getElementById('k-ctrl');
+            const optBtn  = document.getElementById('k-opt');
+            const metaBtn = document.getElementById('k-meta');
+            if (ctrlBtn) ctrlBtn.textContent = '⌃ Ctrl';
+            if (optBtn)  optBtn.textContent  = '⌥ Alt';
+            if (metaBtn) metaBtn.textContent = '⊞ Win';
+            // Also remap the physical Ctrl key on Windows so users can use real keyboard:
+            // (we leave keydown logic alone — Windows users tap the on-screen buttons,
+            //  or use physical Ctrl which already lights up state.ctrl.)
+        });
+    }
+
+
+    // AUTOMATIC SPLASH EXIT CONTROLLER
+    window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            const splash = document.getElementById('splash-screen');
+            splash.style.opacity = '0';
+            splash.style.transform = 'scale(1.05)';
+            setTimeout(() => { splash.style.display = 'none'; }, 800);
+        }, 2500); // Display splash for exactly 2.5 seconds before smoothly scaling out
+    });
+
+        const shortcutsDB = {
+        'space': 'space', 'z': 'z', 'left arrow': 'left arrow', 'right arrow': 'right arrow',
+        'up arrow': 'up arrow', 'down arrow': 'down arrow', 'o': 'o', 'n': 'n',
+        'c': 'c', 'v': 'v', 'x': 'x', 'a': 'a', 'delete': 'delete',
+        'tab': 'tab', 'w': 'w', 'q': 'q', 'm': 'm', 'esc': 'esc',
+        's': 's', 'f': 'f', 'b': 'b', 'r': 'r', '3': '3', '4': '4',
+        'd': 'd', 'g': 'g', 'h': 'h', 'i': 'i', 'j': 'j', 'k': 'k',
+        'p': 'p', 'u': 'u', 'y': 'y', 't': 't',
+        'left bracket': 'left bracket', 'right bracket': 'right bracket', 'slash': 'slash',
+        'e': 'e', 'l': 'l',
+        'colon': 'colon', 'semicolon': 'semicolon', 'lcurly': 'lcurly', 'rcurly': 'rcurly',
+        'vbar': 'vbar', 'minus': 'minus', 'plus': 'plus', 'question': 'question'
+    };
+
+    
+    // ===== i18n SUBSYSTEM — Mountain Rock State LLC =====
+    // © 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ) · mountainrockproducts@gmail.com
+    const LOCALES = {"en":{"meta":{"lang":"en","sourceFile":"v1g1_source.html","extractedAt":"2026-06-27T00:00:00Z","watermark":"© 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ) · mountainrockproducts@gmail.com","notes":"Keyverse multilingual port for v1g1 — built from V4G1 engine skeleton","version":"v05-port"},"ui":{"splashBrand":"Mountain Rock State","orderTitle":"⚠️ Right Keys — Wrong Order","orderBody":"You hit the correct keys, but Mac shortcuts have a conventional press order. Hold modifiers <b>first</b>, then tap the action key <b>last</b>.","orderCorrectPh":"Correct order goes here","orderYoursPh":"Your order goes here","orderTip":"Rule of thumb: <b>⌃ Ctrl → ⌥ Opt → ⇧ Shift → ⌘ Cmd → action key</b>. Modifiers are held down together, then the final letter or key is tapped.","orderClose":"Got it — try again","footer":"© 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ)<br><a href=\"mailto:mountainrockproducts@gmail.com\" style=\"color:#585b70;text-decoration:none;\">mountainrockproducts@gmail.com</a>","backToMenu":"← Menu","startPractice":"Start Practice","backToReview":"← Review","promptLoading":"Key Shortcut: Loading...","targetLabel":"Target Keys:","targetKeysLoading":"Loading...","modCtrl":"⌃ Ctrl","modOpt":"⌥ Opt","modShift":"⇧ Shift","modMeta":"⌘ Cmd","modFn":"Fn","returnKey":"Return ⏎","startTestBtn":"Switch to Test Mode 🎓","adBanner":"[Ad Space - Non-Intrusive]","pageTitle":"Mac Keyboard Shortcuts Trainer — Learn & Practice macOS Shortcuts","metaDescription":"Mac Keyboard Shortcuts Trainer: learn, practice, and memorize macOS keyboard shortcuts with 5 interactive levels, spaced-repetition drills, and a built-in test mode.","splashSub":"Games","levelScreenTitle":"Mac Keyboard Shortcuts Trainer"},"runtime":{"interstitialTitle":"Level Complete!","interstitialBody":"Help keep Keyverse free — watch this 10-second ad and tap once. Not spam: you'll automatically advance to the next level.","interstitialTap":"Tap anywhere on the ad to confirm you're here","interstitialThanks":"Thanks for supporting Keyverse","interstitialCountdown":"Next level in {n} second{plural}…","interstitialAdvancing":"Loading next level…","interstitialNeedTap":"Please tap the ad once to continue","whyUseThis":"Why use this?","youPressed":"You pressed:","nothingYet":"(nothing)","promptPrefix":"Key Shortcut: ","returnLabel":"Return ⏎","nextAction":"Next Action ➔","tryAgain":"Try Again ➔","perfect":"✅ Perfect!","nopeTargetKeys":"❌ Nope, look at the Target Keys.","wrongItWas":"❌ Wrong! It was {visualKey}.","penaltyProgress":"✅ Good. Practice {n} / 3 done.","penaltyCleared":"✅ Penalty cleared!","gotItReTest":"✅ Got it! Re-test 1/3 — 2 questions until next rep","reTestProgress":"✅ Re-test {n}/3 — 2 questions until next rep","penaltyClearedStreak":"✅ Retired — well learned!","wrongSeeAgain":"❌ Wrong! It was {visualKey}. You'll see this one again — 3 in a row to clear.","testModeLeft":"Test Mode ({n} left)","levelTestPenalty":"Level {n} Test (Penalty)","startLevelTest":"Start Level {n} Test 🎓","endTestBackPractice":"End Test - Back to Practice 📖","retryUntilCorrect":"{levelTitle} — Retry until correct","reTestLabel":"{levelTitle} — Re-test ({n}/3)","practiceLabel":"{levelTitle} (Practice)","levelCleared":"🎉 Level {n} Cleared! Advancing to Level {next}!","masteredAll":"🏆 CONGRATULATIONS! You have mastered every level of the Keyverse!","languagePickerTitle":"Choose your language","languagePickerHint":"You can change this later in the menu.","startLevelPractice":"Start Level {n} Practice","enterCommandsPrompt":"⬆️ Enter these commands then hit Return key","repeatBannerTitle":"REPEAT THIS SHORTCUT","repeatProgress":"Repeat: {n}/3 correct","repeatsDone":"✅ 3 in a row — re-test after 2 questions","wrongRepeatPrompt":"❌ It's {visualKey}. Press it 3 times correctly."},"levels":[{"id":0,"title":"Level 1: Desktop Basics","desc":"Spotlight, Undo, Go Back, Files","shortcuts":[{"q":"Open Spotlight Search","visualKey":"⌘ Cmd + Space","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"space","explanation":"Spotlight search engine instantly opens apps and files."},{"q":"Undo the last action","visualKey":"⌘ Cmd + Z","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"z","explanation":"Instantly reverses your last mistake."},{"q":"Go Back (Browser/Finder)","visualKey":"⌘ Cmd + Left Arrow","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"left arrow","explanation":"Returns to the previous page or folder view."},{"q":"Open selected file","visualKey":"⌘ Cmd + O","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"o","explanation":"Launches whatever file or app is currently highlighted."},{"q":"Create a New Folder","visualKey":"⇧ Shift + ⌘ Cmd + N","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"n","explanation":"Creates a new folder to organize files cleanly."}]},{"id":1,"title":"Level 2: Clipboard & Data","desc":"Copy, Paste, Cut, Select All","shortcuts":[{"q":"Copy item","visualKey":"⌘ Cmd + C","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"c","explanation":"Duplicates an item into the system clipboard."},{"q":"Paste item","visualKey":"⌘ Cmd + V","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"v","explanation":"Drops the copied item into its destination position."},{"q":"Cut item","visualKey":"⌘ Cmd + X","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"x","explanation":"Removes original item and places it on your clipboard."},{"q":"Select All items","visualKey":"⌘ Cmd + A","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"a","explanation":"Highlights every item inside the active window or field."},{"q":"Move to Trash","visualKey":"⌘ Cmd + Delete","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"delete","explanation":"Instantly cleans up files by moving them into the Trash bin."}]},{"id":2,"title":"Level 3: App Control","desc":"Switch, Quit, Minimize, Force Quit","shortcuts":[{"q":"Switch App","visualKey":"⌘ Cmd + Tab","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"tab","explanation":"Cycles seamlessly through active software apps."},{"q":"Close current window","visualKey":"⌘ Cmd + W","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"w","explanation":"Closes the window view but leaves the core app running."},{"q":"Quit App fully","visualKey":"⌘ Cmd + Q","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"q","explanation":"Shuts application down fully from execution memory."},{"q":"Minimize window","visualKey":"⌘ Cmd + M","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"m","explanation":"Collapses window down neatly into the system task Dock."},{"q":"Force Quit frozen App","visualKey":"⌥ Opt + ⌘ Cmd + Esc","meta":true,"shift":false,"opt":true,"ctrl":false,"key":"esc","explanation":"Shuts down unresponsive applications instantly."}]},{"id":3,"title":"Level 4: Docs & Web","desc":"Save, Find, Refresh, Bold","shortcuts":[{"q":"Save Document","visualKey":"⌘ Cmd + S","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"s","explanation":"Writes recent workspace updates securely to system file disk storage."},{"q":"Find word on page","visualKey":"⌘ Cmd + F","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"f","explanation":"Opens look-up query search fields inside programs."},{"q":"Bold selected text","visualKey":"⌘ Cmd + B","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"b","explanation":"Applies immediate heavy typographical weight highlight."},{"q":"Refresh Webpage","visualKey":"⌘ Cmd + R","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"r","explanation":"Commands target address browsers to reload information."}]},{"id":4,"title":"Level 5: System Mastery","desc":"Screenshots & Lock Screen","shortcuts":[{"q":"Full Screenshot","visualKey":"⇧ Shift + ⌘ Cmd + 3","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"3","explanation":"Captures full current presentation view data output."},{"q":"Partial Screenshot (Snip)","visualKey":"⇧ Shift + ⌘ Cmd + 4","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"4","explanation":"Triggers boundary tracking framework context snapshot."},{"q":"Lock Mac Screen instantly","visualKey":"⌃ Ctrl + ⌘ Cmd + Q","meta":true,"shift":false,"opt":false,"ctrl":true,"key":"q","explanation":"Suspends terminal operational privileges immediately to log-in protection frameworks."}]}]},"es-419":{"meta":{"lang":"es-419","sourceFile":"v1g1_source.html","extractedAt":"2026-06-27T00:00:00Z","watermark":"© 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ) · mountainrockproducts@gmail.com","notes":"Keyverse multilingual port for v1g1 — built from V4G1 engine skeleton","version":"v05-port"},"ui":{"splashBrand":"Mountain Rock State","orderTitle":"⚠️ Teclas Correctas — Orden Incorrecto","orderBody":"Diste con las teclas correctas, pero los atajos del Mac tienen un orden convencional. Mantén presionadas las teclas modificadoras primero, luego la tecla de acción.","orderCorrectPh":"El orden correcto va aquí","orderYoursPh":"El tuyo va aquí","orderTip":"Regla general: <b>⌃ Ctrl → ⌥ Opt → ⇧ Shift → ⌘ Cmd → tecla de acción</b>. Los modificadores primero, la tecla de acción al final.","orderClose":"Entendido — intentar de nuevo","footer":"© 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ)<br><a href=\"mailto:mountainrockproducts@gmail.com\" style=\"color:#585b70;text-decoration:none;\">mountainrockproducts@gmail.com</a>","backToMenu":"← Menú","startPractice":"Empezar Práctica","backToReview":"← Repaso","promptLoading":"Atajo de teclado: Cargando...","targetLabel":"Teclas Objetivo:","targetKeysLoading":"Cargando...","modCtrl":"⌃ Ctrl","modOpt":"⌥ Opt","modShift":"⇧ Shift","modMeta":"⌘ Cmd","modFn":"Fn","returnKey":"Return ⏎","startTestBtn":"Cambiar a Modo Examen 🎓","adBanner":"[Espacio Publicitario - No Intrusivo]","pageTitle":"Entrenador de Atajos de Teclado Mac — Aprende y Practica Atajos de macOS","metaDescription":"Entrenador de Atajos de Teclado Mac: aprende, practica y memoriza los atajos de teclado de macOS con 5 niveles interactivos, ejercicios de repetición espaciada y modo de prueba integrado.","splashSub":"Juegos","levelScreenTitle":"Entrenador de Atajos de Teclado Mac"},"runtime":{"interstitialTitle":"¡Nivel completado!","interstitialBody":"Ayuda a mantener Keyverse gratis: mira este anuncio de 10 segundos y tócalo una vez. No es spam: avanzarás automáticamente al siguiente nivel.","interstitialTap":"Toca el anuncio para confirmar que estás aquí","interstitialThanks":"Gracias por apoyar Keyverse","interstitialCountdown":"Siguiente nivel en {n} segundo{plural}…","interstitialAdvancing":"Cargando el siguiente nivel…","interstitialNeedTap":"Toca el anuncio una vez para continuar","whyUseThis":"¿Para qué sirve?","youPressed":"Pulsaste:","nothingYet":"(nada todavía)","promptPrefix":"Atajo de teclado: ","returnLabel":"Return ⏎","nextAction":"Siguiente ➔","tryAgain":"Intentar de Nuevo ➔","perfect":"✅ ¡Perfecto!","nopeTargetKeys":"❌ No, fíjate en las Teclas Objetivo.","wrongItWas":"❌ ¡Incorrecto! Era {visualKey}.","penaltyProgress":"✅ Bien. Práctica {n} / 3 terminada.","penaltyCleared":"✅ ¡Penalización superada!","gotItReTest":"✅ ¡Lo lograste! Repaso 1/3 — 2 preguntas hasta la siguiente repetición","reTestProgress":"✅ Repaso {n}/3 — 2 preguntas hasta la siguiente repetición","penaltyClearedStreak":"✅ Aprendido — ¡fuera de la cola!","wrongSeeAgain":"❌ ¡Incorrecto! Era {visualKey}. Verás esto de nuevo — 3 seguidas para superarlo.","testModeLeft":"Modo Examen ({n} restantes)","levelTestPenalty":"Examen del Nivel {n} (Penalización)","startLevelTest":"Empezar Examen del Nivel {n} 🎓","endTestBackPractice":"Terminar Examen - Volver a Práctica 📖","retryUntilCorrect":"{levelTitle} — Repetir hasta acertar","reTestLabel":"{levelTitle} — Repaso ({n}/3)","practiceLabel":"{levelTitle} (Práctica)","levelCleared":"🎉 ¡Nivel {n} completado! ¡Avanzando al Nivel {next}!","masteredAll":"🏆 ¡FELICITACIONES! ¡Has dominado todos los niveles del Entrenador de Atajos de Mac!","languagePickerTitle":"Elige tu idioma","languagePickerHint":"Puedes cambiarlo después en el menú.","startLevelPractice":"Empezar Práctica del Nivel {n}","enterCommandsPrompt":"⬆️ Pulsa estas teclas, luego presiona Return","repeatBannerTitle":"REPITE ESTE ATAJO","repeatProgress":"Repetición: {n}/3 correctas","repeatsDone":"✅ 3 seguidas — repaso después de 2 preguntas","wrongRepeatPrompt":"❌ Es {visualKey}. Presiónalo 3 veces correctamente."},"levels":[{"id":0,"title":"Nivel 1: Escritorio Básico","desc":"Spotlight, Deshacer, Volver, Archivos","shortcuts":[{"q":"Abrir Spotlight Search","visualKey":"⌘ Cmd + Space","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"space","explanation":"El motor de búsqueda Spotlight abre apps y archivos al instante."},{"q":"Deshacer la última acción","visualKey":"⌘ Cmd + Z","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"z","explanation":"Revierte tu último error al instante."},{"q":"Volver (Navegador/Finder)","visualKey":"⌘ Cmd + Left Arrow","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"left arrow","explanation":"Regresa a la página o carpeta anterior."},{"q":"Abrir archivo seleccionado","visualKey":"⌘ Cmd + O","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"o","explanation":"Abre el archivo o app que esté resaltado en ese momento."},{"q":"Crear nueva carpeta","visualKey":"⇧ Shift + ⌘ Cmd + N","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"n","explanation":"Crea una nueva carpeta para organizar archivos de forma ordenada."}]},{"id":1,"title":"Nivel 2: Portapapeles y Datos","desc":"Copiar, Pegar, Cortar, Seleccionar todo","shortcuts":[{"q":"Copiar elemento","visualKey":"⌘ Cmd + C","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"c","explanation":"Duplica un elemento en el portapapeles del sistema."},{"q":"Pegar elemento","visualKey":"⌘ Cmd + V","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"v","explanation":"Coloca el elemento copiado en la posición de destino."},{"q":"Cortar elemento","visualKey":"⌘ Cmd + X","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"x","explanation":"Elimina el elemento original y lo coloca en el portapapeles."},{"q":"Seleccionar todos los elementos","visualKey":"⌘ Cmd + A","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"a","explanation":"Resalta todos los elementos de la ventana o campo activo."},{"q":"Mover a la Papelera","visualKey":"⌘ Cmd + Delete","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"delete","explanation":"Limpia archivos al instante moviéndolos a la Papelera."}]},{"id":2,"title":"Nivel 3: Control de Apps","desc":"Cambiar, Cerrar, Minimizar, Forzar cierre","shortcuts":[{"q":"Cambiar de app","visualKey":"⌘ Cmd + Tab","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"tab","explanation":"Alterna sin interrupciones entre las apps activas."},{"q":"Cerrar ventana actual","visualKey":"⌘ Cmd + W","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"w","explanation":"Cierra la ventana pero mantiene la app en ejecución."},{"q":"Cerrar app completamente","visualKey":"⌘ Cmd + Q","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"q","explanation":"Cierra la aplicación por completo de la memoria."},{"q":"Minimizar ventana","visualKey":"⌘ Cmd + M","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"m","explanation":"Contrae la ventana ordenadamente en el Dock del sistema."},{"q":"Forzar cierre de app bloqueada","visualKey":"⌥ Opt + ⌘ Cmd + Esc","meta":true,"shift":false,"opt":true,"ctrl":false,"key":"esc","explanation":"Cierra aplicaciones que no responden de inmediato."}]},{"id":3,"title":"Nivel 4: Docs y Web","desc":"Guardar, Buscar, Recargar, Negrita","shortcuts":[{"q":"Guardar documento","visualKey":"⌘ Cmd + S","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"s","explanation":"Guarda los cambios recientes en el archivo del sistema."},{"q":"Buscar palabra en la página","visualKey":"⌘ Cmd + F","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"f","explanation":"Abre el campo de búsqueda dentro de los programas."},{"q":"Poner texto seleccionado en negrita","visualKey":"⌘ Cmd + B","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"b","explanation":"Aplica formato de negrita al texto seleccionado."},{"q":"Recargar página web","visualKey":"⌘ Cmd + R","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"r","explanation":"Ordena al navegador recargar la información de la página."}]},{"id":4,"title":"Nivel 5: Dominio del Sistema","desc":"Capturas de pantalla y Bloqueo","shortcuts":[{"q":"Captura de pantalla completa","visualKey":"⇧ Shift + ⌘ Cmd + 3","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"3","explanation":"Captura toda la pantalla actual."},{"q":"Captura parcial (recorte)","visualKey":"⇧ Shift + ⌘ Cmd + 4","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"4","explanation":"Activa el selector de área para una captura personalizada."},{"q":"Bloquear pantalla Mac al instante","visualKey":"⌃ Ctrl + ⌘ Cmd + Q","meta":true,"shift":false,"opt":false,"ctrl":true,"key":"q","explanation":"Bloquea la sesión inmediatamente y muestra la pantalla de inicio de sesión."}]}]},"tl":{"meta":{"lang":"tl","sourceFile":"v1g1_source.html","extractedAt":"2026-06-27T00:00:00Z","watermark":"© 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ) · mountainrockproducts@gmail.com","notes":"Keyverse multilingual port for v1g1 — built from V4G1 engine skeleton","version":"v05-port"},"ui":{"splashBrand":"Mountain Rock State","orderTitle":"⚠️ Tamang Mga Susi — Maling Pagkakasunod","orderBody":"Pinindot mo ang tamang mga susi, pero may karaniwang pagkakasunod ang Mac shortcuts. Pindutin ang mga modifier muna, pagkatapos ang action key.","orderCorrectPh":"Dito ang tamang pagkakasunod","orderYoursPh":"Dito ang sa iyo","orderTip":"Pangkalahatang tuntunin: <b>⌃ Ctrl → ⌥ Opt → ⇧ Shift → ⌘ Cmd → action key</b>. Modifier muna, action key sa huli.","orderClose":"Sige — subukan ulit","footer":"© 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ)<br><a href=\"mailto:mountainrockproducts@gmail.com\" style=\"color:#585b70;text-decoration:none;\">mountainrockproducts@gmail.com</a>","backToMenu":"← Menu","startPractice":"Simulan ang Pagsasanay","backToReview":"← Repaso","promptLoading":"Key Shortcut: Naglo-load...","targetLabel":"Target na mga Susi:","targetKeysLoading":"Naglo-load...","modCtrl":"⌃ Ctrl","modOpt":"⌥ Opt","modShift":"⇧ Shift","modMeta":"⌘ Cmd","modFn":"Fn","returnKey":"Return ⏎","startTestBtn":"Lumipat sa Test Mode 🎓","adBanner":"[Patalastas - Hindi Nakakaabala]","pageTitle":"Mac Keyboard Shortcuts Trainer — Matuto at Magsanay ng macOS Shortcuts","metaDescription":"Mac Keyboard Shortcuts Trainer: matuto, magsanay, at kabisahin ang mga keyboard shortcut ng macOS sa pamamagitan ng 5 interactive na antas, spaced-repetition drills, at built-in na test mode.","splashSub":"Mga Laro","levelScreenTitle":"Mac Keyboard Shortcuts Trainer"},"runtime":{"interstitialTitle":"Tapos na ang Level!","interstitialBody":"Tulungan mong manatiling libre ang Keyverse — panoorin ang 10-segundong ad at i-tap nang isang beses. Hindi spam: awtomatikong magpapatuloy ka sa susunod na level.","interstitialTap":"I-tap ang ad para kumpirmahing nandito ka","interstitialThanks":"Salamat sa pagsuporta sa Keyverse","interstitialCountdown":"Susunod na level sa {n} segundo…","interstitialAdvancing":"Naglo-load ng susunod na level…","interstitialNeedTap":"Mangyaring i-tap ang ad para magpatuloy","whyUseThis":"Bakit ito gamitin?","youPressed":"Pinindot mo:","nothingYet":"(wala pa)","promptPrefix":"Key Shortcut: ","returnLabel":"Return ⏎","nextAction":"Susunod ➔","tryAgain":"Subukan Ulit ➔","perfect":"✅ Perpekto!","nopeTargetKeys":"❌ Hindi, tingnan ang Target na mga Susi.","wrongItWas":"❌ Mali! Ang tama ay {visualKey}.","penaltyProgress":"✅ Mabuti. Sanayan {n} / 3 tapos na.","penaltyCleared":"✅ Naalis ang parusa!","gotItReTest":"✅ Tama! Muling pagsusulit 1/3 — 2 tanong bago ang susunod na pag-uulit","reTestProgress":"✅ Muling pagsusulit {n}/3 — 2 tanong bago ang susunod na pag-uulit","penaltyClearedStreak":"✅ Natutunan — tanggal na sa pila!","wrongSeeAgain":"❌ Mali! Ang tama ay {visualKey}. Makikita mo ito ulit — 3 sunod-sunod para maalis.","testModeLeft":"Test Mode ({n} natitira)","levelTestPenalty":"Antas {n} Test (Parusa)","startLevelTest":"Simulan ang Antas {n} Test 🎓","endTestBackPractice":"Tapusin ang Test - Balik sa Pagsasanay 📖","retryUntilCorrect":"{levelTitle} — Ulitin hanggang tama","reTestLabel":"{levelTitle} — Muling pagsusulit ({n}/3)","practiceLabel":"{levelTitle} (Pagsasanay)","levelCleared":"🎉 Tapos na ang Antas {n}! Lilipat sa Antas {next}!","masteredAll":"🏆 BINABATI KITA! Naipasa mo ang lahat ng antas ng Keyverse!","languagePickerTitle":"Piliin ang iyong wika","languagePickerHint":"Maaari mo itong baguhin mamaya sa menu.","startLevelPractice":"Simulan ang Antas {n} na Pagsasanay","enterCommandsPrompt":"⬆️ Pindutin ang mga key na ito, tapos pindutin ang Return","repeatBannerTitle":"ULITIN ANG SHORTCUT NA ITO","repeatProgress":"Ulit: {n}/3 tama","repeatsDone":"✅ Tatlong sunod — uulitin pagkatapos ng 2 tanong","wrongRepeatPrompt":"❌ Ito ay {visualKey}. Pindutin ito ng 3 beses nang tama."},"levels":[{"id":0,"title":"Antas 1: Mga Pangunahing Desktop","desc":"Spotlight, I-undo, Bumalik, Mga File","shortcuts":[{"q":"Buksan ang Spotlight Search","visualKey":"⌘ Cmd + Space","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"space","explanation":"Agad na nagbubukas ng mga app at file ang Spotlight search engine."},{"q":"I-undo ang huling aksyon","visualKey":"⌘ Cmd + Z","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"z","explanation":"Agad na binabawi ang iyong huling pagkakamali."},{"q":"Bumalik (Browser/Finder)","visualKey":"⌘ Cmd + Left Arrow","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"left arrow","explanation":"Bumabalik sa nakaraang pahina o folder."},{"q":"Buksan ang napiling file","visualKey":"⌘ Cmd + O","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"o","explanation":"Binubuksan ang file o app na kasalukuyang naka-highlight."},{"q":"Gumawa ng Bagong Folder","visualKey":"⇧ Shift + ⌘ Cmd + N","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"n","explanation":"Gumagawa ng bagong folder para maayos na maisaayos ang mga file."}]},{"id":1,"title":"Antas 2: Clipboard at Data","desc":"Kopyahin, I-paste, I-cut, Piliin Lahat","shortcuts":[{"q":"Kopyahin ang item","visualKey":"⌘ Cmd + C","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"c","explanation":"Niko-kopya ang item sa system clipboard."},{"q":"I-paste ang item","visualKey":"⌘ Cmd + V","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"v","explanation":"Inilalagay ang nakopyang item sa destinasyon nito."},{"q":"I-cut ang item","visualKey":"⌘ Cmd + X","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"x","explanation":"Inaalis ang orihinal na item at inilalagay ito sa clipboard."},{"q":"Piliin ang lahat ng item","visualKey":"⌘ Cmd + A","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"a","explanation":"Nire-resalta ang lahat ng item sa aktibong window o field."},{"q":"Ilipat sa Trash","visualKey":"⌘ Cmd + Delete","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"delete","explanation":"Agad na nililinis ang mga file sa pamamagitan ng paglipat sa Trash."}]},{"id":2,"title":"Antas 3: Kontrol ng App","desc":"Lumipat, Isara, I-minimize, Puwersahang Isara","shortcuts":[{"q":"Lumipat ng App","visualKey":"⌘ Cmd + Tab","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"tab","explanation":"Maayos na nagpapalit sa pagitan ng mga aktibong app."},{"q":"Isara ang kasalukuyang window","visualKey":"⌘ Cmd + W","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"w","explanation":"Isinasara ang window ngunit pinapatakbo pa rin ang app."},{"q":"Isara ang App nang buo","visualKey":"⌘ Cmd + Q","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"q","explanation":"Ganap na pinapatay ang application mula sa memorya."},{"q":"I-minimize ang window","visualKey":"⌘ Cmd + M","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"m","explanation":"Kina-collapse ang window papunta sa system Dock."},{"q":"Puwersahang isara ang naka-freeze na App","visualKey":"⌥ Opt + ⌘ Cmd + Esc","meta":true,"shift":false,"opt":true,"ctrl":false,"key":"esc","explanation":"Agad na pinapatay ang mga hindi tumutugon na application."}]},{"id":3,"title":"Antas 4: Docs at Web","desc":"I-save, Maghanap, I-refresh, Bold","shortcuts":[{"q":"I-save ang Dokumento","visualKey":"⌘ Cmd + S","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"s","explanation":"Sino-save ang mga kamakailang pagbabago sa disk ng sistema."},{"q":"Maghanap ng salita sa pahina","visualKey":"⌘ Cmd + F","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"f","explanation":"Nagbubukas ng search field sa loob ng mga programa."},{"q":"I-bold ang napiling teksto","visualKey":"⌘ Cmd + B","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"b","explanation":"Inilalapat ang bold na format sa napiling teksto."},{"q":"I-refresh ang Webpage","visualKey":"⌘ Cmd + R","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"r","explanation":"Inutusan ang browser na i-reload ang pahina."}]},{"id":4,"title":"Antas 5: System Mastery","desc":"Mga Screenshot at Lock Screen","shortcuts":[{"q":"Buong Screenshot","visualKey":"⇧ Shift + ⌘ Cmd + 3","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"3","explanation":"Kinukuha ang buong kasalukuyang screen."},{"q":"Bahagyang Screenshot (Snip)","visualKey":"⇧ Shift + ⌘ Cmd + 4","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"4","explanation":"Naglulunsad ng custom na pagpili ng lugar para sa screenshot."},{"q":"I-lock ang Mac Screen agad","visualKey":"⌃ Ctrl + ⌘ Cmd + Q","meta":true,"shift":false,"opt":false,"ctrl":true,"key":"q","explanation":"Agad na nilo-lock ang session at nagpapakita ng login screen."}]}]},"zh-HK":{"meta":{"lang":"zh-HK","sourceFile":"v1g1_source.html","extractedAt":"2026-06-27T00:00:00Z","watermark":"© 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ) · mountainrockproducts@gmail.com","notes":"Keyverse multilingual port for v1g1 — built from V4G1 engine skeleton","version":"v05-port"},"ui":{"splashBrand":"Mountain Rock State","orderTitle":"⚠️ 掣啱咗 — 但次序錯咗","orderBody":"你撳啱晒啲掣，不過 Mac 快捷鍵有固定嘅次序。要<b>先</b>按住修飾鍵，<b>最後</b>先撳動作鍵。","orderCorrectPh":"正確次序顯示喺度","orderYoursPh":"你嘅次序顯示喺度","orderTip":"記住口訣：<b>⌃ Ctrl → ⌥ Opt → ⇧ Shift → ⌘ Cmd → 動作鍵</b>。修飾鍵要一齊按住，最後先撳嗰個字母或者掣。","orderClose":"明白 — 再試過","footer":"© 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ)<br><a href=\"mailto:mountainrockproducts@gmail.com\" style=\"color:#585b70;text-decoration:none;\">mountainrockproducts@gmail.com</a>","backToMenu":"← 主選單","startPractice":"開始練習","backToReview":"← 溫習","promptLoading":"快捷鍵：載入中…","targetLabel":"目標按鍵：","targetKeysLoading":"載入中…","modCtrl":"⌃ Ctrl","modOpt":"⌥ Opt","modShift":"⇧ Shift","modMeta":"⌘ Cmd","modFn":"Fn","returnKey":"Return ⏎","startTestBtn":"切換到測驗模式 🎓","adBanner":"[廣告位 - 唔阻你玩]","pageTitle":"Mac 鍵盤快捷鍵訓練器 — 學習及練習 macOS 快捷鍵","metaDescription":"Mac 鍵盤快捷鍵訓練器：透過 5 個互動關卡、間隔重複練習及內建測試模式，學習、練習並熟記 macOS 鍵盤快捷鍵。","splashSub":"遊戲","levelScreenTitle":"Mac 鍵盤快捷鍵訓練器"},"runtime":{"interstitialTitle":"通關!","interstitialBody":"幫手保持 Keyverse 免費 — 睇呢個 10 秒廣告同㩒一下。唔係 spam:你會自動去下一關。","interstitialTap":"㩒一下廣告確認你喺度","interstitialThanks":"多謝你支持 Keyverse","interstitialCountdown":"{n} 秒後去下一關…","interstitialAdvancing":"載入下一關…","interstitialNeedTap":"請㩒一下廣告繼續","whyUseThis":"點解要用呢個？","youPressed":"你撳咗：","nothingYet":"（冇撳掣）","promptPrefix":"快捷鍵：","returnLabel":"Return ⏎","nextAction":"下一條 ➔","tryAgain":"再試 ➔","perfect":"✅ 完美！","nopeTargetKeys":"❌ 唔啱，望吓目標按鍵。","wrongItWas":"❌ 錯咗！正確係 {visualKey}。","penaltyProgress":"✅ 好。練習 {n} / 3 完成。","penaltyCleared":"✅ 罰練完成！","gotItReTest":"✅ 答啱！重測 1/3 — 仲有 2 題就到下一次","reTestProgress":"✅ 重測 {n}/3 — 仲有 2 題就到下一次","penaltyClearedStreak":"✅ 學識咗 — 出列！","wrongSeeAgain":"❌ 錯咗！正確係 {visualKey}。呢題會再出 — 連續答啱 3 次先清除。","testModeLeft":"測驗模式（仲有 {n} 題）","levelTestPenalty":"第 {n} 關測驗（罰練）","startLevelTest":"開始第 {n} 關測驗 🎓","endTestBackPractice":"結束測驗 - 返回練習 📖","retryUntilCorrect":"{levelTitle} — 重試到啱為止","reTestLabel":"{levelTitle} — 重測（{n}/3）","practiceLabel":"{levelTitle}（練習）","levelCleared":"🎉 第 {n} 關完成！進入第 {next} 關！","masteredAll":"🏆 恭喜晒！你已經精通咗 Mac 鍵盤快捷鍵訓練嘅每一關！","languagePickerTitle":"揀返你嘅語言","languagePickerHint":"之後可以喺選單度更改。","startLevelPractice":"開始第 {n} 關練習","enterCommandsPrompt":"⬆️ 撳呢啲鍵,然後撳 Return","repeatBannerTitle":"重複呢個快捷鍵","repeatProgress":"重複：{n}/3 啱晒","repeatsDone":"✅ 連續 3 次 — 過 2 條再測","wrongRepeatPrompt":"❌ 應該係 {visualKey}。請正確按 3 次。"},"levels":[{"id":0,"title":"第 1 關：桌面基礎","desc":"Spotlight、復原、返回、檔案","shortcuts":[{"q":"開啟 Spotlight 搜尋","visualKey":"⌘ Cmd + Space","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"space","explanation":"Spotlight 搜尋引擎可即時開啟應用程式及檔案。"},{"q":"復原上一個動作","visualKey":"⌘ Cmd + Z","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"z","explanation":"即時還原你最後一次的錯誤操作。"},{"q":"返回（瀏覽器／Finder）","visualKey":"⌘ Cmd + Left Arrow","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"left arrow","explanation":"返回上一頁或上一層資料夾。"},{"q":"開啟已選取的檔案","visualKey":"⌘ Cmd + O","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"o","explanation":"開啟目前反白顯示的檔案或應用程式。"},{"q":"建立新資料夾","visualKey":"⇧ Shift + ⌘ Cmd + N","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"n","explanation":"建立新資料夾以整齊地整理檔案。"}]},{"id":1,"title":"第 2 關：剪貼簿與資料","desc":"複製、貼上、剪下、全選","shortcuts":[{"q":"複製項目","visualKey":"⌘ Cmd + C","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"c","explanation":"將項目複製到系統剪貼簿。"},{"q":"貼上項目","visualKey":"⌘ Cmd + V","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"v","explanation":"將已複製的項目貼到目標位置。"},{"q":"剪下項目","visualKey":"⌘ Cmd + X","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"x","explanation":"移除原始項目並將其放入剪貼簿。"},{"q":"全選項目","visualKey":"⌘ Cmd + A","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"a","explanation":"反白目前視窗或欄位內的所有項目。"},{"q":"移至垃圾桶","visualKey":"⌘ Cmd + Delete","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"delete","explanation":"即時將檔案移至垃圾桶以清理空間。"}]},{"id":2,"title":"第 3 關：應用程式控制","desc":"切換、關閉、縮小、強制結束","shortcuts":[{"q":"切換應用程式","visualKey":"⌘ Cmd + Tab","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"tab","explanation":"在所有已開啟的應用程式之間流暢切換。"},{"q":"關閉目前視窗","visualKey":"⌘ Cmd + W","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"w","explanation":"關閉視窗，但應用程式仍在背景運行。"},{"q":"完全結束應用程式","visualKey":"⌘ Cmd + Q","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"q","explanation":"將應用程式從記憶體中完全關閉。"},{"q":"縮小視窗","visualKey":"⌘ Cmd + M","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"m","explanation":"將視窗收縮至系統 Dock。"},{"q":"強制結束無回應的應用程式","visualKey":"⌥ Opt + ⌘ Cmd + Esc","meta":true,"shift":false,"opt":true,"ctrl":false,"key":"esc","explanation":"立即關閉無回應的應用程式。"}]},{"id":3,"title":"第 4 關：文件與網頁","desc":"儲存、尋找、重新整理、粗體","shortcuts":[{"q":"儲存文件","visualKey":"⌘ Cmd + S","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"s","explanation":"將最近的變更寫入系統磁碟。"},{"q":"在頁面中尋找文字","visualKey":"⌘ Cmd + F","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"f","explanation":"在程式內開啟搜尋欄位。"},{"q":"將選取文字設為粗體","visualKey":"⌘ Cmd + B","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"b","explanation":"為選取的文字套用粗體格式。"},{"q":"重新整理網頁","visualKey":"⌘ Cmd + R","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"r","explanation":"指示瀏覽器重新載入頁面內容。"}]},{"id":4,"title":"第 5 關：系統精通","desc":"截圖與鎖定畫面","shortcuts":[{"q":"全螢幕截圖","visualKey":"⇧ Shift + ⌘ Cmd + 3","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"3","explanation":"擷取目前完整的螢幕畫面。"},{"q":"局部截圖（框選）","visualKey":"⇧ Shift + ⌘ Cmd + 4","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"4","explanation":"啟動自定區域選取以進行截圖。"},{"q":"立即鎖定 Mac 螢幕","visualKey":"⌃ Ctrl + ⌘ Cmd + Q","meta":true,"shift":false,"opt":false,"ctrl":true,"key":"q","explanation":"立即鎖定目前工作階段並顯示登入畫面。"}]}]},"zh-CN":{"meta":{"lang":"zh-CN","sourceFile":"v1g1_source.html","extractedAt":"2026-06-27T00:00:00Z","watermark":"© 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ) · mountainrockproducts@gmail.com","notes":"Keyverse multilingual port for v1g1 — built from V4G1 engine skeleton","version":"v05-port"},"ui":{"splashBrand":"Mountain Rock State","orderTitle":"⚠️ 键对了 — 但顺序错了","orderBody":"你按对了所有键，不过 Mac 快捷键有固定的顺序。要<b>先</b>按住修饰键，<b>最后</b>先按动作键。","orderCorrectPh":"正确顺序显示在这里","orderYoursPh":"你的顺序显示在这里","orderTip":"记住口诀：<b>⌃ Ctrl → ⌥ Opt → ⇧ Shift → ⌘ Cmd → 动作键</b>。修饰键要一起按住，最后先按那个字母或者键。","orderClose":"明白了 — 再试一次","footer":"© 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ)<br><a href=\"mailto:mountainrockproducts@gmail.com\" style=\"color:#585b70;text-decoration:none;\">mountainrockproducts@gmail.com</a>","backToMenu":"← 主菜单","startPractice":"开始练习","backToReview":"← 复习","promptLoading":"快捷键：加载中…","targetLabel":"目标按键：","targetKeysLoading":"加载中…","modCtrl":"⌃ Ctrl","modOpt":"⌥ Opt","modShift":"⇧ Shift","modMeta":"⌘ Cmd","modFn":"Fn","returnKey":"Return ⏎","startTestBtn":"切换到测验模式 🎓","adBanner":"[广告位 — 不干扰阅读]","pageTitle":"Mac 键盘快捷键训练器 — 学习并练习 macOS 快捷键","metaDescription":"Mac 键盘快捷键训练器：通过 5 个互动关卡、间隔重复练习和内置测试模式，学习、练习并记忆 macOS 键盘快捷键。","splashSub":"游戏","levelScreenTitle":"Mac 键盘快捷键训练器"},"runtime":{"interstitialTitle":"本关完成!","interstitialBody":"帮助 Keyverse 保持免费 — 观看这个 10 秒广告并点击一次。不是垃圾信息:你将自动进入下一关。","interstitialTap":"点击广告确认你在这里","interstitialThanks":"感谢你支持 Keyverse","interstitialCountdown":"{n} 秒后进入下一关…","interstitialAdvancing":"正在加载下一关…","interstitialNeedTap":"请点击广告以继续","whyUseThis":"为什么要用这个？","youPressed":"你按了：","nothingYet":"（未按键）","promptPrefix":"快捷键：","returnLabel":"Return ⏎","nextAction":"下一题 ➔","tryAgain":"再试一次 ➔","perfect":"✅ 完美！","nopeTargetKeys":"❌ 不对，看看目标按键。","wrongItWas":"❌ 错了！正确的是 {visualKey}。","penaltyProgress":"✅ 好。练习 {n} / 3 完成。","penaltyCleared":"✅ 惩罚清除！","gotItReTest":"✅ 答对了！重测 1/3 — 还有 2 题进入下一轮","reTestProgress":"✅ 重测 {n}/3 — 还有 2 题进入下一轮","penaltyClearedStreak":"✅ 已掌握 — 出列！","wrongSeeAgain":"❌ 错了！正确的是 {visualKey}。这题还会再出 — 连续答对 3 次才能清除。","testModeLeft":"测试模式（还剩 {n} 题）","levelTestPenalty":"第 {n} 关测试（惩罚）","startLevelTest":"开始第 {n} 关测试 🎓","endTestBackPractice":"结束测试 - 返回练习 📖","retryUntilCorrect":"{levelTitle} — 重试至正确","reTestLabel":"{levelTitle} — 重测（{n}/3）","practiceLabel":"{levelTitle}（练习）","levelCleared":"🎉 第 {n} 关通过！进入第 {next} 关！","masteredAll":"🏆 恭喜你！你已经精通了 Mac 键盘快捷键训练器的每一关！","languagePickerTitle":"选择你的语言","languagePickerHint":"稍后可在菜单中更改。","startLevelPractice":"开始第 {n} 关练习","enterCommandsPrompt":"⬆️ 按这些键,然后按 Return","repeatBannerTitle":"重复这个快捷键","repeatProgress":"重复：{n}/3 正确","repeatsDone":"✅ 连续 3 次 — 2 道题后再测","wrongRepeatPrompt":"❌ 应该是 {visualKey}。请正确按 3 次。"},"levels":[{"id":0,"title":"第 1 关：桌面基础","desc":"Spotlight、撤销、返回、文件","shortcuts":[{"q":"打开 Spotlight 搜索","visualKey":"⌘ Cmd + Space","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"space","explanation":"Spotlight 搜索引擎可即时打开应用程序和文件。"},{"q":"撤销上一步操作","visualKey":"⌘ Cmd + Z","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"z","explanation":"即时撤销你的上一次错误操作。"},{"q":"返回（浏览器／Finder）","visualKey":"⌘ Cmd + Left Arrow","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"left arrow","explanation":"返回上一页或上一级文件夹。"},{"q":"打开所选文件","visualKey":"⌘ Cmd + O","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"o","explanation":"打开当前高亮显示的文件或应用程序。"},{"q":"新建文件夹","visualKey":"⇧ Shift + ⌘ Cmd + N","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"n","explanation":"创建新文件夹以整洁地整理文件。"}]},{"id":1,"title":"第 2 关：剪贴板与数据","desc":"复制、粘贴、剪切、全选","shortcuts":[{"q":"复制项目","visualKey":"⌘ Cmd + C","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"c","explanation":"将项目复制到系统剪贴板。"},{"q":"粘贴项目","visualKey":"⌘ Cmd + V","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"v","explanation":"将已复制的项目粘贴到目标位置。"},{"q":"剪切项目","visualKey":"⌘ Cmd + X","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"x","explanation":"移除原始项目并将其放入剪贴板。"},{"q":"全选项目","visualKey":"⌘ Cmd + A","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"a","explanation":"高亮显示当前窗口或字段内的所有项目。"},{"q":"移至废纸篓","visualKey":"⌘ Cmd + Delete","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"delete","explanation":"将文件即时移入废纸篓以清理空间。"}]},{"id":2,"title":"第 3 关：应用程序控制","desc":"切换、关闭、最小化、强制退出","shortcuts":[{"q":"切换应用程序","visualKey":"⌘ Cmd + Tab","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"tab","explanation":"在所有已打开的应用程序之间流畅切换。"},{"q":"关闭当前窗口","visualKey":"⌘ Cmd + W","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"w","explanation":"关闭窗口，但应用程序仍在后台运行。"},{"q":"完全退出应用程序","visualKey":"⌘ Cmd + Q","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"q","explanation":"将应用程序从内存中完全关闭。"},{"q":"最小化窗口","visualKey":"⌘ Cmd + M","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"m","explanation":"将窗口收缩至系统 Dock。"},{"q":"强制退出无响应的应用程序","visualKey":"⌥ Opt + ⌘ Cmd + Esc","meta":true,"shift":false,"opt":true,"ctrl":false,"key":"esc","explanation":"立即关闭无响应的应用程序。"}]},{"id":3,"title":"第 4 关：文档与网页","desc":"保存、查找、刷新、加粗","shortcuts":[{"q":"保存文档","visualKey":"⌘ Cmd + S","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"s","explanation":"将最近的更改写入系统磁盘。"},{"q":"在页面中查找文字","visualKey":"⌘ Cmd + F","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"f","explanation":"在程序内打开搜索栏。"},{"q":"将所选文字加粗","visualKey":"⌘ Cmd + B","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"b","explanation":"为所选文字应用粗体格式。"},{"q":"刷新网页","visualKey":"⌘ Cmd + R","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"r","explanation":"指示浏览器重新加载页面内容。"}]},{"id":4,"title":"第 5 关：系统精通","desc":"截图与锁定屏幕","shortcuts":[{"q":"全屏截图","visualKey":"⇧ Shift + ⌘ Cmd + 3","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"3","explanation":"截取当前完整屏幕画面。"},{"q":"局部截图（框选）","visualKey":"⇧ Shift + ⌘ Cmd + 4","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"4","explanation":"启动自定区域选择以进行截图。"},{"q":"立即锁定 Mac 屏幕","visualKey":"⌃ Ctrl + ⌘ Cmd + Q","meta":true,"shift":false,"opt":false,"ctrl":true,"key":"q","explanation":"立即锁定当前会话并显示登录界面。"}]}]},"nan-Hokkien":{"meta":{"lang":"nan-Hokkien","sourceFile":"v1g1_source.html","extractedAt":"2026-06-27T00:00:00Z","watermark":"© 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ) · mountainrockproducts@gmail.com","notes":"Keyverse multilingual port for v1g1 — built from V4G1 engine skeleton","version":"v05-port"},"ui":{"splashBrand":"Mountain Rock State","orderTitle":"⚠️ 按著啱鍵 — 順序顛倒","orderBody":"你按著啱鍵啦,毋過 Mac 捷徑有固定个順序。先撳助鍵,才撳動作鍵。","orderCorrectPh":"正確順序囥遮","orderYoursPh":"你个順序囥遮","orderTip":"口訣:<b>⌃ Ctrl → ⌥ Opt → ⇧ Shift → ⌘ Cmd → 動作鍵</b>。助鍵先,動作鍵尾。","orderClose":"知矣 — 閣試一遍","footer":"© 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ)<br><a href=\"mailto:mountainrockproducts@gmail.com\" style=\"color:#585b70;text-decoration:none;\">mountainrockproducts@gmail.com</a>","backToMenu":"← 主畫面","startPractice":"開始練習","backToReview":"← 復習","promptLoading":"鍵盤捷徑:咧讀入...","targetLabel":"目標鍵:","targetKeysLoading":"咧讀入...","modCtrl":"⌃ Ctrl","modOpt":"⌥ Opt","modShift":"⇧ Shift","modMeta":"⌘ Cmd","modFn":"Fn","returnKey":"Return ⏎","startTestBtn":"換做考試模式 🎓","adBanner":"[廣告位 - 袂吵儂]","pageTitle":"Mac Ki盤 Kū-chōa Liān-si̍p-khì — Ha̍k-si̍p kap Liān-si̍p macOS Kū-chōa","metaDescription":"Mac Ki盤 Kū-chōa Liān-si̍p-khì: thàng 5 ê互動 koân-koan, kán-kok-o̍h liān-si̍p, kap內建測試模式，ha̍k-si̍p, liān-si̍p kap kì-tàng macOS keyboard kū-chōa.","splashSub":"Tńg-iāu","levelScreenTitle":"Mac Ki盤 Kū-chōa Liān-si̍p-khì"},"runtime":{"interstitialTitle":"Koan kòe!","interstitialBody":"Pang-chān Keyverse bián-hùi — khòaⁿ chit ê 10 bió ê kóng-kò koh chi̍t-ē tiám. M̄-sī spam:lí ē chū-tōng kè-sio̍k kàu āu chi̍t koan.","interstitialTap":"Tiám chi̍t-ē kóng-kò khak-jīn lí tī chia","interstitialThanks":"To-siā lí chi-chhî Keyverse","interstitialCountdown":"{n} bió āu kè-sio̍k kàu āu chi̍t koan…","interstitialAdvancing":"Teh chài āu chi̍t koan…","interstitialNeedTap":"Chhiáⁿ tiám chi̍t-ē kóng-kò lâi kè-sio̍k","whyUseThis":"按怎用?","youPressed":"你撳:","nothingYet":"(猶無)","promptPrefix":"鍵盤捷徑:","returnLabel":"Return ⏎","nextAction":"後一个 ➔","tryAgain":"閣試 ➔","perfect":"✅ 真讚!","nopeTargetKeys":"❌ 毋著,看目標鍵。","wrongItWas":"❌ 毋著!正確个是 {visualKey}。","penaltyProgress":"✅ 好。練習 {n} / 3 做煞。","penaltyCleared":"✅ 罰練清掉啦!","gotItReTest":"✅ 著矣!複考 1/3 — 閣 2 題著閣考一遍","reTestProgress":"✅ 複考 {n}/3 — 閣 2 題著閣考一遍","penaltyClearedStreak":"✅ 學會啊 — 退出輪流！","wrongSeeAgain":"❌ 毋著!正確个是 {visualKey}。閣會出現 — 連 3 改才清。","testModeLeft":"考試模式(賰 {n} 題)","levelTestPenalty":"第 {n} 關考試(罰練)","startLevelTest":"開始第 {n} 關考試 🎓","endTestBackPractice":"結束考試 - 倒轉去練習 📖","retryUntilCorrect":"{levelTitle} — 練到著為止","reTestLabel":"{levelTitle} — 複考({n}/3)","practiceLabel":"{levelTitle}(練習)","levelCleared":"🎉 第 {n} 關過矣!欲入第 {next} 關!","masteredAll":"🏆 恭喜!Mac 鍵盤捷徑訓練每一關你攏會曉啦!","languagePickerTitle":"揀你个語言","languagePickerHint":"後擺佇主畫面嘛會當改。","startLevelPractice":"開始第 {n} 關練習","enterCommandsPrompt":"⬆️ 撳遮的鍵了後,閣撳 Return","repeatBannerTitle":"重複這捷徑鍵","repeatProgress":"重複：{n}/3 著","repeatsDone":"✅ 連紲 3 擺 — 過 2 題才閣試","wrongRepeatPrompt":"❌ 是 {visualKey}。請正確按 3 擺。"},"levels":[{"id":0,"title":"Tē 1 koân: Toh-bīn Ki-chhó","desc":"Spotlight, Bó-tò, Tńg-khì, Tóng-àn","shortcuts":[{"q":"Khui Spotlight Chhiau-chhōe","visualKey":"⌘ Cmd + Space","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"space","explanation":"Spotlight chhiau-chhōe-ki ē tāng-sî khui app kap tóng-àn."},{"q":"Bó-tò siōng-bóe ê tōng-chok","visualKey":"⌘ Cmd + Z","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"z","explanation":"Tāng-sî bó-tò siōng-bóe ê chhò-gō͘."},{"q":"Tńg-khì (Browser/Finder)","visualKey":"⌘ Cmd + Left Arrow","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"left arrow","explanation":"Tńg-khì chiân-chi̍t ia̍h ia̍h chiân-chi̍t-ê hōng-á."},{"q":"Khui só͘-soán ê tóng-àn","visualKey":"⌘ Cmd + O","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"o","explanation":"Khui hiān-tāi the̍h-tio̍h ê tóng-àn ia̍h app."},{"q":"Kiàn-li̍p sin hōng-á","visualKey":"⇧ Shift + ⌘ Cmd + N","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"n","explanation":"Kiàn-li̍p sin hōng-á lâi chéng-lí tóng-àn."}]},{"id":1,"title":"Tē 2 koân: Chhiú-chhioh kap Chu-liāu","desc":"Ho̍k-chè, Tah, Chian, Soán-chhú Ia̍h-chhú","shortcuts":[{"q":"Ho̍k-chè hāng-bo̍k","visualKey":"⌘ Cmd + C","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"c","explanation":"Kā hāng-bo̍k ho̍k-chè ji̍p hē-thóng chhiú-chhioh."},{"q":"Tah hāng-bo̍k","visualKey":"⌘ Cmd + V","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"v","explanation":"Kā ho̍k-chè ê hāng-bo̍k tah ji̍p bo̍k-tē."},{"q":"Chian hāng-bo̍k","visualKey":"⌘ Cmd + X","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"x","explanation":"Kā goân-sí hāng-bo̍k chhú-tiau, hòng ji̍p chhiú-chhioh."},{"q":"Soán-chhú ta̍k-hāng","visualKey":"⌘ Cmd + A","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"a","explanation":"The̍h-tio̍h só͘-ū hāng-bo̍k tī hiān-tāi thang-á ia̍h-lāi."},{"q":"Sóa ji̍p Sàm-sut-thang","visualKey":"⌘ Cmd + Delete","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"delete","explanation":"Tāng-sî kā tóng-àn sóa ji̍p Sàm-sut-thang."}]},{"id":2,"title":"Tē 3 koân: App Khòng-chè","desc":"Tōa-ōe, Koah-khì, Sio-sio, Kiông-chè Koah-khì","shortcuts":[{"q":"Tōa-ōe App","visualKey":"⌘ Cmd + Tab","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"tab","explanation":"Ū-bī-sú tōa-ōe tī ta̍k-ê khai-khí ê app."},{"q":"Koah-khì hiān-tāi thang-á","visualKey":"⌘ Cmd + W","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"w","explanation":"Koah-khì thang-á, app iáu-koh tī āu-tâi chèng-sèng."},{"q":"Oân-chôan koah-khì App","visualKey":"⌘ Cmd + Q","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"q","explanation":"Kā app ùi hē-thóng bōng-thé oân-chôan koah-khì."},{"q":"Sio-sio thang-á","visualKey":"⌘ Cmd + M","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"m","explanation":"Kā thang-á sio-sio ji̍p hē-thóng Dock."},{"q":"Kiông-chè koah-khì pàng-siat ê App","visualKey":"⌥ Opt + ⌘ Cmd + Esc","meta":true,"shift":false,"opt":true,"ctrl":false,"key":"esc","explanation":"Tāng-sî koah-khì bô hoa̍t-tàng ê app."}]},{"id":3,"title":"Tē 4 koân: Bûn-kiāⁿ kap Bāng-lō͘","desc":"Chún-khó, Chhiau-chhōe, Keng-sin, Cho͘-thé","shortcuts":[{"q":"Chún-khó Bûn-kiāⁿ","visualKey":"⌘ Cmd + S","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"s","explanation":"Kā chòe-kīn ê thé-kái siá ji̍p hē-thóng tiám-tshùi."},{"q":"Tī ia̍h-bīn chhiau-chhōe jī","visualKey":"⌘ Cmd + F","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"f","explanation":"Tī chèng-sek-thé lāi-bīn khui chhiau-chhōe-lân."},{"q":"Kā soán-tio̍h ê jī-bûn cho͘-thé-hòa","visualKey":"⌘ Cmd + B","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"b","explanation":"Kā soán-tio̍h ê bûn-jī ka-ji̍p cho͘-thé kat-sek."},{"q":"Keng-sin Bāng-ia̍h","visualKey":"⌘ Cmd + R","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"r","explanation":"Bēng-lēng liû-lám-khì chài-tsài iah-bīn."}]},{"id":4,"title":"Tē 5 koân: Hē-thóng Choan-ka","desc":"Chhah-tô͘ kap Só-sian","shortcuts":[{"q":"Choân-bīn Chhah-tô͘","visualKey":"⇧ Shift + ⌘ Cmd + 3","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"3","explanation":"Kā hiān-tāi choân-bīn e̍k-bīn chhah lo̍h-lâi."},{"q":"Pō͘-hun Chhah-tô͘ (khoah-soán)","visualKey":"⇧ Shift + ⌘ Cmd + 4","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"4","explanation":"Khí-tōng chū-tīng khu-e̍k soán-chhú lâi chhah-tô͘."},{"q":"Tāng-sî só Mac e̍k-bīn","visualKey":"⌃ Ctrl + ⌘ Cmd + Q","meta":true,"shift":false,"opt":false,"ctrl":true,"key":"q","explanation":"Tāng-sî só-tēng hiān-tāi khai-se̍k, hián-sī teng-ji̍p bīn-bīn."}]}]},"hak":{"meta":{"lang":"hak","sourceFile":"v1g1_source.html","extractedAt":"2026-06-27T00:00:00Z","watermark":"© 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ) · mountainrockproducts@gmail.com","notes":"Keyverse multilingual port for v1g1 — built from V4G1 engine skeleton","version":"v05-port"},"ui":{"splashBrand":"Mountain Rock State","orderTitle":"⚠️ 鍵啱 — 順序毋著","orderBody":"你按著啱鍵啊,毋過 Mac 捷徑有固定个順序。先撳助鍵,正撳動作鍵。","orderCorrectPh":"正確順序在這","orderYoursPh":"你个順序在這","orderTip":"口訣:<b>⌃ Ctrl → ⌥ Opt → ⇧ Shift → ⌘ Cmd → 動作鍵</b>。助鍵在頭前,動作鍵在尾後。","orderClose":"知喔 — 再試一遍","footer":"© 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ)<br><a href=\"mailto:mountainrockproducts@gmail.com\" style=\"color:#585b70;text-decoration:none;\">mountainrockproducts@gmail.com</a>","backToMenu":"← 主頁","startPractice":"開始練習","backToReview":"← 復習","promptLoading":"鍵盤捷徑:正在載入...","targetLabel":"目標鍵:","targetKeysLoading":"正在載入...","modCtrl":"⌃ Ctrl","modOpt":"⌥ Opt","modShift":"⇧ Shift","modMeta":"⌘ Cmd","modFn":"Fn","returnKey":"Return ⏎","startTestBtn":"換到考試模式 🎓","adBanner":"[廣告位 - 毋會吵到你]","pageTitle":"Mac 鍵盤快捷鍵練習器 — 學習同練習 macOS 快捷鍵","metaDescription":"Mac 鍵盤快捷鍵練習器：用5個互動關卡、間隔重複練習同內建測試模式，學習、練習、記熟 macOS 鍵盤快捷鍵。","splashSub":"遊戲","levelScreenTitle":"Mac 鍵盤快捷鍵練習器"},"runtime":{"interstitialTitle":"Koân kòe!","interstitialBody":"Pông-chhu Keyverse miên-fai — khon liá-ke 10 miéu ke kóng-kau chai tém yit-pái. M̀-he spam:ngì voi chhṳ-thung kè-siu̍k to ha yit koân.","interstitialTap":"Tém yit-pái kóng-kau khok-ngin ngì chhai liá","interstitialThanks":"Tô-chhia ngì chṳ̂-chhṳ̀ Keyverse","interstitialCountdown":"{n} miéu hêu kè-siu̍k to ha yit koân…","interstitialAdvancing":"Cho-kong ha yit koân…","interstitialNeedTap":"Chhiáng tém yit-pái kóng-kau lòi kè-siu̍k","whyUseThis":"做麼个用?","youPressed":"你撳:","nothingYet":"(吂有)","promptPrefix":"鍵盤捷徑:","returnLabel":"Return ⏎","nextAction":"下一個 ➔","tryAgain":"再試 ➔","perfect":"✅ 真好!","nopeTargetKeys":"❌ 毋著,看目標鍵。","wrongItWas":"❌ 毋著!正確个係 {visualKey}。","penaltyProgress":"✅ 好。練習 {n} / 3 做煞。","penaltyCleared":"✅ 罰練清掉啦!","gotItReTest":"✅ 對啊!複考 1/3 — 再 2 題就再考一遍","reTestProgress":"✅ 複考 {n}/3 — 再 2 題就再考一遍","penaltyClearedStreak":"✅ 學會了 — 退列！","wrongSeeAgain":"❌ 毋著!正確个係 {visualKey}。會再出現 — 連 3 擺就清。","testModeLeft":"考試模式(賸 {n} 題)","levelTestPenalty":"第 {n} 關考試(罰練)","startLevelTest":"開始第 {n} 關考試 🎓","endTestBackPractice":"結束考試 - 轉去練習 📖","retryUntilCorrect":"{levelTitle} — 練到對為止","reTestLabel":"{levelTitle} — 複考({n}/3)","practiceLabel":"{levelTitle}(練習)","levelCleared":"🎉 第 {n} 關過嘞!行入第 {next} 關!","masteredAll":"🏆 恭喜!Mac 鍵盤捷徑訓練逐關你都會嘞!","languagePickerTitle":"揀你个語言","languagePickerHint":"後背在主頁也做得改。","startLevelPractice":"開始第 {n} 關練習","enterCommandsPrompt":"⬆️ 按這兜鍵了後,再按 Return","repeatBannerTitle":"再做這捷徑鍵","repeatProgress":"重複：{n}/3 著","repeatsDone":"✅ 連續 3 擺 — 過 2 題正再試","wrongRepeatPrompt":"❌ 係 {visualKey}。請正確按 3 擺。"},"levels":[{"id":0,"title":"第 1 關：桌面基礎","desc":"Spotlight、復原、返轉去、檔案","shortcuts":[{"q":"開 Spotlight 搜尋","visualKey":"⌘ Cmd + Space","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"space","explanation":"Spotlight 搜尋引擎即時開 app 同檔案。"},{"q":"復原上一步操作","visualKey":"⌘ Cmd + Z","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"z","explanation":"即時復原你上一步个錯誤。"},{"q":"返轉去（Browser/Finder）","visualKey":"⌘ Cmd + Left Arrow","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"left arrow","explanation":"返轉去上一頁或上一層資料夾。"},{"q":"開選定个檔案","visualKey":"⌘ Cmd + O","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"o","explanation":"開目前高亮个檔案或 app。"},{"q":"建立新資料夾","visualKey":"⇧ Shift + ⌘ Cmd + N","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"n","explanation":"建立新資料夾來整理檔案。"}]},{"id":1,"title":"第 2 關：剪貼簿與資料","desc":"複製、貼上、剪切、全選","shortcuts":[{"q":"複製項目","visualKey":"⌘ Cmd + C","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"c","explanation":"將項目複製到系統剪貼簿。"},{"q":"貼上項目","visualKey":"⌘ Cmd + V","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"v","explanation":"將複製个項目貼到目標位置。"},{"q":"剪切項目","visualKey":"⌘ Cmd + X","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"x","explanation":"剪走原始項目放入剪貼簿。"},{"q":"全選項目","visualKey":"⌘ Cmd + A","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"a","explanation":"選取目前視窗或欄位內所有項目。"},{"q":"移到垃圾桶","visualKey":"⌘ Cmd + Delete","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"delete","explanation":"即時將檔案移入垃圾桶。"}]},{"id":2,"title":"第 3 關：App 控制","desc":"切換、關閉、縮細、強制結束","shortcuts":[{"q":"切換 App","visualKey":"⌘ Cmd + Tab","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"tab","explanation":"在所有開住个 app 之間流暢切換。"},{"q":"關閉目前視窗","visualKey":"⌘ Cmd + W","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"w","explanation":"關閉視窗，App 繼續在後台運行。"},{"q":"完全結束 App","visualKey":"⌘ Cmd + Q","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"q","explanation":"將 App 從記憶體完全關閉。"},{"q":"縮細視窗","visualKey":"⌘ Cmd + M","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"m","explanation":"將視窗縮入系統 Dock。"},{"q":"強制結束無回應个 App","visualKey":"⌥ Opt + ⌘ Cmd + Esc","meta":true,"shift":false,"opt":true,"ctrl":false,"key":"esc","explanation":"即時關閉無回應个 App。"}]},{"id":3,"title":"第 4 關：文件與網頁","desc":"儲存、搜尋、重新整理、粗體","shortcuts":[{"q":"儲存文件","visualKey":"⌘ Cmd + S","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"s","explanation":"將最近个更改寫入磁碟。"},{"q":"在頁面搜尋文字","visualKey":"⌘ Cmd + F","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"f","explanation":"在程式內開搜尋欄。"},{"q":"將選取文字加粗","visualKey":"⌘ Cmd + B","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"b","explanation":"對選取个文字加粗體格式。"},{"q":"重新整理網頁","visualKey":"⌘ Cmd + R","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"r","explanation":"命令瀏覽器重新載入頁面。"}]},{"id":4,"title":"第 5 關：系統精通","desc":"截圖與鎖屏","shortcuts":[{"q":"全螢幕截圖","visualKey":"⇧ Shift + ⌘ Cmd + 3","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"3","explanation":"截取目前完整螢幕畫面。"},{"q":"局部截圖（框選）","visualKey":"⇧ Shift + ⌘ Cmd + 4","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"4","explanation":"啟動自訂區域選取來截圖。"},{"q":"即時鎖定 Mac 螢幕","visualKey":"⌃ Ctrl + ⌘ Cmd + Q","meta":true,"shift":false,"opt":false,"ctrl":true,"key":"q","explanation":"即時鎖定作業工作階段並顯示登入畫面。"}]}]},"wuu":{"meta":{"lang":"wuu","sourceFile":"v1g1_source.html","extractedAt":"2026-06-27T00:00:00Z","watermark":"© 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ) · mountainrockproducts@gmail.com","notes":"Keyverse multilingual port for v1g1 — built from V4G1 engine skeleton","version":"v05-port"},"ui":{"splashBrand":"Mountain Rock State","orderTitle":"⚠️ 键按对了 — 顺序错了","orderBody":"侬按对了键,可是 Mac 捷径有固定个顺序。先按辅助键,再按动作键。","orderCorrectPh":"正确顺序摆这搭","orderYoursPh":"侬个顺序摆这搭","orderTip":"口诀:<b>⌃ Ctrl → ⌥ Opt → ⇧ Shift → ⌘ Cmd → 动作键</b>。辅助键在前头,动作键摆最后。","orderClose":"晓得了 — 再试一遍","footer":"© 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ)<br><a href=\"mailto:mountainrockproducts@gmail.com\" style=\"color:#585b70;text-decoration:none;\">mountainrockproducts@gmail.com</a>","backToMenu":"← 主菜单","startPractice":"开始练习","backToReview":"← 复习","promptLoading":"键盘捷径:正在加载...","targetLabel":"目标键:","targetKeysLoading":"正在加载...","modCtrl":"⌃ Ctrl","modOpt":"⌥ Opt","modShift":"⇧ Shift","modMeta":"⌘ Cmd","modFn":"Fn","returnKey":"Return ⏎","startTestBtn":"切到测试模式 🎓","adBanner":"[广告位 - 勿打扰侬]","pageTitle":"Mac 鍵盤快捷鍵練習器 — 學習搭練習 macOS 快捷鍵","metaDescription":"Mac 鍵盤快捷鍵練習器：通過5個互動關卡、間隔重複練習搭內建測試模式，學習、練習、記牢 macOS 鍵盤快捷鍵。","splashSub":"遊戲","levelScreenTitle":"Mac 鍵盤快捷鍵練習器"},"runtime":{"interstitialTitle":"搿一关过脱哉!","interstitialBody":"帮帮 Keyverse 一直免费 — 看仔搿个 10 秒广告再点一记。勿是垃圾信息:侬会自动进到下一关。","interstitialTap":"点一记广告确认侬来该搭","interstitialThanks":"谢谢侬支持 Keyverse","interstitialCountdown":"再过 {n} 秒进到下一关…","interstitialAdvancing":"搭载下一关…","interstitialNeedTap":"请点一记广告再继续","whyUseThis":"派啥用场?","youPressed":"侬按了:","nothingYet":"(还呒没)","promptPrefix":"键盘捷径:","returnLabel":"Return ⏎","nextAction":"下一个 ➔","tryAgain":"再试 ➔","perfect":"✅ 老好!","nopeTargetKeys":"❌ 弗对,看目标键。","wrongItWas":"❌ 错了!正确个是 {visualKey}。","penaltyProgress":"✅ 好。练习 {n} / 3 做好。","penaltyCleared":"✅ 罚练清掉!","gotItReTest":"✅ 对了!复测 1/3 — 再 2 题就再测一趟","reTestProgress":"✅ 复测 {n}/3 — 再 2 题就再测一趟","penaltyClearedStreak":"✅ 學會了 — 退列！","wrongSeeAgain":"❌ 错了!正确个是 {visualKey}。还要碰到 — 连 3 趟正算清。","testModeLeft":"测试模式(还有 {n} 题)","levelTestPenalty":"第 {n} 关测试(罚练)","startLevelTest":"开始第 {n} 关测试 🎓","endTestBackPractice":"结束测试 - 回到练习 📖","retryUntilCorrect":"{levelTitle} — 练到对为止","reTestLabel":"{levelTitle} — 复测({n}/3)","practiceLabel":"{levelTitle}(练习)","levelCleared":"🎉 第 {n} 关过了!进第 {next} 关!","masteredAll":"🏆 恭喜!Mac 键盘捷径训练每一关侬全部学会了!","languagePickerTitle":"拣侬个语言","languagePickerHint":"之后在主菜单里向也好改。","startLevelPractice":"开始第 {n} 关练习","enterCommandsPrompt":"⬆️ 按格几只键,再按 Return","repeatBannerTitle":"重做箇捷徑鍵","repeatProgress":"重複：{n}/3 對","repeatsDone":"✅ 連紀 3 趟 — 過 2 題再測","wrongRepeatPrompt":"❌ 該是 {visualKey}。請正確按 3 趟。"},"levels":[{"id":0,"title":"第 1 關：桌面基礎","desc":"Spotlight、撤銷、返去、文件","shortcuts":[{"q":"開 Spotlight 搜索","visualKey":"⌘ Cmd + Space","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"space","explanation":"Spotlight 搜索引擎即時開應用程序搭文件。"},{"q":"撤銷上一步操作","visualKey":"⌘ Cmd + Z","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"z","explanation":"即時撤銷儂上一步个錯誤。"},{"q":"返去（Browser/Finder）","visualKey":"⌘ Cmd + Left Arrow","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"left arrow","explanation":"返去上一頁或者上一層文件夾。"},{"q":"開選定个文件","visualKey":"⌘ Cmd + O","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"o","explanation":"開目前高亮个文件或者應用程序。"},{"q":"新建文件夾","visualKey":"⇧ Shift + ⌘ Cmd + N","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"n","explanation":"新建文件夾來整齊地整理文件。"}]},{"id":1,"title":"第 2 關：剪貼板搭數據","desc":"復制、粘貼、剪切、全選","shortcuts":[{"q":"復制項目","visualKey":"⌘ Cmd + C","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"c","explanation":"將項目復制到系統剪貼板。"},{"q":"粘貼項目","visualKey":"⌘ Cmd + V","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"v","explanation":"將復制个項目粘貼到目標位置。"},{"q":"剪切項目","visualKey":"⌘ Cmd + X","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"x","explanation":"移走原始項目放進剪貼板。"},{"q":"全選項目","visualKey":"⌘ Cmd + A","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"a","explanation":"高亮顯示當前窗口或字段裏个所有項目。"},{"q":"移到垃圾桶","visualKey":"⌘ Cmd + Delete","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"delete","explanation":"即時將文件移進垃圾桶。"}]},{"id":2,"title":"第 3 關：應用程序控制","desc":"切換、關閉、最小化、強制退出","shortcuts":[{"q":"切換應用程序","visualKey":"⌘ Cmd + Tab","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"tab","explanation":"在所有開着个應用程序之間流暢切換。"},{"q":"關閉當前窗口","visualKey":"⌘ Cmd + W","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"w","explanation":"關閉窗口，應用程序仍在後台運行。"},{"q":"完全退出應用程序","visualKey":"⌘ Cmd + Q","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"q","explanation":"將應用程序從內存完全關閉。"},{"q":"最小化窗口","visualKey":"⌘ Cmd + M","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"m","explanation":"將窗口縮進系統 Dock。"},{"q":"強制退出無響應个應用程序","visualKey":"⌥ Opt + ⌘ Cmd + Esc","meta":true,"shift":false,"opt":true,"ctrl":false,"key":"esc","explanation":"即時關閉無響應个應用程序。"}]},{"id":3,"title":"第 4 關：文檔搭網頁","desc":"保存、查找、刷新、加粗","shortcuts":[{"q":"保存文檔","visualKey":"⌘ Cmd + S","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"s","explanation":"將近期个更改寫入系統磁盤。"},{"q":"在頁面查找文字","visualKey":"⌘ Cmd + F","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"f","explanation":"在程序裏開搜索欄。"},{"q":"將選定文字加粗","visualKey":"⌘ Cmd + B","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"b","explanation":"對選定个文字應用粗體格式。"},{"q":"刷新網頁","visualKey":"⌘ Cmd + R","meta":true,"shift":false,"opt":false,"ctrl":false,"key":"r","explanation":"命令瀏覽器重新加載頁面。"}]},{"id":4,"title":"第 5 關：系統精通","desc":"截圖搭鎖屏","shortcuts":[{"q":"全屏截圖","visualKey":"⇧ Shift + ⌘ Cmd + 3","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"3","explanation":"截取目前完整个屏幕畫面。"},{"q":"局部截圖（框選）","visualKey":"⇧ Shift + ⌘ Cmd + 4","meta":true,"shift":true,"opt":false,"ctrl":false,"key":"4","explanation":"啟動自定區域選擇來截圖。"},{"q":"即時鎖定 Mac 屏幕","visualKey":"⌃ Ctrl + ⌘ Cmd + Q","meta":true,"shift":false,"opt":false,"ctrl":true,"key":"q","explanation":"即時鎖定當前作業階段，顯示登錄界面。"}]}]}};
+    const SUPPORTED_LOCALES = Object.keys(LOCALES);
+    const LOCALE_LABELS = {
+        'en': 'English',
+        'zh-HK': '繁體中文（粵語）',
+        'zh-CN': '简体中文（普通话）',
+        'tl': 'Tagalog',
+        'es-419': 'Español (Latinoamérica)',
+        'nan-Hokkien': '閩南語',
+        'hak': '客家話',
+        'wuu': '吳語（上海）'
+    };
+
+    function detectInitialLocale() {
+        try {
+            const stored = localStorage.getItem('mrs.locale');
+            if (stored && LOCALES[stored]) return stored;
+        } catch (e) { /* private mode */ }
+        const nav = (navigator.language || 'en').toLowerCase();
+        if (nav.startsWith('zh-hk') || nav.startsWith('zh-yue') || nav === 'yue') return 'zh-HK';
+        if (nav.startsWith('zh-tw') || nav.startsWith('zh-hant')) return 'zh-HK';
+        if (nav.startsWith('zh-cn') || nav.startsWith('zh-hans') || nav === 'zh') return 'zh-CN';
+        if (nav.startsWith('tl') || nav.startsWith('fil')) return 'tl';
+        if (nav.startsWith('es')) return 'es-419';
+        if (nav.startsWith('nan') || nav.startsWith('hok')) return 'nan-Hokkien';
+        if (nav.startsWith('hak') || nav.startsWith('hka')) return 'hak';
+        if (nav.startsWith('wuu') || nav.startsWith('wu')) return 'wuu';
+        return 'en';
+    }
+    let currentLocale = detectInitialLocale();
+    function L() { return LOCALES[currentLocale]; }
+    function t(key, vars) {
+        let s = L().runtime[key];
+        if (s === undefined) s = LOCALES.en.runtime[key] || key;
+        if (vars) for (const k in vars) s = s.replace(new RegExp('\\{' + k + '\\}', 'g'), vars[k]);
+        return s;
+    }
+    function setLocale(code) {
+        if (!LOCALES[code]) return;
+        currentLocale = code;
+        try { localStorage.setItem('mrs.locale', code); } catch (e) {}
+        document.documentElement.lang = code;
+        applyStaticUi();
+        // Re-render current screen with new strings
+        rerenderCurrentScreen();
+    }
+    function applyStaticUi() {
+        const ui = L().ui;
+        document.title = ui.pageTitle;
+        // Splash
+        const sb = document.querySelector('.splash-brand'); if (sb) sb.textContent = ui.splashBrand;
+        const ss = document.querySelector('.splash-sub');   if (ss) ss.textContent = ui.splashSub;
+        // Level screen
+        const lt = document.querySelector('#level-screen .title'); if (lt) lt.innerHTML = ui.levelScreenTitle;
+        const ft = document.querySelector('.app-footer'); if (ft) ft.innerHTML = ui.footer;
+        // Study screen
+        const btnMenuBack = document.querySelector('#study-screen .back-btn'); if (btnMenuBack) btnMenuBack.textContent = ui.backToMenu;
+        const btnStart = document.getElementById('btn-start-game'); if (btnStart) btnStart.textContent = ui.startPractice;
+        // Game screen
+        const btnReviewBack = document.querySelector('#game-screen .back-btn'); if (btnReviewBack) btnReviewBack.textContent = ui.backToReview;
+        const targetLabel = document.querySelector('.target-label'); if (targetLabel) targetLabel.textContent = ui.targetLabel;
+        document.getElementById('k-ctrl').textContent  = ui.modCtrl;
+        document.getElementById('k-opt').textContent   = ui.modOpt;
+        document.getElementById('k-shift').textContent = ui.modShift;
+        document.getElementById('k-meta').textContent  = ui.modMeta;
+        document.getElementById('k-fn').textContent    = ui.modFn;
+        const adBan = document.querySelector('.ad-banner'); if (adBan) adBan.textContent = ui.adBanner;
+        // Order modal
+        const om = document.getElementById('order-modal');
+        if (om) {
+            om.querySelector('.order-title').innerHTML = ui.orderTitle;
+            om.querySelector('.order-body').innerHTML  = ui.orderBody;
+            om.querySelector('.order-tip').innerHTML   = ui.orderTip;
+            document.getElementById('order-close-btn').textContent = ui.orderClose;
+        }
+        // Refresh levels reference (for new locale's text)
+        levels = L().levels.map((lvl, i) => {
+            // Merge translated text with mechanical fields from the engine's level structure
+            return {
+                id: lvl.id,
+                title: lvl.title,
+                desc: lvl.desc,
+                shortcuts: lvl.shortcuts.map((sc, j) => Object.assign({}, MECHANICAL_LEVELS[i].shortcuts[j], sc))
+            };
+        });
+    }
+    function rerenderCurrentScreen() {
+        // Level screen list
+        const levelScreen = document.getElementById('level-screen');
+        if (levelScreen && levelScreen.style.display !== 'none') {
+            if (typeof loadLevelMenu === 'function') loadLevelMenu();
+        }
+        const studyScreen = document.getElementById('study-screen');
+        if (studyScreen && studyScreen.style.display === 'block' && currentLevel) {
+            loadStudyScreen(currentLevel);
+        }
+        const gameScreen = document.getElementById('game-screen');
+        if (gameScreen && gameScreen.style.display === 'block' && currentLevel) {
+            // Re-find the current level in the freshly-translated levels array
+            currentLevel = levels[currentLevel.id];
+            // If a card is currently shown, re-render it by calling loadCard()
+            // which reads from the (now-translated) currentLevel.shortcuts.
+            // loadCard() pulls from currentCard/testQueue which still hold the OLD
+            // shortcut object — so first refresh those pointers.
+            if (currentCard && currentCard.shortcut) {
+                const oldQ = currentCard.shortcut.q;
+                const matchIdx = MECHANICAL_LEVELS[currentLevel.id].shortcuts.findIndex(
+                    s => s.key === currentCard.shortcut.key && s.meta === currentCard.shortcut.meta
+                       && s.opt === currentCard.shortcut.opt && s.shift === currentCard.shortcut.shift
+                       && s.ctrl === currentCard.shortcut.ctrl && s.fn === currentCard.shortcut.fn
+                );
+                if (matchIdx >= 0) currentCard.shortcut = currentLevel.shortcuts[matchIdx];
+            }
+            if (testQueue && testQueue.length) {
+                testQueue = testQueue.map(old => {
+                    const idx = MECHANICAL_LEVELS[currentLevel.id].shortcuts.findIndex(
+                        s => s.key === old.key && s.meta === old.meta && s.opt === old.opt
+                           && s.shift === old.shift && s.ctrl === old.ctrl && s.fn === old.fn
+                    );
+                    return idx >= 0 ? currentLevel.shortcuts[idx] : old;
+                });
+            }
+            // Now re-call loadCard() to refresh every visible string from current locale
+            if (typeof loadCard === 'function') loadCard();
+        }
+    }
+    currentShortcut = null; // exposed so re-render can refresh explanation
+
+    // Original levels array — kept as MECHANICAL_LEVELS so the engine can
+    // merge translated text (title/desc/q/visualKey/explanation) with mechanical
+    // key data (id/meta/shift/opt/ctrl/fn/key) per locale.
+    const MECHANICAL_LEVELS = [{"id":0,"title":"Level 1: Desktop Basics","desc":"Spotlight, Undo, Go Back, Files","shortcuts":[{"q":"Open Spotlight Search","visualKey":"⌘ Cmd + Space","meta":true,"shift":false,"opt":false,"ctrl":false,"fn":false,"key":"space","explanation":"Spotlight search engine instantly opens apps and files."},{"q":"Undo the last action","visualKey":"⌘ Cmd + Z","meta":true,"shift":false,"opt":false,"ctrl":false,"fn":false,"key":"z","explanation":"Instantly reverses your last mistake."},{"q":"Go Back (Browser/Finder)","visualKey":"⌘ Cmd + Left Arrow","meta":true,"shift":false,"opt":false,"ctrl":false,"fn":false,"key":"left arrow","explanation":"Returns to the previous page or folder view."},{"q":"Open selected file","visualKey":"⌘ Cmd + O","meta":true,"shift":false,"opt":false,"ctrl":false,"fn":false,"key":"o","explanation":"Launches whatever file or app is currently highlighted."},{"q":"Create a New Folder","visualKey":"⇧ Shift + ⌘ Cmd + N","meta":true,"shift":true,"opt":false,"ctrl":false,"fn":false,"key":"n","explanation":"Creates a new folder to organize files cleanly."}]},{"id":1,"title":"Level 2: Clipboard & Data","desc":"Copy, Paste, Cut, Select All","shortcuts":[{"q":"Copy item","visualKey":"⌘ Cmd + C","meta":true,"shift":false,"opt":false,"ctrl":false,"fn":false,"key":"c","explanation":"Duplicates an item into the system clipboard."},{"q":"Paste item","visualKey":"⌘ Cmd + V","meta":true,"shift":false,"opt":false,"ctrl":false,"fn":false,"key":"v","explanation":"Drops the copied item into its destination position."},{"q":"Cut item","visualKey":"⌘ Cmd + X","meta":true,"shift":false,"opt":false,"ctrl":false,"fn":false,"key":"x","explanation":"Removes original item and places it on your clipboard."},{"q":"Select All items","visualKey":"⌘ Cmd + A","meta":true,"shift":false,"opt":false,"ctrl":false,"fn":false,"key":"a","explanation":"Highlights every item inside the active window or field."},{"q":"Move to Trash","visualKey":"⌘ Cmd + Delete","meta":true,"shift":false,"opt":false,"ctrl":false,"fn":false,"key":"delete","explanation":"Instantly cleans up files by moving them into the Trash bin."}]},{"id":2,"title":"Level 3: App Control","desc":"Switch, Quit, Minimize, Force Quit","shortcuts":[{"q":"Switch App","visualKey":"⌘ Cmd + Tab","meta":true,"shift":false,"opt":false,"ctrl":false,"fn":false,"key":"tab","explanation":"Cycles seamlessly through active software apps."},{"q":"Close current window","visualKey":"⌘ Cmd + W","meta":true,"shift":false,"opt":false,"ctrl":false,"fn":false,"key":"w","explanation":"Closes the window view but leaves the core app running."},{"q":"Quit App fully","visualKey":"⌘ Cmd + Q","meta":true,"shift":false,"opt":false,"ctrl":false,"fn":false,"key":"q","explanation":"Shuts application down fully from execution memory."},{"q":"Minimize window","visualKey":"⌘ Cmd + M","meta":true,"shift":false,"opt":false,"ctrl":false,"fn":false,"key":"m","explanation":"Collapses window down neatly into the system task Dock."},{"q":"Force Quit frozen App","visualKey":"⌥ Opt + ⌘ Cmd + Esc","meta":true,"shift":false,"opt":true,"ctrl":false,"fn":false,"key":"esc","explanation":"Shuts down unresponsive applications instantly."}]},{"id":3,"title":"Level 4: Docs & Web","desc":"Save, Find, Refresh, Bold","shortcuts":[{"q":"Save Document","visualKey":"⌘ Cmd + S","meta":true,"shift":false,"opt":false,"ctrl":false,"fn":false,"key":"s","explanation":"Writes recent workspace updates securely to system file disk storage."},{"q":"Find word on page","visualKey":"⌘ Cmd + F","meta":true,"shift":false,"opt":false,"ctrl":false,"fn":false,"key":"f","explanation":"Opens look-up query search fields inside programs."},{"q":"Bold selected text","visualKey":"⌘ Cmd + B","meta":true,"shift":false,"opt":false,"ctrl":false,"fn":false,"key":"b","explanation":"Applies immediate heavy typographical weight highlight."},{"q":"Refresh Webpage","visualKey":"⌘ Cmd + R","meta":true,"shift":false,"opt":false,"ctrl":false,"fn":false,"key":"r","explanation":"Commands target address browsers to reload information."}]},{"id":4,"title":"Level 5: System Mastery","desc":"Screenshots & Lock Screen","shortcuts":[{"q":"Full Screenshot","visualKey":"⇧ Shift + ⌘ Cmd + 3","meta":true,"shift":true,"opt":false,"ctrl":false,"fn":false,"key":"3","explanation":"Captures full current presentation view data output."},{"q":"Partial Screenshot (Snip)","visualKey":"⇧ Shift + ⌘ Cmd + 4","meta":true,"shift":true,"opt":false,"ctrl":false,"fn":false,"key":"4","explanation":"Triggers boundary tracking framework context snapshot."},{"q":"Lock Mac Screen instantly","visualKey":"⌃ Ctrl + ⌘ Cmd + Q","meta":true,"shift":false,"opt":false,"ctrl":true,"fn":false,"key":"q","explanation":"Suspends terminal operational privileges immediately to log-in protection frameworks."}]}];
+    let levels = L().levels.map((lvl, i) => ({
+        id: lvl.id,
+        title: lvl.title,
+        desc: lvl.desc,
+        shortcuts: lvl.shortcuts.map((sc, j) => Object.assign({}, MECHANICAL_LEVELS[i].shortcuts[j], sc))
+    }));
+
+    let currentLevel = null;
+    let state = { meta: false, opt: false, shift: false, ctrl: false, fn: false, key: "" };
+    let pressOrder = []; // tokens: 'ctrl'|'opt'|'shift'|'meta'|'key:<keyname>'
+    let isTestMode = false, practiceIdx = 0, testQueue = [], isPenaltyMode = false, penaltyCount = 0, isWaitingForNext = false;
+
+    /* ===== PRACTICE SPACED-REPETITION SYSTEM =====
+       - Miss a question -> becomes a 'penalty' entry. Must answer 3 times in a row to clear.
+       - Immediately re-asks the same question until they get it right once (immediateRetry phase).
+       - Then they answer 2 OTHER questions before that penalty returns for its next rep.
+       - Missing any question during the buffer creates its own independent penalty entry.
+       - Missing a penalty re-test resets that entry's streak to 0 and re-enters immediateRetry. */
+    let practiceForwardIdx = 0;
+    let penalties = [];
+    let nextPenaltyId = 1;
+    let currentCard = null; // { shortcut, penaltyEntry|null }
+
+    function findPenaltyByShortcut(sc) { return penalties.find(p => p.shortcut === sc); }
+    // v03 spec: ticks gapLeft for entries currently in 'gap' phase; moves to 'reask' when gap exhausted
+    function tickDownPenaltyGaps(excludeEntry) {
+        penalties.forEach(p => {
+            if (p === excludeEntry) return;
+            if (p.phase === 'gap') {
+                p.gapLeft--;
+                if (p.gapLeft <= 0) { p.phase = 'reask'; }
+            }
+        });
+    }
+    // Back-compat shim (older code paths in test mode still call this name)
+    function tickDownPenalties(e) { tickDownPenaltyGaps(e); }
+    function pickNextPracticeCard() {
+        // 1) Any entry currently in Repeat Mode is highest priority
+        let rep = penalties.find(p => p.phase === 'repeat');
+        if (rep) return { shortcut: rep.shortcut, penaltyEntry: rep };
+        // 2) Any entry due for re-ask (gap exhausted)
+        let reask = penalties.find(p => p.phase === 'reask');
+        if (reask) return { shortcut: reask.shortcut, penaltyEntry: reask };
+        // 3) Forward through level
+        let sc = currentLevel.shortcuts[practiceForwardIdx % currentLevel.shortcuts.length];
+        practiceForwardIdx++;
+        return { shortcut: sc, penaltyEntry: null };
+    }
+
+    const MOD_LABEL = { ctrl: "⌃ Ctrl", opt: "⌥ Opt", shift: "⇧ Shift", meta: "⌘ Cmd", fn: "Fn" };
+    function prettyKey(k) {
+        if (!k) return "";
+        if (k === 'left arrow') return 'Left Arrow';
+        if (k === 'right arrow') return 'Right Arrow';
+        if (k === 'up arrow') return 'Up Arrow';
+        if (k === 'down arrow') return 'Down Arrow';
+        if (k === 'delete') return 'Delete';
+        if (k === 'space') return 'Space';
+        if (k === 'tab') return 'Tab';
+        if (k === 'esc') return 'Esc';
+        if (k === 'left bracket') return '[';
+        if (k === 'right bracket') return ']';
+        if (k === 'slash') return '/';
+        if (k === 'colon') return ':';
+        if (k === 'semicolon') return ';';
+        if (k === 'lcurly') return '{';
+        if (k === 'rcurly') return '}';
+        if (k === 'vbar') return '|';
+        if (k === 'minus') return '–';
+        if (k === 'plus') return '+';
+        if (k === 'question') return '?';
+        return k.toUpperCase();
+    }
+    function recordPress(token) { if (!pressOrder.includes(token)) pressOrder.push(token); }
+    function resetPressOrder() { pressOrder = []; }
+    function expectedOrder(target) {
+        let seq = [];
+        ['fn','ctrl','opt','shift','meta'].forEach(m => { if (target[m]) seq.push(MOD_LABEL[m]); });
+        if (target.key) seq.push(prettyKey(target.key));
+        return seq;
+    }
+    function userOrderLabels() {
+        return pressOrder.map(t => {
+            if (MOD_LABEL[t]) return MOD_LABEL[t];
+            if (t.startsWith('key:')) return prettyKey(t.slice(4));
+            return t;
+        });
+    }
+    function isUserOrderCorrect(target) {
+        const exp = expectedOrder(target);
+        const act = userOrderLabels();
+        if (exp.length !== act.length) return false;
+        for (let i = 0; i < exp.length; i++) if (exp[i] !== act[i]) return false;
+        return true;
+    }
+    function showOrderModal(target) {
+        document.getElementById('order-correct').innerText = expectedOrder(target).join("  →  ");
+        const yours = userOrderLabels();
+        document.getElementById('order-yours').innerText = t('youPressed') + " " + (yours.length ? yours.join("  →  ") : t('nothingYet'));
+        document.getElementById('order-modal').classList.add('show');
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+        const closeBtn = document.getElementById('order-close-btn');
+        if (closeBtn) closeBtn.onclick = () => {
+            document.getElementById('order-modal').classList.remove('show');
+            state = { meta: false, opt: false, shift: false, ctrl: false, fn: false, key: "" };
+            resetPressOrder();
+            syncInterfaceKeys(); updateDisplay();
+        };
+    });
+
+    function showScreen(screenId) {
+        document.getElementById('level-screen').style.display = 'none';
+        document.getElementById('study-screen').style.display = 'none';
+        document.getElementById('game-screen').style.display = 'none';
+        document.getElementById(screenId).style.display = 'block';
+    }
+
+    function loadLevelMenu() {
+        const levelListEl = document.getElementById('level-list');
+        levelListEl.innerHTML = '';
+        levels.forEach(lvl => {
+            let btn = document.createElement('button');
+            btn.className = 'level-btn';
+            btn.innerHTML = `${lvl.title}<div class="level-desc">${lvl.desc}</div>`;
+            btn.onclick = () => loadStudyScreen(lvl);
+            levelListEl.appendChild(btn);
+        });
+    }
+    loadLevelMenu();
+
+    function loadStudyScreen(lvl) {
+        currentLevel = lvl;
+        document.getElementById('study-title').innerText = lvl.title;
+        const studyList = document.getElementById('study-list');
+        studyList.innerHTML = '';
+        lvl.shortcuts.forEach(item => {
+            let li = document.createElement('li');
+            li.innerHTML = `<div class="study-q">${item.q}</div><div class="study-a">${item.visualKey}</div>`;
+            studyList.appendChild(li);
+        });
+        document.getElementById('btn-start-game').innerText = t('startLevelPractice', {n: lvl.id + 1});
+        showScreen('study-screen');
+    }
+
+    document.getElementById('btn-start-game').onclick = () => {
+        isTestMode = false; isPenaltyMode = false; practiceIdx = 0;
+        practiceForwardIdx = 0; penalties = []; currentCard = null;
+        buildDynamicKeyboard(); loadCard(); showScreen('game-screen');
+    };
+
+    document.getElementById('btn-toggle-mode').onclick = () => {
+        isTestMode = !isTestMode; isPenaltyMode = false;
+        if (isTestMode) {
+            testQueue = [];
+            for (let i = 0; i <= currentLevel.id; i++) { testQueue = testQueue.concat(levels[i].shortcuts); }
+            for (let i = testQueue.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [testQueue[i], testQueue[j]] = [testQueue[j], testQueue[i]];
+            }
+        } else {
+            practiceIdx = 0; practiceForwardIdx = 0; penalties = []; currentCard = null;
+        }
+        buildDynamicKeyboard(); loadCard();
+    };
+
+    function buildDynamicKeyboard() {
+        const actionContainer = document.getElementById('keyboard-actions');
+        actionContainer.innerHTML = ''; 
+        let uniqueKeys = [];
+        let maxLevel = currentLevel.id;
+        for (let i = 0; i <= maxLevel; i++) {
+            levels[i].shortcuts.forEach(s => { if (!uniqueKeys.includes(s.key)) uniqueKeys.push(s.key); });
+        }
+
+        uniqueKeys.forEach(k => {
+            let btn = document.createElement('button');
+            btn.className = 'key-btn action-btn';
+            btn.id = 'key-' + k.replace(' ', '-');
+            let keyName = k.toUpperCase();
+            if(k === 'left arrow') keyName = '← Lft';
+            if(k === 'right arrow') keyName = 'Rgt →';
+            if(k === 'up arrow') keyName = '↑ Up';
+            if(k === 'down arrow') keyName = '↓ Dwn';
+            if(k === 'delete') keyName = 'Del';
+            if(k === 'space') keyName = 'Space';
+            if(k === 'tab') keyName = 'Tab';
+            if(k === 'esc') keyName = 'Esc';
+            if(k === 'left bracket') keyName = '[';
+            if(k === 'right bracket') keyName = ']';
+            if(k === 'slash') keyName = '/';
+            if(k === 'colon') keyName = ':';
+            if(k === 'semicolon') keyName = ';';
+            if(k === 'lcurly') keyName = '{';
+            if(k === 'rcurly') keyName = '}';
+            if(k === 'vbar') keyName = '|';
+            if(k === 'minus') keyName = '–';
+            if(k === 'plus') keyName = '+';
+            if(k === 'question') keyName = '?';
+            btn.innerText = keyName;
+            if(k === 'space') btn.classList.add('space-btn');
+            
+            btn.onclick = function() {
+                if(isWaitingForNext && !isTestMode) return;
+                document.querySelectorAll('.action-btn').forEach(b => b.classList.remove('active'));
+                if (state.key === k) {
+                    state.key = "";
+                    pressOrder = pressOrder.filter(t => t !== 'key:' + k);
+                } else {
+                    pressOrder = pressOrder.filter(t => !t.startsWith('key:'));
+                    state.key = k; this.classList.add('active');
+                    recordPress('key:' + k);
+                }
+                updateDisplay();
+            };
+            actionContainer.appendChild(btn);
+        });
+
+        ['ctrl', 'opt', 'shift', 'meta', 'fn'].forEach(m => {
+            const b = document.getElementById('k-' + m);
+            if(!b) return; // Fn (or any modifier) button absent in this game — skip gracefully
+            b.className = 'key-btn mod-btn';
+            b.onclick = function() {
+                if(isWaitingForNext && !isTestMode) return;
+                state[m] = !state[m];
+                this.classList.toggle('active', state[m]);
+                if (state[m]) recordPress(m); else pressOrder = pressOrder.filter(t => t !== m);
+                updateDisplay();
+            };
+        });
+    }
+
+    function syncInterfaceKeys() {
+        ['ctrl', 'opt', 'shift', 'meta', 'fn'].forEach(m => {
+            const el = document.getElementById('k-' + m);
+            if(el) el.classList.toggle('active', state[m]);
+        });
+        document.querySelectorAll('.action-btn').forEach(b => b.classList.remove('active'));
+        if(state.key) {
+            const targetID = 'key-' + state.key.replace(' ', '-');
+            const targetBtn = document.getElementById(targetID);
+            if(targetBtn) targetBtn.classList.add('active');
+        }
+    }
+
+    function updateDisplay() {
+        let keys = [];
+        if(state.fn) keys.push("Fn"); if(state.ctrl) keys.push("⌃ Ctrl"); if(state.opt) keys.push("⌥ Opt"); if(state.shift) keys.push("⇧ Shift"); if(state.meta) keys.push("⌘ Cmd");
+        let displayKey = state.key;
+        if(displayKey === 'left arrow') displayKey = 'Left Arrow';
+        if(displayKey === 'right arrow') displayKey = 'Right Arrow';
+        if(displayKey === 'up arrow') displayKey = 'Up Arrow';
+        if(displayKey === 'down arrow') displayKey = 'Down Arrow';
+        if(displayKey === 'delete') displayKey = 'Delete';
+        if(displayKey === 'space') displayKey = 'Space';
+        if(displayKey === 'tab') displayKey = 'Tab';
+        if(displayKey === 'esc') displayKey = 'Esc';
+        if(displayKey === 'left bracket') displayKey = '[';
+        if(displayKey === 'right bracket') displayKey = ']';
+        if(displayKey === 'slash') displayKey = '/';
+        if(displayKey === 'colon') displayKey = ':';
+        if(displayKey === 'semicolon') displayKey = ';';
+        if(displayKey === 'lcurly') displayKey = '{';
+        if(displayKey === 'rcurly') displayKey = '}';
+        if(displayKey === 'vbar') displayKey = '|';
+        if(displayKey === 'minus') displayKey = '–';
+        if(displayKey === 'plus') displayKey = '+';
+        if(displayKey === 'question') displayKey = '?';
+        const isSymbol = ['[',']','/',':',';','{','}','|','–','+','?'].includes(displayKey);
+        if(state.key) keys.push(isSymbol ? displayKey : displayKey.toUpperCase());
+        
+        if(!isWaitingForNext) {
+            document.getElementById('display').innerText = keys.length > 0 ? keys.join(" + ") : t('enterCommandsPrompt');
+        }
+    }
+
+    function loadCard() {
+        if (isTestMode && testQueue.length === 0) return;
+        currentShortcut = null;
+        if (isTestMode) {
+            currentShortcut = testQueue[0];
+        } else {
+            currentCard = pickNextPracticeCard();
+            currentShortcut = currentCard.shortcut;
+            // v03: banner shows only while in repeat phase
+            const banner = document.getElementById('repeat-banner');
+            if (banner) {
+                if (currentCard.penaltyEntry && currentCard.penaltyEntry.phase === 'repeat') {
+                    document.getElementById('rb-keys').innerText = currentShortcut.visualKey;
+                    document.getElementById('rb-count').innerText = t('repeatProgress', {n: 3 - currentCard.penaltyEntry.repsLeft});
+                    document.getElementById('rb-title').innerText = t('repeatBannerTitle');
+                    banner.classList.add('show');
+                } else {
+                    banner.classList.remove('show');
+                }
+            }
+        }
+        document.getElementById('prompt').innerText = t('promptPrefix') + currentShortcut.q;
+        document.getElementById('target-keys').innerText = currentShortcut.visualKey;
+        let levelNumber = currentLevel.id + 1;
+        isWaitingForNext = false;
+        // Reset the explanation box BELOW the Return key for the new question.
+        const expBoxReset = document.getElementById('explanation-box');
+        const belowSlot = document.getElementById('explanation-slot-below');
+        if (expBoxReset.parentElement !== belowSlot) belowSlot.appendChild(expBoxReset);
+        if (!isTestMode) {
+            // Practice mode: 'Why use this' is ALWAYS available for viewing.
+            // Show it below the Return key now; it moves above once the user answers.
+            expBoxReset.innerHTML = `<div class="exp-title">${t('whyUseThis')}</div><div>${currentShortcut.explanation}</div>`;
+            expBoxReset.style.display = 'block';
+        } else {
+            // Test mode: keep it hidden so the answer isn't revealed before answering.
+            expBoxReset.style.display = 'none';
+        }
+        document.getElementById('check').innerText = t('returnLabel');
+
+        if (isTestMode) {
+            if (isPenaltyMode) {
+                document.getElementById('target-box').style.display = 'block';
+                document.getElementById('game-title').innerText = t('levelTestPenalty', {n: levelNumber});
+            } else {
+                document.getElementById('target-box').style.display = 'none';
+                document.getElementById('game-title').innerText = t('testModeLeft', {n: testQueue.length});
+            }
+            document.getElementById('btn-toggle-mode').innerText = t('endTestBackPractice');
+            document.getElementById('btn-toggle-mode').style.background = "#89b4fa";
+        } else {
+            document.getElementById('target-box').style.display = 'block';
+            document.getElementById('btn-toggle-mode').innerText = t('startLevelTest', {n: levelNumber});
+            document.getElementById('btn-toggle-mode').style.background = "#cba6f7";
+            if (currentCard && currentCard.penaltyEntry) {
+                const pe = currentCard.penaltyEntry;
+                if (pe.phase === 'repeat') {
+                    document.getElementById('game-title').innerText = currentLevel.title + " — Repeat (" + (3 - pe.repsLeft) + "/3)";
+                } else if (pe.phase === 'reask') {
+                    document.getElementById('game-title').innerText = currentLevel.title + " — Re-ask";
+                } else {
+                    document.getElementById('game-title').innerText = t('practiceLabel', {levelTitle: currentLevel.title});
+                }
+            } else {
+                document.getElementById('game-title').innerText = currentLevel.title + " (Practice)";
+            }
+        }
+        state = { meta: false, opt: false, shift: false, ctrl: false, fn: false, key: "" };
+        resetPressOrder();
+        if (!document.getElementById('msg').innerText.includes("/ 3")) document.getElementById('msg').innerText = "";
+        syncInterfaceKeys(); updateDisplay();
+    }
+
+    function triggerLevelUp() {
+        let nextLevelId = currentLevel.id + 1;
+        if (nextLevelId < levels.length) {
+            alert(t('levelCleared', {n: currentLevel.id + 1, next: nextLevelId + 1}));
+            loadStudyScreen(levels[nextLevelId]);
+        } else {
+            alert(t('masteredAll'));
+            showScreen('level-screen');
+        }
+    }
+
+    function validateAnswers() {
+        let target;
+        if (isTestMode) {
+            target = testQueue[0];
+        } else {
+            if (isWaitingForNext) { loadCard(); return; }
+            target = currentCard ? currentCard.shortcut : currentLevel.shortcuts[0];
+        }
+        if(!state.key && !state.meta && !state.opt && !state.shift && !state.ctrl && !state.fn) return; 
+        let isMatch = (state.meta === !!target.meta) && (state.opt === !!target.opt) && (state.shift === !!target.shift) && (state.ctrl === !!target.ctrl) && (state.fn === !!target.fn) && (state.key === target.key);
+
+        // If they got the right keys but in the wrong order, teach the order and bail before scoring.
+        if (isMatch && !isUserOrderCorrect(target)) {
+            showOrderModal(target);
+            return;
+        }
+
+        if (isTestMode) {
+            if (isPenaltyMode) {
+                if (isMatch) {
+                    penaltyCount++;
+                    if (penaltyCount >= 3) {
+                        document.getElementById('msg').innerText = t('penaltyCleared'); document.getElementById('msg').style.color = "#a6e3a1"; isPenaltyMode = false;
+                        let missedCard = testQueue.shift(); let insertIndex = Math.min(2, testQueue.length); testQueue.splice(insertIndex, 0, missedCard);
+                        setTimeout(loadCard, 1200);
+                    } else {
+                        document.getElementById('msg').innerText = t('penaltyProgress', {n: penaltyCount}); document.getElementById('msg').style.color = "#f9e2af";
+                        setTimeout(() => { state = { meta: false, opt: false, shift: false, ctrl: false, fn: false, key: "" }; syncInterfaceKeys(); updateDisplay(); }, 400);
+                    }
+                } else { document.getElementById('msg').innerText = t('nopeTargetKeys'); document.getElementById('msg').style.color = "#f38ba8"; }
+            } else {
+                if (isMatch) {
+                    document.getElementById('msg').innerText = t('perfect'); document.getElementById('msg').style.color = "#a6e3a1"; testQueue.shift(); 
+                    if (testQueue.length === 0) setTimeout(triggerLevelUp, 1000); else setTimeout(loadCard, 1000);
+                } else {
+                    document.getElementById('msg').innerText = t('wrongItWas', {visualKey: target.visualKey}); document.getElementById('msg').style.color = "#f38ba8";
+                    isPenaltyMode = true; penaltyCount = 0; setTimeout(loadCard, 2000); 
+                }
+            }
+        } else {
+            // ===== v03 PRACTICE MODE — spec'd by EJ 2026-06-27 =====
+            // - Wrong answer -> Repeat Mode: must press correctly 3 times in a row WITH answer visible
+            // - After 3 reps -> gap of 2 normal questions
+            // - Then re-ask once (answer HIDDEN this time, training wheels off)
+            // - Miss on re-ask -> full Repeat Mode again, recursive
+            // - Multiple misses stack as independent entries
+            const expBox = document.getElementById('explanation-box');
+            const aboveSlot = document.getElementById('explanation-slot-above');
+            const msgEl = document.getElementById('msg');
+            const entry = currentCard ? currentCard.penaltyEntry : null;
+            const banner = document.getElementById('repeat-banner');
+            const rbKeys = document.getElementById('rb-keys');
+            const rbCount = document.getElementById('rb-count');
+            const rbTitle = document.getElementById('rb-title');
+
+            // Show explanation above Return on every answer
+            expBox.innerHTML = `<div class="exp-title">${t('whyUseThis')}</div><div>${target.explanation}</div>`;
+            if (expBox.parentElement !== aboveSlot) aboveSlot.appendChild(expBox);
+            expBox.style.display = 'block';
+
+            if (isMatch) {
+                if (entry && entry.phase === 'repeat') {
+                    entry.repsLeft--;
+                    if (entry.repsLeft <= 0) {
+                        // Finished 3 visible reps — banner off, send to gap
+                        entry.phase = 'gap';
+                        entry.gapLeft = 2;
+                        banner.classList.remove('show');
+                        msgEl.innerText = t('repeatsDone');
+                    } else {
+                        msgEl.innerText = t('repeatProgress', {n: 3 - entry.repsLeft});
+                        // Keep banner visible for next rep
+                    }
+                } else if (entry && entry.phase === 'reask') {
+                    // Training-wheels-off re-ask passed -> retire
+                    penalties = penalties.filter(p => p !== entry);
+                    msgEl.innerText = t('penaltyClearedStreak');
+                    banner.classList.remove('show');
+                    tickDownPenaltyGaps(entry);
+                } else {
+                    // Fresh-card correct answer
+                    msgEl.innerText = t('perfect');
+                    tickDownPenaltyGaps(null);
+                }
+                msgEl.style.color = '#a6e3a1';
+                isWaitingForNext = true;
+                document.getElementById('check').innerText = t('nextAction');
+            } else {
+                // WRONG -> enter or restart Repeat Mode
+                let pe = findPenaltyByShortcut(target);
+                if (!pe) {
+                    pe = { id: nextPenaltyId++, shortcut: target, phase: 'repeat', repsLeft: 3, gapLeft: 0 };
+                    penalties.push(pe);
+                } else {
+                    pe.phase = 'repeat';
+                    pe.repsLeft = 3;
+                    pe.gapLeft = 0;
+                }
+                rbTitle.innerText = t('repeatBannerTitle');
+                rbKeys.innerText = target.visualKey;
+                rbCount.innerText = t('repeatProgress', {n: 0});
+                banner.classList.add('show');
+                msgEl.innerText = t('wrongRepeatPrompt', {visualKey: target.visualKey});
+                msgEl.style.color = '#f38ba8';
+                isWaitingForNext = true;
+                document.getElementById('check').innerText = t('tryAgain');
+                // Wrong answer on a NON-repeat card also ticks down gaps (it counts as an answered question)
+                if (!entry || entry.phase !== 'repeat') tickDownPenaltyGaps(pe);
+            }
+        }
+    }
+
+    document.getElementById('check').onclick = validateAnswers;
+
+    window.addEventListener('keydown', (e) => {
+        if(document.getElementById('game-screen').style.display !== 'block') return;
+        e.preventDefault();
+        if(e.key === 'Enter') { validateAnswers(); return; }
+        if(isWaitingForNext && !isTestMode) return;
+
+        const prev = { ctrl: state.ctrl, opt: state.opt, shift: state.shift, meta: state.meta };
+        state.ctrl = e.ctrlKey;
+        state.opt = e.altKey;
+        state.shift = e.shiftKey;
+        state.meta = e.metaKey;
+
+        // Record modifier presses in real-world press order; drop on release.
+        ['ctrl','opt','shift','meta'].forEach(m => {
+            if (state[m] && !prev[m]) recordPress(m);
+            if (!state[m] && prev[m]) pressOrder = pressOrder.filter(t => t !== m);
+        });
+
+        let rawKey = e.key.toLowerCase();
+        if (rawKey === 'arrowleft') rawKey = 'left arrow';
+        if (rawKey === 'arrowright') rawKey = 'right arrow';
+        if (rawKey === 'arrowup') rawKey = 'up arrow';
+        if (rawKey === 'arrowdown') rawKey = 'down arrow';
+        if (rawKey === '[') rawKey = 'left bracket';
+        if (rawKey === ']') rawKey = 'right bracket';
+        if (rawKey === '/') rawKey = 'slash';
+        if (rawKey === ':') rawKey = 'colon';
+        if (rawKey === ';') rawKey = 'semicolon';
+        if (rawKey === '{') rawKey = 'lcurly';
+        if (rawKey === '}') rawKey = 'rcurly';
+        if (rawKey === '|') rawKey = 'vbar';
+        if (rawKey === '-' || rawKey === '_') rawKey = 'minus';
+        if (rawKey === '+' || rawKey === '=') rawKey = 'plus';
+        if (rawKey === '?') rawKey = 'question';
+        if (rawKey === ' ') rawKey = 'space';
+        if (rawKey === 'escape') rawKey = 'esc';
+
+        if(shortcutsDB[rawKey]) {
+            pressOrder = pressOrder.filter(t => !t.startsWith('key:'));
+            state.key = shortcutsDB[rawKey];
+            recordPress('key:' + state.key);
+        } else if (!['control', 'alt', 'shift', 'meta'].includes(rawKey)) {
+            state.key = "";
+            pressOrder = pressOrder.filter(t => !t.startsWith('key:'));
+        }
+
+        syncInterfaceKeys();
+        updateDisplay();
+    });
+
+    
+    // ============================================================
+    // KEYVERSE — Optional inline service worker for offline play
+    // (only registers on https or localhost; quietly skips otherwise)
+    // ============================================================
+    if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+        // Create SW from blob URL so file works standalone (no companion .js needed)
+        const swCode = `
+            const CACHE = 'keyverse-v05';
+            self.addEventListener('install', e => { self.skipWaiting(); });
+            self.addEventListener('activate', e => { e.waitUntil(self.clients.claim()); });
+            self.addEventListener('fetch', e => {
+                if (e.request.method !== 'GET') return;
+                e.respondWith(
+                    caches.open(CACHE).then(c => c.match(e.request).then(r => r || fetch(e.request).then(resp => {
+                        if (resp.ok && e.request.url.startsWith(location.origin)) c.put(e.request, resp.clone());
+                        return resp;
+                    }).catch(() => c.match('/'))))
+                );
+            });
+        `;
+        try {
+            const blob = new Blob([swCode], {type:'application/javascript'});
+            navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(()=>{});
+        } catch(_) { /* offline mode unavailable; site still works online */ }
+    }
+
+    
+    // ============================================================
+    // KEYVERSE v06 — Expose game functions on window for v06 wrappers
+    // ============================================================
+    try { if (typeof loadCard === 'function')         window.loadCard         = loadCard;         } catch(_){}
+    try { if (typeof validateAnswers === 'function')  window.validateAnswers  = validateAnswers;  } catch(_){}
+    try { if (typeof triggerLevelUp === 'function')   window.triggerLevelUp   = triggerLevelUp;   } catch(_){}
+    try { if (typeof loadStudyScreen === 'function')  window.loadStudyScreen  = loadStudyScreen;  } catch(_){}
+    try { if (typeof showScreen === 'function')       window.showScreen       = showScreen;       } catch(_){}
+    try { if (typeof levels !== 'undefined')          window.levels           = levels;           } catch(_){}
+    try { if (typeof currentLevel !== 'undefined')    Object.defineProperty(window, 'currentLevel', { get(){ return currentLevel; }, configurable:true }); } catch(_){}
+    try { if (typeof currentCard !== 'undefined')     Object.defineProperty(window, 'currentCard',  { get(){ return currentCard;  }, configurable:true }); } catch(_){}
+    try { if (typeof isTestMode !== 'undefined')      Object.defineProperty(window, 'isTestMode',   { get(){ return isTestMode;   }, configurable:true }); } catch(_){}
+    try { if (typeof testQueue !== 'undefined')       Object.defineProperty(window, 'testQueue',    { get(){ return testQueue;    }, configurable:true }); } catch(_){}
+    try { if (typeof t === 'function')                window.t                = t;                } catch(_){}
+
+
+    // ============================================================
+    // KEYVERSE v06 — Touch-press visualizer (iPhone parity)
+    // ============================================================
+    (function installTouchPress(){
+        const SEL = '.key-btn, .level-btn, .return-key, .order-close, .back-btn, .submit-menu, .btn-test-toggle, .lang-opt, #kv-int-ad, button';
+        const add = e => { const t = e.target.closest(SEL); if (t) t.classList.add('pressed'); };
+        const rm  = ()=> document.querySelectorAll('.pressed').forEach(el => el.classList.remove('pressed'));
+        document.addEventListener('touchstart', add, { passive:true, capture:true });
+        document.addEventListener('touchend',   rm,  { passive:true, capture:true });
+        document.addEventListener('touchcancel',rm,  { passive:true, capture:true });
+        document.addEventListener('mousedown',  add, { capture:true });
+        document.addEventListener('mouseup',    rm,  { capture:true });
+        document.addEventListener('mouseleave', rm,  { capture:true });
+    })();
+
+    // ============================================================
+    // KEYVERSE v06 — Why-Use-This box always visible
+    // ============================================================
+    (function installWhyBoxV06(){
+        function placeBelow(box){
+            const slot = document.getElementById('explanation-slot-below');
+            if (slot && box && box.parentElement !== slot) slot.appendChild(box);
+            if (box) box.style.display = 'block';
+        }
+        function placeAbove(box){
+            const slot = document.getElementById('explanation-slot-above');
+            if (slot && box && box.parentElement !== slot) slot.appendChild(box);
+            if (box) box.style.display = 'block';
+        }
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof window.loadCard !== 'function') return;
+            const origLoad = window.loadCard;
+            window.loadCard = function(){
+                const r = origLoad.apply(this, arguments);
+                try {
+                    const box = document.getElementById('explanation-box');
+                    const target = (typeof isTestMode !== 'undefined' && isTestMode)
+                        ? (typeof testQueue !== 'undefined' && testQueue.length ? testQueue[0] : null)
+                        : (typeof currentCard !== 'undefined' && currentCard ? currentCard.shortcut : null);
+                    if (box && target && target.explanation) {
+                        const label = (typeof t === 'function') ? t('whyUseThis') : 'Why use this?';
+                        box.innerHTML = '<div class="exp-title">' + label + '</div><div>' + target.explanation + '</div>';
+                        placeBelow(box);
+                    }
+                } catch(_) {}
+                return r;
+            };
+            if (typeof window.validateAnswers === 'function') {
+                const origVal = window.validateAnswers;
+                window.validateAnswers = function(){
+                    const r = origVal.apply(this, arguments);
+                    try {
+                        const box = document.getElementById('explanation-box');
+                        if (box) placeAbove(box);
+                    } catch(_) {}
+                    return r;
+                };
+            }
+        });
+    })();
+
+    // ============================================================
+    // KEYVERSE v06 — Between-level interstitial controller
+    // ============================================================
+    (function installInterstitialV06(){
+        const DURATION = 10;
+        let timerId = null;
+        let secondsLeft = DURATION;
+        let tapped = false;
+        let pendingNext = null;
+        let waitingForTapAfterTimer = false;
+
+        function tt(key, vars){
+            try { if (typeof t === 'function') return t(key, vars); } catch(_) {}
+            return key;
+        }
+        function pluralize(n){ return (n === 1) ? '' : 's'; }
+        function updateText(){
+            const el = document.getElementById('kv-int-countdown');
+            if (!el) return;
+            if (secondsLeft > 0) {
+                el.innerText = tt('interstitialCountdown', { n: secondsLeft, plural: pluralize(secondsLeft) });
+            } else if (!tapped) {
+                el.innerText = tt('interstitialNeedTap');
+                el.style.color = '#f9e2af';
+            } else {
+                el.innerText = tt('interstitialAdvancing');
+                el.style.color = '#a6e3a1';
+            }
+        }
+        function updateBar(){
+            const bar = document.getElementById('kv-int-bar');
+            if (bar) bar.style.width = (((DURATION - secondsLeft) / DURATION) * 100) + '%';
+        }
+        function tryFinish(){
+            if (secondsLeft <= 0 && tapped) {
+                const ov = document.getElementById('kv-interstitial');
+                if (ov) ov.style.display = 'none';
+                if (typeof pendingNext === 'function') {
+                    const fn = pendingNext;
+                    pendingNext = null;
+                    setTimeout(fn, 200);
+                }
+            }
+        }
+        function tick(){
+            secondsLeft--;
+            updateText();
+            updateBar();
+            if (secondsLeft <= 0) {
+                clearInterval(timerId);
+                timerId = null;
+                if (tapped) {
+                    tryFinish();
+                } else {
+                    waitingForTapAfterTimer = true;
+                    updateText();
+                }
+            }
+        }
+        function show(nextFn){
+            const ov = document.getElementById('kv-interstitial');
+            if (!ov) { if (typeof nextFn === 'function') nextFn(); return; }
+            const title = document.getElementById('kv-int-title');
+            const body = document.getElementById('kv-int-body');
+            const tap = document.getElementById('kv-int-tap');
+            const thx = document.getElementById('kv-int-thanks');
+            if (title) title.innerText = tt('interstitialTitle');
+            if (body)  body.innerText  = tt('interstitialBody');
+            if (tap)   tap.innerText   = tt('interstitialTap');
+            if (thx)   thx.innerText   = tt('interstitialThanks');
+            tapped = false;
+            waitingForTapAfterTimer = false;
+            secondsLeft = DURATION;
+            pendingNext = nextFn;
+            const bar = document.getElementById('kv-int-bar');
+            if (bar) bar.style.width = '0%';
+            const cd = document.getElementById('kv-int-countdown');
+            if (cd) cd.style.color = '#cdd6f4';
+            if (thx) thx.style.display = 'none';
+            updateText();
+            ov.style.display = 'flex';
+            if (timerId) clearInterval(timerId);
+            timerId = setInterval(tick, 1000);
+        }
+        window.addEventListener('DOMContentLoaded', () => {
+            const ad = document.getElementById('kv-int-ad');
+            if (ad) {
+                const onTap = () => {
+                    if (tapped) return;
+                    tapped = true;
+                    const thx = document.getElementById('kv-int-thanks');
+                    if (thx) thx.style.display = 'block';
+                    const tap = document.getElementById('kv-int-tap');
+                    if (tap) tap.style.opacity = '0.4';
+                    if (waitingForTapAfterTimer) {
+                        updateText();
+                        setTimeout(tryFinish, 400);
+                    } else {
+                        updateText();
+                    }
+                };
+                ad.addEventListener('click', onTap);
+                ad.addEventListener('touchend', onTap, { passive: true });
+            }
+        });
+        window.addEventListener('DOMContentLoaded', () => {
+            if (typeof window.triggerLevelUp !== 'function') return;
+            window.triggerLevelUp = function(){
+                try {
+                    const nextLevelId = currentLevel.id + 1;
+                    if (nextLevelId < levels.length) {
+                        show(() => { loadStudyScreen(levels[nextLevelId]); });
+                    } else {
+                        show(() => { alert(tt('masteredAll')); showScreen('level-screen'); });
+                    }
+                } catch (e) {
+                    try { alert(tt('masteredAll')); } catch(_) {}
+                    try { showScreen('level-screen'); } catch(_) {}
+                }
+            };
+        });
+    })();
+
+    /* ================================================================
+     * END OF FILE — Mountain Rock State LLC
+     * © 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ) · mountainrockproducts@gmail.com
+     * Keyverse — Mac Keyboard Shortcuts Trainer — Learn & Practice macOS Shortcuts
+     * Verification: open browser DevTools console to see watermark log,
+     * or inspect <html data-mrs-copyright="..."> attribute.
+     * ================================================================ */
+
+
+    // ===== LANGUAGE PICKER STARTUP =====
+    (function initLanguagePicker() {
+        const picker = document.getElementById('lang-picker');
+        const switchBtn = document.getElementById('lang-switch-btn');
+        const LABEL_ABBR = {
+            'en': 'EN',
+            'zh-HK': '繁',
+            'zh-CN': '简',
+            'tl': 'TL',
+            'es-419': 'ES',
+            'nan-Hokkien': '閩',
+            'hak': '客',
+            'wuu': '吳'
+        };
+
+        function updateSwitchLabel() {
+            switchBtn.textContent = '🌐 ' + LABEL_ABBR[currentLocale];
+        }
+        function hidePicker() { picker.style.display = 'none'; }
+        function showPicker() { picker.style.display = 'flex'; }
+
+        // Apply detected/stored locale immediately so splash text is correct
+        applyStaticUi();
+        updateSwitchLabel();
+
+        // Wire language buttons. Hide picker FIRST so any later error doesn't trap the user.
+        picker.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const code = btn.getAttribute('data-lang');
+                hidePicker();
+                try { setLocale(code); } catch (e) { console.error('setLocale failed:', e); }
+                updateSwitchLabel();
+            });
+        });
+
+        // Persistent switch button reopens the picker
+        switchBtn.addEventListener('click', showPicker);
+
+        // First-time visitors with no stored choice see the picker
+        try {
+            if (!localStorage.getItem('mrs.locale')) {
+                // delay so splash animation can still play briefly
+                setTimeout(showPicker, 400);
+            }
+        } catch (e) {
+            setTimeout(showPicker, 400);
+        }
+    })();
+
+</script>
+<!--
+  =============================================================
+  © 2026 Mountain Rock State LLC — All Rights Reserved.
+  Author:  Elmer Cruz Jr (EJ)
+  Contact: mountainrockproducts@gmail.com
+  Watermark: © 2026 Mountain Rock State LLC — Elmer Cruz Jr (EJ) · mountainrockproducts@gmail.com
+  End of document.
+  =============================================================
+-->
+
+    <!-- KEYVERSE v06 — Between-level interstitial overlay -->
+    <div id="kv-interstitial" style="position:fixed;inset:0;background:rgba(17,17,27,0.96);display:none;align-items:center;justify-content:center;z-index:9999;padding:16px;">
+      <div style="background:#252538;border:2px solid #a6e3a1;border-radius:14px;padding:22px;max-width:380px;width:100%;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.6);">
+        <div id="kv-int-title" style="color:#a6e3a1;font-size:1.3rem;font-weight:900;margin-bottom:8px;letter-spacing:1px;">Level Complete!</div>
+        <div id="kv-int-body" style="color:#bac2de;font-size:0.92rem;line-height:1.45;margin-bottom:14px;">Help keep Keyverse free — watch this 10-second ad and tap once.</div>
+        <div id="kv-int-ad" role="button" tabindex="0" aria-label="Support Keyverse advertisement" style="background:linear-gradient(135deg,#1e1e2e 0%,#313244 100%);border:1.5px solid #585b70;border-radius:10px;padding:24px 16px;cursor:pointer;margin-bottom:12px;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform 100ms ease,border-color 100ms ease;">
+          <div style="color:#f9e2af;font-size:1.5rem;font-weight:900;letter-spacing:2px;margin-bottom:6px;">KEYVERSE</div>
+          <div style="color:#cdd6f4;font-size:0.85rem;margin-bottom:10px;">Master Mac shortcuts in 10 levels</div>
+          <div id="kv-int-tap" style="color:#89b4fa;font-size:0.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;">Tap anywhere on the ad</div>
+        </div>
+        <div id="kv-int-countdown" style="color:#cdd6f4;font-size:0.9rem;font-weight:700;margin-bottom:6px;">Next level in 10 seconds…</div>
+        <div style="height:6px;background:#181825;border-radius:3px;overflow:hidden;">
+          <div id="kv-int-bar" style="height:100%;background:linear-gradient(90deg,#a6e3a1,#89b4fa);width:0%;transition:width 1s linear;"></div>
+        </div>
+        <div id="kv-int-thanks" style="color:#a6e3a1;font-size:0.78rem;margin-top:10px;display:none;">Thanks for supporting Keyverse ✓</div>
+      </div>
+    </div>
+
+</body>
+</html>
