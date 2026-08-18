@@ -79,6 +79,16 @@ class SplitScreenSession {
     this.peer.on('connection', (conn) => this._wireDataConnection(conn));
     this.peer.on('call', (call) => this._handleIncomingCall(call));
     this.peer.on('error', (err) => {
+      if (err.type === 'peer-unavailable' && this.role === 'host' && !this.dataConn) {
+        // The guest's cached peer_id we just tried is dead (they reloaded or
+        // left since announcing). Re-fetch a fresh one and retry instead of
+        // dead-ending here — this is the key fix that makes reopening an
+        // invite link later, or either side refreshing, actually recover.
+        this.callbacks.onStatus('That connection attempt failed — retrying…');
+        this._otherPeerId = null;
+        this._pollForPeer();
+        return;
+      }
       this.callbacks.onError(`Connection error: ${err.type || err.message}`);
     });
     this.peer.on('disconnected', () => this.callbacks.onStatus('Signaling disconnected — attempting to reconnect…'));
@@ -93,32 +103,57 @@ class SplitScreenSession {
   // shows on both sides but chat/data never arrives. To avoid this, the
   // host always initiates; the guest only ever waits for the incoming
   // 'connection' event fired by peer.on('connection', ...) in start().
+  //
+  // The host keeps polling and re-announcing continuously (not just once)
+  // until a real data connection opens, since the guest's peer_id in the
+  // database can go stale at any time (they reloaded, or joined minutes
+  // after the host started this session) — the poll interval re-reads the
+  // CURRENT value every time rather than trusting a value cached at page
+  // load, and any resulting peer-unavailable error triggers exactly one
+  // more fresh poll cycle via the peer.on('error') handler above.
   _pollForPeer() {
+    if (this.pollTimer) return; // already polling
     let attempts = 0;
     this.pollTimer = setInterval(async () => {
       attempts++;
       try {
+        // Re-announce this side's own peer_id periodically. This keeps the
+        // updated_at fresh (useful for future stale-session cleanup) and,
+        // more importantly, guarantees that whenever the OTHER side reads
+        // this row, the peer_id they see is one this browser tab is
+        // definitely still holding open right now.
+        if (attempts % 5 === 1) {
+          await apiFetch(`/api/sessions/${encodeURIComponent(this.inviteCode)}/announce`, {
+            method: 'POST',
+            body: JSON.stringify({ player_id: this.playerId, role: this.role, peer_id: this.peer.id }),
+          }).catch(() => {});
+        }
+
         const session = await apiFetch(`/api/sessions/${encodeURIComponent(this.inviteCode)}`);
         const otherPeerId = this.role === 'host' ? session.guest_peer_id : session.host_peer_id;
-        if (otherPeerId) {
+        if (otherPeerId && otherPeerId !== this._otherPeerId) {
           this._otherPeerId = otherPeerId;
           if (this.role === 'host' && !this.dataConn) {
             clearInterval(this.pollTimer);
+            this.pollTimer = null;
             this.callbacks.onStatus('Found the other player — connecting…');
             const conn = this.peer.connect(otherPeerId, { reliable: true });
             this._wireDataConnection(conn);
-          } else if (this.role === 'guest') {
+          } else if (this.role === 'guest' && !this.dataConn) {
             // Guest just needed the host's peer ID cached for voice/screen-share
-            // calls later; the data channel itself will arrive via the
-            // 'connection' event once the host initiates it.
-            clearInterval(this.pollTimer);
+            // calls later; the data channel itself arrives via the incoming
+            // 'connection' event once the host successfully calls connect().
+            // Keep polling (don't clear the timer) so that if the host's ID
+            // changes again before they actually connect, we notice and stay
+            // in sync rather than freezing on a status message forever.
             this.callbacks.onStatus('Found the host — waiting for them to connect…');
           }
         }
       } catch (err) {
         // 404 just means the other side hasn't announced yet — keep polling silently.
-        if (attempts > 90) { // ~3 minutes at 2s interval
+        if (attempts > 150) { // ~5 minutes at 2s interval
           clearInterval(this.pollTimer);
+          this.pollTimer = null;
           this.callbacks.onError('Timed out waiting for the other player to join. Ask them to open the invite link again.');
         }
       }
@@ -128,6 +163,7 @@ class SplitScreenSession {
   _wireDataConnection(conn) {
     if (this.dataConn) return; // already connected to this peer
     this.dataConn = conn;
+    if (this.pollTimer) { clearInterval(this.pollTimer); this.pollTimer = null; }
     conn.on('open', () => {
       this.callbacks.onStatus('Connected!');
       this.callbacks.onConnected();
