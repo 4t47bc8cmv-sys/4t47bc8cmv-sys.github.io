@@ -4,10 +4,9 @@
 const KEYVERSE_API = 'https://keyverse-api.onrender.com';
 const SUPABASE_URL = 'https://ludisdvlhkheokhehzih.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_xpSiid3HEEUS1wCs2dTMQw_wr6NQVdM';
-// One-time $7.77 split-screen unlock. Currently a TEST-mode Payment Link —
-// swap this for the live Payment Link once the real Stripe business account
-// is created and verified (see the project spec for that step).
-const UNLOCK_PAYMENT_LINK = 'https://buy.stripe.com/test_3cI7sL5Zl0C6dkR7SHgbm00';
+// One-time $7.77 split-screen unlock. LIVE Payment Link — real charges,
+// verified Mountain Rock State LLC business account with payouts enabled.
+const UNLOCK_PAYMENT_LINK = 'https://buy.stripe.com/5kQaEZbb67xSg7u5Vx7bW00';
 
 // Lazily created so pages that don't need auth (e.g. leaderboard.html) can
 // include this file without also loading the Supabase JS CDN script.
