@@ -84,6 +84,15 @@ class SplitScreenSession {
     this.peer.on('disconnected', () => this.callbacks.onStatus('Signaling disconnected — attempting to reconnect…'));
   }
 
+  // IMPORTANT: only ONE side may call peer.connect() to open the data
+  // channel. If both sides called connect() independently (as an earlier
+  // version of this code did), PeerJS creates two separate one-way
+  // connections instead of one shared channel — each side ends up actively
+  // listening on its own outgoing connection while the incoming connection
+  // carrying the other side's messages is silently ignored, so "Connected!"
+  // shows on both sides but chat/data never arrives. To avoid this, the
+  // host always initiates; the guest only ever waits for the incoming
+  // 'connection' event fired by peer.on('connection', ...) in start().
   _pollForPeer() {
     let attempts = 0;
     this.pollTimer = setInterval(async () => {
@@ -91,12 +100,20 @@ class SplitScreenSession {
       try {
         const session = await apiFetch(`/api/sessions/${encodeURIComponent(this.inviteCode)}`);
         const otherPeerId = this.role === 'host' ? session.guest_peer_id : session.host_peer_id;
-        if (otherPeerId && !this.dataConn) {
-          clearInterval(this.pollTimer);
+        if (otherPeerId) {
           this._otherPeerId = otherPeerId;
-          this.callbacks.onStatus('Found the other player — connecting…');
-          const conn = this.peer.connect(otherPeerId, { reliable: true });
-          this._wireDataConnection(conn);
+          if (this.role === 'host' && !this.dataConn) {
+            clearInterval(this.pollTimer);
+            this.callbacks.onStatus('Found the other player — connecting…');
+            const conn = this.peer.connect(otherPeerId, { reliable: true });
+            this._wireDataConnection(conn);
+          } else if (this.role === 'guest') {
+            // Guest just needed the host's peer ID cached for voice/screen-share
+            // calls later; the data channel itself will arrive via the
+            // 'connection' event once the host initiates it.
+            clearInterval(this.pollTimer);
+            this.callbacks.onStatus('Found the host — waiting for them to connect…');
+          }
         }
       } catch (err) {
         // 404 just means the other side hasn't announced yet — keep polling silently.
