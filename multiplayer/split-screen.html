@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Split-Screen · Keyverse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./shared.css" />
+<style>
+  body { align-items: stretch; }
+  .ss-shell { width: 100%; max-width: none; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
+  .ss-topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 24px; border-bottom: 1px solid var(--border); background: var(--bg-elevated);
+    flex-wrap: wrap; gap: 12px;
+  }
+  .ss-topbar .kv-brand { margin: 0; }
+  .ss-status-pill {
+    font-size: 0.82rem; color: var(--text-dim); display: flex; align-items: center; gap: 8px;
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 100px; padding: 6px 14px;
+  }
+  .ss-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-dim); }
+  .ss-dot.live { background: var(--primary); box-shadow: 0 0 8px var(--primary); }
+  .ss-main {
+    flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border);
+  }
+  @media (max-width: 900px) { .ss-main { grid-template-columns: 1fr; } }
+  .ss-pane {
+    background: #05070a; position: relative; display: flex; align-items: center; justify-content: center;
+    min-height: 260px; overflow: hidden;
+  }
+  .ss-pane video { width: 100%; height: 100%; object-fit: cover; }
+  .ss-pane-label {
+    position: absolute; top: 12px; left: 12px; background: rgba(0,0,0,0.55); backdrop-filter: blur(4px);
+    padding: 6px 12px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; display: flex; align-items: center; gap: 6px;
+  }
+  .ss-mic-badge { font-size: 0.75rem; }
+  .ss-empty-pane {
+    color: var(--text-dim); font-size: 0.9rem; text-align: center; padding: 24px; display: flex; flex-direction: column; gap: 10px; align-items: center;
+  }
+  .ss-controls {
+    display: flex; align-items: center; justify-content: center; gap: 10px; padding: 16px 24px;
+    border-top: 1px solid var(--border); background: var(--bg-elevated); flex-wrap: wrap;
+  }
+  .ss-toggle {
+    display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 10px;
+    border: 1px solid var(--border); background: var(--bg-card); color: var(--text); cursor: pointer;
+    font-size: 0.85rem; font-weight: 600; transition: all 0.15s ease;
+  }
+  .ss-toggle.active { border-color: var(--primary); background: rgba(19,242,176,0.12); color: var(--primary); }
+  .ss-toggle:hover { border-color: var(--accent-2); }
+  .ss-chat-panel {
+    position: fixed; right: 0; top: 0; bottom: 0; width: 320px; background: var(--bg-elevated);
+    border-left: 1px solid var(--border); display: flex; flex-direction: column; transform: translateX(100%);
+    transition: transform 0.2s ease; z-index: 20;
+  }
+  .ss-chat-panel.open { transform: translateX(0); }
+  .ss-chat-header { padding: 16px; border-bottom: 1px solid var(--border); font-weight: 700; font-family: var(--font-display); font-size: 0.9rem; }
+  .ss-chat-messages { flex: 1; overflow-y: auto; padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+  .ss-chat-msg { font-size: 0.85rem; padding: 8px 12px; border-radius: 10px; max-width: 85%; line-height: 1.4; }
+  .ss-chat-msg.me { background: var(--primary); color: #06231a; align-self: flex-end; }
+  .ss-chat-msg.them { background: var(--bg-card); border: 1px solid var(--border); align-self: flex-start; }
+  .ss-chat-input-row { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--border); }
+  .ss-chat-input-row input { flex: 1; margin-bottom: 0; }
+  .ss-chat-input-row button { width: auto; padding: 12px 16px; }
+  @media (max-width: 900px) { .ss-chat-panel { width: 100%; } }
+  .ss-desktop-only-notice { max-width: 480px; margin: 80px auto; }
+</style>
+</head>
+<body>
+
+<div id="desktopOnlyNotice" class="kv-shell ss-desktop-only-notice" style="display:none;">
+  <div class="kv-card">
+    <span class="kv-badge kv-badge-locked">🖥️ Desktop &amp; Mac only</span>
+    <h1 class="kv-title" style="margin-top:14px;">Split-screen needs a bigger screen</h1>
+    <p class="kv-subtitle">This feature is designed for PC and Mac. Please open this link on a desktop or laptop to play with your friend side by side.</p>
+  </div>
+</div>
+
+<div id="ssApp" class="ss-shell" style="display:none;">
+  <div class="ss-topbar">
+    <a href="/" class="kv-brand">
+      <svg viewBox="0 0 32 32" fill="none" aria-label="Keyverse logo">
+        <rect x="2" y="8" width="28" height="18" rx="4" stroke="currentColor" stroke-width="2"/>
+        <rect x="7" y="13" width="4" height="4" rx="1" fill="currentColor"/>
+        <rect x="14" y="13" width="4" height="4" rx="1" fill="currentColor"/>
+        <rect x="21" y="13" width="4" height="4" rx="1" fill="currentColor"/>
+        <rect x="7" y="19" width="18" height="3" rx="1.5" fill="currentColor"/>
+      </svg>
+      <span>SPLIT-SCREEN</span>
+    </a>
+    <div class="ss-status-pill">
+      <span class="ss-dot" id="statusDot"></span>
+      <span id="statusText">Connecting…</span>
+    </div>
+  </div>
+
+  <div class="ss-main">
+    <div class="ss-pane" id="localPane">
+      <div class="ss-pane-label">You <span id="localMicBadge" class="ss-mic-badge"></span></div>
+      <div class="ss-empty-pane" id="localEmptyState">
+        <span>🎮</span>
+        <span>Playing your own game — turn on camera or screen-share below if you want your partner to see you.</span>
+      </div>
+      <video id="localVideo" autoplay playsinline muted style="display:none;"></video>
+    </div>
+    <div class="ss-pane" id="remotePane">
+      <div class="ss-pane-label">Partner <span id="remoteMicBadge" class="ss-mic-badge"></span></div>
+      <div class="ss-empty-pane" id="remoteEmptyState">
+        <span>⏳</span>
+        <span id="remoteEmptyText">Waiting for your partner to connect…</span>
+      </div>
+      <video id="remoteVideo" autoplay playsinline style="display:none;"></video>
+    </div>
+  </div>
+
+  <div class="ss-controls">
+    <button class="ss-toggle" id="voiceToggle">🎤 Voice: Off</button>
+    <button class="ss-toggle" id="screenToggle">🖥️ Screen share: Off</button>
+    <button class="ss-toggle" id="chatToggle">💬 Text chat</button>
+    <button class="kv-btn kv-btn-ghost" style="width:auto; padding:10px 20px;" id="leaveBtn">Leave session</button>
+  </div>
+</div>
+
+<div class="ss-chat-panel" id="chatPanel">
+  <div class="ss-chat-header">Chat</div>
+  <div class="ss-chat-messages" id="chatMessages"></div>
+  <div class="ss-chat-input-row">
+    <input class="kv-input" id="chatInput" type="text" placeholder="Type a message…" maxlength="500" />
+    <button class="kv-btn kv-btn-primary" id="chatSendBtn">Send</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.5/dist/peerjs.min.js"></script>
+<script src="./shared.js"></script>
+<script src="./split-screen.js"></script>
+<script>
+  // Desktop/laptop gate — reuses the same detection approach already proven
+  // in the games (KV_PLATFORM), reimplemented here since this page is
+  // standalone and doesn't load a game engine.
+  const ua = (navigator.userAgent || '').toLowerCase();
+  const plat = (navigator.platform || '').toLowerCase();
+  const isIOS = /iphone|ipad|ipod/.test(ua) || (plat === 'macintel' && navigator.maxTouchPoints > 1);
+  const isAndroid = /android/.test(ua);
+  const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  const isDesktop = !isIOS && !isAndroid && !isTouch;
+
+  if (!isDesktop) {
+    document.getElementById('desktopOnlyNotice').style.display = 'block';
+  } else {
+    document.getElementById('ssApp').style.display = 'flex';
+    initSplitScreen();
+  }
+
+  function initSplitScreen() {
+    const params = new URLSearchParams(window.location.search);
+    const inviteCode = params.get('code');
+    const playerId = params.get('player_id');
+    const role = params.get('role'); // 'host' or 'guest'
+
+    const statusText = document.getElementById('statusText');
+    const statusDot = document.getElementById('statusDot');
+    const remoteEmptyText = document.getElementById('remoteEmptyText');
+    const remoteEmptyState = document.getElementById('remoteEmptyState');
+    const remoteVideo = document.getElementById('remoteVideo');
+    const localVideo = document.getElementById('localVideo');
+    const localEmptyState = document.getElementById('localEmptyState');
+
+    if (!inviteCode || !playerId || !role) {
+      statusText.textContent = 'Missing session details — return to your invite link and try again.';
+      return;
+    }
+
+    const session = new SplitScreenSession({
+      inviteCode,
+      playerId,
+      role,
+      callbacks: {
+        onStatus: (msg) => { statusText.textContent = msg; },
+        onConnected: () => {
+          statusDot.classList.add('live');
+          remoteEmptyText.textContent = 'Connected — your partner can now share video/voice if they choose to.';
+        },
+        onDisconnected: () => {
+          statusDot.classList.remove('live');
+          remoteEmptyState.style.display = 'flex';
+          remoteVideo.style.display = 'none';
+          remoteEmptyText.textContent = 'Your partner disconnected.';
+        },
+        onError: (msg) => { statusText.textContent = msg; },
+        onRemoteStream: (kind, stream) => {
+          if (stream) {
+            remoteVideo.srcObject = stream;
+            remoteVideo.style.display = 'block';
+            remoteEmptyState.style.display = 'none';
+          } else {
+            remoteVideo.style.display = 'none';
+            remoteEmptyState.style.display = 'flex';
+          }
+        },
+        onChatMessage: (fromRole, text) => addChatMessage('them', text),
+        onProgressUpdate: () => { /* reserved for future live-score display */ },
+      },
+    });
+
+    session.start();
+
+    // --- Voice toggle ---
+    const voiceToggle = document.getElementById('voiceToggle');
+    const localMicBadge = document.getElementById('localMicBadge');
+    let voiceOn = false;
+    voiceToggle.addEventListener('click', async () => {
+      if (!voiceOn) {
+        const ok = await session.enableVoice();
+        if (ok) {
+          voiceOn = true;
+          voiceToggle.textContent = '🎤 Voice: On';
+          voiceToggle.classList.add('active');
+          localMicBadge.textContent = '🎤';
+        }
+      } else {
+        session.disableVoice();
+        voiceOn = false;
+        voiceToggle.textContent = '🎤 Voice: Off';
+        voiceToggle.classList.remove('active');
+        localMicBadge.textContent = '';
+      }
+    });
+
+    // --- Screen share toggle ---
+    const screenToggle = document.getElementById('screenToggle');
+    let screenOn = false;
+    screenToggle.addEventListener('click', async () => {
+      if (!screenOn) {
+        const ok = await session.enableScreenShare();
+        if (ok) {
+          screenOn = true;
+          screenToggle.textContent = '🖥️ Screen share: On';
+          screenToggle.classList.add('active');
+          localVideo.srcObject = session.localScreenStream;
+          localVideo.style.display = 'block';
+          localEmptyState.style.display = 'none';
+        }
+      } else {
+        session.disableScreenShare();
+        screenOn = false;
+        screenToggle.textContent = '🖥️ Screen share: Off';
+        screenToggle.classList.remove('active');
+        localVideo.style.display = 'none';
+        localEmptyState.style.display = 'flex';
+      }
+    });
+
+    // --- Text chat ---
+    const chatPanel = document.getElementById('chatPanel');
+    const chatToggle = document.getElementById('chatToggle');
+    const chatInput = document.getElementById('chatInput');
+    const chatSendBtn = document.getElementById('chatSendBtn');
+    const chatMessages = document.getElementById('chatMessages');
+
+    chatToggle.addEventListener('click', () => chatPanel.classList.toggle('open'));
+
+    function addChatMessage(who, text) {
+      const div = document.createElement('div');
+      div.className = `ss-chat-msg ${who === 'me' ? 'me' : 'them'}`;
+      div.textContent = text;
+      chatMessages.appendChild(div);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function sendChat() {
+      const text = chatInput.value.trim();
+      if (!text) return;
+      session.sendChatMessage(text);
+      addChatMessage('me', text);
+      chatInput.value = '';
+    }
+    chatSendBtn.addEventListener('click', sendChat);
+    chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChat(); });
+
+    // --- Leave ---
+    document.getElementById('leaveBtn').addEventListener('click', async () => {
+      await session.end();
+      window.location.href = './account.html';
+    });
+    window.addEventListener('beforeunload', () => { session.end(); });
+
+    // Expose for the game page (if this is ever embedded in an iframe
+    // alongside a game) to call session.setMicMutedForAd(true/false) once
+    // real AdSense H5 Games Ads lifecycle events are wired in.
+    window.kvSplitScreenSession = session;
+  }
+</script>
+</body>
+</html>

@@ -46,6 +46,15 @@
       <label class="kv-label">Or send this link</label>
       <div class="kv-invite-link" id="inviteLink">—</div>
       <button class="kv-btn kv-btn-ghost" id="copyLinkBtn">Copy link</button>
+
+      <div style="margin-top:24px; border-top:1px solid var(--border); padding-top:20px;">
+        <label class="kv-label" for="hostNickname">Your nickname</label>
+        <input class="kv-input" type="text" id="hostNickname" placeholder="e.g. SpeedTyper" maxlength="24" />
+        <label class="kv-label" for="hostLanguage">Your language</label>
+        <select class="kv-input" id="hostLanguage"></select>
+        <button class="kv-btn kv-btn-primary" id="startSplitScreenBtn">Start split-screen (desktop/Mac only)</button>
+        <p class="kv-footer-note" style="margin-top:12px;">Your partner should open the invite link above on their own computer once you've started the session.</p>
+      </div>
     </div>
   </div>
 
@@ -112,6 +121,7 @@
         method: 'POST',
         body: JSON.stringify({ account_id: currentAccountId }),
       });
+      currentInviteCode = invite.code;
       document.getElementById('inviteCode').textContent = invite.code;
       const link = new URL('./join.html', window.location.href);
       link.searchParams.set('code', invite.code);
@@ -140,6 +150,53 @@
   document.getElementById('signOutBtn').addEventListener('click', async () => {
     await getSupabaseClient().auth.signOut();
     window.location.href = './login.html';
+  });
+
+  // --- Split-screen launch ---
+  const hostLangSelect = document.getElementById('hostLanguage');
+  LANGUAGES.forEach((lang) => {
+    const opt = document.createElement('option');
+    opt.value = lang.code;
+    opt.textContent = lang.label;
+    hostLangSelect.appendChild(opt);
+  });
+
+  let currentInviteCode = null;
+
+  document.getElementById('startSplitScreenBtn').addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    const nickname = document.getElementById('hostNickname').value.trim();
+    if (!nickname) {
+      showStatus('error', 'Enter a nickname before starting split-screen.');
+      return;
+    }
+    if (!currentInviteCode) {
+      showStatus('error', 'Generate an invite code first.');
+      return;
+    }
+    btn.disabled = true;
+    btn.innerHTML = '<span class="kv-loader"></span> Starting…';
+    try {
+      const player = await apiFetch('/api/players', {
+        method: 'POST',
+        body: JSON.stringify({
+          nickname,
+          preferred_language: hostLangSelect.value,
+          account_id: currentAccountId,
+          invite_code: currentInviteCode,
+        }),
+      });
+      setLocalPlayer(player);
+      const url = new URL('./split-screen.html', window.location.href);
+      url.searchParams.set('code', currentInviteCode);
+      url.searchParams.set('player_id', player.id);
+      url.searchParams.set('role', 'host');
+      window.location.href = url.toString();
+    } catch (err) {
+      showStatus('error', err.message || 'Could not start the split-screen session.');
+      btn.disabled = false;
+      btn.innerHTML = 'Start split-screen (desktop/Mac only)';
+    }
   });
 
   init();

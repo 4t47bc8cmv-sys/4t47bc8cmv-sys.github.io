@@ -45,10 +45,11 @@
   <div id="successCard" class="kv-card" style="display:none;">
     <span class="kv-badge kv-badge-unlocked">✓ You're in</span>
     <h1 class="kv-title" style="margin-top:14px;">Ready to play, <span id="successNickname"></span></h1>
-    <p class="kv-subtitle">Your scores will now be tracked on this device for this invite. Head to a game to start playing, or check the leaderboard.</p>
+    <p class="kv-subtitle">Your scores will now be tracked on this device for this invite. Join split-screen with your partner (desktop/Mac only), head to a game, or check the leaderboard.</p>
+    <button class="kv-btn kv-btn-primary" id="splitScreenBtn" style="margin-bottom:10px;">Join split-screen</button>
     <div class="kv-row">
       <button class="kv-btn kv-btn-ghost" id="viewLeaderboardBtn">View leaderboard</button>
-      <button class="kv-btn kv-btn-primary" id="playBtn">Go to games</button>
+      <button class="kv-btn kv-btn-ghost" id="playBtn">Go to games</button>
     </div>
   </div>
 
@@ -108,6 +109,14 @@
       document.getElementById('formCard').style.display = 'none';
       document.getElementById('successCard').style.display = 'block';
       document.getElementById('successNickname').textContent = nickname;
+
+      document.getElementById('splitScreenBtn').addEventListener('click', () => {
+        const ssUrl = new URL('./split-screen.html', window.location.href);
+        ssUrl.searchParams.set('code', code);
+        ssUrl.searchParams.set('player_id', player.id);
+        ssUrl.searchParams.set('role', 'guest');
+        window.location.href = ssUrl.toString();
+      });
     } catch (err) {
       showStatus('error', err.message || 'That invite code could not be used. Double check it and try again.');
       submitBtn.disabled = false;
