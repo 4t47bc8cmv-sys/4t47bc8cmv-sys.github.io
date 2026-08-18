@@ -746,6 +746,7 @@
         buildDynamicKeyboard(); loadCard(); showScreen('game-screen');
     };
 
+    const KV_GAME_SLUG = 'v3g2-finder-power';
     document.getElementById('btn-toggle-mode').onclick = () => {
         isTestMode = !isTestMode; isPenaltyMode = false;
         if (isTestMode) {
@@ -755,8 +756,10 @@
                 const j = Math.floor(Math.random() * (i + 1));
                 [testQueue[i], testQueue[j]] = [testQueue[j], testQueue[i]];
             }
+            if (window.KVScoreTracker) window.KVScoreTracker.startBoard(KV_GAME_SLUG, currentLevel.id + 1);
         } else {
             practiceIdx = 0; practiceForwardIdx = 0; penalties = []; currentCard = null;
+            if (window.KVScoreTracker) window.KVScoreTracker.cancelBoard();
         }
         buildDynamicKeyboard(); loadCard();
     };
@@ -973,6 +976,7 @@
         }
 
         if (isTestMode) {
+            if (window.KVScoreTracker) window.KVScoreTracker.recordAnswer(isMatch);
             if (isPenaltyMode) {
                 if (isMatch) {
                     penaltyCount++;
@@ -988,7 +992,7 @@
             } else {
                 if (isMatch) {
                     document.getElementById('msg').innerText = t('perfect'); document.getElementById('msg').style.color = "#a6e3a1"; testQueue.shift(); 
-                    if (testQueue.length === 0) setTimeout(triggerLevelUp, 1000); else setTimeout(loadCard, 1000);
+                    if (testQueue.length === 0) { if (window.KVScoreTracker) window.KVScoreTracker.finishBoard(); setTimeout(triggerLevelUp, 1000); } else setTimeout(loadCard, 1000);
                 } else {
                     document.getElementById('msg').innerText = t('wrongItWas', {visualKey: target.visualKey}); document.getElementById('msg').style.color = "#f38ba8";
                     isPenaltyMode = true; penaltyCount = 0; setTimeout(loadCard, 2000); 
@@ -1438,5 +1442,5 @@
       </div>
     </div>
 
+<script src="../multiplayer/kv-score-tracker.js"></script>
 </body>
-</html>
