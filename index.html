@@ -1,30 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HPCMTG7133"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-HPCMTG7133');
-</script>
-
 <meta charset="UTF-8">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2120991969522232" crossorigin="anonymous"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Keyverse — Master Your Mac, One Shortcut at a Time</title>
 <meta name="description" content="Keyverse™ is a free browser game series that teaches Mac keyboard shortcuts through fast, focused levels. Ten games across four volumes — no download required.">
 <meta name="copyright" content="Keyverse(TM) © 2026 Mountain Rock State LLC — All Rights Reserved. U.S. Copyright Office Case #1-15200158071.">
-<meta name="google-adsense-account" content="ca-pub-2120991969522232">
-<link rel="canonical" href="https://keyversegames.com/">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Keyverse — Master Your Mac, One Shortcut at a Time">
-<meta property="og:description" content="Keyverse is a free browser game series that teaches Mac keyboard shortcuts through fast, focused levels. Ten games across four volumes — no download required.">
-<meta property="og:url" content="https://keyversegames.com/">
-<meta property="og:site_name" content="Keyverse">
-<meta property="og:locale" content="en">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=%2224%22 height=%2224%22 rx=%225%22 fill=%22%2313f2b0%22/><text x=%2212%22 y=%2217%22 font-size=%2214%22 text-anchor=%22middle%22 fill=%22%230b0e11%22 font-family=%22monospace%22 font-weight=%22700%22>K</text></svg>">
 <style>
   :root {
@@ -86,15 +67,31 @@
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--color-divider);
   }
-  .nav { display: flex; align-items: center; justify-content: space-between; padding-block: var(--space-4); }
+  .nav { display: flex; align-items: center; justify-content: space-between; padding-block: var(--space-4); gap: var(--space-4); }
   .logo { display: flex; align-items: center; gap: var(--space-2); font-family: var(--font-display); font-weight: 700; font-size: var(--text-lg); letter-spacing: -0.02em; }
   .logo-mark { width: 32px; height: 32px; border-radius: var(--radius-md); background: var(--color-primary); color: #0b0e11; display: flex; align-items: center; justify-content: center; font-weight: 800; }
   .nav-links { display: flex; gap: var(--space-8); font-size: var(--text-sm); color: var(--color-text-muted); }
   .nav-links a:hover { color: var(--color-primary); }
+  .nav-right { display: flex; align-items: center; gap: var(--space-3); }
+
+  .lang-btn-trigger { display: inline-flex; align-items: center; gap: var(--space-2); background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text); border-radius: var(--radius-full); padding: var(--space-2) var(--space-4); font-size: var(--text-sm); font-family: var(--font-body); cursor: pointer; transition: var(--transition-interactive); }
+  .lang-btn-trigger:hover { border-color: var(--color-primary); color: var(--color-primary); }
+
+  .lang-overlay { position: fixed; inset: 0; background: rgba(11,14,17,0.72); backdrop-filter: blur(4px); z-index: 9999; display: none; align-items: center; justify-content: center; padding: var(--space-4); }
+  .lang-overlay.open { display: flex; }
+  .lang-modal { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-xl); padding: var(--space-6); max-width: 420px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+  .lang-modal-title { font-family: var(--font-display); font-weight: 700; font-size: var(--text-lg); margin-bottom: var(--space-2); text-align: center; }
+  .lang-modal-sub { font-size: var(--text-xs); color: var(--color-text-faint); text-align: center; margin-bottom: var(--space-5); line-height: 1.6; }
+  .lang-option { display: flex; align-items: center; gap: var(--space-3); width: 100%; background: var(--color-surface-2); border: 1px solid var(--color-border); color: var(--color-text); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); margin-bottom: var(--space-2); font-size: var(--text-sm); font-weight: 600; cursor: pointer; text-align: left; transition: var(--transition-interactive); }
+  .lang-option:hover, .lang-option.active { border-color: var(--color-primary); background: color-mix(in oklab, var(--color-primary) 10%, var(--color-surface-2)); }
+  .lang-option .flag { font-size: 1.3rem; }
+  .lang-option .check { margin-left: auto; color: var(--color-primary); opacity: 0; }
+  .lang-option.active .check { opacity: 1; }
 
   .hero { padding-block: var(--space-24) var(--space-16); text-align: center; }
   .kicker { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-display); font-size: var(--text-xs); color: var(--color-primary); background: color-mix(in oklab, var(--color-primary) 12%, transparent); border: 1px solid color-mix(in oklab, var(--color-primary) 30%, transparent); padding: var(--space-2) var(--space-4); border-radius: var(--radius-full); margin-bottom: var(--space-6); }
   .hero h1 { font-size: var(--text-3xl); margin-bottom: var(--space-6); margin-inline: auto; max-width: 20ch; }
+  html[lang^="zh"] .hero h1, html[lang^="nan"] .hero h1, html[lang^="hak"] .hero h1, html[lang^="wuu"] .hero h1 { max-width: 30em; }
   .hero h1 span { color: var(--color-primary); }
   .hero p.lead { font-size: var(--text-lg); color: var(--color-text-muted); margin-inline: auto; margin-bottom: var(--space-10); max-width: 52ch; }
   .cta-row { display: flex; gap: var(--space-4); justify-content: center; flex-wrap: wrap; }
@@ -120,14 +117,13 @@
   .volume-head span.sub { color: var(--color-text-faint); font-size: var(--text-sm); }
 
   .game-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--space-5); }
-  .game-card { display: flex; flex-direction: column; gap: var(--space-3); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-6); transition: var(--transition-interactive); }
+  .game-card { display: flex; flex-direction: column; gap: var(--space-3); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-6); transition: var(--transition-interactive); position: relative; }
   .game-card:hover { border-color: var(--color-primary); transform: translateY(-2px); box-shadow: 0 12px 32px oklch(0 0 0 / 0.35); }
   .game-tag { font-family: var(--font-display); font-size: var(--text-xs); color: var(--color-accent-2); }
   .game-card h4 { font-size: var(--text-base); font-family: var(--font-body); font-weight: 700; }
   .game-card p { color: var(--color-text-muted); font-size: var(--text-sm); }
   .game-play { margin-top: auto; display: inline-flex; align-items: center; gap: var(--space-2); color: var(--color-primary); font-size: var(--text-sm); font-weight: 600; font-family: var(--font-display); }
   .game-card:hover .game-play { gap: var(--space-3); }
-
   .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-6); }
   .feature { padding: var(--space-6); border-radius: var(--radius-lg); background: var(--color-surface); border: 1px solid var(--color-border); }
   .feature .icon { width: 40px; height: 40px; border-radius: var(--radius-md); background: color-mix(in oklab, var(--color-primary) 15%, transparent); display: flex; align-items: center; justify-content: center; margin-bottom: var(--space-4); color: var(--color-primary); }
@@ -137,14 +133,16 @@
   footer { border-top: 1px solid var(--color-divider); padding-block: var(--space-12); }
   .footer-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-4); }
   .footer-brand { font-family: var(--font-display); color: var(--color-text-muted); font-size: var(--text-sm); }
-  .footer-links { display: flex; gap: var(--space-6); font-size: var(--text-sm); color: var(--color-text-faint); }
+  .footer-links { display: flex; gap: var(--space-6); font-size: var(--text-sm); color: var(--color-text-faint); flex-wrap: wrap; align-items: center; }
   .footer-links a:hover { color: var(--color-primary); }
 
   @media (max-width: 640px) {
     .nav-links { display: none; }
     .hero { padding-block: var(--space-16) var(--space-10); }
+    .lang-btn-trigger span.lang-label { display: none; }
   }
 </style>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2120991969522232" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -152,23 +150,47 @@
   <div class="wrap nav">
     <div class="logo"><span class="logo-mark">K</span> Keyverse&trade;</div>
     <nav class="nav-links">
-      <a href="#games">Games</a>
-      <a href="#volumes">Volumes</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
+      <a href="#games" data-i18n="nav_games">Games</a>
+      <a href="#volumes" data-i18n="nav_volumes">Volumes</a>
+      <a href="#about" data-i18n="nav_about">About</a>
     </nav>
-    <a href="#games" class="btn btn-ghost" style="padding: var(--space-2) var(--space-5);">Play Now</a>
+    <div class="nav-right">
+      <button class="lang-btn-trigger" id="lang-trigger" type="button" aria-haspopup="dialog">
+        <span aria-hidden="true">🌐</span><span class="lang-label" id="lang-trigger-label">Language</span>
+      </button>
+      <a href="#games" class="btn btn-ghost" style="padding: var(--space-2) var(--space-5);" data-i18n="nav_play">Play Now</a>
+    </div>
   </div>
 </header>
 
+<!-- LANGUAGE PICKER -->
+<div class="lang-overlay" id="lang-overlay" role="dialog" aria-modal="true" aria-label="Language selector">
+  <div class="lang-modal">
+    <div class="lang-modal-title" id="lang-modal-title">Choose your language</div>
+    <div class="lang-modal-sub">Pumili ng wika · Elige idioma · 揀語言 · 选语言 · Kíó-gó-yí</div>
+    <button class="lang-option" data-lang="en"><span class="flag">🇺🇸</span> English <span class="check">✓</span></button>
+    <button class="lang-option" data-lang="es-419"><span class="flag">🌎</span> Español · Latinoamérica <span class="check">✓</span></button>
+    <button class="lang-option" data-lang="tl"><span class="flag">🇵🇭</span> Tagalog <span class="check">✓</span></button>
+    <button class="lang-option" data-lang="zh-HK"><span class="flag">🇭🇰</span> 繁體中文 · 粵語 <span class="check">✓</span></button>
+    <button class="lang-option" data-lang="zh-CN"><span class="flag">🇨🇳</span> 简体中文 · 普通话 <span class="check">✓</span></button>
+    <button class="lang-option" data-lang="nan-Hokkien"><span class="flag">🏮</span> 閩南語 · Hō-ló-oē <span class="check">✓</span></button>
+    <button class="lang-option" data-lang="hak"><span class="flag">🪨</span> 客家話 · Hak-kâ-ngî <span class="check">✓</span></button>
+    <button class="lang-option" data-lang="wuu"><span class="flag">🏯</span> 吳語 · 上海閒話 <span class="check">✓</span></button>
+    <button class="lang-option" data-lang="de-CH"><span class="flag">🇨🇭</span> Deutsch · Schweiz <span class="check">✓</span></button>
+    <button class="lang-option" data-lang="it-IT"><span class="flag">🇮🇹</span> Italiano <span class="check">✓</span></button>
+    <button class="lang-option" data-lang="fr-FR"><span class="flag">🇫🇷</span> Français <span class="check">✓</span></button>
+    <button class="lang-option" data-lang="da-DK"><span class="flag">🇩🇰</span> Dansk <span class="check">✓</span></button>
+  </div>
+</div>
+
 <main>
   <section class="hero wrap">
-    <span class="kicker">● 10 free browser games · no download</span>
-    <h1>Master your Mac, <span>one shortcut at a time</span></h1>
-    <p class="lead">Keyverse is a series of fast, focused browser games that turn Mac keyboard shortcuts into muscle memory — built for people who want to move faster without touching the trackpad.</p>
+    <span class="kicker" data-i18n="kicker_hero">● 10 free browser games · no download</span>
+    <h1><span data-i18n="hero_h1_1">Master your Mac,</span><span id="hero-join"> </span><span data-i18n="hero_h1_2">one shortcut at a time</span></h1>
+    <p class="lead" data-i18n="hero_lead">Keyverse is a series of fast, focused browser games that turn Mac keyboard shortcuts into muscle memory — built for people who want to move faster without touching the trackpad.</p>
     <div class="cta-row">
-      <a href="games/v1g1-first-steps.html" class="btn btn-primary">Start with Volume 1 →</a>
-      <a href="#volumes" class="btn btn-ghost">See all 10 games</a>
+      <a href="games/v1g1-first-steps.html" class="btn btn-primary" data-i18n="cta_start">Start with Volume 1 →</a>
+      <a href="#volumes" class="btn btn-ghost" data-i18n="cta_seeall">See all 10 games</a>
     </div>
     <div class="keycap-row" aria-hidden="true">
       <span class="keycap">⌘</span><span class="keycap">⌥</span><span class="keycap">⇧</span><span class="keycap">⌃</span><span class="keycap">Tab</span><span class="keycap">Space</span>
@@ -177,66 +199,66 @@
 
   <section id="about" class="wrap">
     <div class="section-head">
-      <span class="kicker">Why Keyverse</span>
-      <h2>Learn by doing, not by reading</h2>
-      <p>Every level drops you into a real scenario and rewards the correct shortcut instantly. No slides, no video — just reps.</p>
+      <span class="kicker" data-i18n="kicker_why">Why Keyverse</span>
+      <h2 data-i18n="why_h2">Learn by doing, not by reading</h2>
+      <p data-i18n="why_lead">Every level drops you into a real scenario and rewards the correct shortcut instantly. No slides, no video — just reps.</p>
     </div>
     <div class="features">
       <div class="feature">
         <div class="icon">⚡</div>
-        <h3>Fast feedback loops</h3>
-        <p>Each level is built around a handful of shortcuts, so you build real muscle memory in minutes, not hours.</p>
+        <h3 data-i18n="feat1_h">Fast feedback loops</h3>
+        <p data-i18n="feat1_p">Each level is built around a handful of shortcuts, so you build real muscle memory in minutes, not hours.</p>
       </div>
       <div class="feature">
         <div class="icon">🎮</div>
-        <h3>Runs in your browser</h3>
-        <p>No install, no account. Click play and you're training — on desktop, laptop, tablet, or phone.</p>
+        <h3 data-i18n="feat2_h">Runs in your browser</h3>
+        <p data-i18n="feat2_p">No install, no account. Click play and you're training — on desktop, laptop, tablet, or phone.</p>
       </div>
       <div class="feature">
         <div class="icon">🗺️</div>
-        <h3>Four volumes, ten games</h3>
-        <p>From your very first shortcuts to Finder mastery and text-editing speed runs.</p>
+        <h3 data-i18n="feat3_h">Four volumes, ten games</h3>
+        <p data-i18n="feat3_p">From your very first shortcuts to Finder mastery and text-editing speed runs.</p>
       </div>
     </div>
   </section>
 
   <section id="volumes" class="wrap">
     <div class="section-head">
-      <span class="kicker">The full series</span>
-      <h2 id="games">Pick your volume</h2>
-      <p>Each volume focuses on one category of shortcuts. Play them in order, or jump to whatever you need most.</p>
+      <span class="kicker" data-i18n="kicker_series">The full series</span>
+      <h2 id="games" data-i18n="pick_h2">Pick your volume</h2>
+      <p data-i18n="pick_lead">Each volume focuses on one category of shortcuts. Play them in order, or jump to whatever you need most.</p>
     </div>
 
     <div class="volume">
       <div class="volume-head">
         <span class="volume-num">Vol. 1</span>
-        <h3>Mac Shortcut Trainer</h3>
-        <span class="sub">The essentials — start here</span>
+        <h3 data-i18n="vol1_title">Mac Shortcut Trainer</h3>
+        <span class="sub" data-i18n="vol1_sub">The essentials — start here</span>
       </div>
       <div class="game-grid">
-        <a class="game-card" href="games/v1g1-first-steps.html">
+        <a class="game-card" href="games/v1g1-first-steps.html" data-game="v1g1">
           <span class="game-tag">V1 · G1</span>
-          <h4>First Steps on Mac</h4>
-          <p>The core shortcuts every Mac user should know cold.</p>
-          <span class="game-play">Play →</span>
+          <h4 data-i18n="g_v1g1_h">First Steps on Mac</h4>
+          <p data-i18n="g_v1g1_p">The core shortcuts every Mac user should know cold.</p>
+          <span class="game-play" data-i18n="play">Play →</span>
         </a>
-        <a class="game-card" href="games/v1g2-daily-driver.html">
+        <a class="game-card" href="games/v1g2-daily-driver.html" data-game="v1g2">
           <span class="game-tag">V1 · G2</span>
-          <h4>Daily Driver</h4>
-          <p>Power-user shortcuts for the shortcuts you use every day.</p>
-          <span class="game-play">Play →</span>
+          <h4 data-i18n="g_v1g2_h">Daily Driver</h4>
+          <p data-i18n="g_v1g2_p">Power-user shortcuts for the shortcuts you use every day.</p>
+          <span class="game-play" data-i18n="play">Play →</span>
         </a>
-        <a class="game-card" href="games/v1g3-productivity-boosters.html">
+        <a class="game-card" href="games/v1g3-productivity-boosters.html" data-game="v1g3">
           <span class="game-tag">V1 · G3</span>
-          <h4>Productivity Boosters</h4>
-          <p>Speed up repetitive tasks with shortcuts most people skip.</p>
-          <span class="game-play">Play →</span>
+          <h4 data-i18n="g_v1g3_h">Productivity Boosters</h4>
+          <p data-i18n="g_v1g3_p">Speed up repetitive tasks with shortcuts most people skip.</p>
+          <span class="game-play" data-i18n="play">Play →</span>
         </a>
-        <a class="game-card" href="games/v1g4-accessibility-pro.html">
+        <a class="game-card" href="games/v1g4-accessibility-pro.html" data-game="v1g4">
           <span class="game-tag">V1 · G4</span>
-          <h4>Accessibility Pro</h4>
-          <p>Shortcuts for accessibility features built into macOS.</p>
-          <span class="game-play">Play →</span>
+          <h4 data-i18n="g_v1g4_h">Accessibility Pro</h4>
+          <p data-i18n="g_v1g4_p">Shortcuts for accessibility features built into macOS.</p>
+          <span class="game-play" data-i18n="play">Play →</span>
         </a>
       </div>
     </div>
@@ -244,21 +266,21 @@
     <div class="volume">
       <div class="volume-head">
         <span class="volume-num">Vol. 2</span>
-        <h3>System Control &amp; Windows</h3>
-        <span class="sub">Power, sleep, and window management</span>
+        <h3 data-i18n="vol2_title">System Control &amp; Windows</h3>
+        <span class="sub" data-i18n="vol2_sub">Power, sleep, and window management</span>
       </div>
       <div class="game-grid">
-        <a class="game-card" href="games/v2g1-system-control.html">
+        <a class="game-card" href="games/v2g1-system-control.html" data-game="v2g1">
           <span class="game-tag">V2 · G1</span>
-          <h4>System Control</h4>
-          <p>Power and sleep mastery — control your Mac without menus.</p>
-          <span class="game-play">Play →</span>
+          <h4 data-i18n="g_v2g1_h">System Control</h4>
+          <p data-i18n="g_v2g1_p">Power and sleep mastery — control your Mac without menus.</p>
+          <span class="game-play" data-i18n="play">Play →</span>
         </a>
-        <a class="game-card" href="games/v2g2-window-wrangling.html">
+        <a class="game-card" href="games/v2g2-window-wrangling.html" data-game="v2g2">
           <span class="game-tag">V2 · G2</span>
-          <h4>Window Wrangling</h4>
-          <p>Editing, hiding, and Quick Look shortcuts for window control.</p>
-          <span class="game-play">Play →</span>
+          <h4 data-i18n="g_v2g2_h">Window Wrangling</h4>
+          <p data-i18n="g_v2g2_p">Editing, hiding, and Quick Look shortcuts for window control.</p>
+          <span class="game-play" data-i18n="play">Play →</span>
         </a>
       </div>
     </div>
@@ -266,21 +288,21 @@
     <div class="volume">
       <div class="volume-head">
         <span class="volume-num">Vol. 3</span>
-        <h3>Finder Mastery</h3>
-        <span class="sub">Navigate your files at speed</span>
+        <h3 data-i18n="vol3_title">Finder Mastery</h3>
+        <span class="sub" data-i18n="vol3_sub">Navigate your files at speed</span>
       </div>
       <div class="game-grid">
-        <a class="game-card" href="games/v3g1-finder-basics.html">
+        <a class="game-card" href="games/v3g1-finder-basics.html" data-game="v3g1">
           <span class="game-tag">V3 · G1</span>
-          <h4>Finder Basics</h4>
-          <p>Navigation and folder shortcuts for everyday file management.</p>
-          <span class="game-play">Play →</span>
+          <h4 data-i18n="g_v3g1_h">Finder Basics</h4>
+          <p data-i18n="g_v3g1_p">Navigation and folder shortcuts for everyday file management.</p>
+          <span class="game-play" data-i18n="play">Play →</span>
         </a>
-        <a class="game-card" href="games/v3g2-finder-power.html">
+        <a class="game-card" href="games/v3g2-finder-power.html" data-game="v3g2">
           <span class="game-tag">V3 · G2</span>
-          <h4>Finder Power</h4>
-          <p>Views, panes, and Quick Look — Finder shortcuts for power users.</p>
-          <span class="game-play">Play →</span>
+          <h4 data-i18n="g_v3g2_h">Finder Power</h4>
+          <p data-i18n="g_v3g2_p">Views, panes, and Quick Look — Finder shortcuts for power users.</p>
+          <span class="game-play" data-i18n="play">Play →</span>
         </a>
       </div>
     </div>
@@ -288,21 +310,21 @@
     <div class="volume">
       <div class="volume-head">
         <span class="volume-num">Vol. 4</span>
-        <h3>Text Editing Mastery</h3>
-        <span class="sub">Type and edit at the speed of thought</span>
+        <h3 data-i18n="vol4_title">Text Editing Mastery</h3>
+        <span class="sub" data-i18n="vol4_sub">Type and edit at the speed of thought</span>
       </div>
       <div class="game-grid">
-        <a class="game-card" href="games/v4g1-text-editing.html">
+        <a class="game-card" href="games/v4g1-text-editing.html" data-game="v4g1">
           <span class="game-tag">V4 · G1</span>
-          <h4>Text Editing</h4>
-          <p>Cursor movement and navigation shortcuts for any text field.</p>
-          <span class="game-play">Play →</span>
+          <h4 data-i18n="g_v4g1_h">Text Editing</h4>
+          <p data-i18n="g_v4g1_p">Cursor movement and navigation shortcuts for any text field.</p>
+          <span class="game-play" data-i18n="play">Play →</span>
         </a>
-        <a class="game-card" href="games/v4g2-text-mastery.html">
+        <a class="game-card" href="games/v4g2-text-mastery.html" data-game="v4g2">
           <span class="game-tag">V4 · G2</span>
-          <h4>Text Mastery</h4>
-          <p>Selection, editing, and formatting shortcuts for serious writers.</p>
-          <span class="game-play">Play →</span>
+          <h4 data-i18n="g_v4g2_h">Text Mastery</h4>
+          <p data-i18n="g_v4g2_p">Selection, editing, and formatting shortcuts for serious writers.</p>
+          <span class="game-play" data-i18n="play">Play →</span>
         </a>
       </div>
     </div>
@@ -311,16 +333,123 @@
 
 <footer>
   <div class="wrap footer-row">
-    <span class="footer-brand">Keyverse&trade; — a Mountain Rock State LLC production</span>
+    <span class="footer-brand" data-i18n="footer_tag">Keyverse&trade; — a Mountain Rock State LLC production</span>
     <div class="footer-links">
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="privacy.html">Privacy</a>
-      <a href="terms.html">Terms</a>
-      <span>© 2026 Mountain Rock State LLC. All Rights Reserved. U.S. Copyright Office Case #1-15200158071.</span>
+      <a href="mailto:mountainrockproducts@gmail.com" data-i18n="footer_contact">Contact</a>
+      <a href="privacy.html" data-i18n="footer_privacy">Privacy</a>
+      <a href="terms.html" data-i18n="footer_terms">Terms</a>
+      <span data-i18n="footer_copy">© 2026 Mountain Rock State LLC. All Rights Reserved. U.S. Copyright Office Case #1-15200158071.</span>
     </div>
   </div>
 </footer>
+
+<script>
+(function () {
+  // ===== Keyverse homepage i18n — Mountain Rock State LLC =====
+  // Shares the "mrs.locale" localStorage key with the in-game language system
+  // so a visitor's choice stays consistent between the homepage and any game
+  // that has its own language picker (currently V4·G1).
+  var I18N = {"en": {"nav_games": "Games", "nav_volumes": "Volumes", "nav_about": "About", "nav_play": "Play Now", "kicker_hero": "10 free browser games · no download", "hero_h1_1": "Master your Mac,", "hero_h1_2": "one shortcut at a time", "hero_lead": "Keyverse is a series of fast, focused browser games that turn Mac keyboard shortcuts into muscle memory — built for people who want to move faster without touching the trackpad.", "cta_start": "Start with Volume 1 →", "cta_seeall": "See all 10 games", "kicker_why": "Why Keyverse", "why_h2": "Learn by doing, not by reading", "why_lead": "Every level drops you into a real scenario and rewards the correct shortcut instantly. No slides, no video — just reps.", "feat1_h": "Fast feedback loops", "feat1_p": "Each level is built around a handful of shortcuts, so you build real muscle memory in minutes, not hours.", "feat2_h": "Runs in your browser", "feat2_p": "No install, no account. Click play and you're training — on desktop, laptop, tablet, or phone.", "feat3_h": "Four volumes, ten games", "feat3_p": "From your very first shortcuts to Finder mastery and text-editing speed runs.", "kicker_series": "The full series", "pick_h2": "Pick your volume", "pick_lead": "Each volume focuses on one category of shortcuts. Play them in order, or jump to whatever you need most.", "vol1_title": "Mac Shortcut Trainer", "vol1_sub": "The essentials — start here", "vol2_title": "System Control & Windows", "vol2_sub": "Power, sleep, and window management", "vol3_title": "Finder Mastery", "vol3_sub": "Navigate your files at speed", "vol4_title": "Text Editing Mastery", "vol4_sub": "Type and edit at the speed of thought", "g_v1g1_h": "First Steps on Mac", "g_v1g1_p": "The core shortcuts every Mac user should know cold.", "g_v1g2_h": "Daily Driver", "g_v1g2_p": "Power-user shortcuts for the shortcuts you use every day.", "g_v1g3_h": "Productivity Boosters", "g_v1g3_p": "Speed up repetitive tasks with shortcuts most people skip.", "g_v1g4_h": "Accessibility Pro", "g_v1g4_p": "Shortcuts for accessibility features built into macOS.", "g_v2g1_h": "System Control", "g_v2g1_p": "Power and sleep mastery — control your Mac without menus.", "g_v2g2_h": "Window Wrangling", "g_v2g2_p": "Editing, hiding, and Quick Look shortcuts for window control.", "g_v3g1_h": "Finder Basics", "g_v3g1_p": "Navigation and folder shortcuts for everyday file management.", "g_v3g2_h": "Finder Power", "g_v3g2_p": "Views, panes, and Quick Look — Finder shortcuts for power users.", "g_v4g1_h": "Text Editing", "g_v4g1_p": "Cursor movement and navigation shortcuts for any text field.", "g_v4g2_h": "Text Mastery", "g_v4g2_p": "Selection, editing, and formatting shortcuts for serious writers.", "play": "Play →", "footer_tag": "Keyverse™ — a Mountain Rock State LLC production", "footer_contact": "Contact", "footer_privacy": "Privacy", "footer_terms": "Terms", "footer_copy": "© 2026 Mountain Rock State LLC. All Rights Reserved. U.S. Copyright Office Case #1-15200158071.", "picker_title": "Choose your language", "picker_switch": "Language"}, "es-419": {"nav_games": "Juegos", "nav_volumes": "Volúmenes", "nav_about": "Acerca de", "nav_play": "Jugar ahora", "kicker_hero": "10 juegos gratis en el navegador · sin descargas", "hero_h1_1": "Domina tu Mac,", "hero_h1_2": "un atajo a la vez", "hero_lead": "Keyverse es una serie de juegos rápidos y enfocados en el navegador que convierten los atajos de teclado de Mac en memoria muscular — creados para quienes quieren avanzar más rápido sin tocar el trackpad.", "cta_start": "Empieza con el Volumen 1 →", "cta_seeall": "Ver los 10 juegos", "kicker_why": "Por qué Keyverse", "why_h2": "Aprende haciendo, no leyendo", "why_lead": "Cada nivel te pone en un escenario real y premia al instante el atajo correcto. Sin diapositivas, sin videos — solo repeticiones.", "feat1_h": "Ciclos de retroalimentación rápidos", "feat1_p": "Cada nivel se centra en un puñado de atajos, así que desarrollas memoria muscular real en minutos, no en horas.", "feat2_h": "Funciona en tu navegador", "feat2_p": "Sin instalación, sin cuenta. Haz clic en jugar y ya estás entrenando — en computadora, laptop, tablet o teléfono.", "feat3_h": "Cuatro volúmenes, diez juegos", "feat3_p": "Desde tus primeros atajos hasta el dominio de Finder y velocidad en edición de texto.", "kicker_series": "La serie completa", "pick_h2": "Elige tu volumen", "pick_lead": "Cada volumen se enfoca en una categoría de atajos. Juégalos en orden, o salta al que más necesites.", "vol1_title": "Entrenador de Atajos de Mac", "vol1_sub": "Lo esencial — empieza aquí", "vol2_title": "Control del Sistema y Ventanas", "vol2_sub": "Encendido, suspensión y gestión de ventanas", "vol3_title": "Dominio de Finder", "vol3_sub": "Navega tus archivos a toda velocidad", "vol4_title": "Dominio de Edición de Texto", "vol4_sub": "Escribe y edita a la velocidad del pensamiento", "g_v1g1_h": "Primeros Pasos en Mac", "g_v1g1_p": "Los atajos esenciales que todo usuario de Mac debe saber de memoria.", "g_v1g2_h": "Uso Diario", "g_v1g2_p": "Atajos de usuario avanzado para lo que usas todos los días.", "g_v1g3_h": "Impulsores de Productividad", "g_v1g3_p": "Acelera tareas repetitivas con atajos que la mayoría ignora.", "g_v1g4_h": "Accesibilidad Pro", "g_v1g4_p": "Atajos para las funciones de accesibilidad integradas en macOS.", "g_v2g1_h": "Control del Sistema", "g_v2g1_p": "Dominio de encendido y suspensión — controla tu Mac sin menús.", "g_v2g2_h": "Manejo de Ventanas", "g_v2g2_p": "Atajos de edición, ocultado y Quick Look para el control de ventanas.", "g_v3g1_h": "Fundamentos de Finder", "g_v3g1_p": "Atajos de navegación y carpetas para la gestión diaria de archivos.", "g_v3g2_h": "Finder Avanzado", "g_v3g2_p": "Vistas, paneles y Quick Look — atajos de Finder para usuarios avanzados.", "g_v4g1_h": "Edición de Texto", "g_v4g1_p": "Atajos de movimiento del cursor y navegación para cualquier campo de texto.", "g_v4g2_h": "Dominio de Texto", "g_v4g2_p": "Atajos de selección, edición y formato para escritores serios.", "play": "Jugar →", "footer_tag": "Keyverse™ — una producción de Mountain Rock State LLC", "footer_contact": "Contacto", "footer_privacy": "Privacidad", "footer_terms": "Términos", "footer_copy": "© 2026 Mountain Rock State LLC. Todos los Derechos Reservados. Caso de la Oficina de Derechos de Autor de EE. UU. #1-15200158071.", "picker_title": "Elige tu idioma", "picker_switch": "Idioma"}, "tl": {"nav_games": "Mga Laro", "nav_volumes": "Mga Bolyum", "nav_about": "Tungkol", "nav_play": "Maglaro Ngayon", "kicker_hero": "10 libreng browser game · walang download", "hero_h1_1": "Bihasain ang iyong Mac,", "hero_h1_2": "isang shortcut nang minsan", "hero_lead": "Ang Keyverse ay serye ng mabilis at focused na browser games na ginagawang muscle memory ang mga Mac keyboard shortcut — para sa mga taong gustong gumalaw nang mas mabilis nang hindi na dumadampi sa trackpad.", "cta_start": "Simulan sa Volume 1 →", "cta_seeall": "Tingnan lahat ng 10 laro", "kicker_why": "Bakit Keyverse", "why_h2": "Matuto sa paggawa, hindi sa pagbabasa", "why_lead": "Ang bawat level ay ihuhulog ka sa totoong senaryo at agad gagantimpalaan ang tamang shortcut. Walang slides, walang video — reps lang.", "feat1_h": "Mabilis na feedback loop", "feat1_p": "Bawat level ay binuo sa paligid ng ilang shortcut, kaya nabubuo mo ang totoong muscle memory sa ilang minuto, hindi oras.", "feat2_h": "Gumagana sa iyong browser", "feat2_p": "Walang install, walang account. I-click ang play at agad ka nang nagsasanay — sa desktop, laptop, tablet, o telepono.", "feat3_h": "Apat na bolyum, sampung laro", "feat3_p": "Mula sa iyong mga unang shortcut hanggang Finder mastery at bilis sa text-editing.", "kicker_series": "Ang buong serye", "pick_h2": "Piliin ang iyong bolyum", "pick_lead": "Bawat bolyum ay nakatuon sa isang kategorya ng shortcut. Laruin nang sunod-sunod, o lumaktaw kung saan mo pinakakailangan.", "vol1_title": "Mac Shortcut Trainer", "vol1_sub": "Ang mga esensyal — magsimula dito", "vol2_title": "Kontrol ng Sistema at mga Window", "vol2_sub": "Power, sleep, at pamamahala ng window", "vol3_title": "Kahusayan sa Finder", "vol3_sub": "Mag-navigate ng mga file nang mabilis", "vol4_title": "Kahusayan sa Text Editing", "vol4_sub": "Mag-type at mag-edit nang kasing-bilis ng iyong isip", "g_v1g1_h": "Unang Hakbang sa Mac", "g_v1g1_p": "Ang mga pangunahing shortcut na dapat alam ng lahat ng gumagamit ng Mac.", "g_v1g2_h": "Pang-araw-araw", "g_v1g2_p": "Mga power-user shortcut para sa mga ginagamit mo araw-araw.", "g_v1g3_h": "Mga Pampalakas ng Produktibidad", "g_v1g3_p": "Bilisan ang mga inuulit na gawain gamit ang mga shortcut na madalas laktawan.", "g_v1g4_h": "Accessibility Pro", "g_v1g4_p": "Mga shortcut para sa mga accessibility feature na built-in sa macOS.", "g_v2g1_h": "Kontrol ng Sistema", "g_v2g1_p": "Kahusayan sa power at sleep — kontrolin ang Mac mo nang walang menu.", "g_v2g2_h": "Pamamahala ng Window", "g_v2g2_p": "Mga shortcut sa editing, paglilihim, at Quick Look para sa kontrol ng window.", "g_v3g1_h": "Mga Batayan ng Finder", "g_v3g1_p": "Mga shortcut sa navigation at folder para sa araw-araw na pamamahala ng file.", "g_v3g2_h": "Finder Power", "g_v3g2_p": "Mga view, panel, at Quick Look — mga shortcut ng Finder para sa power user.", "g_v4g1_h": "Text Editing", "g_v4g1_p": "Mga shortcut sa paggalaw ng cursor at navigation para sa anumang text field.", "g_v4g2_h": "Kahusayan sa Text", "g_v4g2_p": "Mga shortcut sa pagpili, pag-edit, at pag-format para sa seryosong manunulat.", "play": "Maglaro →", "footer_tag": "Keyverse™ — isang produksyon ng Mountain Rock State LLC", "footer_contact": "Kontak", "footer_privacy": "Pribasiya", "footer_terms": "Mga Tuntunin", "footer_copy": "© 2026 Mountain Rock State LLC. Lahat ng Karapatan ay Nakalaan. U.S. Copyright Office Case #1-15200158071.", "picker_title": "Pumili ng wika", "picker_switch": "Wika"}, "zh-HK": {"nav_games": "遊戲", "nav_volumes": "系列", "nav_about": "關於", "nav_play": "立即遊玩", "kicker_hero": "10 款免費瀏覽器遊戲 · 無需下載", "hero_h1_1": "精通你的 Mac，", "hero_h1_2": "一次一個快捷鍵", "hero_lead": "Keyverse 是一系列快速、專注的瀏覽器遊戲，將 Mac 鍵盤快捷鍵變成肌肉記憶 — 專為想不用觸控板就能更快操作的人而設。", "cta_start": "從第一冊開始 →", "cta_seeall": "查看全部 10 款遊戲", "kicker_why": "為何選擇 Keyverse", "why_h2": "邊做邊學，而非閱讀", "why_lead": "每個關卡都讓你置身真實情境，並即時獎勵正確的快捷鍵。沒有幻燈片，沒有影片 — 只有反覆練習。", "feat1_h": "快速回饋循環", "feat1_p": "每個關卡圍繞幾個快捷鍵設計，讓你在幾分鐘內建立真正的肌肉記憶，而非幾小時。", "feat2_h": "於瀏覽器中運行", "feat2_p": "無需安裝，無需帳戶。點擊遊玩即可開始訓練 — 桌上型電腦、筆電、平板或手機皆可。", "feat3_h": "四冊系列，十款遊戲", "feat3_p": "從你的第一個快捷鍵到精通 Finder 及文字編輯速度訓練。", "kicker_series": "完整系列", "pick_h2": "選擇你的冊數", "pick_lead": "每冊專注於一類快捷鍵。可按順序遊玩，或直接跳到最需要的部分。", "vol1_title": "Mac 快捷鍵訓練", "vol1_sub": "基礎入門 — 從此開始", "vol2_title": "系統控制與視窗", "vol2_sub": "電源、休眠與視窗管理", "vol3_title": "Finder 精通", "vol3_sub": "快速瀏覽你的檔案", "vol4_title": "文字編輯精通", "vol4_sub": "以思考的速度輸入與編輯", "g_v1g1_h": "Mac 入門第一步", "g_v1g1_p": "每位 Mac 使用者都應熟記的核心快捷鍵。", "g_v1g2_h": "日常必備", "g_v1g2_p": "你每天都會用到的進階使用者快捷鍵。", "g_v1g3_h": "生產力加速器", "g_v1g3_p": "用大多數人忽略的快捷鍵加快重複性任務。", "g_v1g4_h": "無障礙功能專家", "g_v1g4_p": "macOS 內建無障礙功能的快捷鍵。", "g_v2g1_h": "系統控制", "g_v2g1_p": "電源與休眠精通 — 無需選單即可控制你的 Mac。", "g_v2g2_h": "視窗操控", "g_v2g2_p": "編輯、隱藏及 Quick Look 視窗控制快捷鍵。", "g_v3g1_h": "Finder 基礎", "g_v3g1_p": "日常檔案管理的導覽與資料夾快捷鍵。", "g_v3g2_h": "Finder 進階", "g_v3g2_p": "檢視、窗格及 Quick Look — 進階使用者的 Finder 快捷鍵。", "g_v4g1_h": "文字編輯", "g_v4g1_p": "適用於任何文字欄位的游標移動與導覽快捷鍵。", "g_v4g2_h": "文字精通", "g_v4g2_p": "適合認真寫作者的選取、編輯及格式化快捷鍵。", "play": "遊玩 →", "footer_tag": "Keyverse™ — Mountain Rock State LLC 出品", "footer_contact": "聯絡我們", "footer_privacy": "私隱政策", "footer_terms": "條款", "footer_copy": "© 2026 Mountain Rock State LLC. 版權所有。美國版權局案件編號 #1-15200158071。", "picker_title": "選擇你的語言", "picker_switch": "語言"}, "zh-CN": {"nav_games": "游戏", "nav_volumes": "系列", "nav_about": "关于", "nav_play": "立即游玩", "kicker_hero": "10 款免费浏览器游戏 · 无需下载", "hero_h1_1": "精通你的 Mac，", "hero_h1_2": "一次一个快捷键", "hero_lead": "Keyverse 是一系列快速、专注的浏览器游戏，将 Mac 键盘快捷键变成肌肉记忆 — 专为想不用触控板就能更快操作的人打造。", "cta_start": "从第一册开始 →", "cta_seeall": "查看全部 10 款游戏", "kicker_why": "为何选择 Keyverse", "why_h2": "边做边学，而非阅读", "why_lead": "每个关卡都让你置身真实场景，并即时奖励正确的快捷键。没有幻灯片，没有视频 — 只有反复练习。", "feat1_h": "快速反馈循环", "feat1_p": "每个关卡围绕几个快捷键设计，让你在几分钟内建立真正的肌肉记忆，而非几小时。", "feat2_h": "在浏览器中运行", "feat2_p": "无需安装，无需账户。点击游玩即可开始训练 — 台式机、笔记本、平板或手机皆可。", "feat3_h": "四册系列，十款游戏", "feat3_p": "从你的第一个快捷键到精通 Finder 及文字编辑速度训练。", "kicker_series": "完整系列", "pick_h2": "选择你的册数", "pick_lead": "每册专注于一类快捷键。可按顺序游玩，或直接跳到最需要的部分。", "vol1_title": "Mac 快捷键训练", "vol1_sub": "基础入门 — 从此开始", "vol2_title": "系统控制与窗口", "vol2_sub": "电源、睡眠与窗口管理", "vol3_title": "Finder 精通", "vol3_sub": "快速浏览你的文件", "vol4_title": "文字编辑精通", "vol4_sub": "以思考的速度输入与编辑", "g_v1g1_h": "Mac 入门第一步", "g_v1g1_p": "每位 Mac 用户都应熟记的核心快捷键。", "g_v1g2_h": "日常必备", "g_v1g2_p": "你每天都会用到的进阶用户快捷键。", "g_v1g3_h": "生产力加速器", "g_v1g3_p": "用大多数人忽略的快捷键加快重复性任务。", "g_v1g4_h": "无障碍功能专家", "g_v1g4_p": "macOS 内置无障碍功能的快捷键。", "g_v2g1_h": "系统控制", "g_v2g1_p": "电源与睡眠精通 — 无需菜单即可控制你的 Mac。", "g_v2g2_h": "窗口操控", "g_v2g2_p": "编辑、隐藏及 Quick Look 窗口控制快捷键。", "g_v3g1_h": "Finder 基础", "g_v3g1_p": "日常文件管理的导览与文件夹快捷键。", "g_v3g2_h": "Finder 进阶", "g_v3g2_p": "视图、窗格及 Quick Look — 进阶用户的 Finder 快捷键。", "g_v4g1_h": "文字编辑", "g_v4g1_p": "适用于任何文本字段的光标移动与导览快捷键。", "g_v4g2_h": "文字精通", "g_v4g2_p": "适合认真写作者的选取、编辑及格式化快捷键。", "play": "游玩 →", "footer_tag": "Keyverse™ — Mountain Rock State LLC 出品", "footer_contact": "联系我们", "footer_privacy": "隐私政策", "footer_terms": "条款", "footer_copy": "© 2026 Mountain Rock State LLC. 版权所有。美国版权局案件编号 #1-15200158071。", "picker_title": "选择你的语言", "picker_switch": "语言"}, "nan-Hokkien": {"nav_games": "遊戲", "nav_volumes": "系列", "nav_about": "關於", "nav_play": "來𨑨迌", "kicker_hero": "10 款免費瀏覽器遊戲 · 免下載", "hero_h1_1": "精通你的 Mac，", "hero_h1_2": "一擺一个快捷鍵", "hero_lead": "Keyverse 是一系列快速、專注的瀏覽器遊戲，共 Mac 鍵盤快捷鍵變做肌肉記憶 — 專門為著想欲免用觸控板就閬較緊做代誌的人設計。", "cta_start": "對第一冊開始 →", "cta_seeall": "看全部 10 款遊戲", "kicker_why": "為何選 Keyverse", "why_h2": "邊做邊學，毋是看冊", "why_lead": "逐个關卡攏共你放對真實情境內底，隨時獎勵正確个快捷鍵。無投影片，無影片 — 干焦練習。", "feat1_h": "緊速回饋", "feat1_p": "逐个關卡攏是圍一寡快捷鍵設計，予你幾分鐘內就有真正个肌肉記憶，毋是幾點鐘。", "feat2_h": "佇瀏覽器內底就會用", "feat2_p": "免安裝，免帳戶。共『遊玩』一點就開始練習 — 桌上型、筆電、平板抵抵仔都會用。", "feat3_h": "四冊系列，十款遊戲", "feat3_p": "對你頭一擺个快捷鍵到精通 Finder 及文字編輯速度訓練。", "kicker_series": "全系列", "pick_h2": "揀你个冊數", "pick_lead": "逐冊專注佇一類快捷鍵。照順序來𨑨迌，抑是直接跳去你較需要个部分。", "vol1_title": "Mac 快捷鍵訓練", "vol1_sub": "基礎入門 — 對這開始", "vol2_title": "系統控制及視窗", "vol2_sub": "電源、睏眠及視窗管理", "vol3_title": "Finder 精通", "vol3_sub": "緊速揣你个檔案", "vol4_title": "文字編輯精通", "vol4_sub": "照你想法个速度來拍字及編輯", "g_v1g1_h": "Mac 入門第一步", "g_v1g1_p": "逐个 Mac 使用者攏應該愛熟記个核心快捷鍵。", "g_v1g2_h": "日常必備", "g_v1g2_p": "你逐工攏會用著个進階使用者快捷鍵。", "g_v1g3_h": "生產力加速", "g_v1g3_p": "用大部分人攏無注意个快捷鍵，共重複性任務較緊做完。", "g_v1g4_h": "無障礙功能專家", "g_v1g4_p": "macOS 內建無障礙功能个快捷鍵。", "g_v2g1_h": "系統控制", "g_v2g1_p": "電源及睏眠精通 — 免選單就會控制你个 Mac。", "g_v2g2_h": "視窗操控", "g_v2g2_p": "編輯、隱藏及 Quick Look 視窗控制快捷鍵。", "g_v3g1_h": "Finder 基礎", "g_v3g1_p": "日常檔案管理个導覽及資料夾快捷鍵。", "g_v3g2_h": "Finder 進階", "g_v3g2_p": "檢視、窗格及 Quick Look — 進階使用者个 Finder 快捷鍵。", "g_v4g1_h": "文字編輯", "g_v4g1_p": "適用佇任何文字欄位个游標移動及導覽快捷鍵。", "g_v4g2_h": "文字精通", "g_v4g2_p": "適合認真寫作者个選取、編輯及格式化快捷鍵。", "play": "來𨑨迌 →", "footer_tag": "Keyverse™ — Mountain Rock State LLC 出品", "footer_contact": "聯絡阮", "footer_privacy": "隱私政策", "footer_terms": "條款", "footer_copy": "© 2026 Mountain Rock State LLC. 版權所有。美國版權局案件編號 #1-15200158071。", "picker_title": "揀你个語言", "picker_switch": "語言"}, "hak": {"nav_games": "遊戲", "nav_volumes": "系列", "nav_about": "關於", "nav_play": "馬上遊玩", "kicker_hero": "10 隻免費瀏覽器遊戲 · 免下載", "hero_h1_1": "精通你个 Mac，", "hero_h1_2": "一擺一隻快捷鍵", "hero_lead": "Keyverse 係一系列緊速、專注个瀏覽器遊戲，將 Mac 鍵盤快捷鍵變做肌肉記憶 — 專門幫忙想毋使摸觸控板就會較緊做事情个人設計。", "cta_start": "對第一冊開始 →", "cta_seeall": "看齊全部 10 隻遊戲", "kicker_why": "做麼咹揀 Keyverse", "why_h2": "邊做邊學，毋係看書", "why_lead": "每一關都會將你放到真實情境肚，隨時獎勵正確个快捷鍵。無投影片，無影片 — 就係練習。", "feat1_h": "緊速回饋", "feat1_p": "每一關都圍一些快捷鍵設計，予你幾分鐘肚就有真正个肌肉記憶，毋係幾點鐘。", "feat2_h": "在瀏覽器肚就用得", "feat2_p": "毋使安裝，毋使帳戶。㧯『遊玩』一撽就開始練習 — 桌上型、筆電、平板抑係手機都用得。", "feat3_h": "四冊系列，十隻遊戲", "feat3_p": "對你第一擺个快捷鍵到精通 Finder 㧯文字編輯速度訓練。", "kicker_series": "全系列", "pick_h2": "揀你个冊數", "pick_lead": "每冊專注在一類快捷鍵。照順序來遊玩，抑係直接跳到你較需要个部分。", "vol1_title": "Mac 快捷鍵訓練", "vol1_sub": "基礎入門 — 對這開始", "vol2_title": "系統控制㧯視窗", "vol2_sub": "電源、睡眠㧯視窗管理", "vol3_title": "Finder 精通", "vol3_sub": "緊速尋你个檔案", "vol4_title": "文字編輯精通", "vol4_sub": "照你想法个速度來打字㧯編輯", "g_v1g1_h": "Mac 入門第一步", "g_v1g1_p": "每一個 Mac 使用者都應當愛熟記个核心快捷鍵。", "g_v1g2_h": "日常必備", "g_v1g2_p": "你每日都用得著个進階使用者快捷鍵。", "g_v1g3_h": "生產力加速", "g_v1g3_p": "用大部分人都無注意个快捷鍵，將重複性任務較緊做完。", "g_v1g4_h": "無障礙功能專家", "g_v1g4_p": "macOS 內建無障礙功能个快捷鍵。", "g_v2g1_h": "系統控制", "g_v2g1_p": "電源㧯睡眠精通 — 毋使選單就控制得你个 Mac。", "g_v2g2_h": "視窗操控", "g_v2g2_p": "編輯、隱藏㧯 Quick Look 視窗控制快捷鍵。", "g_v3g1_h": "Finder 基礎", "g_v3g1_p": "日常檔案管理个導覽㧯資料夾快捷鍵。", "g_v3g2_h": "Finder 進階", "g_v3g2_p": "檢視、窗格㧯 Quick Look — 進階使用者个 Finder 快捷鍵。", "g_v4g1_h": "文字編輯", "g_v4g1_p": "適合任何文字欄位个游標移動㧯導覽快捷鍵。", "g_v4g2_h": "文字精通", "g_v4g2_p": "適合認真寫作者个選取、編輯㧯格式化快捷鍵。", "play": "遊玩 →", "footer_tag": "Keyverse™ — Mountain Rock State LLC 出品", "footer_contact": "聯絡我等", "footer_privacy": "隱私政策", "footer_terms": "條款", "footer_copy": "© 2026 Mountain Rock State LLC. 版權所有。美國版權局案件編號 #1-15200158071。", "picker_title": "揀你个語言", "picker_switch": "語言"}, "wuu": {"nav_games": "游戏", "nav_volumes": "系列", "nav_about": "关于", "nav_play": "马上来玩", "kicker_hero": "10 款免费浏览器游戏 · 无需下载", "hero_h1_1": "精通你个 Mac，", "hero_h1_2": "一趟一个快捷键", "hero_lead": "Keyverse 是一系列快速、专注个浏览器游戏，把 Mac 键盘快捷键变成肌肉记忆 — 专门为想勿用触控板就更加快操作个人打造。", "cta_start": "从第一册开始 →", "cta_seeall": "看齐全部 10 款游戏", "kicker_why": "为啥拣 Keyverse", "why_h2": "边做边学，勿是看书", "why_lead": "每个关卡都拨你放到真实场景里，随时奖励正确个快捷键。无幻灯片，无视频 — 就是反复练习。", "feat1_h": "快速反馈", "feat1_p": "每个关卡都围一些快捷键设计，让你几分钟里就有真正个肌肉记忆，勿是几点钟。", "feat2_h": "浏览器里就用得", "feat2_p": "勿用安装，勿用账户。点一下『游玩』就开始练习 — 台式机、笔记本、平板抑或手机都用得。", "feat3_h": "四册系列，十款游戏", "feat3_p": "从你头一趟个快捷键到精通 Finder 及文字编辑速度训练。", "kicker_series": "全系列", "pick_h2": "拣你个册数", "pick_lead": "每册专注在一类快捷键。照顺序来玩，抑或直接跳到你更加需要个部分。", "vol1_title": "Mac 快捷键训练", "vol1_sub": "基础入门 — 从此开始", "vol2_title": "系统控制及视窗", "vol2_sub": "电源、睡眠及视窗管理", "vol3_title": "Finder 精通", "vol3_sub": "快速寻你个档案", "vol4_title": "文字编辑精通", "vol4_sub": "照你想法个速度来打字及编辑", "g_v1g1_h": "Mac 入门第一步", "g_v1g1_p": "每一个 Mac 用户都应该要熟记个核心快捷键。", "g_v1g2_h": "日常必备", "g_v1g2_p": "你每日都用得着个进阶用户快捷键。", "g_v1g3_h": "生产力加速", "g_v1g3_p": "用大部分人都无注意个快捷键，把重复性任务更加快做完。", "g_v1g4_h": "无障碍功能专家", "g_v1g4_p": "macOS 内置无障碍功能个快捷键。", "g_v2g1_h": "系统控制", "g_v2g1_p": "电源及睡眠精通 — 勿用选单就控制得你个 Mac。", "g_v2g2_h": "视窗操控", "g_v2g2_p": "编辑、隐藏及 Quick Look 视窗控制快捷键。", "g_v3g1_h": "Finder 基础", "g_v3g1_p": "日常档案管理个导览及文件夹快捷键。", "g_v3g2_h": "Finder 进阶", "g_v3g2_p": "视图、窗格及 Quick Look — 进阶用户个 Finder 快捷键。", "g_v4g1_h": "文字编辑", "g_v4g1_p": "适合任何文字栏位个游标移动及导览快捷键。", "g_v4g2_h": "文字精通", "g_v4g2_p": "适合认真写作者个选取、编辑及格式化快捷键。", "play": "来玩 →", "footer_tag": "Keyverse™ — Mountain Rock State LLC 出品", "footer_contact": "联系我们", "footer_privacy": "隐私政策", "footer_terms": "条款", "footer_copy": "© 2026 Mountain Rock State LLC. 版权所有。美国版权局案件编号 #1-15200158071。", "picker_title": "拣你个语言", "picker_switch": "语言"}, "de-CH": {"nav_games": "Spiele", "nav_volumes": "Bände", "nav_about": "Über uns", "nav_play": "Jetzt spielen", "kicker_hero": "10 kostenlose Browserspiele · kein Download", "hero_h1_1": "Meistere deinen Mac,", "hero_h1_2": "einen Shortcut nach dem anderen", "hero_lead": "Keyverse ist eine Serie schneller, fokussierter Browserspiele, die Mac-Tastenkombinationen in Muskelgedächtnis verwandeln — für alle, die schneller vorankommen wollen, ohne das Trackpad zu berühren.", "cta_start": "Mit Band 1 beginnen →", "cta_seeall": "Alle 10 Spiele ansehen", "kicker_why": "Warum Keyverse", "why_h2": "Lernen durch Tun, nicht durch Lesen", "why_lead": "Jedes Level versetzt dich in ein reales Szenario und belohnt sofort die richtige Tastenkombination. Keine Folien, keine Videos — nur Wiederholung.", "feat1_h": "Schnelle Feedback-Schleifen", "feat1_p": "Jedes Level dreht sich um wenige Shortcuts, sodass du in Minuten echtes Muskelgedächtnis aufbaust, nicht in Stunden.", "feat2_h": "Läuft in deinem Browser", "feat2_p": "Keine Installation, kein Konto. Klicke auf Spielen und du trainierst sofort — auf Desktop, Laptop, Tablet oder Telefon.", "feat3_h": "Vier Bände, zehn Spiele", "feat3_p": "Von deinen ersten Shortcuts bis zur Finder-Meisterschaft und Text-Editing-Geschwindigkeit.", "kicker_series": "Die ganze Serie", "pick_h2": "Wähle deinen Band", "pick_lead": "Jeder Band konzentriert sich auf eine Kategorie von Shortcuts. Spiele sie in Reihenfolge oder springe direkt zu dem, was du am meisten brauchst.", "vol1_title": "Mac-Shortcut-Trainer", "vol1_sub": "Die Grundlagen — hier anfangen", "vol2_title": "Systemsteuerung & Fenster", "vol2_sub": "Energie, Ruhezustand und Fensterverwaltung", "vol3_title": "Finder-Meisterschaft", "vol3_sub": "Navigiere deine Dateien mit Tempo", "vol4_title": "Text-Editing-Meisterschaft", "vol4_sub": "Tippen und bearbeiten in Gedankengeschwindigkeit", "g_v1g1_h": "Erste Schritte am Mac", "g_v1g1_p": "Die Kern-Shortcuts, die jeder Mac-Nutzer im Schlaf kennen sollte.", "g_v1g2_h": "Daily Driver", "g_v1g2_p": "Power-User-Shortcuts für die Dinge, die du täglich tust.", "g_v1g3_h": "Produktivitäts-Booster", "g_v1g3_p": "Beschleunige wiederkehrende Aufgaben mit Shortcuts, die die meisten übersehen.", "g_v1g4_h": "Barrierefreiheit Pro", "g_v1g4_p": "Shortcuts für die in macOS integrierten Bedienungshilfen.", "g_v2g1_h": "Systemsteuerung", "g_v2g1_p": "Energie- und Ruhezustand-Meisterschaft — steuere deinen Mac ohne Menüs.", "g_v2g2_h": "Fenster-Handling", "g_v2g2_p": "Bearbeiten, Ausblenden und Quick-Look-Shortcuts für die Fenstersteuerung.", "g_v3g1_h": "Finder-Grundlagen", "g_v3g1_p": "Navigations- und Ordner-Shortcuts für die tägliche Dateiverwaltung.", "g_v3g2_h": "Finder Power", "g_v3g2_p": "Ansichten, Fensterbereiche und Quick Look — Finder-Shortcuts für Power-User.", "g_v4g1_h": "Texteditor", "g_v4g1_p": "Cursor-Bewegung und Navigations-Shortcuts für jedes Textfeld.", "g_v4g2_h": "Text-Meisterschaft", "g_v4g2_p": "Auswahl-, Bearbeitungs- und Formatierungs-Shortcuts für ernsthafte Schreiber.", "play": "Spielen →", "footer_tag": "Keyverse™ — eine Produktion von Mountain Rock State LLC", "footer_contact": "Kontakt", "footer_privacy": "Datenschutz", "footer_terms": "AGB", "footer_copy": "© 2026 Mountain Rock State LLC. Alle Rechte vorbehalten. U.S. Copyright Office Fall #1-15200158071.", "picker_title": "Wähle deine Sprache", "picker_switch": "Sprache"}, "it-IT": {"nav_games": "Giochi", "nav_volumes": "Volumi", "nav_about": "Chi siamo", "nav_play": "Gioca ora", "kicker_hero": "10 giochi da browser gratuiti · nessun download", "hero_h1_1": "Padroneggia il tuo Mac,", "hero_h1_2": "una scorciatoia alla volta", "hero_lead": "Keyverse è una serie di giochi da browser rapidi e mirati che trasformano le scorciatoie da tastiera del Mac in memoria muscolare — pensati per chi vuole essere più veloce senza toccare il trackpad.", "cta_start": "Inizia con il Volume 1 →", "cta_seeall": "Vedi tutti i 10 giochi", "kicker_why": "Perché Keyverse", "why_h2": "Imparare facendo, non leggendo", "why_lead": "Ogni livello ti immerge in uno scenario reale e premia istantaneamente la scorciatoia corretta. Niente slide, niente video — solo ripetizioni.", "feat1_h": "Cicli di feedback rapidi", "feat1_p": "Ogni livello è costruito attorno a poche scorciatoie, così costruisci una vera memoria muscolare in minuti, non ore.", "feat2_h": "Funziona nel tuo browser", "feat2_p": "Nessuna installazione, nessun account. Clicca su gioca e sei già in allenamento — su desktop, laptop, tablet o telefono.", "feat3_h": "Quattro volumi, dieci giochi", "feat3_p": "Dalle tue prime scorciatoie alla padronanza del Finder e alla velocità nell'editing di testo.", "kicker_series": "La serie completa", "pick_h2": "Scegli il tuo volume", "pick_lead": "Ogni volume si concentra su una categoria di scorciatoie. Giocali in ordine, oppure passa direttamente a ciò che ti serve di più.", "vol1_title": "Mac Shortcut Trainer", "vol1_sub": "Le basi — inizia qui", "vol2_title": "Controllo di Sistema e Finestre", "vol2_sub": "Alimentazione, sospensione e gestione delle finestre", "vol3_title": "Padronanza del Finder", "vol3_sub": "Naviga i tuoi file a tutta velocità", "vol4_title": "Padronanza dell'Editing di Testo", "vol4_sub": "Scrivi e modifica alla velocità del pensiero", "g_v1g1_h": "Primi Passi sul Mac", "g_v1g1_p": "Le scorciatoie fondamentali che ogni utente Mac dovrebbe conoscere a memoria.", "g_v1g2_h": "Daily Driver", "g_v1g2_p": "Scorciatoie da power user per le cose che fai ogni giorno.", "g_v1g3_h": "Booster di Produttività", "g_v1g3_p": "Velocizza le attività ripetitive con scorciatoie che quasi tutti ignorano.", "g_v1g4_h": "Accessibilità Pro", "g_v1g4_p": "Scorciatoie per le funzioni di accessibilità integrate in macOS.", "g_v2g1_h": "Controllo di Sistema", "g_v2g1_p": "Padronanza di alimentazione e sospensione — controlla il tuo Mac senza menu.", "g_v2g2_h": "Gestione delle Finestre", "g_v2g2_p": "Scorciatoie di modifica, nascondimento e Visualizzazione rapida per il controllo delle finestre.", "g_v3g1_h": "Finder Basics", "g_v3g1_p": "Scorciatoie di navigazione e cartelle per la gestione quotidiana dei file.", "g_v3g2_h": "Finder Power", "g_v3g2_p": "Viste, pannelli e Visualizzazione rapida — scorciatoie del Finder per utenti avanzati.", "g_v4g1_h": "Editing di Testo", "g_v4g1_p": "Scorciatoie di movimento del cursore e navigazione per qualsiasi campo di testo.", "g_v4g2_h": "Padronanza del Testo", "g_v4g2_p": "Scorciatoie di selezione, modifica e formattazione per scrittori seri.", "play": "Gioca →", "footer_tag": "Keyverse™ — una produzione di Mountain Rock State LLC", "footer_contact": "Contatti", "footer_privacy": "Privacy", "footer_terms": "Termini", "footer_copy": "© 2026 Mountain Rock State LLC. Tutti i diritti riservati. U.S. Copyright Office Caso #1-15200158071.", "picker_title": "Scegli la tua lingua", "picker_switch": "Lingua"}, "fr-FR": {"nav_games": "Jeux", "nav_volumes": "Volumes", "nav_about": "À propos", "nav_play": "Jouer maintenant", "kicker_hero": "10 jeux de navigateur gratuits · sans téléchargement", "hero_h1_1": "Maîtrisez votre Mac,", "hero_h1_2": "un raccourci à la fois", "hero_lead": "Keyverse est une série de jeux de navigateur rapides et ciblés qui transforment les raccourcis clavier Mac en mémoire musculaire — conçus pour ceux qui veulent aller plus vite sans toucher le trackpad.", "cta_start": "Commencer avec le Volume 1 →", "cta_seeall": "Voir les 10 jeux", "kicker_why": "Pourquoi Keyverse", "why_h2": "Apprendre en faisant, pas en lisant", "why_lead": "Chaque niveau vous plonge dans un scénario réel et récompense instantanément le bon raccourci. Pas de diapositives, pas de vidéo — juste de la répétition.", "feat1_h": "Boucles de rétroaction rapides", "feat1_p": "Chaque niveau est construit autour de quelques raccourcis, pour bâtir une vraie mémoire musculaire en minutes, pas en heures.", "feat2_h": "Fonctionne dans votre navigateur", "feat2_p": "Aucune installation, aucun compte. Cliquez sur jouer et vous vous entraînez déjà — sur ordinateur, portable, tablette ou téléphone.", "feat3_h": "Quatre volumes, dix jeux", "feat3_p": "De vos premiers raccourcis à la maîtrise du Finder et à la vitesse d'édition de texte.", "kicker_series": "La série complète", "pick_h2": "Choisissez votre volume", "pick_lead": "Chaque volume se concentre sur une catégorie de raccourcis. Jouez-les dans l'ordre, ou passez directement à ce dont vous avez le plus besoin.", "vol1_title": "Mac Shortcut Trainer", "vol1_sub": "L'essentiel — commencez ici", "vol2_title": "Contrôle Système et Fenêtres", "vol2_sub": "Alimentation, veille et gestion des fenêtres", "vol3_title": "Maîtrise du Finder", "vol3_sub": "Naviguez dans vos fichiers à toute vitesse", "vol4_title": "Maîtrise de l'Édition de Texte", "vol4_sub": "Tapez et modifiez à la vitesse de la pensée", "g_v1g1_h": "Premiers Pas sur Mac", "g_v1g1_p": "Les raccourcis essentiels que tout utilisateur Mac devrait connaître par cœur.", "g_v1g2_h": "Daily Driver", "g_v1g2_p": "Raccourcis d'utilisateur avancé pour ce que vous faites tous les jours.", "g_v1g3_h": "Boosters de Productivité", "g_v1g3_p": "Accélérez les tâches répétitives avec des raccourcis que la plupart ignorent.", "g_v1g4_h": "Accessibilité Pro", "g_v1g4_p": "Raccourcis pour les fonctionnalités d'accessibilité intégrées à macOS.", "g_v2g1_h": "Contrôle Système", "g_v2g1_p": "Maîtrise de l'alimentation et de la veille — contrôlez votre Mac sans menus.", "g_v2g2_h": "Gestion des Fenêtres", "g_v2g2_p": "Raccourcis d'édition, de masquage et de Coup d'œil pour le contrôle des fenêtres.", "g_v3g1_h": "Finder Basics", "g_v3g1_p": "Raccourcis de navigation et de dossiers pour la gestion quotidienne des fichiers.", "g_v3g2_h": "Finder Power", "g_v3g2_p": "Vues, volets et Coup d'œil — raccourcis Finder pour utilisateurs avancés.", "g_v4g1_h": "Édition de Texte", "g_v4g1_p": "Raccourcis de déplacement du curseur et de navigation pour tout champ de texte.", "g_v4g2_h": "Maîtrise du Texte", "g_v4g2_p": "Raccourcis de sélection, d'édition et de formatage pour les écrivains sérieux.", "play": "Jouer →", "footer_tag": "Keyverse™ — une production de Mountain Rock State LLC", "footer_contact": "Contact", "footer_privacy": "Confidentialité", "footer_terms": "Conditions", "footer_copy": "© 2026 Mountain Rock State LLC. Tous droits réservés. U.S. Copyright Office Dossier #1-15200158071.", "picker_title": "Choisissez votre langue", "picker_switch": "Langue"}, "da-DK": {"nav_games": "Spil", "nav_volumes": "Bind", "nav_about": "Om", "nav_play": "Spil nu", "kicker_hero": "10 gratis browserspil · ingen download", "hero_h1_1": "Bliv mester i din Mac,", "hero_h1_2": "en genvej ad gangen", "hero_lead": "Keyverse er en serie hurtige, fokuserede browserspil, der forvandler Macs tastaturgenveje til muskelhukommelse — bygget til dem, der vil bevæge sig hurtigere uden at røre trackpadet.", "cta_start": "Start med Bind 1 →", "cta_seeall": "Se alle 10 spil", "kicker_why": "Hvorfor Keyverse", "why_h2": "Lær ved at gøre, ikke ved at læse", "why_lead": "Hvert niveau sætter dig i et virkeligt scenarie og belønner øjeblikkeligt den rigtige genvej. Ingen slides, ingen video — kun gentagelser.", "feat1_h": "Hurtige feedback-loops", "feat1_p": "Hvert niveau er bygget omkring en håndfuld genveje, så du opbygger ægte muskelhukommelse på minutter, ikke timer.", "feat2_h": "Kører i din browser", "feat2_p": "Ingen installation, ingen konto. Klik på spil, og du træner allerede — på stationær, laptop, tablet eller telefon.", "feat3_h": "Fire bind, ti spil", "feat3_p": "Fra dine allerførste genveje til Finder-mestring og hastighed i tekstredigering.", "kicker_series": "Hele serien", "pick_h2": "Vælg dit bind", "pick_lead": "Hvert bind fokuserer på en kategori af genveje. Spil dem i rækkefølge, eller spring til det, du har mest brug for.", "vol1_title": "Mac Shortcut Trainer", "vol1_sub": "Det essentielle — start her", "vol2_title": "Systemstyring & Vinduer", "vol2_sub": "Strøm, dvale og vindueshåndtering", "vol3_title": "Finder-mestring", "vol3_sub": "Naviger dine filer med fart", "vol4_title": "Tekstredigerings-mestring", "vol4_sub": "Skriv og rediger med tankens hastighed", "g_v1g1_h": "Første Skridt på Mac", "g_v1g1_p": "De grundlæggende genveje, alle Mac-brugere bør kende udenad.", "g_v1g2_h": "Daily Driver", "g_v1g2_p": "Avancerede brugergenveje til det, du gør hver dag.", "g_v1g3_h": "Produktivitetsboostere", "g_v1g3_p": "Speed op gentagne opgaver med genveje, de fleste springer over.", "g_v1g4_h": "Tilgængelighed Pro", "g_v1g4_p": "Genveje til de tilgængelighedsfunktioner, der er indbygget i macOS.", "g_v2g1_h": "Systemstyring", "g_v2g1_p": "Mestring af strøm og dvale — styr din Mac uden menuer.", "g_v2g2_h": "Vindueshåndtering", "g_v2g2_p": "Redigerings-, skjule- og Vis-genveje til vinduesstyring.", "g_v3g1_h": "Finder-grundlæggende", "g_v3g1_p": "Navigations- og mappegenveje til daglig filhåndtering.", "g_v3g2_h": "Finder Power", "g_v3g2_p": "Visninger, ruder og Vis — Finder-genveje til avancerede brugere.", "g_v4g1_h": "Tekstredigering", "g_v4g1_p": "Markør-bevægelse og navigationsgenveje til ethvert tekstfelt.", "g_v4g2_h": "Tekstmestring", "g_v4g2_p": "Markerings-, redigerings- og formateringsgenveje til seriøse skribenter.", "play": "Spil →", "footer_tag": "Keyverse™ — en produktion fra Mountain Rock State LLC", "footer_contact": "Kontakt", "footer_privacy": "Privatliv", "footer_terms": "Vilkår", "footer_copy": "© 2026 Mountain Rock State LLC. Alle rettigheder forbeholdes. U.S. Copyright Office sag #1-15200158071.", "picker_title": "Vælg dit sprog", "picker_switch": "Sprog"}};
+  var SUPPORTED = Object.keys(I18N);
+
+  // Games that currently ship a real translated build for every locale.
+  // Everything else falls back to English with a clear "coming soon" badge.
+  var MULTILINGUAL_GAMES = { 'v4g1': true };
+
+  var LOCALE_LABEL_SHORT = {
+    'en': 'EN', 'es-419': 'ES', 'tl': 'TL', 'zh-HK': '粵', 'zh-CN': '中',
+    'nan-Hokkien': '閩', 'hak': '客', 'wuu': '吳'
+  };
+
+  function detectInitialLocale() {
+    try {
+      var stored = localStorage.getItem('mrs.locale');
+      if (stored && I18N[stored]) return stored;
+    } catch (e) { /* private browsing */ }
+    var nav = (navigator.language || 'en').toLowerCase();
+    if (nav.startsWith('zh-hk') || nav.startsWith('zh-yue') || nav === 'yue') return 'zh-HK';
+    if (nav.startsWith('zh-tw') || nav.startsWith('zh-hant')) return 'zh-HK';
+    if (nav.startsWith('zh-cn') || nav.startsWith('zh-hans') || nav === 'zh') return 'zh-CN';
+    if (nav.startsWith('tl') || nav.startsWith('fil')) return 'tl';
+    if (nav.startsWith('es')) return 'es-419';
+    if (nav.startsWith('nan') || nav.startsWith('hok')) return 'nan-Hokkien';
+    if (nav.startsWith('hak') || nav.startsWith('hka')) return 'hak';
+    if (nav.startsWith('wuu') || nav.startsWith('wu')) return 'wuu';
+    if (nav.startsWith('de')) return 'de-CH';
+    if (nav.startsWith('it')) return 'it-IT';
+    if (nav.startsWith('fr')) return 'fr-FR';
+    if (nav.startsWith('da')) return 'da-DK';
+    return 'en';
+  }
+
+  var currentLocale = detectInitialLocale();
+
+  function t(key) {
+    var dict = I18N[currentLocale] || I18N.en;
+    return (dict && dict[key] !== undefined) ? dict[key] : (I18N.en[key] || key);
+  }
+
+  var CJK_FAMILY = { 'zh-HK': true, 'zh-CN': true, 'nan-Hokkien': true, 'hak': true, 'wuu': true };
+
+  function applyLocale() {
+    document.documentElement.lang = currentLocale;
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n');
+      var val = t(key);
+      if (val) el.innerHTML = val;
+    });
+    // CJK-family scripts have no natural word-spacing, so a literal joining
+    // space between the two hero halves can strand a lone character on its
+    // own line with a large gap. Drop the space for those locales only.
+    var heroJoin = document.getElementById('hero-join');
+    if (heroJoin) heroJoin.textContent = CJK_FAMILY[currentLocale] ? '' : ' ';
+    document.getElementById('lang-trigger-label').textContent = t('picker_switch');
+    document.getElementById('lang-modal-title').textContent = t('picker_title');
+
+    // Every one of the 10 games now ships the full 12-language engine and
+    // shares the same mrs.locale key, so clicking Play always lands the
+    // visitor on their chosen language automatically — no fallback needed.
+    document.querySelectorAll('.game-play[data-i18n="play"]').forEach(function (el) {
+      el.innerHTML = t('play');
+    });
+
+    // Reflect active choice in the picker modal
+    document.querySelectorAll('.lang-option').forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === currentLocale);
+    });
+  }
+
+  function setLocale(code) {
+    if (!I18N[code]) return;
+    currentLocale = code;
+    try { localStorage.setItem('mrs.locale', code); } catch (e) {}
+    applyLocale();
+    closeOverlay();
+  }
+
+  var overlay = document.getElementById('lang-overlay');
+  function openOverlay() { overlay.classList.add('open'); }
+  function closeOverlay() { overlay.classList.remove('open'); }
+
+  document.getElementById('lang-trigger').addEventListener('click', openOverlay);
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) closeOverlay(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeOverlay(); });
+  document.querySelectorAll('.lang-option').forEach(function (btn) {
+    btn.addEventListener('click', function () { setLocale(btn.getAttribute('data-lang')); });
+  });
+
+  applyLocale();
+
+  // First-time visitor with no saved choice and a non-English browser language:
+  // surface the picker once so they notice it exists, instead of silently
+  // guessing and hoping they find the globe button on their own.
+  try {
+    if (!localStorage.getItem('mrs.locale') && currentLocale !== 'en') {
+      setTimeout(openOverlay, 400);
+    }
+  } catch (e) {}
+})();
+</script>
 
 </body>
 </html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Account · Keyverse Split-Screen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./shared.css" />
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body>
+<div class="kv-shell">
+  <a href="/" class="kv-brand">
+    <svg viewBox="0 0 32 32" fill="none" aria-label="Keyverse logo">
+      <rect x="2" y="8" width="28" height="18" rx="4" stroke="currentColor" stroke-width="2"/>
+      <rect x="7" y="13" width="4" height="4" rx="1" fill="currentColor"/>
+      <rect x="14" y="13" width="4" height="4" rx="1" fill="currentColor"/>
+      <rect x="21" y="13" width="4" height="4" rx="1" fill="currentColor"/>
+      <rect x="7" y="19" width="18" height="3" rx="1.5" fill="currentColor"/>
+    </svg>
+    <span>KEYVERSE</span>
+  </a>
+
+  <div id="loadingCard" class="kv-card">
+    <p class="kv-subtitle" style="margin:0;"><span class="kv-loader"></span> Loading your account…</p>
+  </div>
+
+  <div id="lockedCard" class="kv-card" style="display:none;">
+    <span class="kv-badge kv-badge-locked">🔒 Not unlocked yet</span>
+    <h1 class="kv-title" style="margin-top:14px;">Unlock split-screen</h1>
+    <p class="kv-subtitle">Play side by side with a friend on the same PC or Mac, chat live by voice or text, and invite others to compete for the best scores. One-time payment, yours forever.</p>
+    <div class="kv-price-tag">$7.77</div>
+    <button class="kv-btn kv-btn-primary" id="unlockBtn">Unlock now</button>
+  </div>
+
+  <div id="unlockedCard" class="kv-card" style="display:none;">
+    <span class="kv-badge kv-badge-unlocked">✓ Split-screen unlocked</span>
+    <h1 class="kv-title" style="margin-top:14px;">Welcome back<span id="emailGreeting"></span></h1>
+    <p class="kv-subtitle">Generate an invite so a friend can join your leaderboard — they don't need an account to play.</p>
+    <button class="kv-btn kv-btn-primary" id="generateInviteBtn">Generate invite code</button>
+
+    <div id="inviteResult" style="display:none; margin-top:20px;">
+      <label class="kv-label">Share this code</label>
+      <div class="kv-invite-code" id="inviteCode">—</div>
+      <label class="kv-label">Or send this link</label>
+      <div class="kv-invite-link" id="inviteLink">—</div>
+      <button class="kv-btn kv-btn-ghost" id="copyLinkBtn">Copy link</button>
+    </div>
+  </div>
+
+  <div class="kv-card" id="signOutCard" style="display:none;">
+    <button class="kv-btn kv-btn-ghost" id="signOutBtn">Sign out</button>
+  </div>
+
+  <div id="status" class="kv-status"></div>
+</div>
+
+<script src="./shared.js"></script>
+<script>
+  const statusEl = document.getElementById('status');
+  function showStatus(kind, msg) {
+    statusEl.className = `kv-status show ${kind}`;
+    statusEl.textContent = msg;
+  }
+
+  let currentEmail = null;
+  let currentAccountId = null;
+
+  async function init() {
+    const { data: { session } } = await getSupabaseClient().auth.getSession();
+    if (!session) {
+      window.location.href = './login.html';
+      return;
+    }
+    currentEmail = session.user.email;
+    document.getElementById('signOutCard').style.display = 'block';
+
+    try {
+      const account = await apiFetch(`/api/account?email=${encodeURIComponent(currentEmail)}`);
+      currentAccountId = account.id;
+      document.getElementById('loadingCard').style.display = 'none';
+      if (account.split_screen_unlocked) {
+        document.getElementById('unlockedCard').style.display = 'block';
+        document.getElementById('emailGreeting').textContent = ` — ${currentEmail}`;
+      } else {
+        showLocked();
+      }
+    } catch (err) {
+      // 404 = no account row yet, meaning payment hasn't been made
+      document.getElementById('loadingCard').style.display = 'none';
+      showLocked();
+    }
+  }
+
+  function showLocked() {
+    document.getElementById('lockedCard').style.display = 'block';
+  }
+
+  document.getElementById('unlockBtn').addEventListener('click', () => {
+    const url = new URL(UNLOCK_PAYMENT_LINK);
+    if (currentEmail) url.searchParams.set('prefilled_email', currentEmail);
+    window.location.href = url.toString();
+  });
+
+  document.getElementById('generateInviteBtn').addEventListener('click', async (e) => {
+    const btn = e.currentTarget;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="kv-loader"></span> Generating…';
+    try {
+      const invite = await apiFetch('/api/invites', {
+        method: 'POST',
+        body: JSON.stringify({ account_id: currentAccountId }),
+      });
+      document.getElementById('inviteCode').textContent = invite.code;
+      const link = new URL('./join.html', window.location.href);
+      link.searchParams.set('code', invite.code);
+      document.getElementById('inviteLink').textContent = link.toString();
+      document.getElementById('inviteLink').dataset.url = link.toString();
+      document.getElementById('inviteResult').style.display = 'block';
+      showStatus('success', 'Invite created — share the code or link with a friend.');
+    } catch (err) {
+      showStatus('error', err.message || 'Could not generate an invite. Please try again.');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = 'Generate invite code';
+    }
+  });
+
+  document.getElementById('copyLinkBtn').addEventListener('click', async () => {
+    const url = document.getElementById('inviteLink').dataset.url;
+    try {
+      await navigator.clipboard.writeText(url);
+      showStatus('success', 'Link copied to clipboard.');
+    } catch (e) {
+      showStatus('info', 'Select and copy the link manually.');
+    }
+  });
+
+  document.getElementById('signOutBtn').addEventListener('click', async () => {
+    await getSupabaseClient().auth.signOut();
+    window.location.href = './login.html';
+  });
+
+  init();
+</script>
+</body>
+</html>
