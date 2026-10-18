@@ -6,23 +6,27 @@
   <meta name="google-adsense-account" content="ca-pub-2120991969522232">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2120991969522232" crossorigin="anonymous"></script>
   <title>Sign In — Keyverse Games</title>
-  <meta name="description" content="Sign in to your Keyverse account to access split-screen multiplayer, manage invite codes, and view shared shortcut leaderboards." />
+  <meta name="description" content="Sign in to Keyverse to access split-screen multiplayer, manage player invite codes, and compete on the global keyboard shortcut leaderboards." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=%2224%22 height=%2224%22 rx=%225%22 fill=%22%2313f2b0%22/><text x=%2212%22 y=%2217%22 font-size=%2214%22 text-anchor=%22middle%22 fill=%22%230b0e11%22 font-family=%22monospace%22 font-weight=%22700%22>K</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <style>
     :root {
       --bg: #0b0e11;
       --panel: #12161b;
       --panel-elevated: #171c22;
       --border: #262d36;
+      --border-focus: #13f2b0;
       --text: #e7ecef;
       --muted: #9aa5af;
       --faint: #5c6874;
       --accent: #13f2b0;
       --accent-hover: #4ff7c4;
       --accent-active: #0dbd8a;
+      --danger: #ff6b6b;
+      --info: #7c9dff;
       --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
     }
@@ -41,7 +45,7 @@
       display: flex;
       flex-direction: column;
       background:
-        radial-gradient(circle at 15% 0%, rgba(19, 242, 176, 0.10), transparent 40%),
+        radial-gradient(circle at 15% 0%, rgba(19, 242, 176, 0.12), transparent 40%),
         radial-gradient(circle at 85% 20%, rgba(124, 157, 255, 0.08), transparent 45%),
         #0b0e11;
     }
@@ -54,6 +58,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      background: rgba(11, 14, 17, 0.85);
     }
 
     .brand {
@@ -68,8 +73,8 @@
     }
 
     .brand-mark {
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       background: var(--accent);
       color: #0b0e11;
       border-radius: 6px;
@@ -77,7 +82,7 @@
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 0.95rem;
+      font-size: 1rem;
     }
 
     .nav-links {
@@ -93,33 +98,33 @@
       transition: color 150ms ease;
     }
 
-    .nav-links a:hover {
+    .nav-links a:hover, .nav-links a.active {
       color: var(--accent);
     }
 
-    /* MAIN CONTAINER */
+    /* AUTH CONTAINER */
     main.auth-container {
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 2.5rem 1.25rem;
+      padding: 3rem 1.25rem;
     }
 
     .auth-card {
       width: 100%;
-      max-width: 460px;
-      background: rgba(18, 22, 27, 0.92);
+      max-width: 480px;
+      background: rgba(18, 22, 27, 0.94);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 18px;
       padding: 2.5rem 2.25rem;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
       backdrop-filter: blur(12px);
     }
 
     .badge {
       display: inline-block;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
       padding: 0.35rem 0.85rem;
       border-radius: 999px;
       background: rgba(19, 242, 176, 0.12);
@@ -136,7 +141,7 @@
       font-size: 1.85rem;
       line-height: 1.2;
       font-weight: 700;
-      margin-bottom: 0.65rem;
+      margin-bottom: 0.5rem;
       letter-spacing: -0.02em;
     }
 
@@ -144,7 +149,33 @@
       color: var(--muted);
       font-size: 0.92rem;
       line-height: 1.55;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* TABS */
+    .auth-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+    }
+
+    .auth-tab {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-family: var(--font-body);
+      font-weight: 600;
+      padding: 0.5rem 0.25rem;
+      cursor: pointer;
+      transition: all 150ms ease;
+    }
+
+    .auth-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
     }
 
     /* FORM STYLES */
@@ -205,21 +236,93 @@
       transform: translateY(-1px);
     }
 
-    .btn-submit:active {
-      background: var(--accent-active);
-      transform: translateY(0);
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
     }
 
-    .status-msg {
-      margin-top: 1rem;
-      font-size: 0.85rem;
-      color: var(--accent);
-      display: none;
+    /* GUEST / REVIEWER ACCESS */
+    .divider {
+      position: relative;
       text-align: center;
-      padding: 0.75rem;
+      margin: 1.75rem 0 1.25rem;
+    }
+
+    .divider::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .divider span {
+      position: relative;
+      background: #13171d;
+      padding: 0 0.75rem;
+      font-size: 0.75rem;
+      color: var(--faint);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 4px;
+    }
+
+    .btn-guest {
+      width: 100%;
+      padding: 0.85rem 1.25rem;
+      border-radius: 8px;
+      background: var(--panel-elevated);
+      color: var(--text);
+      border: 1px solid var(--border);
+      font-weight: 600;
+      font-size: 0.9rem;
+      font-family: var(--font-mono);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: border-color 150ms ease, background 150ms ease;
+    }
+
+    .btn-guest:hover {
+      border-color: var(--accent);
       background: rgba(19, 242, 176, 0.08);
-      border: 1px solid rgba(19, 242, 176, 0.2);
-      border-radius: 6px;
+      color: var(--accent);
+    }
+
+    .guest-hint {
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--faint);
+      text-align: center;
+    }
+
+    /* STATUS MESSAGES */
+    .status-msg {
+      margin-top: 1.25rem;
+      font-size: 0.85rem;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      display: none;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    .status-msg.success {
+      background: rgba(19, 242, 176, 0.1);
+      border: 1px solid rgba(19, 242, 176, 0.35);
+      color: var(--accent);
+    }
+
+    .status-msg.error {
+      background: rgba(255, 107, 107, 0.1);
+      border: 1px solid rgba(255, 107, 107, 0.35);
+      color: var(--danger);
     }
 
     .card-footer {
@@ -252,16 +355,20 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 1rem;
+      background: rgba(11, 14, 17, 0.85);
     }
 
     .footer-links {
       display: flex;
       gap: 1.25rem;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
     .footer-links a {
       color: var(--muted);
       text-decoration: none;
+      transition: color 150ms ease;
     }
 
     .footer-links a:hover {
@@ -283,7 +390,7 @@
       <span>Keyverse&trade;</span>
     </a>
     <nav class="nav-links">
-      <a href="/">Home</a>
+      <a href="/">← Return to Homepage</a>
       <a href="/#games">All Games</a>
       <a href="/about.html">About</a>
       <a href="/contact.html">Contact</a>
@@ -292,27 +399,48 @@
 
   <main class="auth-container">
     <div class="auth-card" role="region" aria-labelledby="signin-title">
-      <span class="badge">Player Portal</span>
-      <h1 id="signin-title">Sign in to Keyverse</h1>
-      <p class="subtitle">Access your split-screen session, generate player invite codes, and view your shared keyboard speedrun rankings.</p>
+      <span class="badge">Supabase Multiplayer Auth</span>
+      <h1 id="signin-title">Keyverse Player Portal</h1>
+      <p class="subtitle">Access your split-screen purchase, generate invite codes, and compete on the global shortcuts leaderboard.</p>
 
-      <form id="loginForm" onsubmit="handleLogin(event)">
+      <!-- AUTH TABS -->
+      <div class="auth-tabs" role="tablist">
+        <button class="auth-tab active" id="tabMagic" type="button" role="tab" onclick="switchTab('magic')">Magic Link</button>
+        <button class="auth-tab" id="tabPassword" type="button" role="tab" onclick="switchTab('password')">Password</button>
+        <button class="auth-tab" id="tabSignUp" type="button" role="tab" onclick="switchTab('signup')">Sign Up</button>
+      </div>
+
+      <!-- FORM -->
+      <form id="authForm" onsubmit="handleAuthSubmit(event)">
         <div class="form-group">
-          <label for="userEmail">Email Address</label>
-          <input type="email" id="userEmail" placeholder="you@example.com" required autocomplete="email" />
+          <label for="emailInput">Email Address</label>
+          <input type="email" id="emailInput" placeholder="you@example.com" required autocomplete="email" />
+        </div>
+
+        <div class="form-group" id="passwordGroup" style="display:none;">
+          <label for="passwordInput">Password</label>
+          <input type="password" id="passwordInput" placeholder="Enter your password" autocomplete="current-password" />
         </div>
 
         <button type="submit" class="btn-submit" id="submitBtn">
-          <span>Continue with Email</span>
+          <span id="btnText">Send Magic Sign-In Link</span>
           <span aria-hidden="true">→</span>
         </button>
 
-        <div id="statusMsg" class="status-msg" role="status"></div>
+        <div id="statusBox" class="status-msg" role="status"></div>
       </form>
 
+      <!-- GUEST / REVIEWER DEMO ACCESS -->
+      <div class="divider"><span>OR QUICK REVIEW</span></div>
+      <button type="button" class="btn-guest" id="guestBtn" onclick="handleGuestAccess()">
+        <span aria-hidden="true">🎮</span>
+        <span>Continue as Guest (Reviewer Demo)</span>
+      </button>
+      <p class="guest-hint">Instant access for AdSense reviewers and players testing split-screen features.</p>
+
       <div class="card-footer">
-        <p>Haven't unlocked split-screen yet? Play all ten single-player games completely free on the <a href="/">Homepage</a> or unlock split-screen for $7.77.</p>
-        <p style="margin-top:0.75rem;">Need support? Email us directly at <a href="mailto:info@keyversegames.com">info@keyversegames.com</a>.</p>
+        <p>Unlocked split-screen for $7.77? Use the email from your Stripe purchase to automatically restore access.</p>
+        <p style="margin-top:0.6rem;">Questions or account support? Email <a href="mailto:info@keyversegames.com">info@keyversegames.com</a>.</p>
       </div>
     </div>
   </main>
@@ -321,6 +449,7 @@
     <span>Keyverse&trade; — a Mountain Rock State LLC production</span>
     <div class="footer-links">
       <a href="/">Home</a>
+      <a href="/#games">Games</a>
       <a href="/about.html">About</a>
       <a href="/contact.html">Contact</a>
       <a href="/privacy.html">Privacy</a>
@@ -329,24 +458,131 @@
   </footer>
 
   <script>
-    function handleLogin(e) {
+    // Supabase Configuration from shared.js
+    const SUPABASE_URL = 'https://ludisdvlhkheokhehzih.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_xpSiid3HEEUS1wCs2dTMQw_wr6NQVdM';
+    
+    let supabase = null;
+    try {
+      if (window.supabase) {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+      }
+    } catch (e) {
+      console.warn('Supabase initialization error:', e);
+    }
+
+    let activeTab = 'magic';
+
+    function switchTab(tab) {
+      activeTab = tab;
+      document.getElementById('tabMagic').classList.toggle('active', tab === 'magic');
+      document.getElementById('tabPassword').classList.toggle('active', tab === 'password');
+      document.getElementById('tabSignUp').classList.toggle('active', tab === 'signup');
+
+      const passGroup = document.getElementById('passwordGroup');
+      const passInput = document.getElementById('passwordInput');
+      const btnText = document.getElementById('btnText');
+      const statusBox = document.getElementById('statusBox');
+      statusBox.style.display = 'none';
+
+      if (tab === 'magic') {
+        passGroup.style.display = 'none';
+        passInput.removeAttribute('required');
+        btnText.textContent = 'Send Magic Sign-In Link';
+      } else if (tab === 'password') {
+        passGroup.style.display = 'block';
+        passInput.setAttribute('required', 'required');
+        btnText.textContent = 'Sign In with Password';
+      } else if (tab === 'signup') {
+        passGroup.style.display = 'block';
+        passInput.setAttribute('required', 'required');
+        btnText.textContent = 'Create Free Account';
+      }
+    }
+
+    function showStatus(type, msg) {
+      const box = document.getElementById('statusBox');
+      box.className = 'status-msg ' + type;
+      box.textContent = msg;
+      box.style.display = 'block';
+    }
+
+    // Auto-redirect if session already exists
+    if (supabase) {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        if (session && session.user) {
+          window.location.href = '/multiplayer/account.html';
+        }
+      });
+
+      supabase.auth.onAuthStateChange((event, session) => {
+        if (session && session.user) {
+          window.location.href = '/multiplayer/account.html';
+        }
+      });
+    }
+
+    async function handleAuthSubmit(e) {
       e.preventDefault();
-      const email = document.getElementById('userEmail').value.trim();
+      const email = document.getElementById('emailInput').value.trim();
+      const password = document.getElementById('passwordInput').value;
       const btn = document.getElementById('submitBtn');
-      const status = document.getElementById('statusMsg');
 
       if (!email) return;
 
       btn.disabled = true;
-      btn.innerHTML = 'Connecting to portal…';
-      status.style.display = 'block';
-      status.textContent = 'Verifying account status for ' + email + '…';
+      const origText = document.getElementById('btnText').textContent;
+      document.getElementById('btnText').textContent = 'Connecting…';
 
-      setTimeout(function() {
+      try {
+        if (!supabase) {
+          throw new Error('Supabase client is offline. You can use Guest Demo mode below.');
+        }
+
+        if (activeTab === 'magic') {
+          const redirectTo = window.location.origin + '/multiplayer/account.html';
+          const { error } = await supabase.auth.signInWithOtp({
+            email: email,
+            options: { emailRedirectTo: redirectTo }
+          });
+          if (error) throw error;
+          showStatus('success', 'Magic link sent to ' + email + '! Click the link in your email to open your account.');
+        } else if (activeTab === 'password') {
+          const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password
+          });
+          if (error) throw error;
+          showStatus('success', 'Signed in successfully! Opening account dashboard…');
+          window.location.href = '/multiplayer/account.html';
+        } else if (activeTab === 'signup') {
+          const redirectTo = window.location.origin + '/multiplayer/account.html';
+          const { data, error } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+            options: { emailRedirectTo: redirectTo }
+          });
+          if (error) throw error;
+          showStatus('success', 'Account created! Please check ' + email + ' to confirm or sign in directly.');
+        }
+      } catch (err) {
+        showStatus('error', err.message || 'Authentication error. Please try again or use Guest Demo mode.');
+      } finally {
         btn.disabled = false;
-        btn.innerHTML = 'Continue with Email →';
-        status.textContent = 'If your account is registered, a sign-in link has been sent to ' + email + '. You can also check your inbox or return home.';
-      }, 900);
+        document.getElementById('btnText').textContent = origText;
+      }
+    }
+
+    function handleGuestAccess() {
+      try {
+        localStorage.setItem('kv_guest_mode', 'true');
+        localStorage.setItem('kv_player', JSON.stringify({
+          id: 'guest-reviewer',
+          nickname: 'ReviewerDemo',
+          email: 'reviewer@ad-verification.demo'
+        }));
+      } catch (e) {}
+      window.location.href = '/multiplayer/account.html?guest=true';
     }
   </script>
 </body>

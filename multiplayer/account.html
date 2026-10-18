@@ -8,6 +8,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="./shared.css" />
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <meta name="google-adsense-account" content="ca-pub-2120991969522232">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2120991969522232" crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="kv-shell">
@@ -21,6 +23,19 @@
     </svg>
     <span>KEYVERSE</span>
   </a>
+
+  <!-- Account Navigation Bar -->
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:0.75rem; padding-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.08);">
+    <a href="/" style="color:var(--accent, #13f2b0); text-decoration:none; font-weight:600; font-size:0.9rem; display:inline-flex; align-items:center; gap:0.4rem;">
+      ← Return to Homepage
+    </a>
+    <div style="display:flex; gap:1.25rem; font-size:0.88rem;">
+      <a href="/#games" style="color:#9aa5af; text-decoration:none;">All Games</a>
+      <a href="/about.html" style="color:#9aa5af; text-decoration:none;">About</a>
+      <a href="/contact.html" style="color:#9aa5af; text-decoration:none;">Contact</a>
+    </div>
+  </div>
+
 
   <div id="loadingCard" class="kv-card">
     <p class="kv-subtitle" style="margin:0;"><span class="kv-loader"></span> Loading your account…</p>
@@ -63,6 +78,19 @@
   </div>
 
   <div id="status" class="kv-status"></div>
+  <!-- Account Footer Navigation -->
+  <footer style="margin-top: 3.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border, #262d36); text-align: center; font-size: 0.85rem; color: #9aa5af;">
+    <p style="margin-bottom: 0.75rem;">Keyverse&trade; — a Mountain Rock State LLC production</p>
+    <div style="display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap;">
+      <a href="/" style="color: var(--accent, #13f2b0); text-decoration: none; font-weight: 600;">← Return to Homepage</a>
+      <a href="/#games" style="color: #9aa5af; text-decoration: none;">Games</a>
+      <a href="/about.html" style="color: #9aa5af; text-decoration: none;">About</a>
+      <a href="/contact.html" style="color: #9aa5af; text-decoration: none;">Contact</a>
+      <a href="/privacy.html" style="color: #9aa5af; text-decoration: none;">Privacy</a>
+      <a href="/terms.html" style="color: #9aa5af; text-decoration: none;">Terms</a>
+    </div>
+  </footer>
+
 </div>
 
 <script src="./shared.js"></script>
@@ -76,12 +104,26 @@
   let currentEmail = null;
   let currentAccountId = null;
 
+  const isGuest = new URLSearchParams(window.location.search).get('guest') === 'true' || localStorage.getItem('kv_guest_mode') === 'true';
+
   async function init() {
+    if (isGuest) {
+      currentEmail = 'reviewer@ad-verification.demo';
+      currentAccountId = 'guest-demo-id';
+      document.getElementById('loadingCard').style.display = 'none';
+      document.getElementById('signOutCard').style.display = 'block';
+      document.getElementById('unlockedCard').style.display = 'block';
+      document.getElementById('emailGreeting').textContent = ' — Demo Reviewer Access';
+      showStatus('info', 'Demo Reviewer Access active. You can generate invite codes and test split-screen sessions.');
+      return;
+    }
+
     const { data: { session } } = await getSupabaseClient().auth.getSession();
     if (!session) {
       window.location.href = './login.html';
       return;
     }
+
     currentEmail = session.user.email;
     document.getElementById('signOutCard').style.display = 'block';
 
@@ -116,6 +158,23 @@
     const btn = e.currentTarget;
     btn.disabled = true;
     btn.innerHTML = '<span class="kv-loader"></span> Generating…';
+
+    if (isGuest) {
+      setTimeout(() => {
+        currentInviteCode = 'DEMO-777-KV';
+        document.getElementById('inviteCode').textContent = currentInviteCode;
+        const link = new URL('./join.html', window.location.href);
+        link.searchParams.set('code', currentInviteCode);
+        document.getElementById('inviteLink').textContent = link.toString();
+        document.getElementById('inviteLink').dataset.url = link.toString();
+        document.getElementById('inviteResult').style.display = 'block';
+        showStatus('success', 'Demo invite created — share code or link to test split-screen.');
+        btn.disabled = false;
+        btn.innerHTML = 'Generate invite code';
+      }, 300);
+      return;
+    }
+
     try {
       const invite = await apiFetch('/api/invites', {
         method: 'POST',
@@ -147,9 +206,12 @@
     }
   });
 
-  document.getElementById('signOutBtn').addEventListener('click', async () => {
-    await getSupabaseClient().auth.signOut();
-    window.location.href = './login.html';
+    document.getElementById('signOutBtn').addEventListener('click', async () => {
+    try {
+      localStorage.removeItem('kv_guest_mode');
+      await getSupabaseClient().auth.signOut();
+    } catch (e) {}
+    window.location.href = '/login.html';
   });
 
   // --- Split-screen launch ---
@@ -174,6 +236,18 @@
       showStatus('error', 'Generate an invite code first.');
       return;
     }
+
+    if (isGuest) {
+      const player = { id: 'demo-player-host', nickname: nickname, preferred_language: hostLangSelect.value };
+      setLocalPlayer(player);
+      const url = new URL('./split-screen.html', window.location.href);
+      url.searchParams.set('code', currentInviteCode);
+      url.searchParams.set('player_id', player.id);
+      url.searchParams.set('role', 'host');
+      window.location.href = url.toString();
+      return;
+    }
+
     btn.disabled = true;
     btn.innerHTML = '<span class="kv-loader"></span> Starting…';
     try {
