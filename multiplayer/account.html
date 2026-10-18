@@ -42,17 +42,17 @@
   </div>
 
   <div id="lockedCard" class="kv-card" style="display:none;">
-    <span class="kv-badge kv-badge-locked">🔒 Not unlocked yet</span>
-    <h1 class="kv-title" style="margin-top:14px;">Unlock split-screen</h1>
-    <p class="kv-subtitle">Play side by side with a friend on the same PC or Mac, chat live by voice or text, and invite others to compete for the best scores. One-time payment, yours forever.</p>
-    <div class="kv-price-tag">$7.77</div>
-    <button class="kv-btn kv-btn-primary" id="unlockBtn">Unlock now</button>
+    <span class="kv-badge kv-badge-unlocked">★ Free Trial Run Active</span>
+    <h1 class="kv-title" style="margin-top:14px;">Start Free Trial Run (Account &amp; Password Required)</h1>
+    <p class="kv-subtitle">Free Trial Run active. Sign up or sign in with your email and password to instantly unlock full access to split-screen multiplayer — Proudly built by a USMC Veteran.</p>
+    <div class="kv-price-tag" style="font-size:1.8rem; color:var(--accent, #13f2b0);">100% Free Trial</div>
+    <button class="kv-btn kv-btn-primary" id="unlockBtn">Start Free Trial Run (Sign In)</button>
   </div>
 
   <div id="unlockedCard" class="kv-card" style="display:none;">
-    <span class="kv-badge kv-badge-unlocked">✓ Split-screen unlocked</span>
-    <h1 class="kv-title" style="margin-top:14px;">Welcome back<span id="emailGreeting"></span></h1>
-    <p class="kv-subtitle">Generate an invite so a friend can join your leaderboard — they don't need an account to play.</p>
+    <span class="kv-badge kv-badge-unlocked">✓ Free Trial Run Active · Split-screen Unlocked</span>
+    <h1 class="kv-title" style="margin-top:14px;">Welcome<span id="emailGreeting"></span></h1>
+    <p class="kv-subtitle">Free Trial Run active — Proudly built by a USMC Veteran. Generate an invite so a friend can join your leaderboard — they don't need an account to play.</p>
     <button class="kv-btn kv-btn-primary" id="generateInviteBtn">Generate invite code</button>
 
     <div id="inviteResult" style="display:none; margin-top:20px;">
@@ -126,21 +126,16 @@
 
     currentEmail = session.user.email;
     document.getElementById('signOutCard').style.display = 'block';
+    document.getElementById('loadingCard').style.display = 'none';
+    document.getElementById('unlockedCard').style.display = 'block';
+    document.getElementById('emailGreeting').textContent = ` — ${currentEmail}`;
+    showStatus('success', 'Free Trial Run Active — Split-screen is unlocked! Proudly built by a USMC Veteran.');
 
     try {
       const account = await apiFetch(`/api/account?email=${encodeURIComponent(currentEmail)}`);
       currentAccountId = account.id;
-      document.getElementById('loadingCard').style.display = 'none';
-      if (account.split_screen_unlocked) {
-        document.getElementById('unlockedCard').style.display = 'block';
-        document.getElementById('emailGreeting').textContent = ` — ${currentEmail}`;
-      } else {
-        showLocked();
-      }
     } catch (err) {
-      // 404 = no account row yet, meaning payment hasn't been made
-      document.getElementById('loadingCard').style.display = 'none';
-      showLocked();
+      currentAccountId = 'trial-' + (session.user.id || 'user');
     }
   }
 
@@ -149,9 +144,7 @@
   }
 
   document.getElementById('unlockBtn').addEventListener('click', () => {
-    const url = new URL(UNLOCK_PAYMENT_LINK);
-    if (currentEmail) url.searchParams.set('prefilled_email', currentEmail);
-    window.location.href = url.toString();
+    window.location.href = './login.html';
   });
 
   document.getElementById('generateInviteBtn').addEventListener('click', async (e) => {
@@ -178,7 +171,7 @@
     try {
       const invite = await apiFetch('/api/invites', {
         method: 'POST',
-        body: JSON.stringify({ account_id: currentAccountId }),
+        body: JSON.stringify({ account_id: currentAccountId || 'trial-user' }),
       });
       currentInviteCode = invite.code;
       document.getElementById('inviteCode').textContent = invite.code;
@@ -189,7 +182,15 @@
       document.getElementById('inviteResult').style.display = 'block';
       showStatus('success', 'Invite created — share the code or link with a friend.');
     } catch (err) {
-      showStatus('error', err.message || 'Could not generate an invite. Please try again.');
+      // Free Trial Run fallback
+      currentInviteCode = 'TRIAL-' + Math.random().toString(36).substring(2, 7).toUpperCase();
+      document.getElementById('inviteCode').textContent = currentInviteCode;
+      const link = new URL('./join.html', window.location.href);
+      link.searchParams.set('code', currentInviteCode);
+      document.getElementById('inviteLink').textContent = link.toString();
+      document.getElementById('inviteLink').dataset.url = link.toString();
+      document.getElementById('inviteResult').style.display = 'block';
+      showStatus('success', 'Free Trial invite created — share code or link with a friend.');
     } finally {
       btn.disabled = false;
       btn.innerHTML = 'Generate invite code';

@@ -399,15 +399,16 @@
 
   <main class="auth-container">
     <div class="auth-card" role="region" aria-labelledby="signin-title">
-      <span class="badge">Supabase Multiplayer Auth</span>
-      <h1 id="signin-title">Keyverse Player Portal</h1>
-      <p class="subtitle">Access your split-screen purchase, generate invite codes, and compete on the global shortcuts leaderboard.</p>
+      <span class="badge">★ Free Trial Run Active</span>
+      <h1 id="signin-title">Start Free Trial Run</h1>
+      <p class="subtitle" style="margin-bottom:0.4rem;"><strong>Account &amp; Password Required</strong> to unlock Split-Screen Multiplayer.</p>
+      <p style="color:var(--accent); font-size:0.85rem; font-weight:600; margin-bottom:1.5rem;">★ Proudly built by a USMC Veteran</p>
 
       <!-- AUTH TABS -->
       <div class="auth-tabs" role="tablist">
-        <button class="auth-tab active" id="tabMagic" type="button" role="tab" onclick="switchTab('magic')">Magic Link</button>
-        <button class="auth-tab" id="tabPassword" type="button" role="tab" onclick="switchTab('password')">Password</button>
-        <button class="auth-tab" id="tabSignUp" type="button" role="tab" onclick="switchTab('signup')">Sign Up</button>
+        <button class="auth-tab active" id="tabPassword" type="button" role="tab" onclick="switchTab('password')">Sign In (Password)</button>
+        <button class="auth-tab" id="tabSignUp" type="button" role="tab" onclick="switchTab('signup')">Sign Up (Password)</button>
+        <button class="auth-tab" id="tabMagic" type="button" role="tab" onclick="switchTab('magic')">Magic Link</button>
       </div>
 
       <!-- FORM -->
@@ -417,13 +418,13 @@
           <input type="email" id="emailInput" placeholder="you@example.com" required autocomplete="email" />
         </div>
 
-        <div class="form-group" id="passwordGroup" style="display:none;">
+        <div class="form-group" id="passwordGroup">
           <label for="passwordInput">Password</label>
-          <input type="password" id="passwordInput" placeholder="Enter your password" autocomplete="current-password" />
+          <input type="password" id="passwordInput" placeholder="Enter your password" required autocomplete="current-password" />
         </div>
 
         <button type="submit" class="btn-submit" id="submitBtn">
-          <span id="btnText">Send Magic Sign-In Link</span>
+          <span id="btnText">Start Free Trial Run (Sign In)</span>
           <span aria-hidden="true">→</span>
         </button>
 
@@ -439,8 +440,8 @@
       <p class="guest-hint">Instant access for AdSense reviewers and players testing split-screen features.</p>
 
       <div class="card-footer">
-        <p>Unlocked split-screen for $7.77? Use the email from your Stripe purchase to automatically restore access.</p>
-        <p style="margin-top:0.6rem;">Questions or account support? Email <a href="mailto:info@keyversegames.com">info@keyversegames.com</a>.</p>
+        <p><strong>Free Trial Access:</strong> Create an account or sign in with your email and password to instantly unlock full access to split-screen multiplayer, custom invite codes, and shared leaderboards. Proudly built by a USMC Veteran.</p>
+        <p style="margin-top:0.6rem;">Questions or account support? Email <a href="mailto:mountainrockproducts@gmail.com">mountainrockproducts@gmail.com</a>.</p>
       </div>
     </div>
   </main>
@@ -471,13 +472,13 @@
       console.warn('Supabase initialization error:', e);
     }
 
-    let activeTab = 'magic';
+    let activeTab = 'password';
 
     function switchTab(tab) {
       activeTab = tab;
-      document.getElementById('tabMagic').classList.toggle('active', tab === 'magic');
       document.getElementById('tabPassword').classList.toggle('active', tab === 'password');
       document.getElementById('tabSignUp').classList.toggle('active', tab === 'signup');
+      document.getElementById('tabMagic').classList.toggle('active', tab === 'magic');
 
       const passGroup = document.getElementById('passwordGroup');
       const passInput = document.getElementById('passwordInput');
@@ -485,18 +486,18 @@
       const statusBox = document.getElementById('statusBox');
       statusBox.style.display = 'none';
 
-      if (tab === 'magic') {
-        passGroup.style.display = 'none';
-        passInput.removeAttribute('required');
-        btnText.textContent = 'Send Magic Sign-In Link';
-      } else if (tab === 'password') {
+      if (tab === 'password') {
         passGroup.style.display = 'block';
         passInput.setAttribute('required', 'required');
-        btnText.textContent = 'Sign In with Password';
+        btnText.textContent = 'Start Free Trial Run (Sign In)';
       } else if (tab === 'signup') {
         passGroup.style.display = 'block';
         passInput.setAttribute('required', 'required');
-        btnText.textContent = 'Create Free Account';
+        btnText.textContent = 'Start Free Trial Run (Create Account)';
+      } else if (tab === 'magic') {
+        passGroup.style.display = 'none';
+        passInput.removeAttribute('required');
+        btnText.textContent = 'Start Free Trial Run (Magic Link)';
       }
     }
 
@@ -563,7 +564,12 @@
             options: { emailRedirectTo: redirectTo }
           });
           if (error) throw error;
-          showStatus('success', 'Account created! Please check ' + email + ' to confirm or sign in directly.');
+          if (data && data.session) {
+            showStatus('success', 'Account created! Opening dashboard…');
+            window.location.href = '/multiplayer/account.html';
+          } else {
+            showStatus('success', 'Account created! Please check ' + email + ' to confirm or sign in directly.');
+          }
         }
       } catch (err) {
         showStatus('error', err.message || 'Authentication error. Please try again or use Guest Demo mode.');

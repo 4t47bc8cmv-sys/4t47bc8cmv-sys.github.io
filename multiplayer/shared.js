@@ -4,9 +4,8 @@
 const KEYVERSE_API = 'https://keyverse-api.onrender.com';
 const SUPABASE_URL = 'https://ludisdvlhkheokhehzih.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_xpSiid3HEEUS1wCs2dTMQw_wr6NQVdM';
-// One-time $7.77 split-screen unlock. LIVE Payment Link — real charges,
-// verified Mountain Rock State LLC business account with payouts enabled.
-const UNLOCK_PAYMENT_LINK = 'https://buy.stripe.com/5kQaEZbb67xSg7u5Vx7bW00';
+// Temporary Free Trial Run (Account & Password Required) — Proudly built by a USMC Veteran
+const UNLOCK_PAYMENT_LINK = '/multiplayer/login.html';
 
 // Lazily created so pages that don't need auth (e.g. leaderboard.html) can
 // include this file without also loading the Supabase JS CDN script.
