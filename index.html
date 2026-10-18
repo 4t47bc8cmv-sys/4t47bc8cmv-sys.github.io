@@ -153,7 +153,144 @@
     .hero { padding-block: var(--space-16) var(--space-10); }
     .lang-btn-trigger span.lang-label { display: none; }
   }
+
+  /* ============================================================
+   * Mac Keyboard Shortcut Reference Guide & FAQ (AdSense Value)
+   * ============================================================ */
+  .guide-section {
+    padding-block: var(--space-20);
+    border-top: 1px solid var(--color-divider);
+  }
+  .guide-hero {
+    text-align: center;
+    max-width: 800px;
+    margin-inline: auto;
+    margin-bottom: var(--space-12);
+  }
+  .guide-hero h2 {
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-4);
+    color: var(--color-text);
+  }
+  .guide-hero p {
+    font-size: var(--text-base);
+    color: var(--color-text-muted);
+    margin-inline: auto;
+  }
+  .guide-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--space-8);
+    margin-bottom: var(--space-16);
+  }
+  .guide-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+  }
+  .guide-card h3 {
+    font-size: var(--text-lg);
+    font-family: var(--font-display);
+    color: var(--color-primary);
+    margin-bottom: var(--space-3);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .guide-card p {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+    line-height: 1.6;
+  }
+  .shortcut-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--space-4);
+    font-size: var(--text-sm);
+  }
+  .shortcut-table th {
+    text-align: left;
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 2px solid var(--color-divider);
+    color: var(--color-text-muted);
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .shortcut-table td {
+    padding: var(--space-3);
+    border-bottom: 1px solid var(--color-divider);
+    color: var(--color-text);
+  }
+  .shortcut-table tr:last-child td {
+    border-bottom: none;
+  }
+  .kbd-combo {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: var(--font-display);
+    white-space: nowrap;
+  }
+  .kbd {
+    display: inline-block;
+    padding: 2px 7px;
+    font-size: var(--text-xs);
+    font-family: var(--font-display);
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border);
+    border-bottom: 2px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+  .guide-article {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8) var(--space-10);
+    margin-bottom: var(--space-16);
+    line-height: 1.8;
+  }
+  .guide-article h3 {
+    font-size: var(--text-xl);
+    margin-bottom: var(--space-4);
+    color: var(--color-text);
+  }
+  .guide-article p {
+    margin-bottom: var(--space-4);
+    color: var(--color-text-muted);
+  }
+  .guide-faq {
+    margin-top: var(--space-12);
+  }
+  .faq-item {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    margin-bottom: var(--space-4);
+  }
+  .faq-q {
+    font-family: var(--font-display);
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: var(--space-2);
+  }
+  .faq-a {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    margin: 0;
+  }
+
 </style>
+    <meta name="google-adsense-account" content="ca-pub-2120991969522232">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2120991969522232" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -165,7 +302,7 @@
       <a href="#games" data-i18n="nav_games">Games</a>
       <a href="#volumes" data-i18n="nav_volumes">Volumes</a>
       <a href="#multiplayer" data-i18n="nav_multiplayer">Multiplayer</a>
-      <a href="#about" data-i18n="nav_about">About</a>
+      <a href="about.html" data-i18n="nav_about">About</a>
     </nav>
     <div class="nav-right">
       <button class="lang-btn-trigger" id="lang-trigger" type="button" aria-haspopup="dialog">
@@ -373,13 +510,141 @@
         <li data-i18n="multi_f4">✓ Works in your browser — no install required</li>
       </ul>
     </section>
+
+  <!-- MAC KEYBOARD SHORTCUTS REFERENCE & FAQ (Substantial Editorial Content) -->
+  <section id="guide" class="wrap guide-section" aria-labelledby="guide-title">
+    <div class="guide-hero">
+      <span class="kicker">● Comprehensive Resource</span>
+      <h2 id="guide-title">The Complete Guide to Mac Keyboard Shortcuts & Muscle Memory</h2>
+      <p>Whether you are new to Apple silicon or a veteran macOS power user, keyboard shortcuts represent the single highest-leverage productivity skill on the Mac platform. Here is how modern shortcuts work, why spatial muscle memory outperforms mouse navigation, and an essential reference of everyday commands.</p>
+    </div>
+
+    <!-- Modifier Key Primer -->
+    <div class="guide-article">
+      <h3>The Anatomy of macOS Modifier Keys</h3>
+      <p>Switching from Windows to macOS often creates friction because Apple positions primary system modifiers differently. On Windows, the <kbd class="kbd">Ctrl</kbd> key is in the lower-left corner and handles virtually all operations. On macOS, the <kbd class="kbd">⌘ Command</kbd> key is placed immediately adjacent to the spacebar, positioned so your thumb can comfortably strike it without awkward pinky strain.</p>
+      <p>Understanding macOS modifier symbols is critical for reading menu shortcuts and mastering the platform:</p>
+      <ul style="padding-left: var(--space-6); color: var(--color-text-muted); margin-bottom: var(--space-4);">
+        <li><strong style="color:var(--color-primary)">⌘ Command (cmd):</strong> The primary operational key used for everyday system actions, navigation, text manipulation, and application controls.</li>
+        <li><strong style="color:var(--color-primary)">⌥ Option (alt):</strong> Modifies existing commands to provide alternative, non-destructive, or advanced secondary behaviors (e.g., closing all windows, jumping whole words).</li>
+        <li><strong style="color:var(--color-primary)">⌃ Control (ctrl):</strong> Distinct from Command; traditionally used in terminal emulation, UNIX text navigation, and contextual (right-click) menus.</li>
+        <li><strong style="color:var(--color-primary)">⇧ Shift:</strong> Capitalizes input and expands or reverses operations (e.g., <kbd class="kbd">⌘</kbd>+<kbd class="kbd">Z</kbd> for undo vs. <kbd class="kbd">⌘</kbd>+<kbd class="kbd">⇧</kbd>+<kbd class="kbd">Z</kbd> for redo).</li>
+      </ul>
+      <p>By keeping your hands anchored on the home row, you eliminate the constant micro-delays caused by lifting your hand, acquiring the trackpad cursor, locating a 16-pixel menu item, and returning to the keyboard.</p>
+    </div>
+
+    <!-- 4 Shortcut Reference Tables -->
+    <div class="guide-grid">
+      <div class="guide-card">
+        <h3><span aria-hidden="true">⚡</span> System Essentials</h3>
+        <p>The bedrock commands that keep your entire macOS environment responsive and fluid throughout the workday.</p>
+        <table class="shortcut-table">
+          <thead>
+            <tr><th>Shortcut</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌘</kbd> <kbd class="kbd">Space</kbd></span></td><td>Spotlight search for apps &amp; calculations</td></tr>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌘</kbd> <kbd class="kbd">Tab</kbd></span></td><td>Switch between active applications</td></tr>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌘</kbd> <kbd class="kbd">⌥</kbd> <kbd class="kbd">Esc</kbd></span></td><td>Open Force Quit Applications dialog</td></tr>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌘</kbd> <kbd class="kbd">⇧</kbd> <kbd class="kbd">4</kbd></span></td><td>Capture interactive screen selection</td></tr>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌘</kbd> <kbd class="kbd">,</kbd></span></td><td>Open Preferences / Settings for active app</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="guide-card">
+        <h3><span aria-hidden="true">🪟</span> Window &amp; App Control</h3>
+        <p>Prevent desktop clutter and glide across applications without dragging windows across monitors.</p>
+        <table class="shortcut-table">
+          <thead>
+            <tr><th>Shortcut</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌘</kbd> <kbd class="kbd">H</kbd></span></td><td>Hide active application from screen</td></tr>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌘</kbd> <kbd class="kbd">⌥</kbd> <kbd class="kbd">H</kbd></span></td><td>Hide all other apps except active one</td></tr>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌘</kbd> <kbd class="kbd">`</kbd></span></td><td>Cycle windows of the same application</td></tr>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌃</kbd> <kbd class="kbd">⌘</kbd> <kbd class="kbd">F</kbd></span></td><td>Toggle native full-screen mode</td></tr>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌘</kbd> <kbd class="kbd">W</kbd> / <kbd class="kbd">Q</kbd></span></td><td>Close current window / Quit entire app</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="guide-card">
+        <h3><span aria-hidden="true">📁</span> Finder File Mastery</h3>
+        <p>Organize folders, inspect multi-gigabyte media instantly, and navigate file directories at lightning speed.</p>
+        <table class="shortcut-table">
+          <thead>
+            <tr><th>Shortcut</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">Space</kbd></span></td><td>Quick Look preview selected file instantly</td></tr>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌘</kbd> <kbd class="kbd">⇧</kbd> <kbd class="kbd">G</kbd></span></td><td>Go to direct folder path / terminal directory</td></tr>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌘</kbd> <kbd class="kbd">↑</kbd> / <kbd class="kbd">↓</kbd></span></td><td>Open enclosing folder / Open selected item</td></tr>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌘</kbd> <kbd class="kbd">⌫</kbd></span></td><td>Move highlighted files directly to Trash</td></tr>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌘</kbd> <kbd class="kbd">⌥</kbd> <kbd class="kbd">P</kbd></span></td><td>Toggle hierarchical Finder path bar</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="guide-card">
+        <h3><span aria-hidden="true">✍️</span> High-Speed Text Editing</h3>
+        <p>Edit documentation, code, and emails effortlessly by navigating text without touching the trackpad.</p>
+        <table class="shortcut-table">
+          <thead>
+            <tr><th>Shortcut</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌥</kbd> <kbd class="kbd">←</kbd> / <kbd class="kbd">→</kbd></span></td><td>Jump cursor forward or backward one whole word</td></tr>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌘</kbd> <kbd class="kbd">←</kbd> / <kbd class="kbd">→</kbd></span></td><td>Jump cursor to beginning or end of current line</td></tr>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌥</kbd> <kbd class="kbd">⌫</kbd></span></td><td>Delete previous entire word cleanly</td></tr>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌘</kbd> <kbd class="kbd">⌫</kbd></span></td><td>Delete entire line backward from cursor</td></tr>
+            <tr><td><span class="kbd-combo"><kbd class="kbd">⌥</kbd> <kbd class="kbd">⇧</kbd> <kbd class="kbd">⌘</kbd> <kbd class="kbd">V</kbd></span></td><td>Paste text matching destination style</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Science of Muscle Memory -->
+    <div class="guide-article">
+      <h3>The Science of Keyboard Muscle Memory: Why Doing Beats Reading</h3>
+      <p>Psychologists and neuroscientists specialize in motor skill acquisition: procedural knowledge (knowing *how* to execute an action instinctively) is stored in the cerebellum and basal ganglia, completely separate from declarative memory (recalling a fact from a cheatsheet). When you read a static list of shortcuts, your conscious brain processes the information sequentially. In a fast-paced work environment, this cognitive friction causes you to fall back to the slower, familiar mouse pointer.</p>
+      <p>Keyverse was built specifically on the principle of active spaced repetition. By placing you in a zero-risk, high-speed interactive environment with instant auditory and visual feedback, your neural pathways convert deliberate key combinations into automatic reflexes. Practicing just three to five minutes a day across our four volumes creates durable muscle memory that saves an estimated 64 hours of cumulative trackpad travel every single year.</p>
+    </div>
+
+    <!-- Frequently Asked Questions -->
+    <div class="guide-faq">
+      <h3 style="font-size:var(--text-xl); margin-bottom:var(--space-6); text-align:center;">Frequently Asked Questions</h3>
+      <div class="faq-item">
+        <h4 class="faq-q">What are the five most essential Mac shortcuts everyone should memorize first?</h4>
+        <p class="faq-a">If you only memorize five shortcuts, choose: 1) <kbd class="kbd">⌘</kbd>+<kbd class="kbd">Space</kbd> for Spotlight launcher; 2) <kbd class="kbd">⌘</kbd>+<kbd class="kbd">Tab</kbd> for instant app switching; 3) <kbd class="kbd">Spacebar</kbd> in Finder for Quick Look previews without opening applications; 4) <kbd class="kbd">⌘</kbd>+<kbd class="kbd">⌥</kbd>+<kbd class="kbd">Esc</kbd> for Force Quitting unresponsive programs; and 5) <kbd class="kbd">⌥</kbd>+<kbd class="kbd">←</kbd>/<kbd class="kbd">→</kbd> for rapid word navigation across all text fields.</p>
+      </div>
+      <div class="faq-item">
+        <h4 class="faq-q">Do these keyboard shortcuts work across macOS Sequoia, Sonoma, and Ventura?</h4>
+        <p class="faq-a">Yes. Every shortcut drilled in Keyverse is part of the standardized core macOS Human Interface Guidelines. Apple has preserved these foundational bindings across decades of OS updates, ensuring your muscle memory remains 100% applicable across current and upcoming macOS versions.</p>
+      </div>
+      <div class="faq-item">
+        <h4 class="faq-q">Can I use a Windows PC keyboard with these Mac games?</h4>
+        <p class="faq-a">Yes! When using a standard Windows keyboard on a Mac, the Windows key maps automatically to <kbd class="kbd">⌘ Command</kbd>, and the <kbd class="kbd">Alt</kbd> key maps to <kbd class="kbd">⌥ Option</kbd>. In Keyverse, each game also provides interactive on-screen modifier buttons so you can play on touchscreens, tablets, or non-Mac keyboards.</p>
+      </div>
+      <div class="faq-item">
+        <h4 class="faq-q">Why does Keyverse offer 10 separate games instead of one big list?</h4>
+        <p class="faq-a">Cognitive overload prevents effective skill learning. Trying to memorize fifty shortcuts at once leads to rapid forgetting. By dividing macOS shortcuts into four focused volumes—Essentials, System &amp; Windows, Finder, and Text Mastery—each game trains just 4 to 6 interrelated keys until they are second nature before introducing new ones.</p>
+      </div>
+      <div class="faq-item">
+        <h4 class="faq-q">Is Keyverse free, and do I need to create an account to practice?</h4>
+        <p class="faq-a">Keyverse is completely free to play in your browser with no account creation, sign-up, or software download required. All ten single-player games run natively using client-side web technologies, and your level progress is automatically saved to your browser local storage.</p>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer>
   <div class="wrap footer-row">
     <span class="footer-brand" data-i18n="footer_tag">Keyverse&trade; — a Mountain Rock State LLC production</span>
     <div class="footer-links">
-      <a href="mailto:mountainrockproducts@gmail.com" data-i18n="footer_contact">Contact</a>
+      <a href="about.html" data-i18n="footer_about">About</a>
+      <a href="contact.html" data-i18n="footer_contact">Contact</a>
       <a href="privacy.html" data-i18n="footer_privacy">Privacy</a>
       <a href="terms.html" data-i18n="footer_terms">Terms</a>
       <span data-i18n="footer_copy">© 2026 Mountain Rock State LLC. All Rights Reserved. U.S. Copyright Office Case #1-15200158071.</span>
