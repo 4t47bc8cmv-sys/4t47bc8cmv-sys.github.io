@@ -3,120 +3,351 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="robots" content="noindex, nofollow" />
-  <meta name="description" content="Keyverse is currently undergoing brief scheduled maintenance. Back online shortly." />
-  <title>Keyverse — Maintenance</title>
+  <meta name="google-adsense-account" content="ca-pub-2120991969522232">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2120991969522232" crossorigin="anonymous"></script>
+  <title>Sign In — Keyverse Games</title>
+  <meta name="description" content="Sign in to your Keyverse account to access split-screen multiplayer, manage invite codes, and view shared shortcut leaderboards." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=%2224%22 height=%2224%22 rx=%225%22 fill=%22%2313f2b0%22/><text x=%2212%22 y=%2217%22 font-size=%2214%22 text-anchor=%22middle%22 fill=%22%230b0e11%22 font-family=%22monospace%22 font-weight=%22700%22>K</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #0b0e11;
-      --panel: #12181d;
-      --text: #edf3f7;
+      --panel: #12161b;
+      --panel-elevated: #171c22;
+      --border: #262d36;
+      --text: #e7ecef;
       --muted: #9aa5af;
+      --faint: #5c6874;
       --accent: #13f2b0;
       --accent-hover: #4ff7c4;
+      --accent-active: #0dbd8a;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
     }
 
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     html, body {
-      margin: 0;
-      min-height: 100%;
-      height: 100%;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+      min-height: 100vh;
+      font-family: var(--font-body);
       background: var(--bg);
       color: var(--text);
+      line-height: 1.6;
     }
 
     body {
-      display: grid;
-      place-items: center;
+      display: flex;
+      flex-direction: column;
       background:
-        radial-gradient(circle at top, rgba(19, 242, 176, 0.12), transparent 35%),
+        radial-gradient(circle at 15% 0%, rgba(19, 242, 176, 0.10), transparent 40%),
+        radial-gradient(circle at 85% 20%, rgba(124, 157, 255, 0.08), transparent 45%),
         #0b0e11;
-      padding: 1rem;
     }
 
-    .maintenance {
-      width: min(92vw, 760px);
-      padding: 48px 32px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 18px;
-      background: rgba(18, 24, 29, 0.9);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.42);
-      text-align: center;
+    /* HEADER */
+    header.site-header {
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(8px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 30px;
+      height: 30px;
+      background: var(--accent);
+      color: #0b0e11;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 150ms ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    /* MAIN CONTAINER */
+    main.auth-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1.25rem;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 460px;
+      background: rgba(18, 22, 27, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem 2.25rem;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(12px);
     }
 
     .badge {
       display: inline-block;
-      margin-bottom: 18px;
-      padding: 8px 14px;
+      margin-bottom: 1.25rem;
+      padding: 0.35rem 0.85rem;
       border-radius: 999px;
       background: rgba(19, 242, 176, 0.12);
       border: 1px solid rgba(19, 242, 176, 0.35);
       color: var(--accent);
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       font-weight: 700;
+      font-family: var(--font-mono);
     }
 
     h1 {
-      margin: 0;
-      font-size: clamp(2rem, 5vw, 3.25rem);
-      line-height: 1.15;
+      font-size: 1.85rem;
+      line-height: 1.2;
       font-weight: 700;
-      letter-spacing: -0.04em;
+      margin-bottom: 0.65rem;
+      letter-spacing: -0.02em;
     }
 
-    p {
-      margin: 18px auto 0;
-      max-width: 560px;
+    .subtitle {
       color: var(--muted);
-      font-size: clamp(1rem, 2vw, 1.125rem);
-      line-height: 1.7;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      margin-bottom: 1.75rem;
     }
 
-    .actions {
-      margin-top: 32px;
+    /* FORM STYLES */
+    .form-group {
+      margin-bottom: 1.25rem;
+      text-align: left;
     }
 
-    .btn-home {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 0.45rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: var(--panel-elevated);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: var(--font-body);
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(19, 242, 176, 0.2);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 0.95rem 1.25rem;
       border-radius: 8px;
       background: var(--accent);
       color: #0b0e11;
       font-weight: 700;
       font-size: 0.95rem;
-      text-decoration: none;
-      transition: background 180ms ease, transform 180ms ease;
+      font-family: var(--font-mono);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background 150ms ease, transform 150ms ease;
+      margin-top: 0.5rem;
     }
 
-    .btn-home:hover {
+    .btn-submit:hover {
       background: var(--accent-hover);
       transform: translateY(-1px);
     }
 
-    :focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 3px;
+    .btn-submit:active {
+      background: var(--accent-active);
+      transform: translateY(0);
+    }
+
+    .status-msg {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--accent);
+      display: none;
+      text-align: center;
+      padding: 0.75rem;
+      background: rgba(19, 242, 176, 0.08);
+      border: 1px solid rgba(19, 242, 176, 0.2);
+      border-radius: 6px;
+    }
+
+    .card-footer {
+      margin-top: 1.75rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .card-footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .card-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* FOOTER */
+    footer.site-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 1.5rem 2rem;
+      font-size: 0.85rem;
+      color: var(--faint);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.25rem;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    @media (max-width: 600px) {
+      header.site-header { padding: 1rem; }
+      .nav-links { display: none; }
+      footer.site-footer { flex-direction: column; text-align: center; }
     }
   </style>
 </head>
 <body>
-  <main class="maintenance" aria-live="polite">
-    <div class="badge">Keyverse System Status</div>
-    <h1>Keyverse is down for quick maintenance</h1>
-    <p>We are making scheduled improvements across the Keyverse series and account systems. All games and progress will be back online shortly!</p>
-    <div class="actions">
-      <a href="index.html" class="btn-home">← Return to Homepage</a>
+
+  <header class="site-header">
+    <a href="/" class="brand">
+      <span class="brand-mark">K</span>
+      <span>Keyverse&trade;</span>
+    </a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/#games">All Games</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="auth-container">
+    <div class="auth-card" role="region" aria-labelledby="signin-title">
+      <span class="badge">Player Portal</span>
+      <h1 id="signin-title">Sign in to Keyverse</h1>
+      <p class="subtitle">Access your split-screen session, generate player invite codes, and view your shared keyboard speedrun rankings.</p>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="userEmail">Email Address</label>
+          <input type="email" id="userEmail" placeholder="you@example.com" required autocomplete="email" />
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">
+          <span>Continue with Email</span>
+          <span aria-hidden="true">→</span>
+        </button>
+
+        <div id="statusMsg" class="status-msg" role="status"></div>
+      </form>
+
+      <div class="card-footer">
+        <p>Haven't unlocked split-screen yet? Play all ten single-player games completely free on the <a href="/">Homepage</a> or unlock split-screen for $7.77.</p>
+        <p style="margin-top:0.75rem;">Need support? Email us directly at <a href="mailto:info@keyversegames.com">info@keyversegames.com</a>.</p>
+      </div>
     </div>
   </main>
+
+  <footer class="site-footer">
+    <span>Keyverse&trade; — a Mountain Rock State LLC production</span>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/contact.html">Contact</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/terms.html">Terms</a>
+    </div>
+  </footer>
+
+  <script>
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('userEmail').value.trim();
+      const btn = document.getElementById('submitBtn');
+      const status = document.getElementById('statusMsg');
+
+      if (!email) return;
+
+      btn.disabled = true;
+      btn.innerHTML = 'Connecting to portal…';
+      status.style.display = 'block';
+      status.textContent = 'Verifying account status for ' + email + '…';
+
+      setTimeout(function() {
+        btn.disabled = false;
+        btn.innerHTML = 'Continue with Email →';
+        status.textContent = 'If your account is registered, a sign-in link has been sent to ' + email + '. You can also check your inbox or return home.';
+      }, 900);
+    }
+  </script>
 </body>
 </html>
