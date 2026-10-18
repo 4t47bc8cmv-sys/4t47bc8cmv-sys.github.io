@@ -4,7 +4,9 @@
 const KEYVERSE_API = 'https://keyverse-api.onrender.com';
 const SUPABASE_URL = 'https://ludisdvlhkheokhehzih.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_xpSiid3HEEUS1wCs2dTMQw_wr6NQVdM';
-// Temporary Free Trial Run (Account & Password Required) — Proudly built by a USMC Veteran
+// Global Free Trial configuration. Set to false when trial ends.
+const FREE_TRIAL_ENABLED = true;
+const FREE_TRIAL_PASSCODE = 'Veteran USMC';
 const UNLOCK_PAYMENT_LINK = '/multiplayer/login.html';
 
 // Lazily created so pages that don't need auth (e.g. leaderboard.html) can

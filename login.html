@@ -148,191 +148,196 @@
     .subtitle {
       color: var(--muted);
       font-size: 0.92rem;
-      line-height: 1.55;
       margin-bottom: 1.5rem;
     }
 
-    /* TABS */
+    /* AUTH TABS */
     .auth-tabs {
       display: flex;
-      border-bottom: 1px solid var(--border);
+      gap: 0.5rem;
       margin-bottom: 1.5rem;
-      gap: 1rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.5rem;
     }
 
     .auth-tab {
       background: transparent;
       border: none;
-      border-bottom: 2px solid transparent;
       color: var(--muted);
-      font-size: 0.9rem;
       font-family: var(--font-body);
+      font-size: 0.88rem;
       font-weight: 600;
-      padding: 0.5rem 0.25rem;
+      padding: 0.5rem 0.75rem;
       cursor: pointer;
+      border-radius: 6px;
       transition: all 150ms ease;
+    }
+
+    .auth-tab:hover {
+      color: var(--text);
     }
 
     .auth-tab.active {
       color: var(--accent);
-      border-bottom-color: var(--accent);
+      background: rgba(19, 242, 176, 0.1);
     }
 
-    /* FORM STYLES */
+    /* FORM ELEMENTS */
     .form-group {
       margin-bottom: 1.25rem;
-      text-align: left;
     }
 
     label {
       display: block;
       font-size: 0.82rem;
       font-weight: 600;
-      color: var(--muted);
-      margin-bottom: 0.45rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+      color: var(--text);
     }
 
-    input[type="email"], input[type="password"] {
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
       width: 100%;
-      padding: 0.85rem 1rem;
       background: var(--panel-elevated);
       border: 1px solid var(--border);
       border-radius: 8px;
+      padding: 0.8rem 1rem;
       color: var(--text);
-      font-size: 0.95rem;
       font-family: var(--font-body);
-      transition: border-color 150ms ease, box-shadow 150ms ease;
+      font-size: 0.95rem;
+      transition: all 150ms ease;
+      outline: none;
     }
 
     input:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(19, 242, 176, 0.2);
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(19, 242, 176, 0.15);
     }
 
     .btn-submit {
       width: 100%;
-      padding: 0.95rem 1.25rem;
-      border-radius: 8px;
       background: var(--accent);
       color: #0b0e11;
+      border: none;
+      border-radius: 8px;
+      padding: 0.85rem 1.25rem;
+      font-family: var(--font-body);
       font-weight: 700;
       font-size: 0.95rem;
-      font-family: var(--font-mono);
-      border: none;
       cursor: pointer;
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      transition: background 150ms ease, transform 150ms ease;
+      transition: all 150ms ease;
       margin-top: 0.5rem;
     }
 
-    .btn-submit:hover {
+    .btn-submit:hover:not(:disabled) {
       background: var(--accent-hover);
       transform: translateY(-1px);
+    }
+
+    .btn-submit:active:not(:disabled) {
+      background: var(--accent-active);
+      transform: translateY(0);
     }
 
     .btn-submit:disabled {
       opacity: 0.6;
       cursor: not-allowed;
-      transform: none;
     }
 
-    /* GUEST / REVIEWER ACCESS */
-    .divider {
-      position: relative;
-      text-align: center;
-      margin: 1.75rem 0 1.25rem;
-    }
-
-    .divider::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .divider span {
-      position: relative;
-      background: #13171d;
-      padding: 0 0.75rem;
-      font-size: 0.75rem;
-      color: var(--faint);
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      border-radius: 4px;
-    }
-
-    .btn-guest {
-      width: 100%;
-      padding: 0.85rem 1.25rem;
-      border-radius: 8px;
-      background: var(--panel-elevated);
-      color: var(--text);
-      border: 1px solid var(--border);
-      font-weight: 600;
-      font-size: 0.9rem;
-      font-family: var(--font-mono);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      transition: border-color 150ms ease, background 150ms ease;
-    }
-
-    .btn-guest:hover {
-      border-color: var(--accent);
-      background: rgba(19, 242, 176, 0.08);
-      color: var(--accent);
-    }
-
-    .guest-hint {
-      margin-top: 0.5rem;
-      font-size: 0.75rem;
-      color: var(--faint);
-      text-align: center;
-    }
-
-    /* STATUS MESSAGES */
+    /* STATUS MESSAGE */
     .status-msg {
-      margin-top: 1.25rem;
-      font-size: 0.85rem;
-      padding: 0.85rem 1rem;
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
       border-radius: 8px;
+      font-size: 0.85rem;
+      line-height: 1.4;
       display: none;
-      line-height: 1.5;
-      text-align: left;
     }
 
     .status-msg.success {
       background: rgba(19, 242, 176, 0.1);
-      border: 1px solid rgba(19, 242, 176, 0.35);
+      border: 1px solid rgba(19, 242, 176, 0.3);
       color: var(--accent);
     }
 
     .status-msg.error {
       background: rgba(255, 107, 107, 0.1);
-      border: 1px solid rgba(255, 107, 107, 0.35);
+      border: 1px solid rgba(255, 107, 107, 0.3);
       color: var(--danger);
     }
 
+    .status-msg.info {
+      background: rgba(124, 157, 255, 0.1);
+      border: 1px solid rgba(124, 157, 255, 0.3);
+      color: var(--info);
+    }
+
+    /* DIVIDER & GUEST BUTTON */
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 1.75rem 0 1.25rem;
+      color: var(--faint);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .divider span {
+      padding: 0 0.75rem;
+    }
+
+    .btn-guest {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 150ms ease;
+    }
+
+    .btn-guest:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .guest-hint {
+      text-align: center;
+      color: var(--faint);
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+    }
+
+    /* CARD FOOTER */
     .card-footer {
       margin-top: 1.75rem;
-      padding-top: 1.5rem;
+      padding-top: 1.25rem;
       border-top: 1px solid var(--border);
-      font-size: 0.82rem;
       color: var(--muted);
-      text-align: center;
-      line-height: 1.6;
+      font-size: 0.8rem;
+      line-height: 1.5;
     }
 
     .card-footer a {
@@ -346,13 +351,13 @@
 
     /* FOOTER */
     footer.site-footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
       padding: 1.5rem 2rem;
-      font-size: 0.85rem;
-      color: var(--faint);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      font-size: 0.85rem;
+      color: var(--muted);
       flex-wrap: wrap;
       gap: 1rem;
       background: rgba(11, 14, 17, 0.85);
@@ -361,8 +366,6 @@
     .footer-links {
       display: flex;
       gap: 1.25rem;
-      align-items: center;
-      flex-wrap: wrap;
     }
 
     .footer-links a {
@@ -376,22 +379,25 @@
     }
 
     @media (max-width: 600px) {
-      header.site-header { padding: 1rem; }
-      .nav-links { display: none; }
-      footer.site-footer { flex-direction: column; text-align: center; }
+      header.site-header, footer.site-footer {
+        padding: 1rem 1.25rem;
+      }
+      .auth-card {
+        padding: 1.75rem 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
 
   <header class="site-header">
-    <a href="/" class="brand">
+    <a href="/" class="brand" aria-label="Keyverse Homepage">
       <span class="brand-mark">K</span>
-      <span>Keyverse&trade;</span>
+      <span>KEYVERSE</span>
     </a>
-    <nav class="nav-links">
-      <a href="/">← Return to Homepage</a>
-      <a href="/#games">All Games</a>
+    <nav class="nav-links" aria-label="Main Navigation">
+      <a href="/">Home</a>
+      <a href="/#games">Games</a>
       <a href="/about.html">About</a>
       <a href="/contact.html">Contact</a>
     </nav>
@@ -399,15 +405,19 @@
 
   <main class="auth-container">
     <div class="auth-card" role="region" aria-labelledby="signin-title">
-      <span class="badge">★ Free Trial Run Active</span>
-      <h1 id="signin-title">Start Free Trial Run</h1>
-      <p class="subtitle" style="margin-bottom:0.4rem;"><strong>Account &amp; Password Required</strong> to unlock Split-Screen Multiplayer.</p>
-      <p style="color:var(--accent); font-size:0.85rem; font-weight:600; margin-bottom:1.5rem;">★ Proudly built by a USMC Veteran</p>
+      <span class="badge">Player Portal · Free Trial</span>
+      <h1 id="signin-title">Split-Screen Multiplayer</h1>
+      <p class="subtitle">Enter your email and the worldwide Free Trial Passcode to access split-screen multiplayer.</p>
+
+      <!-- PROMINENT FREE TRIAL PASSCODE NOTICE -->
+      <div id="trialNotice" style="background: rgba(19, 242, 176, 0.08); border: 1px solid rgba(19, 242, 176, 0.25); border-radius: 8px; padding: 0.85rem 1rem; margin-bottom: 1.25rem; font-size: 0.88rem; text-align: center;">
+        <span style="color: var(--muted); display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 0.35rem;">Worldwide Free Trial Passcode</span>
+        <code style="background: rgba(0, 0, 0, 0.4); padding: 0.3rem 0.75rem; border-radius: 4px; color: var(--accent); font-family: var(--font-mono); font-weight: 700; font-size: 1.1rem; letter-spacing: 0.05em;">Veteran USMC</code>
+      </div>
 
       <!-- AUTH TABS -->
-      <div class="auth-tabs" role="tablist">
-        <button class="auth-tab active" id="tabPassword" type="button" role="tab" onclick="switchTab('password')">Sign In (Password)</button>
-        <button class="auth-tab" id="tabSignUp" type="button" role="tab" onclick="switchTab('signup')">Sign Up (Password)</button>
+      <div class="auth-tabs" id="authTabs" role="tablist">
+        <button class="auth-tab active" id="tabTrial" type="button" role="tab" onclick="switchTab('trial')">Free Trial (Passcode)</button>
         <button class="auth-tab" id="tabMagic" type="button" role="tab" onclick="switchTab('magic')">Magic Link</button>
       </div>
 
@@ -419,12 +429,12 @@
         </div>
 
         <div class="form-group" id="passwordGroup">
-          <label for="passwordInput">Password</label>
-          <input type="password" id="passwordInput" placeholder="Enter your password" required autocomplete="current-password" />
+          <label for="passwordInput" id="passwordLabel">Free Trial Passcode</label>
+          <input type="password" id="passwordInput" placeholder="Enter: Veteran USMC" required autocomplete="current-password" />
         </div>
 
         <button type="submit" class="btn-submit" id="submitBtn">
-          <span id="btnText">Start Free Trial Run (Sign In)</span>
+          <span id="btnText">Start Free Trial Run</span>
           <span aria-hidden="true">→</span>
         </button>
 
@@ -440,7 +450,7 @@
       <p class="guest-hint">Instant access for AdSense reviewers and players testing split-screen features.</p>
 
       <div class="card-footer">
-        <p><strong>Free Trial Access:</strong> Create an account or sign in with your email and password to instantly unlock full access to split-screen multiplayer, custom invite codes, and shared leaderboards. Proudly built by a USMC Veteran.</p>
+        <p><strong>Free Trial Access:</strong> Create an account or sign in with your email and the trial passcode to access split-screen multiplayer, custom invite codes, and shared leaderboards.</p>
         <p style="margin-top:0.6rem;">Questions or account support? Email <a href="mailto:mountainrockproducts@gmail.com">mountainrockproducts@gmail.com</a>.</p>
       </div>
     </div>
@@ -459,9 +469,13 @@
   </footer>
 
   <script>
-    // Supabase Configuration from shared.js
-    const SUPABASE_URL = 'https://ludisdvlhkheokhehzih.supabase.co';
-    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_xpSiid3HEEUS1wCs2dTMQw_wr6NQVdM';
+    // Config: Toggle Free Trial mode. Set to false when trial ends.
+    const FREE_TRIAL_ENABLED = true;
+    const FREE_TRIAL_PASSCODE = "Veteran USMC";
+
+    // Supabase Configuration
+    const SUPABASE_URL = "https://ludisdvlhkheokhehzih.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_xpSiid3HEEUS1wCs2dTMQw_wr6NQVdM";
     
     let supabase = null;
     try {
@@ -469,127 +483,176 @@
         supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
       }
     } catch (e) {
-      console.warn('Supabase initialization error:', e);
+      console.warn("Supabase initialization error:", e);
     }
 
-    let activeTab = 'password';
+    let activeTab = "trial";
+
+    function applyTrialConfig() {
+      const trialNotice = document.getElementById("trialNotice");
+      const passLabel = document.getElementById("passwordLabel");
+      const passInput = document.getElementById("passwordInput");
+      const btnText = document.getElementById("btnText");
+      const tabTrial = document.getElementById("tabTrial");
+
+      if (FREE_TRIAL_ENABLED) {
+        if (trialNotice) trialNotice.style.display = "block";
+        if (passLabel) passLabel.textContent = "Free Trial Passcode";
+        if (passInput) passInput.placeholder = "Enter: " + FREE_TRIAL_PASSCODE;
+        if (btnText && activeTab === "trial") btnText.textContent = "Start Free Trial Run";
+        if (tabTrial) tabTrial.textContent = "Free Trial (Passcode)";
+      } else {
+        if (trialNotice) trialNotice.style.display = "none";
+        if (passLabel) passLabel.textContent = "Password";
+        if (passInput) passInput.placeholder = "Enter your password";
+        if (btnText && activeTab === "trial") btnText.textContent = "Sign In with Password";
+        if (tabTrial) tabTrial.textContent = "Password";
+      }
+    }
 
     function switchTab(tab) {
       activeTab = tab;
-      document.getElementById('tabPassword').classList.toggle('active', tab === 'password');
-      document.getElementById('tabSignUp').classList.toggle('active', tab === 'signup');
-      document.getElementById('tabMagic').classList.toggle('active', tab === 'magic');
+      document.getElementById("tabTrial").classList.toggle("active", tab === "trial");
+      document.getElementById("tabMagic").classList.toggle("active", tab === "magic");
 
-      const passGroup = document.getElementById('passwordGroup');
-      const passInput = document.getElementById('passwordInput');
-      const btnText = document.getElementById('btnText');
-      const statusBox = document.getElementById('statusBox');
-      statusBox.style.display = 'none';
+      const passGroup = document.getElementById("passwordGroup");
+      const passInput = document.getElementById("passwordInput");
+      const btnText = document.getElementById("btnText");
+      const statusBox = document.getElementById("statusBox");
+      statusBox.style.display = "none";
 
-      if (tab === 'password') {
-        passGroup.style.display = 'block';
-        passInput.setAttribute('required', 'required');
-        btnText.textContent = 'Start Free Trial Run (Sign In)';
-      } else if (tab === 'signup') {
-        passGroup.style.display = 'block';
-        passInput.setAttribute('required', 'required');
-        btnText.textContent = 'Start Free Trial Run (Create Account)';
-      } else if (tab === 'magic') {
-        passGroup.style.display = 'none';
-        passInput.removeAttribute('required');
-        btnText.textContent = 'Start Free Trial Run (Magic Link)';
+      if (tab === "trial") {
+        passGroup.style.display = "block";
+        passInput.setAttribute("required", "required");
+        btnText.textContent = FREE_TRIAL_ENABLED ? "Start Free Trial Run" : "Sign In with Password";
+      } else if (tab === "magic") {
+        passGroup.style.display = "none";
+        passInput.removeAttribute("required");
+        btnText.textContent = "Send Magic Sign-In Link";
       }
     }
 
     function showStatus(type, msg) {
-      const box = document.getElementById('statusBox');
-      box.className = 'status-msg ' + type;
+      const box = document.getElementById("statusBox");
+      box.className = "status-msg " + type;
       box.textContent = msg;
-      box.style.display = 'block';
+      box.style.display = "block";
     }
 
     // Auto-redirect if session already exists
     if (supabase) {
       supabase.auth.getSession().then(({ data: { session } }) => {
         if (session && session.user) {
-          window.location.href = '/multiplayer/account.html';
+          window.location.href = "/multiplayer/account.html";
         }
       });
 
       supabase.auth.onAuthStateChange((event, session) => {
         if (session && session.user) {
-          window.location.href = '/multiplayer/account.html';
+          window.location.href = "/multiplayer/account.html";
         }
       });
     }
 
     async function handleAuthSubmit(e) {
       e.preventDefault();
-      const email = document.getElementById('emailInput').value.trim();
-      const password = document.getElementById('passwordInput').value;
-      const btn = document.getElementById('submitBtn');
+      const email = document.getElementById("emailInput").value.trim();
+      const password = document.getElementById("passwordInput").value.trim();
+      const btn = document.getElementById("submitBtn");
 
       if (!email) return;
 
       btn.disabled = true;
-      const origText = document.getElementById('btnText').textContent;
-      document.getElementById('btnText').textContent = 'Connecting…';
+      const origText = document.getElementById("btnText").textContent;
+      document.getElementById("btnText").textContent = "Connecting…";
 
       try {
-        if (!supabase) {
-          throw new Error('Supabase client is offline. You can use Guest Demo mode below.');
-        }
+        if (activeTab === "trial") {
+          if (FREE_TRIAL_ENABLED) {
+            // Universal Free Trial Passcode validation (case-insensitive)
+            if (password.toLowerCase() !== FREE_TRIAL_PASSCODE.toLowerCase()) {
+              throw new Error('Invalid trial passcode. Please enter "' + FREE_TRIAL_PASSCODE + '" to unlock free trial access.');
+            }
 
-        if (activeTab === 'magic') {
-          const redirectTo = window.location.origin + '/multiplayer/account.html';
+            // Attempt Supabase sign-in or account creation in the background
+            if (supabase) {
+              try {
+                const { error: signInErr } = await supabase.auth.signInWithPassword({
+                  email: email,
+                  password: FREE_TRIAL_PASSCODE
+                });
+                if (signInErr) {
+                  await supabase.auth.signUp({
+                    email: email,
+                    password: FREE_TRIAL_PASSCODE
+                  }).catch(() => {});
+                }
+              } catch (e) {
+                console.warn("Supabase background trial auth:", e);
+              }
+            }
+
+            // Activate local trial session
+            localStorage.setItem("kv_trial_active", "true");
+            localStorage.setItem("kv_trial_email", email);
+            localStorage.setItem("kv_player", JSON.stringify({
+              id: "trial-" + btoa(email).replace(/=/g, "").substring(0, 12),
+              nickname: email.split("@")[0],
+              email: email
+            }));
+
+            showStatus("success", "Passcode verified! Entering split-screen multiplayer…");
+            setTimeout(() => {
+              window.location.href = "/multiplayer/account.html";
+            }, 350);
+            return;
+          } else {
+            // Standard Supabase password authentication when trial is disabled
+            if (!supabase) {
+              throw new Error("Authentication service is offline. Please try again shortly.");
+            }
+            const { data, error } = await supabase.auth.signInWithPassword({
+              email: email,
+              password: password
+            });
+            if (error) throw error;
+            showStatus("success", "Signed in successfully! Opening dashboard…");
+            window.location.href = "/multiplayer/account.html";
+          }
+        } else if (activeTab === "magic") {
+          if (!supabase) {
+            throw new Error("Supabase client is offline. You can use the Free Trial passcode above.");
+          }
+          const redirectTo = window.location.origin + "/multiplayer/account.html";
           const { error } = await supabase.auth.signInWithOtp({
             email: email,
             options: { emailRedirectTo: redirectTo }
           });
           if (error) throw error;
-          showStatus('success', 'Magic link sent to ' + email + '! Click the link in your email to open your account.');
-        } else if (activeTab === 'password') {
-          const { data, error } = await supabase.auth.signInWithPassword({
-            email: email,
-            password: password
-          });
-          if (error) throw error;
-          showStatus('success', 'Signed in successfully! Opening account dashboard…');
-          window.location.href = '/multiplayer/account.html';
-        } else if (activeTab === 'signup') {
-          const redirectTo = window.location.origin + '/multiplayer/account.html';
-          const { data, error } = await supabase.auth.signUp({
-            email: email,
-            password: password,
-            options: { emailRedirectTo: redirectTo }
-          });
-          if (error) throw error;
-          if (data && data.session) {
-            showStatus('success', 'Account created! Opening dashboard…');
-            window.location.href = '/multiplayer/account.html';
-          } else {
-            showStatus('success', 'Account created! Please check ' + email + ' to confirm or sign in directly.');
-          }
+          showStatus("success", "Magic link sent to " + email + "! Click the link in your email to open your account.");
         }
       } catch (err) {
-        showStatus('error', err.message || 'Authentication error. Please try again or use Guest Demo mode.');
+        showStatus("error", err.message || "Authentication error. Please try again or use Guest Demo mode.");
       } finally {
         btn.disabled = false;
-        document.getElementById('btnText').textContent = origText;
+        document.getElementById("btnText").textContent = origText;
       }
     }
 
     function handleGuestAccess() {
       try {
-        localStorage.setItem('kv_guest_mode', 'true');
-        localStorage.setItem('kv_player', JSON.stringify({
-          id: 'guest-reviewer',
-          nickname: 'ReviewerDemo',
-          email: 'reviewer@ad-verification.demo'
+        localStorage.setItem("kv_guest_mode", "true");
+        localStorage.setItem("kv_player", JSON.stringify({
+          id: "guest-reviewer",
+          nickname: "ReviewerDemo",
+          email: "reviewer@ad-verification.demo"
         }));
       } catch (e) {}
-      window.location.href = '/multiplayer/account.html?guest=true';
+      window.location.href = "/multiplayer/account.html?guest=true";
     }
+
+    // Apply configuration on load
+    applyTrialConfig();
   </script>
 </body>
 </html>
