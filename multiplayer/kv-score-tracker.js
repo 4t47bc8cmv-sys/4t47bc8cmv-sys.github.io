@@ -328,12 +328,26 @@
     }
   }
 
+  let challengeOpenedTracked = false;
+
   function checkUrlForChallenge() {
     try {
       const params = new URLSearchParams(window.location.search);
       const score = params.get('challenge_score');
       if (score) {
         renderChallengeBanner(score);
+        if (!challengeOpenedTracked) {
+          challengeOpenedTracked = true;
+          if (typeof gtag === 'function') {
+            gtag('event', 'challenge_link_opened', {
+              challenge_target_score: Number(score)
+            });
+          } else if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+            window.gtag('event', 'challenge_link_opened', {
+              challenge_target_score: Number(score)
+            });
+          }
+        }
       }
     } catch (_) {}
   }

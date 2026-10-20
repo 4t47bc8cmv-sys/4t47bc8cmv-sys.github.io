@@ -5,6 +5,9 @@
  * Selects a rotating Mac Shortcut Tip of the Day and posts to:
  * 1. Discord (via incoming webhook)
  * 2. Bluesky (via AT Protocol com.atproto.server.createSession + com.atproto.repo.createRecord)
+ * 3. Mastodon (via POST ${instance}/api/v1/statuses)
+ * 4. Telegram Channel (via POST https://api.telegram.org/bot${token}/sendMessage)
+ * 5. Universal Cross-Post Webhook (Make.com, Zapier, Buffer for X/LinkedIn/Threads/Facebook)
  *
  * Requirements:
  * - Node 20+ (uses native global fetch, no external dependencies)
@@ -12,6 +15,11 @@
  *   - DISCORD_WEBHOOK_URL (optional, skips if missing)
  *   - BLUESKY_HANDLE (optional, skips if missing)
  *   - BLUESKY_APP_PASSWORD (optional, skips if missing)
+ *   - MASTODON_INSTANCE_URL (optional, defaults to https://mastodon.social)
+ *   - MASTODON_ACCESS_TOKEN (optional, skips if missing)
+ *   - TELEGRAM_BOT_TOKEN (optional, skips if missing)
+ *   - TELEGRAM_CHAT_ID (optional, skips if missing)
+ *   - MULTI_SOCIAL_WEBHOOK_URL (optional, skips if missing)
  */
 
 const MAC_SHORTCUT_TIPS = [
@@ -204,6 +212,17 @@ function getDayOfYear(date = new Date()) {
   return Math.floor(diff / oneDay) + 1;
 }
 
+function buildPostText(tip, targetUrl) {
+  return `💡 Mac Shortcut of the Day: ${tip.title}\n\nKeys: ${tip.keys}\n\n${tip.desc}\n\n🎮 Practice and build muscle memory for Mac shortcuts:\n${targetUrl}`;
+}
+
+function escapeHtml(text) {
+  return (text || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 async function postToDiscord(tip, targetUrl, dayOfYear) {
   const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
   if (!webhookUrl || !webhookUrl.trim()) {
@@ -247,7 +266,7 @@ async function postToDiscord(tip, targetUrl, dayOfYear) {
   }
 }
 
-async function postToBluesky(tip, targetUrl) {
+async function postToBluesky(tip, targetUrl, postText) {
   const handle = process.env.BLUESKY_HANDLE;
   const appPassword = process.env.BLUESKY_APP_PASSWORD;
 
@@ -276,9 +295,6 @@ async function postToBluesky(tip, targetUrl) {
     console.log(`[Bluesky] Authenticated as @${session.handle} (${session.did})`);
 
     // 2. Prepare Post Text & Facets
-    const postText = `💡 Mac Shortcut of the Day: ${tip.title}\n\nKeys: ${tip.keys}\n\n${tip.desc}\n\n🎮 Practice and build muscle memory for Mac shortcuts:\n${targetUrl}`;
-
-    // Calculate byte indices for the link facet
     const beforeUrl = postText.slice(0, postText.indexOf(targetUrl));
     const byteStart = Buffer.byteLength(beforeUrl, 'utf8');
     const byteEnd = byteStart + Buffer.byteLength(targetUrl, 'utf8');
@@ -337,6 +353,117 @@ async function postToBluesky(tip, targetUrl) {
   }
 }
 
+async function postToMastodon(tip, targetUrl, postText) {
+  const accessToken = process.env.MASTODON_ACCESS_TOKEN;
+  if (!accessToken || !accessToken.trim()) {
+    console.log('[Mastodon] Notice: MASTODON_ACCESS_TOKEN secret not configured. Skipping Mastodon post.');
+    return;
+  }
+
+  const rawInstance = (process.env.MASTODON_INSTANCE_URL || 'https://mastodon.social').trim().replace(/\/+$/, '');
+  const instanceUrl = rawInstance.startsWith('http://') || rawInstance.startsWith('https://')
+    ? rawInstance
+    : `https://${rawInstance}`;
+
+  const apiUrl = `${instanceUrl}/api/v1/statuses`;
+
+  try {
+    const res = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken.trim()}`
+      },
+      body: JSON.stringify({
+        status: postText
+      })
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      console.log(`✅ [Mastodon] Daily tip posted successfully: ${data.url || data.id}`);
+    } else {
+      const errText = await res.text();
+      console.error(`❌ [Mastodon] API returned status ${res.status}: ${errText}`);
+    }
+  } catch (err) {
+    console.error('❌ [Mastodon] Failed to post status:', err.message);
+  }
+}
+
+async function postToTelegram(tip, targetUrl, dayOfYear) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+
+  if (!token || !token.trim() || !chatId || !chatId.trim()) {
+    console.log('[Telegram] Notice: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID secret not configured. Skipping Telegram post.');
+    return;
+  }
+
+  const apiUrl = `https://api.telegram.org/bot${token.trim()}/sendMessage`;
+
+  const messageText = `💡 <b>Mac Shortcut Tip of the Day</b> (Day ${dayOfYear})\n\n<b>${escapeHtml(tip.title)}</b> — <code>${escapeHtml(tip.keys)}</code>\n\n${escapeHtml(tip.desc)}\n\n🎮 <a href="${targetUrl}">Train your Mac keyboard muscle memory on Keyverse</a>`;
+
+  try {
+    const res = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: chatId.trim(),
+        text: messageText,
+        parse_mode: 'HTML',
+        disable_web_page_preview: false
+      })
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      console.log(`✅ [Telegram] Daily tip posted successfully (Message ID: ${data.result?.message_id}).`);
+    } else {
+      const errText = await res.text();
+      console.error(`❌ [Telegram] API returned status ${res.status}: ${errText}`);
+    }
+  } catch (err) {
+    console.error('❌ [Telegram] Failed to post message:', err.message);
+  }
+}
+
+async function postToMultiSocialWebhook(tip, trackedUrl, dayOfYear, postText, dateObj) {
+  const webhookUrl = process.env.MULTI_SOCIAL_WEBHOOK_URL;
+  if (!webhookUrl || !webhookUrl.trim()) {
+    console.log('[Multi-Social Webhook] Notice: MULTI_SOCIAL_WEBHOOK_URL secret not configured. Skipping cross-post webhook.');
+    return;
+  }
+
+  const dateStr = dateObj.toISOString().split('T')[0];
+  const payload = {
+    date: dateStr,
+    dayOfYear,
+    shortcut: tip.keys,
+    title: tip.title,
+    tip: tip.desc,
+    trackedUrl,
+    postText
+  };
+
+  try {
+    const res = await fetch(webhookUrl.trim(), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (res.ok) {
+      console.log('✅ [Multi-Social Webhook] Daily tip payload dispatched successfully.');
+    } else {
+      const errText = await res.text();
+      console.error(`❌ [Multi-Social Webhook] Webhook returned status ${res.status}: ${errText}`);
+    }
+  } catch (err) {
+    console.error('❌ [Multi-Social Webhook] Failed to dispatch webhook:', err.message);
+  }
+}
+
 async function main() {
   const now = new Date();
   const dayOfYear = getDayOfYear(now);
@@ -344,6 +471,7 @@ async function main() {
   const tip = MAC_SHORTCUT_TIPS[tipIndex];
 
   const targetUrl = `https://keyversegames.com/?utm_source=social_auto&utm_medium=daily_tip&utm_campaign=tip_${dayOfYear}`;
+  const postText = buildPostText(tip, targetUrl);
 
   console.log(`========================================`);
   console.log(`Keyverse Social Promo Poster`);
@@ -353,10 +481,13 @@ async function main() {
   console.log(`Target URL: ${targetUrl}`);
   console.log(`========================================\n`);
 
-  // Execute posts in parallel
+  // Execute posts in parallel across all supported platforms
   await Promise.allSettled([
     postToDiscord(tip, targetUrl, dayOfYear),
-    postToBluesky(tip, targetUrl)
+    postToBluesky(tip, targetUrl, postText),
+    postToMastodon(tip, targetUrl, postText),
+    postToTelegram(tip, targetUrl, dayOfYear),
+    postToMultiSocialWebhook(tip, targetUrl, dayOfYear, postText, now)
   ]);
 
   console.log('\nDaily promo posting run finished.');
@@ -366,3 +497,4 @@ main().catch((err) => {
   console.error('Fatal error in social promo poster:', err);
   process.exit(1);
 });
+
