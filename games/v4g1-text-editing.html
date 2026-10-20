@@ -1604,11 +1604,23 @@
   =============================================================
 -->
 
-    <!-- KEYVERSE v07 -- Between-level "Level Complete" overlay (honest, no ad gate) -->
+    <!-- KEYVERSE -- Level Complete / Score Summary overlay -->
     <div id="kv-interstitial" style="position:fixed;inset:0;background:rgba(17,17,27,0.96);display:none;align-items:center;justify-content:center;z-index:9999;padding:16px;">
-      <div style="background:#252538;border:2px solid #a6e3a1;border-radius:14px;padding:28px 22px;max-width:380px;width:100%;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.6);">
-        <div id="kv-int-title" style="color:#a6e3a1;font-size:1.3rem;font-weight:900;margin-bottom:10px;letter-spacing:1px;">Level Complete!</div>
-        <div id="kv-int-body" style="color:#bac2de;font-size:0.92rem;line-height:1.45;margin-bottom:20px;">Nice work -- you're ready for the next level.</div>
+      <div style="background:#252538;border:2px solid #a6e3a1;border-radius:14px;padding:26px 22px;max-width:380px;width:100%;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.6);">
+        <div id="kv-int-title" style="color:#a6e3a1;font-size:1.3rem;font-weight:900;margin-bottom:8px;letter-spacing:1px;">Level Complete!</div>
+        <div id="kv-int-body" style="color:#bac2de;font-size:0.92rem;line-height:1.45;margin-bottom:14px;">Nice work -- you're ready for the next level.</div>
+        <div id="kv-int-score-box" style="background:#181825;border:1px solid #45475a;border-radius:10px;padding:10px 14px;margin-bottom:14px;display:flex;justify-content:space-around;align-items:center;">
+          <div>
+            <div style="font-size:0.7rem;color:#a6adc8;text-transform:uppercase;font-weight:700;letter-spacing:0.5px;">Your Score</div>
+            <div id="kv-int-score" style="font-size:1.5rem;font-weight:900;color:#f9e2af;margin-top:2px;">1,000</div>
+          </div>
+          <div style="width:1px;height:30px;background:#313244;"></div>
+          <div>
+            <div style="font-size:0.7rem;color:#a6adc8;text-transform:uppercase;font-weight:700;letter-spacing:0.5px;">Accuracy</div>
+            <div id="kv-int-acc" style="font-size:1.5rem;font-weight:900;color:#a6e3a1;margin-top:2px;">100%</div>
+          </div>
+        </div>
+        <button id="kv-challenge-btn" class="kv-challenge-btn" type="button">⚔️ Challenge a Friend</button>
         <button id="kv-int-next" type="button" style="background:linear-gradient(135deg,#a6e3a1,#89b4fa);color:#11111b;font-size:0.95rem;font-weight:800;letter-spacing:0.5px;border:none;border-radius:10px;padding:12px 24px;cursor:pointer;width:100%;">Next Level &#8594;</button>
       </div>
     </div>
