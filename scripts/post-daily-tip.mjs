@@ -294,32 +294,16 @@ async function postToBluesky(tip, targetUrl, postText) {
     const session = await sessionRes.json();
     console.log(`[Bluesky] Authenticated as @${session.handle} (${session.did})`);
 
-    // 2. Prepare Post Text & Facets
-    const beforeUrl = postText.slice(0, postText.indexOf(targetUrl));
-    const byteStart = Buffer.byteLength(beforeUrl, 'utf8');
-    const byteEnd = byteStart + Buffer.byteLength(targetUrl, 'utf8');
+    // 2. Prepare Post Text (shortened without raw trackedUrl, since external embed card already links to targetUrl)
+    const blueskyText = `💡 Mac Shortcut of the Day: ${tip.title}\n\nKeys: ${tip.keys}\n\n${tip.desc}`.slice(0, 295);
 
     const recordPayload = {
       repo: session.did,
       collection: 'app.bsky.feed.post',
       record: {
         $type: 'app.bsky.feed.post',
-        text: postText,
+        text: blueskyText,
         createdAt: new Date().toISOString(),
-        facets: [
-          {
-            index: {
-              byteStart,
-              byteEnd
-            },
-            features: [
-              {
-                $type: 'app.bsky.richtext.facet#link',
-                uri: targetUrl
-              }
-            ]
-          }
-        ],
         embed: {
           $type: 'app.bsky.embed.external',
           external: {
