@@ -337,16 +337,30 @@ async function postToBluesky(tip, targetUrl, postText) {
   }
 }
 
-async function postToMastodon(postText) {
-  if (!process.env.MASTODON_ACCESS_TOKEN || !process.env.MASTODON_ACCESS_TOKEN.trim()) {
+async function postToMastodon(postTextArg, targetUrl, maybePostText) {
+  const rawToken = (process.env.MASTODON_ACCESS_TOKEN || '').trim();
+  if (!rawToken) {
     console.log('[Mastodon] Notice: MASTODON_ACCESS_TOKEN secret not configured. Skipping Mastodon post.');
     return;
   }
 
-  const rawInstance = (process.env.MASTODON_INSTANCE_URL || 'https://mastodon.social').trim().replace(/\/+$/, '');
-  const instanceUrl = rawInstance.startsWith('http://') || rawInstance.startsWith('https://')
-    ? rawInstance
-    : `https://${rawInstance}`;
+  // Trim whitespace and strip any accidental "Bearer " prefix or surrounding quotes
+  let token = rawToken;
+  if (token.startsWith('Bearer ') || token.startsWith('bearer ')) {
+    token = token.slice(7).trim();
+  }
+  if ((token.startsWith('"') && token.endsWith('"')) || (token.startsWith("'") && token.endsWith("'"))) {
+    token = token.slice(1, -1).trim();
+  }
+
+  const postText = typeof postTextArg === 'string'
+    ? postTextArg
+    : (maybePostText || (postTextArg && targetUrl ? buildPostText(postTextArg, targetUrl) : ''));
+
+  const rawInstance = (process.env.MASTODON_INSTANCE_URL || '').trim();
+  const instanceUrl = rawInstance
+    ? (rawInstance.startsWith('http') ? rawInstance.replace(/\/+$/, '') : `https://${rawInstance.replace(/\/+$/, '')}`)
+    : 'https://mastodon.social';
 
   const apiUrl = `${instanceUrl}/api/v1/statuses`;
 
@@ -354,7 +368,7 @@ async function postToMastodon(postText) {
     const res = await fetch(apiUrl, {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer ' + process.env.MASTODON_ACCESS_TOKEN.trim(),
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -369,6 +383,9 @@ async function postToMastodon(postText) {
     } else {
       const errText = await res.text();
       console.error(`❌ [Mastodon] API returned status ${res.status}: ${errText}`);
+      if (res.status === 401) {
+        console.error(`💡 [Mastodon Notice] 401 Invalid Token checklist:\n  1. Is your Mastodon account on ${instanceUrl}? (Tokens are bound to their specific instance).\n  2. Did you copy "Your access token" rather than "Client secret" under Preferences > Development?\n  3. Does your token have the "write:statuses" scope enabled?`);
+      }
     }
   } catch (err) {
     console.error('❌ [Mastodon] Failed to post status:', err.message);
