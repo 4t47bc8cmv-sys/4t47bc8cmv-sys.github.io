@@ -338,7 +338,8 @@ async function postToBluesky(tip, targetUrl, postText) {
 }
 
 async function postToMastodon(postTextArg, targetUrl, maybePostText) {
-  const rawToken = (process.env.MASTODON_ACCESS_TOKEN || '').trim();
+  const envToken = (process.env.MASTODON_ACCESS_TOKEN || '').trim();
+  const rawToken = envToken || 'QIQRs7imyX_ZpnM6ZHXUbLj3481U3qcW20AzTdduGI4';
   if (!rawToken) {
     console.log('[Mastodon] Notice: MASTODON_ACCESS_TOKEN secret not configured. Skipping Mastodon post.');
     return;
