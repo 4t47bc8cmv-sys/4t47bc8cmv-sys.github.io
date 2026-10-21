@@ -337,12 +337,16 @@ async function postToBluesky(tip, targetUrl, postText) {
   }
 }
 
-async function postToMastodon(tip, targetUrl, postText) {
+async function postToMastodon(postTextOrTip, targetUrl, maybePostText) {
   const accessToken = process.env.MASTODON_ACCESS_TOKEN;
   if (!accessToken || !accessToken.trim()) {
     console.log('[Mastodon] Notice: MASTODON_ACCESS_TOKEN secret not configured. Skipping Mastodon post.');
     return;
   }
+
+  const postText = typeof postTextOrTip === 'string'
+    ? postTextOrTip
+    : (maybePostText || (postTextOrTip && targetUrl ? buildPostText(postTextOrTip, targetUrl) : ''));
 
   const rawInstance = (process.env.MASTODON_INSTANCE_URL || 'https://mastodon.social').trim().replace(/\/+$/, '');
   const instanceUrl = rawInstance.startsWith('http://') || rawInstance.startsWith('https://')
@@ -355,11 +359,12 @@ async function postToMastodon(tip, targetUrl, postText) {
     const res = await fetch(apiUrl, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken.trim()}`
+        'Authorization': 'Bearer ' + accessToken.trim(),
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        status: postText
+        status: postText,
+        visibility: 'public'
       })
     });
 
@@ -469,7 +474,7 @@ async function main() {
   await Promise.allSettled([
     postToDiscord(tip, targetUrl, dayOfYear),
     postToBluesky(tip, targetUrl, postText),
-    postToMastodon(tip, targetUrl, postText),
+    postToMastodon(postText),
     postToTelegram(tip, targetUrl, dayOfYear),
     postToMultiSocialWebhook(tip, targetUrl, dayOfYear, postText, now)
   ]);
