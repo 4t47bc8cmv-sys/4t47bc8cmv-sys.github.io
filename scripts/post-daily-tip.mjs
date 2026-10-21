@@ -337,22 +337,20 @@ async function postToBluesky(tip, targetUrl, postText) {
   }
 }
 
-async function postToMastodon(postTextArg, targetUrl, maybePostText) {
-  const envToken = (process.env.MASTODON_ACCESS_TOKEN || '').trim();
-  const rawToken = envToken || 'QIQRs7imyX_ZpnM6ZHXUbLj3481U3qcW20AzTdduGI4';
-  if (!rawToken) {
-    console.log('[Mastodon] Notice: MASTODON_ACCESS_TOKEN secret not configured. Skipping Mastodon post.');
-    return;
-  }
-
-  // Trim whitespace and strip any accidental "Bearer " prefix or surrounding quotes
-  let token = rawToken;
+function sanitizeToken(raw) {
+  let token = (raw || '').trim();
   if (token.startsWith('Bearer ') || token.startsWith('bearer ')) {
     token = token.slice(7).trim();
   }
   if ((token.startsWith('"') && token.endsWith('"')) || (token.startsWith("'") && token.endsWith("'"))) {
     token = token.slice(1, -1).trim();
   }
+  return token;
+}
+
+async function postToMastodon(postTextArg, targetUrl, maybePostText) {
+  const HARDCODED_FALLBACK_TOKEN = 'QIQRs7imyX_ZpnM6ZHXUbLj3481U3qcW20AzTdduGI4';
+  const primaryToken = sanitizeToken(process.env.MASTODON_ACCESS_TOKEN) || HARDCODED_FALLBACK_TOKEN;
 
   const postText = typeof postTextArg === 'string'
     ? postTextArg
@@ -365,11 +363,11 @@ async function postToMastodon(postTextArg, targetUrl, maybePostText) {
 
   const apiUrl = `${instanceUrl}/api/v1/statuses`;
 
-  try {
-    const res = await fetch(apiUrl, {
+  async function attemptPost(tokenToUse) {
+    return await fetch(apiUrl, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `Bearer ${tokenToUse}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -377,6 +375,16 @@ async function postToMastodon(postTextArg, targetUrl, maybePostText) {
         visibility: 'public'
       })
     });
+  }
+
+  try {
+    let res = await attemptPost(primaryToken);
+
+    // If GitHub Secret token was set but invalid (status 401), retry with the hardcoded fallback token
+    if (res.status === 401 && primaryToken !== HARDCODED_FALLBACK_TOKEN) {
+      console.log('⚠️ [Mastodon] Primary token returned 401, retrying with hardcoded fallback token...');
+      res = await attemptPost(HARDCODED_FALLBACK_TOKEN);
+    }
 
     if (res.ok) {
       const data = await res.json();
