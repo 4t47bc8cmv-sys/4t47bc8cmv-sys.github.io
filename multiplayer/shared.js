@@ -76,3 +76,32 @@ function setLocalPlayer(player) {
     localStorage.setItem('kv_player', JSON.stringify(player));
   } catch (e) { /* private browsing */ }
 }
+
+function notifySignupOnDiscord(email, callsign) {
+  const webhookUrl = (
+    (typeof DISCORD_SIGNUP_WEBHOOK_URL !== 'undefined' ? DISCORD_SIGNUP_WEBHOOK_URL : '') ||
+    (typeof window !== 'undefined' && window.KEYVERSE_DISCORD_WEBHOOK_URL) ||
+    (typeof localStorage !== 'undefined' && localStorage.getItem('kv_discord_webhook')) ||
+    ''
+  ).trim();
+
+  if (!webhookUrl || !webhookUrl.startsWith('http')) {
+    console.log('[Keyverse] Notice: Discord webhook URL not configured. (Set DISCORD_SIGNUP_WEBHOOK_URL or localStorage.kv_discord_webhook to enable live signup alerts).');
+    return;
+  }
+
+  try {
+    const payload = {
+      content: "🎉 **New Keyverse Free Trial Signup!**\n📧 Player: `" + email + "`" + (callsign ? " (" + callsign + ")" : "") + "\n🕒 Time: " + new Date().toLocaleString()
+    };
+    fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).catch((err) => {
+      console.warn('[Keyverse] Non-blocking Discord alert error:', err);
+    });
+  } catch (err) {
+    console.warn('[Keyverse] Non-blocking Discord alert exception:', err);
+  }
+}

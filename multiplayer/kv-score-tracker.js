@@ -340,11 +340,13 @@
           challengeOpenedTracked = true;
           if (typeof gtag === 'function') {
             gtag('event', 'challenge_link_opened', {
-              challenge_target_score: Number(score)
+              challenge_target_score: Number(score),
+              send_to: GA_MEASUREMENT_ID
             });
           } else if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
             window.gtag('event', 'challenge_link_opened', {
-              challenge_target_score: Number(score)
+              challenge_target_score: Number(score),
+              send_to: GA_MEASUREMENT_ID
             });
           }
         }
