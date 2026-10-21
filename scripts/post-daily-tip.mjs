@@ -349,7 +349,7 @@ function sanitizeToken(raw) {
 }
 
 async function postToMastodon(postTextArg, targetUrl, maybePostText) {
-  const HARDCODED_FALLBACK_TOKEN = 'QIQRs7imyX_ZpnM6ZHXUbLj3481U3qcW20AzTdduGI4';
+  const HARDCODED_FALLBACK_TOKEN = 'HA_P4UHXC-R5vNXCYD5LBt6Vvqz8vQcyJAe7yw_InRE';
   const primaryToken = sanitizeToken(process.env.MASTODON_ACCESS_TOKEN) || HARDCODED_FALLBACK_TOKEN;
 
   const postText = typeof postTextArg === 'string'
