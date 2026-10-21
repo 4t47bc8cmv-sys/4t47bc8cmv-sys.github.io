@@ -105,3 +105,73 @@ function notifySignupOnDiscord(email, callsign) {
     console.warn('[Keyverse] Non-blocking Discord alert exception:', err);
   }
 }
+
+function recordTrialSignup(email, callsign) {
+  // 1. Local Storage
+  try {
+    localStorage.setItem('kv_trial_active', 'true');
+    localStorage.setItem('kv_trial_email', email);
+    localStorage.setItem('kv_player', JSON.stringify({
+      id: 'trial-' + btoa(email).replace(/=/g, '').substring(0, 12),
+      nickname: callsign || email.split('@')[0],
+      email: email
+    }));
+  } catch (e) {}
+
+  // 2. Google Analytics trial_signup_completed tracking to G-HPCMTG7133
+  try {
+    const gaId = 'G-HPCMTG7133';
+    if (typeof gtag === 'function') {
+      gtag('event', 'trial_signup_completed', {
+        method: 'veteran_usmc_passcode',
+        send_to: gaId
+      });
+    } else if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+      window.gtag('event', 'trial_signup_completed', {
+        method: 'veteran_usmc_passcode',
+        send_to: gaId
+      });
+    }
+  } catch (e) {
+    console.warn('[Keyverse] GA trial signup event error:', e);
+  }
+
+  // 3. Supabase Auth & Record
+  try {
+    const sb = typeof getSupabaseClient === 'function' ? getSupabaseClient() : (window.supabaseClient || null);
+    if (sb) {
+      sb.auth.signInWithPassword({
+        email: email,
+        password: FREE_TRIAL_PASSCODE
+      }).then(({ error }) => {
+        if (error) {
+          return sb.auth.signUp({
+            email: email,
+            password: FREE_TRIAL_PASSCODE,
+            options: {
+              data: {
+                trial_active: true,
+                trial_passcode: FREE_TRIAL_PASSCODE,
+                signup_source: 'veteran_usmc_passcode',
+                signup_time: new Date().toISOString()
+              }
+            }
+          });
+        }
+      }).catch(() => {});
+
+      sb.from('trial_signups').insert([{
+        email: email,
+        method: 'veteran_usmc_passcode',
+        created_at: new Date().toISOString()
+      }]).catch(() => {});
+    }
+  } catch (e) {
+    console.warn('[Keyverse] Supabase trial recording:', e);
+  }
+
+  // 4. Non-blocking Discord Notification
+  if (typeof notifySignupOnDiscord === 'function') {
+    notifySignupOnDiscord(email, callsign);
+  }
+}

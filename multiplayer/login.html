@@ -626,9 +626,23 @@
                 if (signInErr) {
                   await supabase.auth.signUp({
                     email: email,
-                    password: FREE_TRIAL_PASSCODE
+                    password: FREE_TRIAL_PASSCODE,
+                    options: {
+                      data: {
+                        trial_active: true,
+                        trial_passcode: FREE_TRIAL_PASSCODE,
+                        signup_source: "veteran_usmc_passcode",
+                        signup_time: new Date().toISOString()
+                      }
+                    }
                   }).catch(() => {});
                 }
+                // Also save signup record into Supabase database table if configured
+                await supabase.from('trial_signups').insert([{
+                  email: email,
+                  method: 'veteran_usmc_passcode',
+                  created_at: new Date().toISOString()
+                }]).catch(() => {});
               } catch (e) {
                 console.warn("Supabase background trial auth:", e);
               }
@@ -642,6 +656,23 @@
               nickname: email.split("@")[0],
               email: email
             }));
+
+            // Track custom Google Analytics trial_signup_completed event to G-HPCMTG7133
+            try {
+              if (typeof gtag === "function") {
+                gtag("event", "trial_signup_completed", {
+                  method: "veteran_usmc_passcode",
+                  send_to: "G-HPCMTG7133"
+                });
+              } else if (typeof window !== "undefined" && typeof window.gtag === "function") {
+                window.gtag("event", "trial_signup_completed", {
+                  method: "veteran_usmc_passcode",
+                  send_to: "G-HPCMTG7133"
+                });
+              }
+            } catch (gaErr) {
+              console.warn("[Keyverse] GA signup tracking error:", gaErr);
+            }
 
             // Non-blocking Discord signup notification
             notifySignupOnDiscord(email, email.split("@")[0]);
