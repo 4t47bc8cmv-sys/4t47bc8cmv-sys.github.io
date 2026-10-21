@@ -224,8 +224,8 @@ function escapeHtml(text) {
 }
 
 async function postToDiscord(tip, targetUrl, dayOfYear) {
-  const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
-  if (!webhookUrl || !webhookUrl.trim()) {
+  const webhookUrl = (process.env.DISCORD_WEBHOOK_URL || 'https://discord.com/api/webhooks/1562218378213589095/6V18U91OyAirDk38bipavCB0QATYQT87ilDO3rko-WF02KizDz43pCiyeCljWJrRLfQ1').trim();
+  if (!webhookUrl) {
     console.log('[Discord] Notice: DISCORD_WEBHOOK_URL secret not configured. Skipping Discord post.');
     return;
   }

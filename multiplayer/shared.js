@@ -77,9 +77,11 @@ function setLocalPlayer(player) {
   } catch (e) { /* private browsing */ }
 }
 
+const DISCORD_SIGNUP_WEBHOOK_URL = 'https://discord.com/api/webhooks/1562218378213589095/6V18U91OyAirDk38bipavCB0QATYQT87ilDO3rko-WF02KizDz43pCiyeCljWJrRLfQ1';
+
 function notifySignupOnDiscord(email, callsign) {
   const webhookUrl = (
-    (typeof DISCORD_SIGNUP_WEBHOOK_URL !== 'undefined' ? DISCORD_SIGNUP_WEBHOOK_URL : '') ||
+    DISCORD_SIGNUP_WEBHOOK_URL ||
     (typeof window !== 'undefined' && window.KEYVERSE_DISCORD_WEBHOOK_URL) ||
     (typeof localStorage !== 'undefined' && localStorage.getItem('kv_discord_webhook')) ||
     ''
