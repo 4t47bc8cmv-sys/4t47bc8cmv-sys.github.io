@@ -337,16 +337,11 @@ async function postToBluesky(tip, targetUrl, postText) {
   }
 }
 
-async function postToMastodon(postTextOrTip, targetUrl, maybePostText) {
-  const accessToken = process.env.MASTODON_ACCESS_TOKEN;
-  if (!accessToken || !accessToken.trim()) {
+async function postToMastodon(postText) {
+  if (!process.env.MASTODON_ACCESS_TOKEN || !process.env.MASTODON_ACCESS_TOKEN.trim()) {
     console.log('[Mastodon] Notice: MASTODON_ACCESS_TOKEN secret not configured. Skipping Mastodon post.');
     return;
   }
-
-  const postText = typeof postTextOrTip === 'string'
-    ? postTextOrTip
-    : (maybePostText || (postTextOrTip && targetUrl ? buildPostText(postTextOrTip, targetUrl) : ''));
 
   const rawInstance = (process.env.MASTODON_INSTANCE_URL || 'https://mastodon.social').trim().replace(/\/+$/, '');
   const instanceUrl = rawInstance.startsWith('http://') || rawInstance.startsWith('https://')
@@ -359,7 +354,7 @@ async function postToMastodon(postTextOrTip, targetUrl, maybePostText) {
     const res = await fetch(apiUrl, {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer ' + accessToken.trim(),
+        'Authorization': 'Bearer ' + process.env.MASTODON_ACCESS_TOKEN.trim(),
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
