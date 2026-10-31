@@ -136,7 +136,7 @@ This curriculum focuses on fast web tab recovery, email triage shortcuts, global
     ],
     workflows: `In Apple Mail, you can process incoming messages without ever touching the mouse. Tap <kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>R</kbd> to reply, type your response, and hit <kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>D</kbd> to dispatch it immediately. If a message is spam, <kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>J</kbd> sends it to Junk in one motion.
 
-For developers and web creators, <kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>.</kbd> in Finder is essential. It instantly unhides hidden dotfiles like \`.gitignore\`, \`.env\`, and user configuration files without needing to open the Terminal and run defaults commands.`,
+For developers and web creators, <kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>.</kbd> in Finder is essential. It instantly unhides hidden dotfiles like <code>.gitignore</code>, <code>.env</code>, and user configuration files without needing to open the Terminal and run defaults commands.`,
     windowsMistakes: [
       'Pressing F5 to refresh browser tabs: On Mac keyboards, F5 dims the keyboard backlight! Always use Command + R to reload web pages.',
       'Opening a browser tab just to look up a word definition: Hover your mouse over any word in macOS and tap Ctrl + Cmd + D for an instant dictionary popover.',
@@ -310,7 +310,7 @@ Volume 3 Game 1 trains the core navigation bindings of Finder: duplicating files
       { key: '⌃ Ctrl + ⌘ Cmd + A', action: 'Create Alias', context: 'Generates a lightweight macOS symbolic link pointer to the original file.' },
       { key: '⌃ Ctrl + ⌘ Cmd + T', action: 'Add to Sidebar', context: 'Pins selected directory to Finder left sidebar under Favorites.' }
     ],
-    workflows: `The single most powerful navigation feature in Finder is "Go to Folder" (<kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>G</kbd>). When configuring developer tools or clearing application caches, pressing Shift+Cmd+G lets you type \`~/Library/Application Support\` or \`/etc/hosts\` with tab-completion, bypassing multiple nested folder clicks.
+    workflows: `The single most powerful navigation feature in Finder is "Go to Folder" (<kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>G</kbd>). When configuring developer tools or clearing application caches, pressing Shift+Cmd+G lets you type <code>~/Library/Application Support</code> or <code>/etc/hosts</code> with tab-completion, bypassing multiple nested folder clicks.
 
 When moving through deeply nested project folders, use <kbd>⌘ Cmd</kbd> + <kbd>[</kbd> and <kbd>⌘ Cmd</kbd> + <kbd>]</kbd> to step backward and forward through your browsing path like web browser history.`,
     windowsMistakes: [
@@ -401,7 +401,7 @@ Because macOS is engineered on a Unix foundation, it includes both traditional G
       { key: '⌃ Ctrl + O', action: 'Open Newline After Cursor', context: 'Inserts blank line below insertion point without moving current cursor.' },
       { key: '⌃ Ctrl + K', action: 'Kill Line', context: 'Deletes all text from cursor to end of current line into dedicated kill buffer.' }
     ],
-    workflows: `The difference between Option and Command navigation is systematic across macOS: <kbd>⌥ Option</kbd> navigates by **word**, while <kbd>⌘ Command</kbd> navigates by **structural boundary** (line start/end, document start/end). Adding <kbd>⇧ Shift</kbd> to either modifier automatically converts the movement into a highlight selection.
+    workflows: `The difference between Option and Command navigation is systematic across macOS: <kbd>⌥ Option</kbd> navigates by <strong>word</strong>, while <kbd>⌘ Command</kbd> navigates by <strong>structural boundary</strong> (line start/end, document start/end). Adding <kbd>⇧ Shift</kbd> to either modifier automatically converts the movement into a highlight selection.
 
 For programmers, writers, and command-line users, standard Emacs keys work globally in almost every macOS text field—including Safari search bars, Slack inputs, Mail composition, and Xcode. You can jump to line start with <kbd>⌃ Ctrl</kbd> + <kbd>A</kbd>, line end with <kbd>⌃ Ctrl</kbd> + <kbd>E</kbd>, and delete to line end with <kbd>⌃ Ctrl</kbd> + <kbd>K</kbd> without lifting your hands from home row.`,
     windowsMistakes: [
@@ -704,14 +704,17 @@ for (const file of Object.keys(GAMES_DATA)) {
   }
 
   // Pinpoint replace of guide container right before </body>
-  const guideIdx = content.lastIndexOf('<div class="game-guide-container"');
+  let guideIdx = content.indexOf('<!-- ACCREDITED COMPREHENSIVE SHORTCUT GUIDE');
+  if (guideIdx === -1) guideIdx = content.indexOf('<!-- COMPLETE EDUCATIONAL GUIDE');
+  if (guideIdx === -1) guideIdx = content.lastIndexOf('<article class="game-guide-container"');
+  if (guideIdx === -1) guideIdx = content.lastIndexOf('<div class="game-guide-container"');
   const bodyIdx = content.lastIndexOf('</body>');
   if (guideIdx === -1 || bodyIdx === -1) {
     throw new Error(`Could not find guide or body in ${file}`);
   }
 
   const guideHTML = generateGuideHTML(GAMES_DATA[file]);
-  content = content.substring(0, guideIdx) + guideHTML + '\n' + content.substring(bodyIdx);
+  content = content.substring(0, guideIdx).trimEnd() + '\n\n' + guideHTML + '\n</body>\n</html>\n';
 
   fs.writeFileSync(filePath, content, 'utf8');
 
