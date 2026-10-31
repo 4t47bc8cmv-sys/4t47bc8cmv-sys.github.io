@@ -322,6 +322,43 @@
             font-weight: bold;
             font-size: 0.82rem;
         }
+        
+        .game-guide-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0 24px;
+            font-size: 0.88rem;
+            color: #bac2de;
+            border: 1px solid #45475a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .game-guide-container th {
+            background: #1e1e2e;
+            color: #89b4fa;
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid #45475a;
+            font-weight: 700;
+        }
+        .game-guide-container td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #313244;
+            vertical-align: top;
+        }
+        .game-guide-container tr:last-child td {
+            border-bottom: none;
+        }
+        .game-guide-container tr:nth-child(even) {
+            background: rgba(30, 30, 46, 0.4);
+        }
+        @media (max-width: 600px) {
+            .game-guide-container table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
         .game-guide-nav {
             display: flex;
             justify-content: space-between;
@@ -1583,33 +1620,178 @@
 <script src="../multiplayer/kv-score-tracker.js"></script>
 
     <!-- ACCREDITED COMPREHENSIVE SHORTCUT GUIDE (Crawlable Editorial Content) -->
-    <div class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
-      <span class="guide-tag">Volume 2 · Game 2 · In-Depth Guide</span>
-      <h2>Window Wrangling: Multi-Monitor & Multi-Window Navigation</h2>
+        <!-- COMPLETE EDUCATIONAL GUIDE & SHORTCUT REFERENCE (Crawlable Editorial Content) -->
+    <article class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
+      <span class="guide-tag">Volume 2 · Game 2 · Complete Guide</span>
+      <h2>Complete Guide &amp; Shortcut Reference for Window Wrangling</h2>
       
-      <h3>Navigating Overlapping Windows and Multi-Document Workspaces</h3>
-      <p>Many Mac users know how to switch between different applications with Command+Tab, but struggle when working with multiple windows of the <em>same</em> application—such as having five separate Finder windows, three browser windows, or multiple spreadsheets open simultaneously. Window Wrangling shortcuts give you precise, fluid command over your desktop layout.</p>
+      <h3>Overview: Why These Mac Shortcuts Matter</h3>
+      <p>Desktop chaos degrades productivity. When working across multiple applications, having dozens of overlapping windows creates visual noise and slows down focus. Most users waste significant time manually dragging window borders or minimizing windows to the Dock.</p>
+      <p>Volume 2 Game 2 covers "Window Wrangling": hiding background clutter with a single keystroke (<kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>H</kbd>), cycling windows of the same application backward and forward, opening app settings universally (<kbd>⌘ Cmd</kbd> + <kbd>,</kbd>), and leveraging Quick Look previews.</p>
 
-      <h3>The Most Underutilized Mac Shortcut: <kbd>⌘</kbd> + <kbd>`</kbd> (Tilde)</h3>
-      <p>Located directly above the Tab key and below Escape, the grave accent/tilde key (<kbd>`</kbd>) serves as the companion to Command+Tab. While Command+Tab switches between apps, <kbd>⌘</kbd>+<kbd>`</kbd> cycles exclusively through all open windows of your currently active app. You can rapidly review separate documents without pulling up Mission Control or clicking through the Dock.</p>
+      <h3>Full Keyboard Shortcut Reference Table</h3>
+      <p>Here is every single Mac keyboard shortcut trained in <em>Window Wrangling</em>, complete with its primary function and real-world application context:</p>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 32%;">Shortcut</th>
+            <th style="width: 28%;">Action</th>
+            <th style="width: 40%;">macOS Workflow Context</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Z</kbd></strong></td>
+          <td>Redo</td>
+          <td>Re-applies the edit or action that was reversed by Undo.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>G</kbd></strong></td>
+          <td>Find Again (Next)</td>
+          <td>Advances cursor to the next occurrence of a search query in text or documents.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>G</kbd></strong></td>
+          <td>Find Previous</td>
+          <td>Steps backward to the previous occurrence of a search query.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>F</kbd></strong></td>
+          <td>Find and Replace</td>
+          <td>Jumps directly to the replacement input field in text editors and word processors.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>V</kbd></strong></td>
+          <td>Paste and Match Style</td>
+          <td>Strips external fonts, colors, and styling, pasting plain text that perfectly matches the destination paragraph.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>H</kbd></strong></td>
+          <td>Hide Front App</td>
+          <td>Hides all windows of active foreground application without quitting it.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>H</kbd></strong></td>
+          <td>Hide Other Apps</td>
+          <td>Clears desktop clutter by hiding every application except the active front window.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>M</kbd></strong></td>
+          <td>Minimize All Windows</td>
+          <td>Minimizes all windows of current application into the Dock.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>W</kbd></strong></td>
+          <td>Close All Windows</td>
+          <td>Closes every open window of active app while leaving the application process running.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>`</kbd></strong></td>
+          <td>Cycle Windows Backward</td>
+          <td>Cycles backward through open windows belonging to current application.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>P</kbd></strong></td>
+          <td>Print Document</td>
+          <td>Opens print dialog or export to PDF menu.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>,</kbd></strong></td>
+          <td>Settings / Preferences</td>
+          <td>Universal shortcut across all macOS software to open application preferences.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>S</kbd></strong></td>
+          <td>Save As / Duplicate</td>
+          <td>Duplicates file or opens Save As modal in document editors.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>P</kbd></strong></td>
+          <td>Page Setup</td>
+          <td>Customizes paper dimensions, orientation, and print scaling.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>D</kbd></strong></td>
+          <td>Toggle Dock Auto-Hide</td>
+          <td>Shows or hides macOS Dock to reclaim maximum screen real estate.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>Spacebar</kbd></strong></td>
+          <td>Quick Look Preview</td>
+          <td>Instantly previews highlighted files, images, PDFs, audio, and videos without opening applications.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>N</kbd></strong></td>
+          <td>New Folder with Selection</td>
+          <td>Automatically creates a new folder containing all currently selected files.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>T</kbd></strong></td>
+          <td>Add to Dock / Favorites</td>
+          <td>Pins selected file or folder to the Dock or Finder sidebar favorites.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>C</kbd></strong></td>
+          <td>Open Computer Window</td>
+          <td>Navigates Finder to top-level view showing all mounted storage drives and connected devices.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>L</kbd></strong></td>
+          <td>Open Downloads Folder</td>
+          <td>Opens the user Downloads directory in Finder.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>Fn</kbd> + <kbd>E</kbd></strong></td>
+          <td>Emoji & Symbol Palette</td>
+          <td>Summons emoji and special character picker.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>;</kbd></strong></td>
+          <td>Check Document Spelling</td>
+          <td>Finds and highlights the next misspelled word in active document.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>I</kbd></strong></td>
+          <td>Inspector / Format Panel</td>
+          <td>Opens inspector attributes sidebar in Pages, Keynote, and Numbers.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>Click Menu Clock</kbd></strong></td>
+          <td>Toggle Do Not Disturb</td>
+          <td>Mutes incoming notifications to enter distraction-free focus mode.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>/</kbd></strong></td>
+          <td>Help Menu Command Search</td>
+          <td>Jumps directly to Help search field to locate and execute any menu command by typing.</td>
+        </tr>
+        </tbody>
+      </table>
 
-      <h3>Window Wrangling Shortcuts Reference</h3>
+      <h3>Real-World macOS Workflows</h3>
+      <p>One of the most satisfying shortcuts on Mac is <kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>H</kbd> ("Hide Others"). When working in Photoshop, Xcode, or a writing document, pressing Option+Cmd+H instantly hides every other open app on your screen, giving you instant focus without closing your background tasks.</p>
+      <p>When preparing to share or email text, always use <kbd>⌥ Opt</kbd> + <kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>V</kbd> ("Paste and Match Style"). It cleanses foreign HTML, weird font sizes, and dark-mode background boxes, ensuring pasted text blends seamlessly into your destination document.</p>
+
+      <h3>Common Mistakes Windows Switchers Make</h3>
       <ul>
-        <li><strong>Cycle Windows of Same App (<kbd>⌘</kbd> + <kbd>`</kbd>):</strong> Flips forward through all open document or browser windows in the foreground application. Add <kbd>⇧ Shift</kbd> (<kbd>⌘</kbd>+<kbd>⇧</kbd>+<kbd>`</kbd>) to cycle in reverse.</li>
-        <li><strong>Full Screen Toggle (<kbd>⌃</kbd> + <kbd>⌘</kbd> + <kbd>F</kbd>):</strong> Expands the active window to full screen, moving it to its own virtual Space and hiding menu bars for an immersive work experience. Tap again to return to floating desktop mode.</li>
-        <li><strong>Application Windows / Exposé (<kbd>⌃</kbd> + <kbd>↓</kbd>):</strong> Gathers all windows belonging to the current application on your screen, highlighting recently opened documents and minimizing others.</li>
-        <li><strong>Show Desktop (<kbd>F11</kbd> or <kbd>⌘</kbd> + <kbd>Mission Control</kbd>):</strong> Sweeps all windows away toward the edges of the screen, granting instant access to files and folders on your physical desktop surface.</li>
-        <li><strong>Minimize Window (<kbd>⌘</kbd> + <kbd>M</kbd>):</strong> Collapses the frontmost window into the right side of your Dock. Hold <kbd>⌥ Option</kbd> (<kbd>⌘⌥M</kbd>) to minimize all windows of the current application at once.</li>
+        <li>Hunting for "Options" under Tools/Edit menus: In macOS, Command + Comma (<kbd>⌘,</kbd>) universally opens Settings in every application from Safari to Terminal.</li>
+        <li>Opening files just to inspect their contents: On Mac, tapping Spacebar gives you an instant Quick Look preview of PDFs, images, spreadsheets, and video without launching heavy applications.</li>
+        <li>Manually minimizing ten background windows: Press Option + Command + H to vanish all non-active windows in one millisecond.</li>
       </ul>
 
-      <h3>Desktop Ergonomics</h3>
-      <p>Combining <kbd>⌘</kbd>+<kbd>`</kbd> with full-screen Spaces provides seamless navigation on single-screen laptop setups without requiring external multi-monitor rigs.</p>
+      <h3>Pro Productivity &amp; Ergonomics Tips</h3>
+      <ul>
+        <li>Instant Search for Any Menu Action: Shift+Cmd+/ focuses the Help search bar. Type the name of any menu command (e.g., "Export") and press Return to trigger it without touching the mouse.</li>
+        <li>Paste Without Formatting: Memorize Option+Shift+Cmd+V. It saves you from having to manually reset fonts and sizes when copying from web pages.</li>
+        <li>New Folder with Selection: Highlight five files in Finder and press Ctrl+Cmd+N to bundle them into a clean folder instantly.</li>
+      </ul>
 
       <div class="game-guide-nav">
-        <a href="../">← Return to Keyverse Home</a>
-        <a href="../#games">Browse All 10 Games</a>
+        <a href="../index.html">← Back to Keyverse Home</a>
+        <a href="../index.html#games">Browse All 10 Games</a>
         <a href="../about.html">About Keyverse</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
       </div>
-    </div>
-    
+    </article>
 </body>

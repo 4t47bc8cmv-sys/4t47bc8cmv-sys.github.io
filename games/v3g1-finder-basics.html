@@ -322,6 +322,43 @@
             font-weight: bold;
             font-size: 0.82rem;
         }
+        
+        .game-guide-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0 24px;
+            font-size: 0.88rem;
+            color: #bac2de;
+            border: 1px solid #45475a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .game-guide-container th {
+            background: #1e1e2e;
+            color: #89b4fa;
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid #45475a;
+            font-weight: 700;
+        }
+        .game-guide-container td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #313244;
+            vertical-align: top;
+        }
+        .game-guide-container tr:last-child td {
+            border-bottom: none;
+        }
+        .game-guide-container tr:nth-child(even) {
+            background: rgba(30, 30, 46, 0.4);
+        }
+        @media (max-width: 600px) {
+            .game-guide-container table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
         .game-guide-nav {
             display: flex;
             justify-content: space-between;
@@ -1583,34 +1620,118 @@
 <script src="../multiplayer/kv-score-tracker.js"></script>
 
     <!-- ACCREDITED COMPREHENSIVE SHORTCUT GUIDE (Crawlable Editorial Content) -->
-    <div class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
-      <span class="guide-tag">Volume 3 · Game 1 · In-Depth Guide</span>
-      <h2>Finder Basics: File Management, Trashing, and Folder Navigation</h2>
+        <!-- COMPLETE EDUCATIONAL GUIDE & SHORTCUT REFERENCE (Crawlable Editorial Content) -->
+    <article class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
+      <span class="guide-tag">Volume 3 · Game 1 · Complete Guide</span>
+      <h2>Complete Guide &amp; Shortcut Reference for Finder Basics</h2>
       
-      <h3>Organizing Your Digital Filing Cabinet with Precision</h3>
-      <p>The macOS Finder is the foundational environment for organizing client assets, project code, media files, and downloads. While dragging files with a trackpad is intuitive for simple tasks, it is prone to accidental drops into wrong folders and becomes painfully slow when managing nested directory structures. Keyboard-driven Finder navigation transforms file management into a rapid, error-free operation.</p>
+      <h3>Overview: Why These Mac Shortcuts Matter</h3>
+      <p>The macOS Finder is your digital filing cabinet, but navigating folder hierarchies with mouse clicks is slow. Power users never click through drive trees; they use direct keyboard location jumps and directory navigation shortcuts.</p>
+      <p>Volume 3 Game 1 trains the core navigation bindings of Finder: duplicating files with <kbd>⌘ Cmd</kbd> + <kbd>D</kbd>, leaping directly to iCloud Drive, Network shares, Home, and Documents, navigating folder history with bracket keys, and managing aliases.</p>
 
-      <h3>Navigating Folder Hierarchies with Arrow Keys</h3>
-      <p>Instead of double-clicking folders, use the keyboard's spatial navigation. Select an item in Finder and press <kbd>⌘</kbd> + <kbd>↓</kbd> (or <kbd>⌘</kbd> + <kbd>O</kbd>) to open it. To navigate back up to the enclosing folder, press <kbd>⌘</kbd> + <kbd>↑</kbd>. Combined with left and right arrow keys in Column view, you can traverse ten directory levels in seconds without moving your mouse an inch.</p>
+      <h3>Full Keyboard Shortcut Reference Table</h3>
+      <p>Here is every single Mac keyboard shortcut trained in <em>Finder Basics</em>, complete with its primary function and real-world application context:</p>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 32%;">Shortcut</th>
+            <th style="width: 28%;">Action</th>
+            <th style="width: 40%;">macOS Workflow Context</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>D</kbd></strong></td>
+          <td>Duplicate File</td>
+          <td>Creates an exact clone of the selected file with "copy" appended to filename.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>G</kbd></strong></td>
+          <td>Go to Folder</td>
+          <td>Summons direct path input sheet to jump to hidden or deep Unix paths (e.g. ~/Library or /etc).</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>H</kbd></strong></td>
+          <td>Go to Home Folder</td>
+          <td>Opens user home directory (~/) in active Finder window.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>I</kbd></strong></td>
+          <td>Open iCloud Drive</td>
+          <td>Jumps directly to cloud-synced documents and shared application data.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>K</kbd></strong></td>
+          <td>Network Browser</td>
+          <td>Opens network window discovering local file servers, NAS drives, and shared Macs.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>O</kbd></strong></td>
+          <td>Open Documents</td>
+          <td>Opens the user Documents directory.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>U</kbd></strong></td>
+          <td>Open Utilities</td>
+          <td>Opens macOS Utilities folder containing Terminal, Activity Monitor, and Disk Utility.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>[</kbd></strong></td>
+          <td>Folder History Back</td>
+          <td>Traverses back to the preceding folder in navigation history.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>]</kbd></strong></td>
+          <td>Folder History Forward</td>
+          <td>Traverses forward to the next folder in navigation history.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>Down Arrow</kbd></strong></td>
+          <td>Open Selected Item</td>
+          <td>Opens selected folder or launches highlighted document in default program.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Up Arrow</kbd></strong></td>
+          <td>Open Enclosing in New Window</td>
+          <td>Spawns a new Finder window focused on the parent directory.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>A</kbd></strong></td>
+          <td>Create Alias</td>
+          <td>Generates a lightweight macOS symbolic link pointer to the original file.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>T</kbd></strong></td>
+          <td>Add to Sidebar</td>
+          <td>Pins selected directory to Finder left sidebar under Favorites.</td>
+        </tr>
+        </tbody>
+      </table>
 
-      <h3>Finder Basics Shortcuts Reference</h3>
+      <h3>Real-World macOS Workflows</h3>
+      <p>The single most powerful navigation feature in Finder is "Go to Folder" (<kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>G</kbd>). When configuring developer tools or clearing application caches, pressing Shift+Cmd+G lets you type `~/Library/Application Support` or `/etc/hosts` with tab-completion, bypassing multiple nested folder clicks.</p>
+      <p>When moving through deeply nested project folders, use <kbd>⌘ Cmd</kbd> + <kbd>[</kbd> and <kbd>⌘ Cmd</kbd> + <kbd>]</kbd> to step backward and forward through your browsing path like web browser history.</p>
+
+      <h3>Common Mistakes Windows Switchers Make</h3>
       <ul>
-        <li><strong>Go to Folder (<kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>G</kbd>):</strong> The power user's shortcut. Summons a path dialog where you can type or paste direct paths (such as <code>~/Documents/Projects</code> or <code>/etc/hosts</code>) with complete tab-completion support.</li>
-        <li><strong>Move to Trash (<kbd>⌘</kbd> + <kbd>⌫</kbd>):</strong> Instantly moves the selected file or folder to the Trash bin without prompting for confirmation.</li>
-        <li><strong>Empty Trash (<kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>⌫</kbd>):</strong> Purges all files from the Trash. Add <kbd>⌥ Option</kbd> (<kbd>⌘⌥⇧⌫</kbd>) to empty the Trash immediately without the confirmation dialogue box.</li>
-        <li><strong>New Folder (<kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>N</kbd>):</strong> Creates an untitled folder in the active Finder location with the name field already selected for typing.</li>
-        <li><strong>Duplicate Item (<kbd>⌘</kbd> + <kbd>D</kbd>):</strong> Creates an instantaneous copy of selected files or folders, automatically appending "copy" to the filename.</li>
-        <li><strong>Quick Look (<kbd>Spacebar</kbd>):</strong> Previews the highlighted document without launching any external application.</li>
+        <li>Clicking Enter to open folders: On Mac, pressing Enter/Return renames the folder. Press Command + Down Arrow to open folders or launch files.</li>
+        <li>Clicking through user folders manually: Press Shift+Cmd+H to jump to Home, Shift+Cmd+O for Documents, and Shift+Cmd+I for iCloud Drive instantly.</li>
+        <li>Creating redundant copies when an alias is needed: Press Ctrl+Cmd+A to make an alias that points to the original file without eating disk space.</li>
       </ul>
 
-      <h3>Safe File Management</h3>
-      <p>If you accidentally trash a file using <kbd>⌘</kbd>+<kbd>⌫</kbd>, simply press <kbd>⌘</kbd>+<kbd>Z</kbd> immediately to restore the file to its exact original folder location.</p>
+      <h3>Pro Productivity &amp; Ergonomics Tips</h3>
+      <ul>
+        <li>The Go to Folder Shortcut: Press Shift+Cmd+G in any Finder window or open/save file dialog to jump directly to any Unix file path.</li>
+        <li>Browser-Style Folder Back/Forward: Use Cmd+[ and Cmd+] to step through folder history instead of clicking breadcrumbs.</li>
+        <li>Pin to Sidebar in One Tap: Highlight your current project folder and press Ctrl+Cmd+T to pin it to your Finder favorites list.</li>
+      </ul>
 
       <div class="game-guide-nav">
-        <a href="../">← Return to Keyverse Home</a>
-        <a href="../#games">Browse All 10 Games</a>
+        <a href="../index.html">← Back to Keyverse Home</a>
+        <a href="../index.html#games">Browse All 10 Games</a>
         <a href="../about.html">About Keyverse</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
       </div>
-    </div>
-    
+    </article>
 </body>

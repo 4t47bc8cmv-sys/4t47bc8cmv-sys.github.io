@@ -330,6 +330,43 @@
             font-weight: bold;
             font-size: 0.82rem;
         }
+        
+        .game-guide-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0 24px;
+            font-size: 0.88rem;
+            color: #bac2de;
+            border: 1px solid #45475a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .game-guide-container th {
+            background: #1e1e2e;
+            color: #89b4fa;
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid #45475a;
+            font-weight: 700;
+        }
+        .game-guide-container td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #313244;
+            vertical-align: top;
+        }
+        .game-guide-container tr:last-child td {
+            border-bottom: none;
+        }
+        .game-guide-container tr:nth-child(even) {
+            background: rgba(30, 30, 46, 0.4);
+        }
+        @media (max-width: 600px) {
+            .game-guide-container table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
         .game-guide-nav {
             display: flex;
             justify-content: space-between;
@@ -1581,38 +1618,158 @@
 <script src="../multiplayer/kv-score-tracker.js"></script>
 
     <!-- ACCREDITED COMPREHENSIVE SHORTCUT GUIDE (Crawlable Editorial Content) -->
-    <div class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
-      <span class="guide-tag">Volume 4 · Game 2 · In-Depth Guide</span>
-      <h2>Text Mastery: Precision Highlighting, Deletions, and Style Matching</h2>
+        <!-- COMPLETE EDUCATIONAL GUIDE & SHORTCUT REFERENCE (Crawlable Editorial Content) -->
+    <article class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
+      <span class="guide-tag">Volume 4 · Game 2 · Complete Guide</span>
+      <h2>Complete Guide &amp; Shortcut Reference for Text Mastery</h2>
       
-      <h3>Transforming Raw Typing into Polished Editorial Speed</h3>
-      <p>Writing is largely editing. While Volume 4 Game 1 focused on cursor navigation, Text Mastery combines navigation keys with the <kbd>⇧ Shift</kbd> modifier to execute surgical text selection, granular deletion, finding, replacing, and clean style-matching paste operations without ever highlighting with a mouse.</p>
+      <h3>Overview: Why These Mac Shortcuts Matter</h3>
+      <p>Transforming draft writing into polished prose requires rapid structural text manipulation: selecting paragraphs, swapping misspelled letters, re-aligning headings, and scaling typography. Reaching for mouse cursors to highlight text blocks creates accidental selections and breaks mental momentum.</p>
+      <p>Volume 4 Game 2 trains the ultimate level of text mastery on macOS. Learn precision keyboard selection by character, line, and paragraph; instant typo fixing with character transposition (<kbd>⌃ Ctrl</kbd> + <kbd>T</kbd>); hardware forward delete on compact keyboards; and direct paragraph alignments.</p>
 
-      <h3>The Shift Expansion Rule</h3>
-      <p>In the macOS text system, adding <kbd>⇧ Shift</kbd> to any cursor navigation shortcut transforms it from a <em>movement</em> command into a <em>selection</em> command:</p>
+      <h3>Full Keyboard Shortcut Reference Table</h3>
+      <p>Here is every single Mac keyboard shortcut trained in <em>Text Mastery</em>, complete with its primary function and real-world application context:</p>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 32%;">Shortcut</th>
+            <th style="width: 28%;">Action</th>
+            <th style="width: 40%;">macOS Workflow Context</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Down Arrow</kbd></strong></td>
+          <td>Select to Document End</td>
+          <td>Highlights all text from cursor location down to the final character of document.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Left Arrow</kbd></strong></td>
+          <td>Select to Line Start</td>
+          <td>Highlights all text from cursor location back to the beginning of current line.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>Left Arrow</kbd></strong></td>
+          <td>Select Character Left</td>
+          <td>Extends text selection one character to the left.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>Right Arrow</kbd></strong></td>
+          <td>Select Character Right</td>
+          <td>Extends text selection one character to the right.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>Up Arrow</kbd></strong></td>
+          <td>Select Line Up</td>
+          <td>Extends text selection upward by one line in the identical column.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>Down Arrow</kbd></strong></td>
+          <td>Select Line Down</td>
+          <td>Extends text selection downward by one line in identical column.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⇧ Shift</kbd> + <kbd>Up Arrow</kbd></strong></td>
+          <td>Select to Paragraph Start</td>
+          <td>Extends selection to beginning of current paragraph; tap again to capture preceding paragraph.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⇧ Shift</kbd> + <kbd>Down Arrow</kbd></strong></td>
+          <td>Select to Paragraph End</td>
+          <td>Extends selection to end of current paragraph; tap again to capture next paragraph.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⇧ Shift</kbd> + <kbd>Left Arrow</kbd></strong></td>
+          <td>Select Word Left</td>
+          <td>Extends selection to beginning of previous word.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>H</kbd></strong></td>
+          <td>Backspace (Delete Left)</td>
+          <td>Deletes character behind cursor without lifting hand from home row.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>D</kbd></strong></td>
+          <td>Forward Delete</td>
+          <td>Deletes character ahead of cursor.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>Fn</kbd> + <kbd>Delete</kbd></strong></td>
+          <td>Hardware Forward Delete</td>
+          <td>Functions as Forward Delete key on compact MacBooks and Magic Keyboards.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>K</kbd></strong></td>
+          <td>Cut to Paragraph End</td>
+          <td>Cuts all text from cursor to paragraph end into dedicated kill buffer.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>T</kbd></strong></td>
+          <td>Transpose Characters</td>
+          <td>Swaps the two characters on either side of cursor—fixes typos like "teh" or "adn" in one millisecond!</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>[</kbd></strong></td>
+          <td>Left Align Paragraph</td>
+          <td>Aligns selected paragraph to the left margin in rich-text editors.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>]</kbd></strong></td>
+          <td>Right Align Paragraph</td>
+          <td>Aligns selected paragraph to the right margin.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>|</kbd></strong></td>
+          <td>Center Align Paragraph</td>
+          <td>Centers selected paragraph between margins.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>:</kbd></strong></td>
+          <td>Spelling & Grammar Window</td>
+          <td>Summons macOS Spelling and Grammar review panel.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>-</kbd></strong></td>
+          <td>Decrease Font Size</td>
+          <td>Steps down font point size of selected text.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>+</kbd></strong></td>
+          <td>Increase Font Size</td>
+          <td>Steps up font point size of selected text.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>?</kbd></strong></td>
+          <td>Help Search Bar</td>
+          <td>Opens Help menu command search bar across all native macOS apps.</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <h3>Real-World macOS Workflows</h3>
+      <p>The single greatest secret weapon in the macOS text system is Transpose (<kbd>⌃ Ctrl</kbd> + <kbd>T</kbd>). When typing quickly, the most common error is swapping two letters (e.g. typing "wrold" instead of "world"). Instead of hitting backspace three times and re-typing, place your cursor between the swapped letters and tap Ctrl+T. macOS swaps them instantaneously!</p>
+      <p>When restructuring documents, combining <kbd>⌥ Opt</kbd> + <kbd>⇧ Shift</kbd> + <kbd>↓</kbd> (select paragraph) with <kbd>⌘ Cmd</kbd> + <kbd>X</kbd> and <kbd>⌘ Cmd</kbd> + <kbd>V</kbd> allows you to rearrange multi-paragraph blocks in seconds without awkward trackpad click-and-drag errors.</p>
+
+      <h3>Common Mistakes Windows Switchers Make</h3>
       <ul>
-        <li><strong>Select by Word (<kbd>⇧</kbd> + <kbd>⌥</kbd> + <kbd>←</kbd> / <kbd>→</kbd>):</strong> Expands or contracts the highlighted selection word by word.</li>
-        <li><strong>Select to Line Boundary (<kbd>⇧</kbd> + <kbd>⌘</kbd> + <kbd>←</kbd> / <kbd>→</kbd>):</strong> Selects everything from your current cursor position to the start or end of the line.</li>
-        <li><strong>Select Entire Document (<kbd>⌘</kbd> + <kbd>A</kbd>):</strong> Highlights all text across the active field or document.</li>
+        <li>Assuming Mac keyboards cannot Forward Delete: Compact Mac keyboards lack a dedicated Del key, but pressing Fn + Delete performs a true forward delete.</li>
+        <li>Manually fixing reversed letter typos: Placing your cursor between swapped letters and pressing Ctrl + T swaps them back instantly.</li>
+        <li>Dragging mouse pointers across pages to highlight long text: Press Shift + Command + Down Arrow to select from your cursor to the very end of the file in one tap.</li>
       </ul>
 
-      <h3>High-Leverage Deletions and Formatting</h3>
+      <h3>Pro Productivity &amp; Ergonomics Tips</h3>
       <ul>
-        <li><strong>Delete Previous Word (<kbd>⌥</kbd> + <kbd>⌫</kbd>):</strong> Deletes the preceding word in a single strike, avoiding the tedious rapid-tapping of Backspace.</li>
-        <li><strong>Delete Preceding Line (<kbd>⌘</kbd> + <kbd>⌫</kbd>):</strong> Obliterates all text from the cursor back to the start of the current line. Essential for quickly rewriting a bad sentence start.</li>
-        <li><strong>Forward Delete (<kbd>Fn</kbd> + <kbd>⌫</kbd> or <kbd>⌃</kbd> + <kbd>D</kbd>):</strong> Deletes characters to the right of the cursor on compact MacBook keyboards lacking a dedicated Delete key.</li>
-        <li><strong>Paste and Match Style (<kbd>⌥</kbd> + <kbd>⇧</kbd> + <kbd>⌘</kbd> + <kbd>V</kbd>):</strong> Strips away font sizes, colors, and background highlights from copied text, formatting it to match the destination document seamlessly.</li>
-        <li><strong>Find and Find Again (<kbd>⌘</kbd> + <kbd>F</kbd> / <kbd>⌘</kbd> + <kbd>G</kbd>):</strong> Summons the search bar, while Command+G jumps to the next match, and <kbd>⌘⇧G</kbd> jumps to the previous match.</li>
+        <li>Fix Typos with Transpose: Memorize Ctrl+T. It is the fastest way to fix reversed-letter typos in macOS without erasing.</li>
+        <li>Forward Delete on MacBooks: Hold Fn while pressing Delete to delete characters forward.</li>
+        <li>Instant Paragraph Alignment: Use Cmd+[ for left, Shift+Cmd+| for center, and Cmd+] for right alignment in native text editors.</li>
       </ul>
-
-      <h3>The Writer's Edge</h3>
-      <p>Practicing these compound key combinations frees your conscious attention from the mechanics of editing so you can focus entirely on high-quality writing.</p>
 
       <div class="game-guide-nav">
-        <a href="../">← Return to Keyverse Home</a>
-        <a href="../#games">Browse All 10 Games</a>
+        <a href="../index.html">← Back to Keyverse Home</a>
+        <a href="../index.html#games">Browse All 10 Games</a>
         <a href="../about.html">About Keyverse</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
       </div>
-    </div>
-    
+    </article>
 </body>

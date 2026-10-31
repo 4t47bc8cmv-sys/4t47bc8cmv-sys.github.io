@@ -322,6 +322,43 @@
             font-weight: bold;
             font-size: 0.82rem;
         }
+        
+        .game-guide-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0 24px;
+            font-size: 0.88rem;
+            color: #bac2de;
+            border: 1px solid #45475a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .game-guide-container th {
+            background: #1e1e2e;
+            color: #89b4fa;
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid #45475a;
+            font-weight: 700;
+        }
+        .game-guide-container td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #313244;
+            vertical-align: top;
+        }
+        .game-guide-container tr:last-child td {
+            border-bottom: none;
+        }
+        .game-guide-container tr:nth-child(even) {
+            background: rgba(30, 30, 46, 0.4);
+        }
+        @media (max-width: 600px) {
+            .game-guide-container table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
         .game-guide-nav {
             display: flex;
             justify-content: space-between;
@@ -1583,37 +1620,178 @@
 <script src="../multiplayer/kv-score-tracker.js"></script>
 
     <!-- ACCREDITED COMPREHENSIVE SHORTCUT GUIDE (Crawlable Editorial Content) -->
-    <div class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
-      <span class="guide-tag">Volume 1 · Game 2 · In-Depth Guide</span>
-      <h2>Daily Driver Shortcuts: Essential Everyday macOS Workflows</h2>
+        <!-- COMPLETE EDUCATIONAL GUIDE & SHORTCUT REFERENCE (Crawlable Editorial Content) -->
+    <article class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
+      <span class="guide-tag">Volume 1 · Game 2 · Complete Guide</span>
+      <h2>Complete Guide &amp; Shortcut Reference for Daily Driver Shortcuts</h2>
       
-      <h3>Speeding Up the Actions You Take Hundreds of Times Daily</h3>
-      <p>Daily Driver shortcuts represent the frequent utility actions that sit between basic typing and specialized app tasks. Navigating browser tabs, taking screenshots for documentation, previewing documents without launching resource-heavy software, and closing windows are tasks performed constantly. Mastering these keystrokes reduces visual distractions and keeps your desktop organized.</p>
+      <h3>Overview: Why These Mac Shortcuts Matter</h3>
+      <p>Once you have memorized basic file opening and clipboard actions, the next productivity bottleneck is window and desktop clutter. In modern knowledge work, professionals juggle multiple browser tabs, code editors, reference PDFs, and communication channels simultaneously. Navigating between these overlapping windows with a trackpad wastes cognitive energy.</p>
+      <p>Volume 1 Game 2 focuses on "Daily Driver" workflows: switching between desktop Spaces, cycling windows within the same application, applying inline typographic styles, and controlling Finder layout views. These 25 shortcuts transform your macOS workstation into a seamless multi-pane command center.</p>
 
-      <h3>Window vs. Application Lifecycle: <kbd>⌘</kbd>+<kbd>W</kbd> vs <kbd>⌘</kbd>+<kbd>Q</kbd></h3>
-      <p>One of the most confusing concepts for Mac newcomers is that closing a document window does not terminate the running application. Understanding this distinction is vital for memory management and battery efficiency:</p>
+      <h3>Full Keyboard Shortcut Reference Table</h3>
+      <p>Here is every single Mac keyboard shortcut trained in <em>Daily Driver Shortcuts</em>, complete with its primary function and real-world application context:</p>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 32%;">Shortcut</th>
+            <th style="width: 28%;">Action</th>
+            <th style="width: 40%;">macOS Workflow Context</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>F</kbd></strong></td>
+          <td>Toggle Full Screen</td>
+          <td>Maximizes the front window into a dedicated macOS virtual Space without clicking the green traffic light.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>Up Arrow</kbd></strong></td>
+          <td>Mission Control</td>
+          <td>Presents a bird's-eye view of every active window, grouped by application across all virtual desktops.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>Down Arrow</kbd></strong></td>
+          <td>App Exposé</td>
+          <td>Tiles all open windows of the active foreground application for quick selection.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>Right Arrow</kbd></strong></td>
+          <td>Next Desktop Space</td>
+          <td>Swipes seamlessly to the adjacent virtual desktop or full-screen app workspace.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>`</kbd></strong></td>
+          <td>Cycle App Windows</td>
+          <td>Cycles through all open windows of the active application without touching other programs.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>B</kbd></strong></td>
+          <td>Bold</td>
+          <td>Applies bold typography to selected text in rich-text editors, email, and word processors.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>I</kbd></strong></td>
+          <td>Italic</td>
+          <td>Applies italic slant to highlighted text.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>U</kbd></strong></td>
+          <td>Underline</td>
+          <td>Underlines selected text in documents and notes.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>Delete</kbd></strong></td>
+          <td>Delete Previous Word</td>
+          <td>Erases the entire preceding word in one keystroke, replacing repeated Backspace tapping.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>Delete</kbd></strong></td>
+          <td>Delete to Line Start</td>
+          <td>Deletes all characters from current cursor insertion point back to the start of the line.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Right Arrow</kbd></strong></td>
+          <td>Select to Line End</td>
+          <td>Highlights all text from the cursor to the end of the line.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌥ Opt</kbd> + <kbd>Right Arrow</kbd></strong></td>
+          <td>Select Word Forward</td>
+          <td>Extends text selection forward one word at a time.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Up Arrow</kbd></strong></td>
+          <td>Select to Document Start</td>
+          <td>Highlights from current cursor location all the way up to the top of the file.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>Up Arrow</kbd></strong></td>
+          <td>Cursor to Document Top</td>
+          <td>Jumps the insertion point immediately to the beginning of the document.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>Left Arrow</kbd></strong></td>
+          <td>Cursor to Line Start</td>
+          <td>Snaps cursor to the beginning of the active line.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>1</kbd></strong></td>
+          <td>Finder Icon View</td>
+          <td>Switches Finder folder display to large icon grid view.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>2</kbd></strong></td>
+          <td>Finder List View</td>
+          <td>Switches Finder display to expandable hierarchical list view with sortable columns.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>3</kbd></strong></td>
+          <td>Finder Column View</td>
+          <td>Switches Finder display to multi-tier Miller columns for intuitive parent-child folder browsing.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>4</kbd></strong></td>
+          <td>Finder Gallery View</td>
+          <td>Switches Finder display to large preview gallery with metadata sidebar for photos and videos.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>V</kbd></strong></td>
+          <td>Move / Cut-Paste File</td>
+          <td>Relocates a previously copied file to the current folder, removing the original without duplication.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>4</kbd></strong></td>
+          <td>Region Snip to Clipboard</td>
+          <td>Snips selected screen area directly into clipboard memory without creating a Desktop file.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>5</kbd></strong></td>
+          <td>Screenshot Toolbar</td>
+          <td>Opens interactive screen capture toolbar for still frames, video recording, and timed captures.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>6</kbd></strong></td>
+          <td>Touch Bar Screenshot</td>
+          <td>Captures Touch Bar contents on supported MacBook Pro hardware.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>4</kbd></strong></td>
+          <td>Region Snip to File</td>
+          <td>Saves crosshair selected screen area as a PNG file on the Desktop.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>3</kbd></strong></td>
+          <td>Full Screen to Clipboard</td>
+          <td>Captures full display directly into clipboard memory for immediate pasting into chat or email.</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <h3>Real-World macOS Workflows</h3>
+      <p>A core power-user technique is combining Finder's Column View (<kbd>⌘ Cmd</kbd> + <kbd>3</kbd>) with arrow-key navigation. By holding Command and tapping 3, you can navigate nested folder structures using only your Left and Right arrow keys, previewing files instantly with the Spacebar without ever spawning cluttering extra windows.</p>
+      <p>For writing and communications, combining <kbd>⌥ Opt</kbd> + <kbd>Delete</kbd> with <kbd>⌘ Cmd</kbd> + <kbd>Delete</kbd> dramatically speeds up drafting. When revising a sentence, instead of tapping backspace fifteen times, tapping Option+Delete cleanly removes bad words, keeping your mind focused on composition rather than editing mechanics.</p>
+
+      <h3>Common Mistakes Windows Switchers Make</h3>
       <ul>
-        <li><strong>Close Window (<kbd>⌘</kbd> + <kbd>W</kbd>):</strong> Closes the active window or browser tab. The parent application remains running in memory (indicated by a small dot under the app icon in the Dock), ready to open new windows instantly without relaunch delay.</li>
-        <li><strong>Quit Application (<kbd>⌘</kbd> + <kbd>Q</kbd>):</strong> Completely shuts down the application and purges its memory allocation. Use Command+Q when you are finished with intensive applications like Photoshop, Final Cut, or Xcode.</li>
+        <li>Trying to cut files with Cmd+X: On macOS, Cmd+X is intentionally disabled on files to prevent accidental deletion if you get distracted before pasting. Instead, copy with Cmd+C, navigate to the target folder, and press Option+Cmd+V to move it cleanly.</li>
+        <li>Using Alt+Tab to cycle windows within the same app: On Windows, Alt+Tab mixes all windows together. On Mac, Cmd+Tab switches applications, while Cmd+` (tilde) cycles exclusively through windows of the current app.</li>
+        <li>Saving screenshots to the Desktop only to drag them into Slack: Adding the Control key (Ctrl+Shift+Cmd+4) copies the screen snip directly to your clipboard so you can paste it with Cmd+V instantly.</li>
       </ul>
 
-      <h3>High-Leverage Daily Shortcuts Reference</h3>
+      <h3>Pro Productivity &amp; Ergonomics Tips</h3>
       <ul>
-        <li><strong>Quick Look Preview (<kbd>Spacebar</kbd>):</strong> Select any file in Finder or your desktop and tap the Spacebar. Quick Look displays PDFs, images, high-resolution videos, audio files, and spreadsheets instantly without opening Preview, Acrobat, or Excel. Tap Spacebar again to dismiss.</li>
-        <li><strong>Interactive Screenshot (<kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>4</kbd>):</strong> Turns your cursor into crosshairs to capture an exact region of your screen. Press the Spacebar while the crosshairs are visible to snap a clean window screenshot with drop-shadow.</li>
-        <li><strong>Screen Capture Utility (<kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>5</kbd>):</strong> Opens the advanced capture bar for recording video screen tutorials, setting capture timers, and choosing custom save destinations.</li>
-        <li><strong>Application Preferences (<kbd>⌘</kbd> + <kbd>,</kbd>):</strong> Universally summons the settings dialog for whichever application is currently active. You never need to hunt through menus to adjust preferences.</li>
-        <li><strong>New Tab (<kbd>⌘</kbd> + <kbd>T</kbd>):</strong> Spawns a fresh tab in Safari, Chrome, Finder, and Terminal, avoiding desktop clutter.</li>
+        <li>Instant Window Cleaning: If you have four Safari windows open and need to cycle between them, press Cmd+` (the key right above Tab) to jump smoothly between them.</li>
+        <li>Fast Screenshot to Clipboard: Memorize Ctrl+Shift+Cmd+4. It saves you from accumulating dozens of unwanted screenshot PNG files on your Desktop.</li>
+        <li>Full Screen Space Toggle: Use Ctrl+Cmd+F to expand your active code editor or browser to a dedicated workspace, then swipe with Ctrl+Left/Right arrows.</li>
       </ul>
-
-      <h3>Maximizing Everyday Speed</h3>
-      <p>By relying on Quick Look and targeted screenshot shortcuts, you bypass unnecessary application load times and produce cleaner communications in Slack, email, and shared project tickets.</p>
 
       <div class="game-guide-nav">
-        <a href="../">← Return to Keyverse Home</a>
-        <a href="../#games">Browse All 10 Games</a>
+        <a href="../index.html">← Back to Keyverse Home</a>
+        <a href="../index.html#games">Browse All 10 Games</a>
         <a href="../about.html">About Keyverse</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
       </div>
-    </div>
-    
+    </article>
 </body>

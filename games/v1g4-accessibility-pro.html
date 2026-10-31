@@ -322,6 +322,43 @@
             font-weight: bold;
             font-size: 0.82rem;
         }
+        
+        .game-guide-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0 24px;
+            font-size: 0.88rem;
+            color: #bac2de;
+            border: 1px solid #45475a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .game-guide-container th {
+            background: #1e1e2e;
+            color: #89b4fa;
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid #45475a;
+            font-weight: 700;
+        }
+        .game-guide-container td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #313244;
+            vertical-align: top;
+        }
+        .game-guide-container tr:last-child td {
+            border-bottom: none;
+        }
+        .game-guide-container tr:nth-child(even) {
+            background: rgba(30, 30, 46, 0.4);
+        }
+        @media (max-width: 600px) {
+            .game-guide-container table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
         .game-guide-nav {
             display: flex;
             justify-content: space-between;
@@ -1583,32 +1620,178 @@
 <script src="../multiplayer/kv-score-tracker.js"></script>
 
     <!-- ACCREDITED COMPREHENSIVE SHORTCUT GUIDE (Crawlable Editorial Content) -->
-    <div class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
-      <span class="guide-tag">Volume 1 · Game 4 · In-Depth Guide</span>
-      <h2>macOS Accessibility Pro: Ergonomics, Vision, and Precision Controls</h2>
+        <!-- COMPLETE EDUCATIONAL GUIDE & SHORTCUT REFERENCE (Crawlable Editorial Content) -->
+    <article class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
+      <span class="guide-tag">Volume 1 · Game 4 · Complete Guide</span>
+      <h2>Complete Guide &amp; Shortcut Reference for Accessibility Pro</h2>
       
-      <h3>Built-In Power Features for Vision, Audio, and Motor Comfort</h3>
-      <p>Apple has long set the industry standard for operating system accessibility. Beyond assisting users with physical or visual impairments, macOS accessibility shortcuts offer tremendous utility for developers inspecting UI layouts, designers validating color contrast, and anyone seeking to minimize eye fatigue during late-night work sessions.</p>
+      <h3>Overview: Why These Mac Shortcuts Matter</h3>
+      <p>macOS includes some of the world's most advanced accessibility and hardware-tuning technologies, but many users never discover them. Beyond assistive technology, accessibility shortcuts provide precision control over screen backlighting, audio fidelity, and keyboard-first system operation.</p>
+      <p>Volume 1 Game 4 trains precision hardware calibration: quarter-step volume and brightness adjustments, screen magnification zoom, full keyboard menu bar access (<kbd>⌃ Ctrl</kbd> + <kbd>F2</kbd>), and instant emoji and symbol palette access.</p>
 
-      <h3>Hardware Precision Adjustments: The Shift-Option Secret</h3>
-      <p>When you press the volume or display brightness function keys, macOS adjusts levels in full increments of 1/16th. By holding <kbd>⌥ Option</kbd> + <kbd>⇧ Shift</kbd> while pressing brightness (<kbd>F1</kbd>/<kbd>F2</kbd>) or volume (<kbd>F11</kbd>/<kbd>F12</kbd>), you unlock quarter-step adjustments. This provides 64 granular levels instead of 16, allowing you to find the exact acoustic sweet spot when listening through studio monitors or high-sensitivity headphones.</p>
+      <h3>Full Keyboard Shortcut Reference Table</h3>
+      <p>Here is every single Mac keyboard shortcut trained in <em>Accessibility Pro</em>, complete with its primary function and real-world application context:</p>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 32%;">Shortcut</th>
+            <th style="width: 28%;">Action</th>
+            <th style="width: 40%;">macOS Workflow Context</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><strong><kbd>F10</kbd></strong></td>
+          <td>Mute Audio</td>
+          <td>Instantly silences system audio output.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>F11</kbd></strong></td>
+          <td>Volume Down</td>
+          <td>Lowers audio output by one standard increment.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>F12</kbd></strong></td>
+          <td>Volume Up</td>
+          <td>Increases audio output by one standard increment.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⇧ Shift</kbd> + <kbd>F11</kbd></strong></td>
+          <td>Fine Volume Down</td>
+          <td>Decreases volume by one-quarter step (1/64th of full scale) for micro-adjustments with sensitive headphones.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⇧ Shift</kbd> + <kbd>F12</kbd></strong></td>
+          <td>Fine Volume Up</td>
+          <td>Increases volume by one-quarter step for fine acoustic balancing.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>F1</kbd></strong></td>
+          <td>Brightness Down</td>
+          <td>Lowers screen backlight by one standard increment.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>F2</kbd></strong></td>
+          <td>Brightness Up</td>
+          <td>Increases screen backlight by one standard increment.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⇧ Shift</kbd> + <kbd>F1</kbd></strong></td>
+          <td>Fine Brightness Down</td>
+          <td>Decreases screen brightness by one-quarter increment for comfortable low-light late-night viewing.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>F2</kbd></strong></td>
+          <td>Focus Menu Bar</td>
+          <td>Moves keyboard focus to the Apple menu bar for 100% mouse-free navigation using arrow keys.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>F3</kbd></strong></td>
+          <td>Focus Dock</td>
+          <td>Moves keyboard focus to the Dock for keyboard selection of applications.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>8</kbd></strong></td>
+          <td>Toggle Screen Zoom</td>
+          <td>Enables or disables hardware screen magnification.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>=</kbd></strong></td>
+          <td>Zoom In</td>
+          <td>Magnifies screen viewport closer to cursor position.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>-</kbd></strong></td>
+          <td>Zoom Out</td>
+          <td>Scales screen magnification back to standard level.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>8</kbd></strong></td>
+          <td>Invert Colors</td>
+          <td>Inverts screen color palette to high-contrast dark mode to relieve ocular strain.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>F5</kbd></strong></td>
+          <td>Accessibility Shortcuts</td>
+          <td>Summons Accessibility Shortcuts panel (VoiceOver, Zoom, Sticky Keys, Captions).</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Space</kbd></strong></td>
+          <td>Character & Emoji Viewer</td>
+          <td>Summons full character picker with emojis, arrows, math symbols, and accents.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>C</kbd></strong></td>
+          <td>Copy Style</td>
+          <td>Copies paragraph formatting, font size, and color without copying text characters.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>V</kbd></strong></td>
+          <td>Paste Style</td>
+          <td>Applies copied typography styling to selected text block.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>T</kbd></strong></td>
+          <td>Inspector / Format Toolbar</td>
+          <td>Shows or hides typography font attributes panel in Pages, TextEdit, and Keynote.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>+</kbd></strong></td>
+          <td>Increase Text Size</td>
+          <td>Increases font display size in browsers, mail, and text editors.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>Power</kbd></strong></td>
+          <td>Power Options Dialog</td>
+          <td>Opens dialog with Restart, Sleep, Cancel, and Shut Down options.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Power</kbd></strong></td>
+          <td>Force Restart</td>
+          <td>Instantly reboots computer without displaying save prompts.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Power</kbd></strong></td>
+          <td>Safe Shut Down</td>
+          <td>Prompts to save open documents, quits applications, and powers off Mac.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>Power</kbd></strong></td>
+          <td>Sleep Displays Only</td>
+          <td>Darkens screen immediately while keeping audio playback and background processing running.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Q</kbd></strong></td>
+          <td>Immediate Logout</td>
+          <td>Logs out active user account immediately without the 60-second confirmation prompt.</td>
+        </tr>
+        </tbody>
+      </table>
 
-      <h3>Essential Accessibility Shortcuts Reference</h3>
+      <h3>Real-World macOS Workflows</h3>
+      <p>In quiet environments or during late-night work sessions, standard volume and brightness steps are often too aggressive. By holding <kbd>⌥ Opt</kbd> + <kbd>⇧ Shift</kbd> while tapping <kbd>F11</kbd> or <kbd>F1</kbd>, macOS subdivides each block on the on-screen indicator into four micro-steps, giving you 64 discrete levels for perfect low-light and headphone balance.</p>
+      <p>When your trackpad or mouse disconnects or runs out of battery, pressing <kbd>⌃ Ctrl</kbd> + <kbd>F2</kbd> moves full control to the Apple menu bar. You can traverse menus with arrow keys, type the first letter of any menu item, and press Return to trigger commands cleanly.</p>
+
+      <h3>Common Mistakes Windows Switchers Make</h3>
       <ul>
-        <li><strong>Toggle Screen Zoom (<kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>8</kbd>):</strong> Activates hardware-accelerated screen magnification. Once enabled, use <kbd>⌘</kbd>+<kbd>⌥</kbd>+<kbd>=</kbd> to zoom in and <kbd>⌘</kbd>+<kbd>⌥</kbd>+<kbd>-</kbd> to zoom out. Essential for inspecting pixel alignment in design assets.</li>
-        <li><strong>Invert Display Colors (<kbd>⌃</kbd> + <kbd>⌥</kbd> + <kbd>⌘</kbd> + <kbd>8</kbd>):</strong> Instantly reverses screen polarity. Provides high-contrast white-on-black viewing for reading long documents or darkroom environments where standard dark mode is insufficient.</li>
-        <li><strong>VoiceOver Toggle (<kbd>⌘</kbd> + <kbd>F5</kbd>):</strong> Turns Apple's advanced screen reader on and off. Vital for web and software developers conducting accessibility testing to verify screen reader semantics and ARIA tags.</li>
-        <li><strong>Accessibility Options Panel (<kbd>⌥</kbd> + <kbd>⌘</kbd> + <kbd>F5</kbd>):</strong> Summons the quick accessibility shortcuts dialog, granting instant toggles for Zoom, Sticky Keys, Slow Keys, and Mouse Keys.</li>
+        <li>Assuming Mac has no emoji picker: On Windows, Win + Period opens emojis. On Mac, press Control + Command + Space anywhere to summon the full Character Viewer.</li>
+        <li>Clicking menu items when trackpad freezes: Tapping Ctrl + F2 focuses the top Apple menu bar for keyboard-only navigation.</li>
+        <li>Struggling with blinding brightness steps at night: Hold Option + Shift while tapping brightness keys to adjust in quarter-increments.</li>
       </ul>
 
-      <h3>Ergonomic Habit Formation</h3>
-      <p>Using keyboard shortcuts reduces repetitive stress injury (RSI) associated with continuous mouse gripping. Rotate through keyboard navigation options to maintain long-term physical comfort during extended computing sessions.</p>
+      <h3>Pro Productivity &amp; Ergonomics Tips</h3>
+      <ul>
+        <li>Micro Volume Control: Hold Option+Shift while pressing volume keys for 64 precision levels instead of the standard 16.</li>
+        <li>Copy Formatting Only: Press Option+Cmd+C to copy paragraph style and Option+Cmd+V to apply it elsewhere without retyping.</li>
+        <li>Immediate Emergency Logout: Tap Option+Shift+Cmd+Q to log out immediately without waiting for the 60-second confirmation timer.</li>
+      </ul>
 
       <div class="game-guide-nav">
-        <a href="../">← Return to Keyverse Home</a>
-        <a href="../#games">Browse All 10 Games</a>
+        <a href="../index.html">← Back to Keyverse Home</a>
+        <a href="../index.html#games">Browse All 10 Games</a>
         <a href="../about.html">About Keyverse</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
       </div>
-    </div>
-    
+    </article>
 </body>

@@ -330,6 +330,43 @@
             font-weight: bold;
             font-size: 0.82rem;
         }
+        
+        .game-guide-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0 24px;
+            font-size: 0.88rem;
+            color: #bac2de;
+            border: 1px solid #45475a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .game-guide-container th {
+            background: #1e1e2e;
+            color: #89b4fa;
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid #45475a;
+            font-weight: 700;
+        }
+        .game-guide-container td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #313244;
+            vertical-align: top;
+        }
+        .game-guide-container tr:last-child td {
+            border-bottom: none;
+        }
+        .game-guide-container tr:nth-child(even) {
+            background: rgba(30, 30, 46, 0.4);
+        }
+        @media (max-width: 600px) {
+            .game-guide-container table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
         .game-guide-nav {
             display: flex;
             justify-content: space-between;
@@ -1628,39 +1665,178 @@
 <script src="../multiplayer/kv-score-tracker.js"></script>
 
     <!-- ACCREDITED COMPREHENSIVE SHORTCUT GUIDE (Crawlable Editorial Content) -->
-    <div class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
-      <span class="guide-tag">Volume 4 · Game 1 · In-Depth Guide</span>
-      <h2>Text Editing Navigation: Navigating Code & Prose Without Trackpads</h2>
+        <!-- COMPLETE EDUCATIONAL GUIDE & SHORTCUT REFERENCE (Crawlable Editorial Content) -->
+    <article class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
+      <span class="guide-tag">Volume 4 · Game 1 · Complete Guide</span>
+      <h2>Complete Guide &amp; Shortcut Reference for Text Editing Navigation</h2>
       
-      <h3>Speeding Up Typing by Eliminating Mouse Context Switches</h3>
-      <p>When drafting emails, writing documentation, or programming, lifting your hand from the keyboard to position the text cursor with a mouse or trackpad disrupts your cognitive focus. macOS includes an extraordinary set of universal text navigation shortcuts embedded natively into the Cocoa text system. Because these bindings are implemented at the system level, they work identically in Notes, Safari, Slack, Mail, TextEdit, and professional code editors.</p>
+      <h3>Overview: Why These Mac Shortcuts Matter</h3>
+      <p>Touching the trackpad or mouse while writing or coding breaks cognitive flow. Every time your hand leaves the keyboard, your brain experiences micro-interruptions that slow down thought synthesis. macOS includes a sophisticated, deeply integrated text-editing engine that allows you to maneuver anywhere in a document with zero trackpad travel.</p>
+      <p>Because macOS is engineered on a Unix foundation, it includes both traditional GUI movement shortcuts (<kbd>⌘ Cmd</kbd> and <kbd>⌥ Opt</kbd> with arrows) and standard Readline/Emacs cursor controls (<kbd>⌃ Ctrl</kbd> + <kbd>A</kbd>, <kbd>E</kbd>, <kbd>K</kbd>, <kbd>O</kbd>). Volume 4 Game 1 drills these 25 essential cursor navigation bindings.</p>
 
-      <h3>Hierarchical Cursor Navigation: Characters, Words, and Lines</h3>
-      <p>macOS structures cursor navigation with intuitive modifier pairings:</p>
+      <h3>Full Keyboard Shortcut Reference Table</h3>
+      <p>Here is every single Mac keyboard shortcut trained in <em>Text Editing Navigation</em>, complete with its primary function and real-world application context:</p>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 32%;">Shortcut</th>
+            <th style="width: 28%;">Action</th>
+            <th style="width: 40%;">macOS Workflow Context</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><strong><kbd>Fn</kbd> + <kbd>Up Arrow</kbd></strong></td>
+          <td>Page Up</td>
+          <td>Scrolls view up one full screen page without moving cursor insertion point.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>Fn</kbd> + <kbd>Down Arrow</kbd></strong></td>
+          <td>Page Down</td>
+          <td>Scrolls view down one full screen page.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>Fn</kbd> + <kbd>Left Arrow</kbd></strong></td>
+          <td>Home</td>
+          <td>Jumps viewport to the very top of document.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>Fn</kbd> + <kbd>Shift</kbd> + <kbd>Up Arrow</kbd></strong></td>
+          <td>Page Up with Selection</td>
+          <td>Extends text selection one full screen page upward.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>Fn</kbd> + <kbd>Shift</kbd> + <kbd>Down Arrow</kbd></strong></td>
+          <td>Page Down with Selection</td>
+          <td>Extends text selection one full screen page downward.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>Fn</kbd> + <kbd>Right Arrow</kbd></strong></td>
+          <td>End</td>
+          <td>Jumps viewport to the very end of document.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>Right Arrow</kbd></strong></td>
+          <td>End of Line</td>
+          <td>Snaps insertion cursor to the absolute end of current line.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>Left Arrow</kbd></strong></td>
+          <td>Beginning of Line</td>
+          <td>Snaps insertion cursor to the absolute beginning of current line.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>Up Arrow</kbd></strong></td>
+          <td>Top of Document</td>
+          <td>Moves cursor directly to the start of the entire document.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>Down Arrow</kbd></strong></td>
+          <td>End of Document</td>
+          <td>Moves cursor directly to the end of the entire document.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>Left Arrow</kbd></strong></td>
+          <td>Previous Word</td>
+          <td>Leaps cursor backward to the beginning of the previous word.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>Right Arrow</kbd></strong></td>
+          <td>Next Word</td>
+          <td>Leaps cursor forward to the end of the next word.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⇧ Shift</kbd> + <kbd>Left Arrow</kbd></strong></td>
+          <td>Select Previous Word</td>
+          <td>Extends selection backward word by word.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⇧ Shift</kbd> + <kbd>Right Arrow</kbd></strong></td>
+          <td>Select Next Word</td>
+          <td>Extends selection forward word by word.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>Delete</kbd></strong></td>
+          <td>Delete Word Left</td>
+          <td>Erases the entire preceding word in one keystroke.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>A</kbd></strong></td>
+          <td>Line Start (Emacs)</td>
+          <td>Moves cursor to beginning of line/paragraph without leaving home row.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>E</kbd></strong></td>
+          <td>Line End (Emacs)</td>
+          <td>Moves cursor to end of line/paragraph without leaving home row.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>F</kbd></strong></td>
+          <td>Forward Character</td>
+          <td>Advances cursor one character forward (home-row navigation).</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>B</kbd></strong></td>
+          <td>Backward Character</td>
+          <td>Retracts cursor one character backward (home-row navigation).</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>D</kbd></strong></td>
+          <td>Forward Delete</td>
+          <td>Deletes character directly to the right of cursor.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>P</kbd></strong></td>
+          <td>Previous Line</td>
+          <td>Moves cursor up one line (home-row navigation).</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>N</kbd></strong></td>
+          <td>Next Line</td>
+          <td>Moves cursor down one line (home-row navigation).</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>L</kbd></strong></td>
+          <td>Center Cursor in Window</td>
+          <td>Centers current cursor line in middle of editing screen.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>O</kbd></strong></td>
+          <td>Open Newline After Cursor</td>
+          <td>Inserts blank line below insertion point without moving current cursor.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>K</kbd></strong></td>
+          <td>Kill Line</td>
+          <td>Deletes all text from cursor to end of current line into dedicated kill buffer.</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <h3>Real-World macOS Workflows</h3>
+      <p>The difference between Option and Command navigation is systematic across macOS: <kbd>⌥ Option</kbd> navigates by **word**, while <kbd>⌘ Command</kbd> navigates by **structural boundary** (line start/end, document start/end). Adding <kbd>⇧ Shift</kbd> to either modifier automatically converts the movement into a highlight selection.</p>
+      <p>For programmers, writers, and command-line users, standard Emacs keys work globally in almost every macOS text field—including Safari search bars, Slack inputs, Mail composition, and Xcode. You can jump to line start with <kbd>⌃ Ctrl</kbd> + <kbd>A</kbd>, line end with <kbd>⌃ Ctrl</kbd> + <kbd>E</kbd>, and delete to line end with <kbd>⌃ Ctrl</kbd> + <kbd>K</kbd> without lifting your hands from home row.</p>
+
+      <h3>Common Mistakes Windows Switchers Make</h3>
       <ul>
-        <li><strong>Word Jumping (<kbd>⌥ Option</kbd> + <kbd>←</kbd> / <kbd>→</kbd>):</strong> Moves the blinking insertion point forward or backward by one entire word, intelligently respecting punctuation boundaries.</li>
-        <li><strong>Line Jumping (<kbd>⌘ Command</kbd> + <kbd>←</kbd> / <kbd>→</kbd>):</strong> Instantly sends the cursor to the extreme beginning (<kbd>⌘←</kbd>) or extreme end (<kbd>⌘→</kbd>) of the current visual line.</li>
-        <li><strong>Document Start / End (<kbd>⌘ Command</kbd> + <kbd>↑</kbd> / <kbd>↓</kbd>):</strong> Jumps directly to the very top or bottom of the entire text document or webpage.</li>
-        <li><strong>Paragraph Jumping (<kbd>⌥ Option</kbd> + <kbd>↑</kbd> / <kbd>↓</kbd>):</strong> Moves the cursor up or down to the start or end of the current paragraph block.</li>
+        <li>Assuming Mac laptops lack Home and End keys: Fn + Left Arrow is Home; Fn + Right Arrow is End; Fn + Up/Down is Page Up/Down.</li>
+        <li>Reaching for the mouse to jump to the start of a line: Command + Left Arrow snaps you to line start in zero seconds.</li>
+        <li>Holding Backspace for ten seconds to erase words: Option + Delete deletes whole words instantly.</li>
       </ul>
 
-      <h3>Universal Emacs / UNIX Text Navigation in macOS</h3>
-      <p>Because macOS is built on a Darwin/BSD UNIX foundation, standard Emacs cursor commands are active in nearly all single-line and multi-line text fields:</p>
+      <h3>Pro Productivity &amp; Ergonomics Tips</h3>
       <ul>
-        <li><strong>Line Start (<kbd>⌃</kbd> + <kbd>A</kbd>):</strong> Jumps cursor to beginning of the line (equivalent to <kbd>⌘←</kbd>).</li>
-        <li><strong>Line End (<kbd>⌃</kbd> + <kbd>E</kbd>):</strong> Jumps cursor to end of the line (equivalent to <kbd>⌘→</kbd>).</li>
-        <li><strong>Kill to End of Line (<kbd>⌃</kbd> + <kbd>K</kbd>):</strong> Deletes all text from the cursor position to the end of the line, storing it in the kill-ring buffer.</li>
-        <li><strong>Yank (<kbd>⌃</kbd> + <kbd>Y</kbd>):</strong> Pastes the most recently killed line back into place.</li>
+        <li>Home-Row Navigation: Use Ctrl+A and Ctrl+E to navigate line edges without moving your hands to arrow keys.</li>
+        <li>Kill to Line End: Ctrl+K deletes from your cursor to the end of the line, storing the text in a secondary buffer.</li>
+        <li>Insert Line Below: Ctrl+O creates a new line under your cursor without moving your cursor position.</li>
       </ul>
-
-      <h3>Developing Typing Fluency</h3>
-      <p>Combine Option and Command navigation daily. Once your fingers automatically reach for <kbd>⌥←</kbd> rather than tapping the left arrow fifteen times, your editing throughput doubles.</p>
 
       <div class="game-guide-nav">
-        <a href="../">← Return to Keyverse Home</a>
-        <a href="../#games">Browse All 10 Games</a>
+        <a href="../index.html">← Back to Keyverse Home</a>
+        <a href="../index.html#games">Browse All 10 Games</a>
         <a href="../about.html">About Keyverse</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
       </div>
-    </div>
-    
+    </article>
 </body>

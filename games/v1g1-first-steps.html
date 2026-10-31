@@ -322,6 +322,43 @@
             font-weight: bold;
             font-size: 0.82rem;
         }
+        
+        .game-guide-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0 24px;
+            font-size: 0.88rem;
+            color: #bac2de;
+            border: 1px solid #45475a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .game-guide-container th {
+            background: #1e1e2e;
+            color: #89b4fa;
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid #45475a;
+            font-weight: 700;
+        }
+        .game-guide-container td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #313244;
+            vertical-align: top;
+        }
+        .game-guide-container tr:last-child td {
+            border-bottom: none;
+        }
+        .game-guide-container tr:nth-child(even) {
+            background: rgba(30, 30, 46, 0.4);
+        }
+        @media (max-width: 600px) {
+            .game-guide-container table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
         .game-guide-nav {
             display: flex;
             justify-content: space-between;
@@ -1583,35 +1620,164 @@
 <script src="../multiplayer/kv-score-tracker.js"></script>
 
     <!-- ACCREDITED COMPREHENSIVE SHORTCUT GUIDE (Crawlable Editorial Content) -->
-    <div class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
-      <span class="guide-tag">Volume 1 · Game 1 · In-Depth Guide</span>
-      <h2>Mastering First Steps on Mac: Core Shortcut Reference & Tutorial</h2>
+        <!-- COMPLETE EDUCATIONAL GUIDE & SHORTCUT REFERENCE (Crawlable Editorial Content) -->
+    <article class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
+      <span class="guide-tag">Volume 1 · Game 1 · Complete Guide</span>
+      <h2>Complete Guide &amp; Shortcut Reference for First Steps on Mac</h2>
       
-      <h3>Why the First Shortcuts Define Your Entire Mac Experience</h3>
-      <p>When you transition to a Mac or set up a new machine, your initial instinct is often to perform basic actions via trackpad gestures or upper menu bars. However, everyday operations like copying, pasting, undoing mistakes, and switching applications account for over 60% of daily keyboard-to-screen interactions. Committing these core shortcuts to permanent muscle memory prevents cumulative strain and establishes the mechanical foundation for all advanced macOS navigation.</p>
-      
-      <h3>The Command Key Advantage</h3>
-      <p>On Apple keyboards, the <kbd>⌘ Command</kbd> key is engineered for ergonomic access using the thumb rather than the pinky finger. This architectural design allows you to strike combinations without contorting your wrist or shifting your hand away from the home row typing position. Keep your palms relaxed and let your left thumb pivot naturally to anchor the Command key.</p>
+      <h3>Overview: Why These Mac Shortcuts Matter</h3>
+      <p>When switching to a Mac or setting up a new Apple computer, your immediate instinct is often to rely heavily on the trackpad or reach for the top menu bar. However, basic operations like copying, pasting, undoing edits, switching applications, and launching files account for more than 60% of all user input interactions. Mastering these foundational shortcuts builds the neurological baseline for all subsequent macOS speed and muscle memory.</p>
+      <p>On Apple keyboards, the Command (<kbd>⌘</kbd>) key is positioned directly under your thumb rather than your pinky finger. This architectural design distinction allows you to strike combinations without wrist deviation or lifting your hand from the home-row typing posture. By practicing these 22 core shortcuts until they become involuntary reflexes, you eliminate cumulative friction and save dozens of cumulative hours every working year.</p>
 
-      <h3>Essential First Steps Shortcut Breakdown</h3>
+      <h3>Full Keyboard Shortcut Reference Table</h3>
+      <p>Here is every single Mac keyboard shortcut trained in <em>First Steps on Mac</em>, complete with its primary function and real-world application context:</p>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 32%;">Shortcut</th>
+            <th style="width: 28%;">Action</th>
+            <th style="width: 40%;">macOS Workflow Context</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>Space</kbd></strong></td>
+          <td>Spotlight Search</td>
+          <td>Universal launcher for applications, files, calculations (e.g. "145 * 12"), and dictionary lookups without touching the mouse.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>Z</kbd></strong></td>
+          <td>Undo</td>
+          <td>Reverses the immediate prior action in text editors, graphic design software, and Finder file operations.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>Left Arrow</kbd></strong></td>
+          <td>Go Back</td>
+          <td>Navigates back to the preceding webpage in Safari or Chrome, or jumps to the parent folder in Finder.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>O</kbd></strong></td>
+          <td>Open File</td>
+          <td>Opens highlighted files or documents in their system default application.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>N</kbd></strong></td>
+          <td>New Folder</td>
+          <td>Instantly generates an untitled directory in the active Finder window or on the Desktop.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>C</kbd></strong></td>
+          <td>Copy</td>
+          <td>Duplicates selected text, image assets, or files onto the macOS system clipboard.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>V</kbd></strong></td>
+          <td>Paste</td>
+          <td>Inserts clipboard contents into the active cursor position or target Finder folder.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>X</kbd></strong></td>
+          <td>Cut</td>
+          <td>Removes selected text or data and stages it on the clipboard for immediate relocation.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>A</kbd></strong></td>
+          <td>Select All</td>
+          <td>Selects every element, text string, or file inside the active document or folder.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>Delete</kbd></strong></td>
+          <td>Move to Trash</td>
+          <td>Instantly sends selected files or folders to the macOS Trash bin without dragging.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>Tab</kbd></strong></td>
+          <td>App Switcher</td>
+          <td>Cycles through running applications. Hold Command and tap Tab to move forward, or tap Q to quit the highlighted app.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>W</kbd></strong></td>
+          <td>Close Window</td>
+          <td>Closes the frontmost window or tab while allowing the background application process to stay open.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>Q</kbd></strong></td>
+          <td>Quit App</td>
+          <td>Completely terminates the application process and releases system memory.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>M</kbd></strong></td>
+          <td>Minimize Window</td>
+          <td>Shrinks active window down into the right-hand tray of the macOS Dock.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Esc</kbd></strong></td>
+          <td>Force Quit</td>
+          <td>Summons the Force Quit Applications dialog to terminate unresponsive software immediately.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>S</kbd></strong></td>
+          <td>Save Document</td>
+          <td>Commits current file changes to storage in text editors, IDEs, and office suites.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>F</kbd></strong></td>
+          <td>Find on Page</td>
+          <td>Summons search query input inside Safari, Notes, Word, and text documents.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>B</kbd></strong></td>
+          <td>Bold Text</td>
+          <td>Toggles bold typographic weight on highlighted characters.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>R</kbd></strong></td>
+          <td>Refresh / Reload</td>
+          <td>Reloads the current browser tab or updates the current Finder file directory.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>3</kbd></strong></td>
+          <td>Full Screenshot</td>
+          <td>Captures the entire screen display and saves a timestamped PNG image to the Desktop.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>4</kbd></strong></td>
+          <td>Region Screenshot</td>
+          <td>Turns the cursor into crosshairs to select a rectangular area, or tap Space to capture an entire window.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Q</kbd></strong></td>
+          <td>Lock Screen</td>
+          <td>Immediately locks the Mac screen and requires password or Touch ID authentication to resume.</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <h3>Real-World macOS Workflows</h3>
+      <p>In everyday work, combining <kbd>⌘ Cmd</kbd> + <kbd>Space</kbd> with <kbd>⌘ Cmd</kbd> + <kbd>Tab</kbd> replaces the trackpad entirely when launching and switching between tasks. For example, instead of moving your hand to click on Spotlight or hunting through the Dock, a quick thumb tap on Command and Space lets you type three letters of an application name, hit Return to launch, and press <kbd>⌘ Cmd</kbd> + <kbd>Tab</kbd> to seamlessly toggle back to your active document.</p>
+      <p>When managing documents, keep your left thumb anchored on the Command key. Pressing <kbd>⌘ Cmd</kbd> + <kbd>S</kbd> after every key thought ensures your work is continuously committed, while <kbd>⌘ Cmd</kbd> + <kbd>Z</kbd> and <kbd>⌘ Cmd</kbd> + <kbd>A</kbd> give you complete editorial control over text blocks without breaking typing cadence.</p>
+
+      <h3>Common Mistakes Windows Switchers Make</h3>
       <ul>
-        <li><strong>Copy (<kbd>⌘</kbd> + <kbd>C</kbd>):</strong> Duplicates highlighted text, image assets, or Finder files to the macOS system clipboard. Unlike Windows, the clipboard preserves rich text and metadata across different sandbox environments.</li>
-        <li><strong>Paste (<kbd>⌘</kbd> + <kbd>V</kbd>):</strong> Inserts the contents of your clipboard at the active cursor position or inside the target Finder directory.</li>
-        <li><strong>Undo (<kbd>⌘</kbd> + <kbd>Z</kbd>):</strong> Reverses your immediate previous action. macOS applications maintain deep undo stacks, allowing you to backtrack through multiple sequential edits in text documents, graphic canvases, and file renames.</li>
-        <li><strong>Redo (<kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>Z</kbd>):</strong> Re-applies an action you previously reversed with undo. Shift universally functions across macOS as an inverse modifier.</li>
-        <li><strong>Select All (<kbd>⌘</kbd> + <kbd>A</kbd>):</strong> Highlights every element within the active document, text field, or Finder folder view for bulk manipulation.</li>
-        <li><strong>Spotlight Search (<kbd>⌘</kbd> + <kbd>Space</kbd>):</strong> The universal launcher. Press Command and Space to instantly summon the Spotlight search bar. You can launch any application, calculate arithmetic (e.g., "45 * 12"), convert foreign currencies, or locate files without opening Launchpad or Finder.</li>
-        <li><strong>Application Switcher (<kbd>⌘</kbd> + <kbd>Tab</kbd>):</strong> Hold Command and tap Tab to cycle forward through running apps. While holding Command, you can press <kbd>Q</kbd> to quit an highlighted app, or <kbd>H</kbd> to hide it.</li>
+        <li>Reaching for the Control key with the pinky finger: On Windows, Control sits at the far bottom-left corner. On Mac, Command sits directly adjacent to the spacebar. Anchor with your thumb to eliminate pinky strain.</li>
+        <li>Hitting Return to open a file: On Windows, Enter opens files. In macOS Finder, pressing Return renames the file; to open it, press Command + Down Arrow or Command + O.</li>
+        <li>Clicking the red window traffic light to quit: On macOS, closing the window (Cmd+W) does not quit the application process. To quit completely, always use Command + Q.</li>
+        <li>Using third-party tools for screenshots: macOS has professional screen-snapping built in. Shift+Cmd+4 followed by Spacebar takes a clean window capture with native drop shadows.</li>
       </ul>
 
-      <h3>Daily Practice & Muscle Memory Drills</h3>
-      <p>To turn these combinations into effortless second nature, practice conscious repetition. Whenever you catch yourself reaching for the Edit menu or right-clicking with the trackpad, stop and deliberately use the keyboard equivalent twice. Within two to three days, your tactile reflexes will handle these keystrokes automatically, saving minutes of friction every working hour.</p>
+      <h3>Pro Productivity &amp; Ergonomics Tips</h3>
+      <ul>
+        <li>Thumb-Pivot Ergonomics: Rest your left thumb on the Command key and let your index and middle fingers strike letters (C, V, Z, Q, W). Your hand never has to twist or leave the home row.</li>
+        <li>Spotlight Math & Conversions: Tap Cmd+Space and type expressions like "45 * 18" or "120 EUR in USD" for instant answers without opening a browser or calculator app.</li>
+        <li>Quick Lock Security: Before stepping away from your desk in a shared office or coffee shop, tap Ctrl+Cmd+Q to secure your Mac in under half a second.</li>
+      </ul>
 
       <div class="game-guide-nav">
-        <a href="../">← Return to Keyverse Home</a>
-        <a href="../#games">Browse All 10 Games</a>
+        <a href="../index.html">← Back to Keyverse Home</a>
+        <a href="../index.html#games">Browse All 10 Games</a>
         <a href="../about.html">About Keyverse</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
       </div>
-    </div>
-    
+    </article>
 </body>

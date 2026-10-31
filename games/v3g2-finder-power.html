@@ -322,6 +322,43 @@
             font-weight: bold;
             font-size: 0.82rem;
         }
+        
+        .game-guide-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0 24px;
+            font-size: 0.88rem;
+            color: #bac2de;
+            border: 1px solid #45475a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .game-guide-container th {
+            background: #1e1e2e;
+            color: #89b4fa;
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid #45475a;
+            font-weight: 700;
+        }
+        .game-guide-container td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #313244;
+            vertical-align: top;
+        }
+        .game-guide-container tr:last-child td {
+            border-bottom: none;
+        }
+        .game-guide-container tr:nth-child(even) {
+            background: rgba(30, 30, 46, 0.4);
+        }
+        @media (max-width: 600px) {
+            .game-guide-container table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
         .game-guide-nav {
             display: flex;
             justify-content: space-between;
@@ -1583,39 +1620,143 @@
 <script src="../multiplayer/kv-score-tracker.js"></script>
 
     <!-- ACCREDITED COMPREHENSIVE SHORTCUT GUIDE (Crawlable Editorial Content) -->
-    <div class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
-      <span class="guide-tag">Volume 3 · Game 2 · In-Depth Guide</span>
-      <h2>Finder Power User: Views, Pathbars, Dotfiles, and Server Shares</h2>
+        <!-- COMPLETE EDUCATIONAL GUIDE & SHORTCUT REFERENCE (Crawlable Editorial Content) -->
+    <article class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
+      <span class="guide-tag">Volume 3 · Game 2 · Complete Guide</span>
+      <h2>Complete Guide &amp; Shortcut Reference for Finder Power</h2>
       
-      <h3>Unlocking the Hidden Capabilities of Apple's File Manager</h3>
-      <p>Beyond elementary copying and folder creation, the macOS Finder incorporates deep Unix features, network protocols, and multi-perspective views designed for system administrators, photographers, and engineers. Mastering Finder Power shortcuts gives you instant insight into file sizes, hidden dotfiles, and remote server connections.</p>
+      <h3>Overview: Why These Mac Shortcuts Matter</h3>
+      <p>For power users who manage thousands of assets, raw folder browsing is insufficient. macOS Finder includes deep metadata tools, expandable tree views, and automated Smart Folders that can locate all files modified in the last 24 hours automatically.</p>
+      <p>Volume 3 Game 2 unlocks advanced Finder control: custom view options (<kbd>⌘ Cmd</kbd> + <kbd>J</kbd>), full-screen Quick Look slideshows, interactive breadcrumb path bars, immediate trash purges, list-view folder expansion with arrow keys, and keyboard toggles for Dock and Control Center.</p>
 
-      <h3>The Four View Modes: <kbd>⌘</kbd>+<kbd>1</kbd> through <kbd>⌘</kbd>+<kbd>4</kbd></h3>
-      <p>Finder offers four specialized viewing layouts tailored to different file inspection needs. You can switch between them on the fly without clicking toolbar buttons:</p>
+      <h3>Full Keyboard Shortcut Reference Table</h3>
+      <p>Here is every single Mac keyboard shortcut trained in <em>Finder Power</em>, complete with its primary function and real-world application context:</p>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 32%;">Shortcut</th>
+            <th style="width: 28%;">Action</th>
+            <th style="width: 40%;">macOS Workflow Context</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>J</kbd></strong></td>
+          <td>Show View Options</td>
+          <td>Customizes icon grid size, text label placement, column sorting, and default folder view settings.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>Y</kbd></strong></td>
+          <td>Quick Look Preview</td>
+          <td>Previews highlighted file without opening application (Spacebar equivalent).</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Y</kbd></strong></td>
+          <td>Quick Look Slideshow</td>
+          <td>Launches full-screen slideshow of all selected photos, graphics, or document pages.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>/</kbd></strong></td>
+          <td>Toggle Status Bar</td>
+          <td>Displays bottom bar showing exact item count and remaining free disk gigabytes.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>P</kbd></strong></td>
+          <td>Toggle Path Bar</td>
+          <td>Reveals interactive breadcrumb path bar along bottom edge of Finder window.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>S</kbd></strong></td>
+          <td>Toggle Sidebar</td>
+          <td>Hides or reveals Finder left sidebar for clean minimalist view.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>N</kbd></strong></td>
+          <td>New Smart Folder</td>
+          <td>Creates dynamic search folder that automatically updates based on file metadata rules.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Delete</kbd></strong></td>
+          <td>Empty Trash Immediately</td>
+          <td>Bypasses confirmation dialog and permanently purges Trash contents immediately.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>Right Arrow (→)</kbd></strong></td>
+          <td>Expand Folder in List View</td>
+          <td>Expands folder disclosure triangle inline in List View without navigating away.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>Left Arrow (←)</kbd></strong></td>
+          <td>Collapse Folder in List View</td>
+          <td>Collapses folder tree in List View.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>F</kbd></strong></td>
+          <td>Finder Search</td>
+          <td>Opens search bar scoped to current folder or entire Mac with attribute filters.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>I</kbd></strong></td>
+          <td>Get Info</td>
+          <td>Displays file size, permissions, EXIF camera data, and default opening app.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>N</kbd></strong></td>
+          <td>New Finder Window</td>
+          <td>Opens fresh file browsing window.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>Fn</kbd> + <kbd>A</kbd></strong></td>
+          <td>Toggle Dock</td>
+          <td>Shows or hides Dock via Fn key.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>Fn</kbd> + <kbd>C</kbd></strong></td>
+          <td>Control Center</td>
+          <td>Toggles Control Center panel for Wi-Fi, Bluetooth, and audio outputs.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>Fn</kbd> + <kbd>D</kbd></strong></td>
+          <td>Start Dictation</td>
+          <td>Activates macOS speech-to-text voice dictation.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>Fn</kbd> + <kbd>N</kbd></strong></td>
+          <td>Notification Center</td>
+          <td>Slides out widgets and notification history.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>Fn</kbd> + <kbd>H</kbd></strong></td>
+          <td>Show Desktop</td>
+          <td>Clears all windows away to reveal Desktop files.</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <h3>Real-World macOS Workflows</h3>
+      <p>The interactive Path Bar (<kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>P</kbd>) is one of Finder's best-kept secrets. When enabled, it displays clickable breadcrumbs along the bottom of the window. You can drag files directly onto any parent folder in the breadcrumb path to relocate them without opening secondary windows!</p>
+      <p>In List View (<kbd>⌘ Cmd</kbd> + <kbd>2</kbd>), use the Right Arrow key to expand a folder inline. If you hold the <kbd>⌥ Option</kbd> key while pressing Right Arrow, Finder expands that folder and all nested subfolders simultaneously, giving you a full tree view of complex project directories.</p>
+
+      <h3>Common Mistakes Windows Switchers Make</h3>
       <ul>
-        <li><strong>Icon View (<kbd>⌘</kbd> + <kbd>1</kbd>):</strong> Displays large visual thumbnails. Ideal for photo albums and video clip sorting.</li>
-        <li><strong>List View (<kbd>⌘</kbd> + <kbd>2</kbd>):</strong> Presents hierarchical file trees with sortable columns for file size, date modified, and file kind.</li>
-        <li><strong>Column View (<kbd>⌘</kbd> + <kbd>3</kbd>):</strong> The gold standard for power users. Displays a cascading horizontal tree showing the complete ancestry of the selected file.</li>
-        <li><strong>Gallery View (<kbd>⌘</kbd> + <kbd>4</kbd>):</strong> Shows an oversized central preview accompanied by a horizontal carousel and rich EXIF metadata.</li>
+        <li>Opening folders just to see what subdirectories they contain: In List View, hit the Right Arrow key to expand folder trees inline without changing your active window.</li>
+        <li>Dragging files into the Trash and confirming: Option + Shift + Command + Delete empties the Trash instantly without showing any confirmation modal.</li>
+        <li>Guessing file sizes: Press Command + / to display the Status Bar, showing exact remaining SSD capacity at all times.</li>
       </ul>
 
-      <h3>Finder Power Shortcuts Reference</h3>
+      <h3>Pro Productivity &amp; Ergonomics Tips</h3>
       <ul>
-        <li><strong>Toggle Path Bar (<kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>P</kbd>):</strong> Displays the interactive breadcrumb path bar at the bottom of the Finder window. You can drag files directly onto any breadcrumb segment to move them.</li>
-        <li><strong>Toggle Status Bar (<kbd>⌘</kbd> + <kbd>/</kbd>):</strong> Reveals the total item count and remaining available drive space on your active storage volume.</li>
-        <li><strong>Toggle Hidden System Files (<kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>.</kbd>):</strong> Instantly reveals or hides invisible Unix dotfiles (such as <code>.gitignore</code>, <code>.zshrc</code>, <code>.ssh</code>, and hidden system library caches).</li>
-        <li><strong>Get File Info (<kbd>⌘</kbd> + <kbd>I</kbd>):</strong> Opens the comprehensive properties window showing file permissions, dimensions, Spotlight tags, and default opening applications.</li>
-        <li><strong>Connect to Server (<kbd>⌘</kbd> + <kbd>K</kbd>):</strong> Summons the network dialogue for mounting SMB, AFP, NFS, or FTP storage shares across your local network.</li>
+        <li>Interactive Breadcrumb Dragging: Enable the Path Bar with Option+Cmd+P and drop files directly onto intermediate parent folders in the breadcrumb line.</li>
+        <li>Expand All Nested Subfolders: In List View, hold Option while tapping Right Arrow to expand an entire folder hierarchy in one stroke.</li>
+        <li>Full-Screen Slideshow: Select 20 photos in Finder and press Option+Cmd+Y to launch an instant distraction-free full-screen presentation.</li>
       </ul>
-
-      <h3>Diagnostic Workflow</h3>
-      <p>Always leave the Path Bar (<kbd>⌘⌥P</kbd>) enabled to keep an immediate visual reference of your file system location while organizing assets.</p>
 
       <div class="game-guide-nav">
-        <a href="../">← Return to Keyverse Home</a>
-        <a href="../#games">Browse All 10 Games</a>
+        <a href="../index.html">← Back to Keyverse Home</a>
+        <a href="../index.html#games">Browse All 10 Games</a>
         <a href="../about.html">About Keyverse</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
       </div>
-    </div>
-    
+    </article>
 </body>

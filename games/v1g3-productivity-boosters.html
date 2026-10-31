@@ -322,6 +322,43 @@
             font-weight: bold;
             font-size: 0.82rem;
         }
+        
+        .game-guide-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0 24px;
+            font-size: 0.88rem;
+            color: #bac2de;
+            border: 1px solid #45475a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .game-guide-container th {
+            background: #1e1e2e;
+            color: #89b4fa;
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid #45475a;
+            font-weight: 700;
+        }
+        .game-guide-container td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #313244;
+            vertical-align: top;
+        }
+        .game-guide-container tr:last-child td {
+            border-bottom: none;
+        }
+        .game-guide-container tr:nth-child(even) {
+            background: rgba(30, 30, 46, 0.4);
+        }
+        @media (max-width: 600px) {
+            .game-guide-container table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
         .game-guide-nav {
             display: flex;
             justify-content: space-between;
@@ -1583,36 +1620,178 @@
 <script src="../multiplayer/kv-score-tracker.js"></script>
 
     <!-- ACCREDITED COMPREHENSIVE SHORTCUT GUIDE (Crawlable Editorial Content) -->
-    <div class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
-      <span class="guide-tag">Volume 1 · Game 3 · In-Depth Guide</span>
-      <h2>macOS Productivity Boosters: Streamlining Complex Multitasking</h2>
+        <!-- COMPLETE EDUCATIONAL GUIDE & SHORTCUT REFERENCE (Crawlable Editorial Content) -->
+    <article class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
+      <span class="guide-tag">Volume 1 · Game 3 · Complete Guide</span>
+      <h2>Complete Guide &amp; Shortcut Reference for Productivity Boosters</h2>
       
-      <h3>Eliminating Desktop Chaos and App Freezes</h3>
-      <p>As modern work demands dozens of simultaneous apps, browser windows, and communication clients, cognitive fatigue quickly accumulates. macOS includes dedicated productivity commands designed to tame window clutter, manage unresponsive software, and insert special typography without breaking your mental flow.</p>
+      <h3>Overview: Why These Mac Shortcuts Matter</h3>
+      <p>When working across Safari, Mail, Apple Notes, and Finder, repetitive friction points like opening tabs, drafting replies, and inspecting system files add up to hundreds of wasted clicks daily. Volume 1 Game 3 drills the shortcuts that separate advanced macOS power users from casual trackpad clickers.</p>
+      <p>This curriculum focuses on fast web tab recovery, email triage shortcuts, global note capture from anywhere on your Mac, dictionary lookups, and developer utilities such as revealing hidden Unix dotfiles in Finder.</p>
 
-      <h3>Hiding vs. Minimizing: The Modern Approach</h3>
-      <p>Many users habitually click the yellow minimize button (<kbd>⌘</kbd>+<kbd>M</kbd>), sending windows to the right side of the Dock. However, modern macOS workflows favor <em>Hiding</em>:</p>
+      <h3>Full Keyboard Shortcut Reference Table</h3>
+      <p>Here is every single Mac keyboard shortcut trained in <em>Productivity Boosters</em>, complete with its primary function and real-world application context:</p>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 32%;">Shortcut</th>
+            <th style="width: 28%;">Action</th>
+            <th style="width: 40%;">macOS Workflow Context</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>T</kbd></strong></td>
+          <td>New Browser Tab</td>
+          <td>Opens a new tab in Safari, Chrome, or Firefox.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>W</kbd></strong></td>
+          <td>Close Tab</td>
+          <td>Closes the current browser tab or document window.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>T</kbd></strong></td>
+          <td>Reopen Closed Tab</td>
+          <td>Restores the most recently closed browser tab along with its complete back-forward history.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>L</kbd></strong></td>
+          <td>Highlight Address Bar</td>
+          <td>Jumps directly to the browser search/URL bar ready for typing.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>R</kbd></strong></td>
+          <td>Reload Page</td>
+          <td>Refreshes current webpage assets and layout.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>N</kbd></strong></td>
+          <td>New Email Message</td>
+          <td>Opens a new message composition window in Apple Mail.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>D</kbd></strong></td>
+          <td>Send Email</td>
+          <td>Dispatches active composed email immediately without clicking the paper airplane icon.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>R</kbd></strong></td>
+          <td>Reply to Sender</td>
+          <td>Initiates a reply email addressed to the original sender.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>F</kbd></strong></td>
+          <td>Forward Email</td>
+          <td>Forwards active email conversation including attachments.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>J</kbd></strong></td>
+          <td>Mark as Junk</td>
+          <td>Moves spam message to Junk folder and trains the macOS mail filter.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>`</kbd></strong></td>
+          <td>New Note</td>
+          <td>Creates a fresh note inside the Apple Notes application.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>L</kbd></strong></td>
+          <td>Toggle Checklist</td>
+          <td>Converts selected lines into interactive checklist bubbles in Apple Notes.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>K</kbd></strong></td>
+          <td>Add Hyperlink</td>
+          <td>Embeds a web URL into highlighted text in Mail, Notes, and Pages.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>Fn</kbd> + <kbd>Q</kbd></strong></td>
+          <td>Global Quick Note</td>
+          <td>Summons a floating Quick Note scratchpad from any application in macOS.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>H</kbd></strong></td>
+          <td>Format as Heading</td>
+          <td>Applies bold Heading typographic style in Apple Notes.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>D</kbd></strong></td>
+          <td>Dictionary Lookup</td>
+          <td>Summons built-in macOS dictionary, thesaurus, and Wikipedia definition popover for the word under cursor.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Space</kbd></strong></td>
+          <td>Spotlight in Finder</td>
+          <td>Opens full-window Spotlight search in Finder with metadata filters.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>E</kbd></strong></td>
+          <td>Eject Disk</td>
+          <td>Safely unmounts and ejects selected external hard drive, USB stick, or DMG installer.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>I</kbd></strong></td>
+          <td>Get Info</td>
+          <td>Opens file inspector showing size, permissions, metadata, and default opening application.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>R</kbd></strong></td>
+          <td>Show Original / Package</td>
+          <td>Navigates to the original target of an alias or inspects application bundle packages.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>.</kbd></strong></td>
+          <td>Toggle Hidden Dotfiles</td>
+          <td>Toggles visibility of invisible Unix configuration files (.git, .env, .zshrc) in Finder.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Delete</kbd></strong></td>
+          <td>Empty Trash</td>
+          <td>Empties macOS Trash bin with safety confirmation modal.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Q</kbd></strong></td>
+          <td>Log Out User</td>
+          <td>Initiates logout of current macOS session with prompt to save open documents.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>N</kbd></strong></td>
+          <td>New Finder Window</td>
+          <td>Opens a new file browser window.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌘ Cmd</kbd> + <kbd>R</kbd></strong></td>
+          <td>Reveal Alias Source</td>
+          <td>Instantly reveals the real file location pointed to by an alias.</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <h3>Real-World macOS Workflows</h3>
+      <p>In Apple Mail, you can process incoming messages without ever touching the mouse. Tap <kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>R</kbd> to reply, type your response, and hit <kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>D</kbd> to dispatch it immediately. If a message is spam, <kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>J</kbd> sends it to Junk in one motion.</p>
+      <p>For developers and web creators, <kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>.</kbd> in Finder is essential. It instantly unhides hidden dotfiles like `.gitignore`, `.env`, and user configuration files without needing to open the Terminal and run defaults commands.</p>
+
+      <h3>Common Mistakes Windows Switchers Make</h3>
       <ul>
-        <li><strong>Hide Active App (<kbd>⌘</kbd> + <kbd>H</kbd>):</strong> Instantly removes all windows of the current app from your view. The app remains active, and clicking its Dock icon or switching to it via <kbd>⌘</kbd>+<kbd>Tab</kbd> restores all windows in their exact original positions.</li>
-        <li><strong>Hide Others (<kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>H</kbd>):</strong> The ultimate focus command. Instantly vanishes every window except the one you are actively working on, giving you an immediate distraction-free canvas.</li>
+        <li>Pressing F5 to refresh browser tabs: On Mac keyboards, F5 dims the keyboard backlight! Always use Command + R to reload web pages.</li>
+        <li>Opening a browser tab just to look up a word definition: Hover your mouse over any word in macOS and tap Ctrl + Cmd + D for an instant dictionary popover.</li>
+        <li>Clicking through File > New to make Quick Notes: Tapping Fn + Q pops up an instant note window regardless of what application you are currently running.</li>
       </ul>
 
-      <h3>Key Productivity Booster Shortcuts</h3>
+      <h3>Pro Productivity &amp; Ergonomics Tips</h3>
       <ul>
-        <li><strong>Force Quit Applications (<kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>Esc</kbd>):</strong> When an application hangs with the spinning beach ball, pressing Command+Option+Escape opens the Force Quit manager so you can terminate the frozen process without restarting your Mac.</li>
-        <li><strong>Character &amp; Emoji Viewer (<kbd>⌃</kbd> + <kbd>⌘</kbd> + <kbd>Space</kbd>):</strong> Pops up the system emoji, symbol, math character, and accented glyph picker in any text field across macOS.</li>
-        <li><strong>Lock Screen (<kbd>⌃</kbd> + <kbd>⌘</kbd> + <kbd>Q</kbd>):</strong> Instantly locks your display and requires password or Touch ID authentication to resume. Essential for safeguarding sensitive data whenever you step away from your workstation.</li>
-        <li><strong>Mission Control (<kbd>⌃</kbd> + <kbd>↑</kbd>):</strong> Spreads every open window across an organized bird's-eye view, allowing you to select and activate hidden windows immediately.</li>
+        <li>Reopen Closed Tab Magic: If you accidentally close an important web page, press Shift+Cmd+T to bring it back immediately with all form data intact.</li>
+        <li>Send Email Faster: Shift+Cmd+D dispatches drafted emails in Mail instantly, keeping your hands on the keyboard.</li>
+        <li>Instant Hidden File Toggle: Press Shift+Cmd+. in any Finder window or open/save dialog to reveal hidden developer files.</li>
       </ul>
-
-      <h3>Focus Workflows for Serious Creators</h3>
-      <p>Integrate Command+Option+H whenever beginning a deep work session. Clearing visual noise reduces context switching and ensures your processing power remains dedicated to the task at hand.</p>
 
       <div class="game-guide-nav">
-        <a href="../">← Return to Keyverse Home</a>
-        <a href="../#games">Browse All 10 Games</a>
+        <a href="../index.html">← Back to Keyverse Home</a>
+        <a href="../index.html#games">Browse All 10 Games</a>
         <a href="../about.html">About Keyverse</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
       </div>
-    </div>
-    
+    </article>
 </body>

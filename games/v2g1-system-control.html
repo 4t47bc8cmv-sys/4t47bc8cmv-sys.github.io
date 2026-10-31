@@ -322,6 +322,43 @@
             font-weight: bold;
             font-size: 0.82rem;
         }
+        
+        .game-guide-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 18px 0 24px;
+            font-size: 0.88rem;
+            color: #bac2de;
+            border: 1px solid #45475a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .game-guide-container th {
+            background: #1e1e2e;
+            color: #89b4fa;
+            text-align: left;
+            padding: 10px 14px;
+            border-bottom: 2px solid #45475a;
+            font-weight: 700;
+        }
+        .game-guide-container td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #313244;
+            vertical-align: top;
+        }
+        .game-guide-container tr:last-child td {
+            border-bottom: none;
+        }
+        .game-guide-container tr:nth-child(even) {
+            background: rgba(30, 30, 46, 0.4);
+        }
+        @media (max-width: 600px) {
+            .game-guide-container table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+
         .game-guide-nav {
             display: flex;
             justify-content: space-between;
@@ -1583,33 +1620,138 @@
 <script src="../multiplayer/kv-score-tracker.js"></script>
 
     <!-- ACCREDITED COMPREHENSIVE SHORTCUT GUIDE (Crawlable Editorial Content) -->
-    <div class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
-      <span class="guide-tag">Volume 2 · Game 1 · In-Depth Guide</span>
-      <h2>System Control & Power Management: Hardware Mastery Without Menus</h2>
+        <!-- COMPLETE EDUCATIONAL GUIDE & SHORTCUT REFERENCE (Crawlable Editorial Content) -->
+    <article class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
+      <span class="guide-tag">Volume 2 · Game 1 · Complete Guide</span>
+      <h2>Complete Guide &amp; Shortcut Reference for System Control & Power</h2>
       
-      <h3>Direct Hardware Control at the Speed of Thought</h3>
-      <p>Navigating up to the top-left Apple menu (<kbd></kbd>) just to sleep your display, shut down, or log out wastes motion and breaks concentration. macOS incorporates robust hardware and power shortcuts that allow you to manage your machine's power state, restart routines, and sleep behavior instantly from the keyboard.</p>
+      <h3>Overview: Why These Mac Shortcuts Matter</h3>
+      <p>Controlling your Mac's power states—sleeping, locking, rebooting, and shutting down—is one of the most critical security and hardware competencies. Relying on clicking through the Apple menu is slow and leaves your workstation exposed when stepping away.</p>
+      <p>Volume 2 Game 1 trains hardware mastery without menus. Learn the difference between locking your screen (<kbd>⌃ Ctrl</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Q</kbd>), putting displays to sleep while keeping background rendering active (<kbd>⌃ Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>Power</kbd>), and holding the Option key to bypass confirmation dialogs in the Apple menu.</p>
 
-      <h3>Managing Modern Apple Silicon Power States</h3>
-      <p>Mac laptops powered by M-series chips wake and sleep instantaneously. Rather than keeping displays illuminated when walking away to meetings, triggering hardware sleep locks protects confidential documents and conserves battery life for long road trips.</p>
+      <h3>Full Keyboard Shortcut Reference Table</h3>
+      <p>Here is every single Mac keyboard shortcut trained in <em>System Control & Power</em>, complete with its primary function and real-world application context:</p>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 32%;">Shortcut</th>
+            <th style="width: 28%;">Action</th>
+            <th style="width: 40%;">macOS Workflow Context</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><strong><kbd>Power / Touch ID Tap</kbd></strong></td>
+          <td>Screen Lock / Wake</td>
+          <td>Locks modern Touch ID Macs or wakes sleeping displays instantaneously.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>Power Hold (5s)</kbd></strong></td>
+          <td>Hardware Force Shutdown</td>
+          <td>Cuts hardware power to logic board during complete system lockups.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>Power Hold (~1.5s)</kbd></strong></td>
+          <td>Sleep System</td>
+          <td>Puts older non-Touch ID Mac keyboards into low-power sleep mode.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Power</kbd></strong></td>
+          <td>Modifier Sleep</td>
+          <td>Standard modifier shortcut to put Mac into full system sleep.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Q</kbd></strong></td>
+          <td>Instant Screen Lock</td>
+          <td>Immediately locks display and requires password or Touch ID, leaving background processes running.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Q</kbd></strong></td>
+          <td>Log Out (with prompt)</td>
+          <td>Displays 60-second confirmation countdown to log out current user.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Q</kbd></strong></td>
+          <td>Log Out (no prompt)</td>
+          <td>Immediately terminates user session and closes all applications without confirmation modal.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>Power</kbd></strong></td>
+          <td>Power Dialog</td>
+          <td>Opens system dialog offering Restart, Sleep, Cancel, or Shut Down.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>Power</kbd></strong></td>
+          <td>Sleep Displays Only</td>
+          <td>Shuts down screen backlights immediately while audio playback, downloads, and rendering continue.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Power</kbd></strong></td>
+          <td>Immediate Force Reboot</td>
+          <td>Forces immediate kernel reboot without prompting to save open documents.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Power</kbd></strong></td>
+          <td>Graceful Shutdown</td>
+          <td>Prompts to save open documents, quits applications safely, and shuts down computer.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Eject</kbd></strong></td>
+          <td>Shutdown via Eject</td>
+          <td>Performs graceful shutdown on older external Apple keyboards with Eject key.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Eject</kbd></strong></td>
+          <td>Restart via Eject</td>
+          <td>Triggers immediate restart on keyboards equipped with Eject key.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Eject</kbd></strong></td>
+          <td>Sleep via Eject</td>
+          <td>Puts system to sleep on keyboards with Eject key.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>Click Apple Menu</kbd></strong></td>
+          <td>Bypass Confirm Dialogs</td>
+          <td>Holding Option turns "Shut Down..." into "Shut Down" and "Log Out..." into "Log Out", skipping all prompts.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌃ Ctrl</kbd> + <kbd>F2, then Return</kbd></strong></td>
+          <td>Open Apple Menu</td>
+          <td>Opens the Apple menu via keyboard without mouse interaction.</td>
+        </tr>
+        <tr>
+          <td><strong><kbd>⌥ Opt</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Esc</kbd></strong></td>
+          <td>Force Quit Manager</td>
+          <td>Opens Task Killer dialog to terminate stuck or spinning-beachball applications.</td>
+        </tr>
+        </tbody>
+      </table>
 
-      <h3>System Control Shortcuts Reference</h3>
+      <h3>Real-World macOS Workflows</h3>
+      <p>When running heavy background tasks like video rendering, compiling software, or downloading files, you don't want your Mac to enter deep system sleep, but you also don't want the screen burning power. Pressing <kbd>⌃ Ctrl</kbd> + <kbd>⇧ Shift</kbd> + <kbd>Power</kbd> puts the displays into energy-saving black mode while keeping CPU, GPU, and network processes running at full capacity.</p>
+      <p>For security when leaving your desk, tap <kbd>⌃ Ctrl</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>Q</kbd>. It locks your screen instantly without interrupting any background tasks, and waking takes a split-second touch on the Touch ID sensor.</p>
+
+      <h3>Common Mistakes Windows Switchers Make</h3>
       <ul>
-        <li><strong>Sleep Display (<kbd>⌃</kbd> + <kbd>⇧</kbd> + <kbd>Power</kbd> or <kbd>Eject</kbd>):</strong> Instantly turns off your internal and external monitors while keeping background downloads, rendering tasks, and audio playback active. Tap any key to wake the display.</li>
-        <li><strong>System Sleep (<kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>Power</kbd>):</strong> Transitions your Mac into low-power sleep mode immediately without waiting for system idle timers.</li>
-        <li><strong>Power / Shutdown Dialog (<kbd>⌃</kbd> + <kbd>Power</kbd>):</strong> Brings up the native system dialog giving you options to Restart, Sleep, Cancel, or Shut Down with a single keypress.</li>
-        <li><strong>Force Restart (<kbd>⌘</kbd> + <kbd>⌃</kbd> + <kbd>Power</kbd>):</strong> Forces an immediate reboot if the system becomes entirely unresponsive without risking SSD partition corruption.</li>
-        <li><strong>Log Out User Account (<kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>Q</kbd>):</strong> Safely terminates your user session, prompting you to save any open documents before returning to the macOS login screen. Add <kbd>⌥ Option</kbd> (<kbd>⌘⌥⇧Q</kbd>) to log out instantly without confirmation.</li>
+        <li>Looking for Ctrl+Alt+Delete: macOS does not use Ctrl+Alt+Del for task management. Press Option + Command + Escape to summon the Force Quit application manager.</li>
+        <li>Closing the laptop lid during long exports: Closing the lid puts the Mac into sleep mode, halting downloads and renders. Use display sleep (Ctrl+Shift+Power) instead.</li>
+        <li>Clicking through confirmation countdowns: Hold Option while clicking the Apple menu to restart or shut down without any confirmation modals.</li>
       </ul>
 
-      <h3>Pro Security Habits</h3>
-      <p>Pair <kbd>⌃</kbd>+<kbd>⌘</kbd>+<kbd>Q</kbd> (Lock Screen) with immediate display sleep (<kbd>⌃</kbd>+<kbd>⇧</kbd>+<kbd>Power</kbd>) whenever leaving your desk in open offices, coffee shops, or client environments.</p>
+      <h3>Pro Productivity &amp; Ergonomics Tips</h3>
+      <ul>
+        <li>Lock in 0.2 Seconds: Memorize Ctrl+Cmd+Q. It is the gold standard for office and coffee shop security.</li>
+        <li>Display Sleep for Background Jobs: Ctrl+Shift+Power shuts off screens while podcast audio, backups, and file downloads continue uninterrupted.</li>
+        <li>Option Menu Modifier: Holding Option in native macOS menus transforms commands into their direct, prompt-free power-user equivalents.</li>
+      </ul>
 
       <div class="game-guide-nav">
-        <a href="../">← Return to Keyverse Home</a>
-        <a href="../#games">Browse All 10 Games</a>
+        <a href="../index.html">← Back to Keyverse Home</a>
+        <a href="../index.html#games">Browse All 10 Games</a>
         <a href="../about.html">About Keyverse</a>
+        <a href="../privacy.html">Privacy Policy</a>
+        <a href="../terms.html">Terms of Service</a>
       </div>
-    </div>
-    
+    </article>
 </body>
