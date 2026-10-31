@@ -472,7 +472,7 @@ const CSS_STYLE = `
             height: auto !important;
             overflow-y: auto !important;
         }
-        .game-guide-container {
+        .game-guide {
             width: 100%;
             max-width: 720px;
             margin-top: 36px;
@@ -486,14 +486,14 @@ const CSS_STYLE = `
             box-sizing: border-box;
             text-align: left;
         }
-        .game-guide-container h2 {
+        .game-guide h2 {
             font-size: 1.35rem;
             color: #89b4fa;
             margin-bottom: 8px;
             line-height: 1.3;
             text-align: left;
         }
-        .game-guide-container .guide-tag {
+        .game-guide .guide-tag {
             display: inline-block;
             font-size: 0.75rem;
             font-weight: bold;
@@ -502,32 +502,32 @@ const CSS_STYLE = `
             letter-spacing: 1px;
             margin-bottom: 12px;
         }
-        .game-guide-container h3 {
+        .game-guide h3 {
             font-size: 1.05rem;
             color: #f5c2e7;
             margin-top: 22px;
             margin-bottom: 8px;
             text-align: left;
         }
-        .game-guide-container p {
+        .game-guide p {
             margin-bottom: 14px;
             font-size: 0.92rem;
             color: #bac2de;
             line-height: 1.65;
             text-align: left;
         }
-        .game-guide-container ul {
+        .game-guide ul {
             margin-bottom: 16px;
             padding-left: 22px;
             color: #bac2de;
             font-size: 0.92rem;
             text-align: left;
         }
-        .game-guide-container li {
+        .game-guide li {
             margin-bottom: 8px;
             text-align: left;
         }
-        .game-guide-container kbd {
+        .game-guide kbd {
             display: inline-block;
             padding: 2px 7px;
             background: #11111b;
@@ -539,7 +539,7 @@ const CSS_STYLE = `
             font-weight: bold;
             font-size: 0.82rem;
         }
-        .game-guide-container table {
+        .game-guide table {
             width: 100%;
             border-collapse: collapse;
             margin: 18px 0 24px;
@@ -549,7 +549,7 @@ const CSS_STYLE = `
             border-radius: 8px;
             overflow: hidden;
         }
-        .game-guide-container th {
+        .game-guide th {
             background: #1e1e2e;
             color: #89b4fa;
             text-align: left;
@@ -557,19 +557,19 @@ const CSS_STYLE = `
             border-bottom: 2px solid #45475a;
             font-weight: 700;
         }
-        .game-guide-container td {
+        .game-guide td {
             padding: 10px 14px;
             border-bottom: 1px solid #313244;
             vertical-align: top;
         }
-        .game-guide-container tr:last-child td {
+        .game-guide tr:last-child td {
             border-bottom: none;
         }
-        .game-guide-container tr:nth-child(even) {
+        .game-guide tr:nth-child(even) {
             background: rgba(30, 30, 46, 0.4);
         }
         @media (max-width: 600px) {
-            .game-guide-container table {
+            .game-guide table {
                 display: block;
                 overflow-x: auto;
             }
@@ -610,7 +610,7 @@ function generateGuideHTML(info) {
   const proTipsHTML = info.proTips.map(p => `        <li>${p}</li>`).join('\n');
 
   return `    <!-- COMPLETE EDUCATIONAL GUIDE & SHORTCUT REFERENCE (Crawlable Editorial Content) -->
-    <article class="game-guide-container" role="region" aria-label="Tutorial and Shortcut Reference">
+    <article class="game-guide">
       <span class="guide-tag">${info.volume} · Complete Guide</span>
       <h2>Complete Guide &amp; Shortcut Reference for ${info.title}</h2>
       
@@ -656,7 +656,7 @@ ${proTipsHTML}
 }
 
 const TABLE_CSS = `
-        .game-guide-container table {
+        .game-guide table {
             width: 100%;
             border-collapse: collapse;
             margin: 18px 0 24px;
@@ -666,7 +666,7 @@ const TABLE_CSS = `
             border-radius: 8px;
             overflow: hidden;
         }
-        .game-guide-container th {
+        .game-guide th {
             background: #1e1e2e;
             color: #89b4fa;
             text-align: left;
@@ -674,19 +674,19 @@ const TABLE_CSS = `
             border-bottom: 2px solid #45475a;
             font-weight: 700;
         }
-        .game-guide-container td {
+        .game-guide td {
             padding: 10px 14px;
             border-bottom: 1px solid #313244;
             vertical-align: top;
         }
-        .game-guide-container tr:last-child td {
+        .game-guide tr:last-child td {
             border-bottom: none;
         }
-        .game-guide-container tr:nth-child(even) {
+        .game-guide tr:nth-child(even) {
             background: rgba(30, 30, 46, 0.4);
         }
         @media (max-width: 600px) {
-            .game-guide-container table {
+            .game-guide table {
                 display: block;
                 overflow-x: auto;
             }
@@ -699,15 +699,16 @@ for (const file of Object.keys(GAMES_DATA)) {
   let content = fs.readFileSync(filePath, 'utf8');
 
   // Insert Table CSS before .game-guide-nav in style if not present
-  if (!content.includes('.game-guide-container table')) {
+  if (!content.includes('.game-guide table')) {
     content = content.replace(/(\.game-guide-nav\s*\{)/, TABLE_CSS + '\n        $1');
   }
 
   // Pinpoint replace of guide container right before </body>
   let guideIdx = content.indexOf('<!-- ACCREDITED COMPREHENSIVE SHORTCUT GUIDE');
   if (guideIdx === -1) guideIdx = content.indexOf('<!-- COMPLETE EDUCATIONAL GUIDE');
-  if (guideIdx === -1) guideIdx = content.lastIndexOf('<article class="game-guide-container"');
-  if (guideIdx === -1) guideIdx = content.lastIndexOf('<div class="game-guide-container"');
+  if (guideIdx === -1) guideIdx = content.lastIndexOf('<article class="game-guide"');
+  if (guideIdx === -1) guideIdx = content.lastIndexOf('<article class="game-guide"');
+  if (guideIdx === -1) guideIdx = content.lastIndexOf('<div class="game-guide"');
   const bodyIdx = content.lastIndexOf('</body>');
   if (guideIdx === -1 || bodyIdx === -1) {
     throw new Error(`Could not find guide or body in ${file}`);
@@ -719,7 +720,7 @@ for (const file of Object.keys(GAMES_DATA)) {
   fs.writeFileSync(filePath, content, 'utf8');
 
   // Verify word count of text
-  const match = content.match(/<article class="game-guide-container"[\s\S]*?<\/article>/);
+  const match = content.match(/<article class="game-guide"[\s\S]*?<\/article>/);
   if (match) {
     const textOnly = match[0].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
     const words = textOnly.split(/\s+/).length;
