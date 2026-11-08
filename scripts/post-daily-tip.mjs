@@ -7,7 +7,8 @@
  * 2. Bluesky (via AT Protocol com.atproto.server.createSession + com.atproto.repo.createRecord)
  * 3. Mastodon (via POST ${instance}/api/v1/statuses)
  * 4. Telegram Channel (via POST https://api.telegram.org/bot${token}/sendMessage)
- * 5. Universal Cross-Post Webhook (Make.com, Zapier, Buffer for X/LinkedIn/Threads/Facebook)
+ * 5. Instagram (@keyversegames via Meta/Instagram Graph API /{ig-user-id}/media + /media_publish)
+ * 6. Universal Cross-Post Webhook (Make.com, Zapier, Buffer for Instagram/X/LinkedIn/Threads/Facebook)
  *
  * Requirements:
  * - Node 20+ (uses native global fetch, no external dependencies)
@@ -19,6 +20,8 @@
  *   - MASTODON_ACCESS_TOKEN (optional, skips if missing)
  *   - TELEGRAM_BOT_TOKEN (optional, skips if missing)
  *   - TELEGRAM_CHAT_ID (optional, skips if missing)
+ *   - INSTAGRAM_USER_ID (optional, skips if missing)
+ *   - INSTAGRAM_ACCESS_TOKEN (optional, skips if missing)
  *   - MULTI_SOCIAL_WEBHOOK_URL (optional, skips if missing)
  */
 
@@ -214,6 +217,22 @@ function getDayOfYear(date = new Date()) {
 
 function buildPostText(tip, targetUrl) {
   return `💡 Mac Shortcut of the Day: ${tip.title}\n\nKeys: ${tip.keys}\n\n${tip.desc}\n\n🎮 Practice and build muscle memory for Mac shortcuts:\n${targetUrl}`;
+}
+
+function buildInstagramCaption(tip, targetUrl, dayOfYear) {
+  return [
+    `💡 Mac Shortcut of the Day (Day ${dayOfYear}): ${tip.title}`,
+    ``,
+    `⌨️ Shortcut: ${tip.keys}`,
+    `📂 Category: ${tip.category}`,
+    ``,
+    `${tip.desc}`,
+    ``,
+    `🎮 Train your Mac keyboard muscle memory with 10 free retro browser games — no install, no download:`,
+    `👉 Play free at keyversegames.com (Link in bio @keyversegames)`,
+    ``,
+    `#MacShortcuts #macOS #AppleTips #ProductivityHacks #MacBookPro #KeyverseGames #LearnMac #KeyboardShortcuts #TechTips #MacBookAir`
+  ].join('\n');
 }
 
 function escapeHtml(text) {
@@ -438,7 +457,88 @@ async function postToTelegram(tip, targetUrl, dayOfYear) {
   }
 }
 
-async function postToMultiSocialWebhook(tip, trackedUrl, dayOfYear, postText, dateObj) {
+async function postToInstagram(tip, dayOfYear, imageUrl, instagramCaption) {
+  const igUserId = (process.env.INSTAGRAM_USER_ID || '').trim();
+  const accessToken = sanitizeToken(process.env.INSTAGRAM_ACCESS_TOKEN);
+
+  if (!igUserId || !accessToken) {
+    console.log('[Instagram] Notice: INSTAGRAM_USER_ID or INSTAGRAM_ACCESS_TOKEN secret not configured. Skipping direct Instagram Graph API post.');
+    return;
+  }
+
+  const hosts = ['https://graph.facebook.com/v21.0', 'https://graph.instagram.com/v21.0'];
+
+  async function createAndPublish(baseUrl) {
+    // 1. Create Media Container
+    const containerRes = await fetch(`${baseUrl}/${igUserId}/media`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        image_url: imageUrl,
+        caption: instagramCaption,
+        access_token: accessToken
+      })
+    });
+
+    if (!containerRes.ok) {
+      const errText = await containerRes.text();
+      const err = new Error(`Container creation failed (${containerRes.status}): ${errText}`);
+      err.status = containerRes.status;
+      throw err;
+    }
+
+    const containerData = await containerRes.json();
+    const creationId = containerData.id;
+    console.log(`[Instagram] Created media container (${creationId}) for ${imageUrl}`);
+
+    // 2. Poll container status briefly to ensure Instagram finished fetching the 1080x1080 image
+    for (let attempt = 1; attempt <= 5; attempt++) {
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      const statusRes = await fetch(
+        `${baseUrl}/${creationId}?fields=status_code&access_token=${encodeURIComponent(accessToken)}`
+      );
+      if (statusRes.ok) {
+        const statusData = await statusRes.json();
+        if (statusData.status_code === 'FINISHED') break;
+        if (statusData.status_code === 'ERROR') {
+          throw new Error(`Instagram media container processing returned ERROR status.`);
+        }
+      }
+    }
+
+    // 3. Publish Media Container to @keyversegames Feed
+    const publishRes = await fetch(`${baseUrl}/${igUserId}/media_publish`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        creation_id: creationId,
+        access_token: accessToken
+      })
+    });
+
+    if (!publishRes.ok) {
+      const errText = await publishRes.text();
+      throw new Error(`Media publish failed (${publishRes.status}): ${errText}`);
+    }
+
+    return await publishRes.json();
+  }
+
+  try {
+    let published;
+    try {
+      published = await createAndPublish(hosts[0]);
+    } catch (firstErr) {
+      console.log(`⚠️ [Instagram] Primary endpoint failed (${firstErr.message}), retrying via graph.instagram.com...`);
+      published = await createAndPublish(hosts[1]);
+    }
+    console.log(`✅ [Instagram] Daily tip posted successfully to @keyversegames (Media ID: ${published.id}).`);
+  } catch (err) {
+    console.error('❌ [Instagram] Failed to publish post:', err.message);
+  }
+}
+
+async function postToMultiSocialWebhook(tip, trackedUrl, dayOfYear, postText, dateObj, imageUrl, instagramCaption) {
   const webhookUrl = process.env.MULTI_SOCIAL_WEBHOOK_URL;
   if (!webhookUrl || !webhookUrl.trim()) {
     console.log('[Multi-Social Webhook] Notice: MULTI_SOCIAL_WEBHOOK_URL secret not configured. Skipping cross-post webhook.');
@@ -451,8 +551,12 @@ async function postToMultiSocialWebhook(tip, trackedUrl, dayOfYear, postText, da
     dayOfYear,
     shortcut: tip.keys,
     title: tip.title,
+    category: tip.category,
     tip: tip.desc,
     trackedUrl,
+    imageUrl,
+    instagramHandle: '@keyversegames',
+    instagramCaption,
     postText
   };
 
@@ -481,7 +585,9 @@ async function main() {
   const tip = MAC_SHORTCUT_TIPS[tipIndex];
 
   const targetUrl = `https://keyversegames.com/?utm_source=social_auto&utm_medium=daily_tip&utm_campaign=tip_${dayOfYear}`;
+  const imageUrl = `https://keyversegames.com/social-cards/tip-${tipIndex + 1}.png`;
   const postText = buildPostText(tip, targetUrl);
+  const instagramCaption = buildInstagramCaption(tip, targetUrl, dayOfYear);
 
   console.log(`========================================`);
   console.log(`Keyverse Social Promo Poster`);
@@ -489,6 +595,7 @@ async function main() {
   console.log(`Day of Year: ${dayOfYear}`);
   console.log(`Tip #${tipIndex + 1}/${MAC_SHORTCUT_TIPS.length}: ${tip.title} (${tip.keys})`);
   console.log(`Target URL: ${targetUrl}`);
+  console.log(`Instagram Card URL: ${imageUrl}`);
   console.log(`========================================\n`);
 
   // Execute posts in parallel across all supported platforms
@@ -497,7 +604,8 @@ async function main() {
     postToBluesky(tip, targetUrl, postText),
     postToMastodon(postText),
     postToTelegram(tip, targetUrl, dayOfYear),
-    postToMultiSocialWebhook(tip, targetUrl, dayOfYear, postText, now)
+    postToInstagram(tip, dayOfYear, imageUrl, instagramCaption),
+    postToMultiSocialWebhook(tip, targetUrl, dayOfYear, postText, now, imageUrl, instagramCaption)
   ]);
 
   console.log('\nDaily promo posting run finished.');
