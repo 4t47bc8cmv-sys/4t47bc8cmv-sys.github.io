@@ -538,25 +538,30 @@ async function postToInstagram(tip, dayOfYear, imageUrl, instagramCaption) {
   }
 }
 
-async function postToMultiSocialWebhook(tip, trackedUrl, dayOfYear, postText, dateObj, imageUrl, instagramCaption) {
+async function postToMultiSocialBridge(todayTip, trackedUrl, dayOfYear, postText, dateObj = new Date(), staticCardUrl = '', instagramCaption = '') {
   const webhookUrl = process.env.MULTI_SOCIAL_WEBHOOK_URL;
   if (!webhookUrl || !webhookUrl.trim()) {
-    console.log('[Multi-Social Webhook] Notice: MULTI_SOCIAL_WEBHOOK_URL secret not configured. Skipping cross-post webhook.');
+    console.log('[Multi-Social Bridge] Notice: MULTI_SOCIAL_WEBHOOK_URL secret not configured. Skipping cross-post webhook.');
     return;
   }
 
-  const dateStr = dateObj.toISOString().split('T')[0];
+  const date = dateObj.toISOString().split('T')[0];
+  const cardText = encodeURIComponent(`KEYVERSE MAC TIP\n\n${todayTip.shortcut}\n\n${todayTip.title}`);
+  const imageUrl = `https://placehold.co/1080x1080/0b0e11/13f2b0.png?font=montserrat&text=${cardText}`;
+
   const payload = {
-    date: dateStr,
+    date,
     dayOfYear,
-    shortcut: tip.keys,
-    title: tip.title,
-    category: tip.category,
-    tip: tip.desc,
+    shortcut: todayTip.shortcut,
+    title: todayTip.title,
+    tip: todayTip.tip,
     trackedUrl,
     imageUrl,
+    caption: postText,
+    staticCardUrl: staticCardUrl || imageUrl,
+    category: todayTip.category,
     instagramHandle: '@keyversegames',
-    instagramCaption,
+    instagramCaption: instagramCaption || postText,
     postText
   };
 
@@ -568,44 +573,52 @@ async function postToMultiSocialWebhook(tip, trackedUrl, dayOfYear, postText, da
     });
 
     if (res.ok) {
-      console.log('✅ [Multi-Social Webhook] Daily tip payload dispatched successfully.');
+      console.log('✅ [Multi-Social Bridge] Daily tip payload dispatched successfully.');
     } else {
       const errText = await res.text();
-      console.error(`❌ [Multi-Social Webhook] Webhook returned status ${res.status}: ${errText}`);
+      console.error(`❌ [Multi-Social Bridge] Webhook returned status ${res.status}: ${errText}`);
     }
   } catch (err) {
-    console.error('❌ [Multi-Social Webhook] Failed to dispatch webhook:', err.message);
+    console.error('❌ [Multi-Social Bridge] Failed to dispatch webhook:', err.message);
   }
 }
+
+const postToMultiSocialWebhook = postToMultiSocialBridge;
 
 async function main() {
   const now = new Date();
   const dayOfYear = getDayOfYear(now);
   const tipIndex = (dayOfYear - 1) % MAC_SHORTCUT_TIPS.length;
-  const tip = MAC_SHORTCUT_TIPS[tipIndex];
+  const rawTip = MAC_SHORTCUT_TIPS[tipIndex];
+  const todayTip = {
+    ...rawTip,
+    shortcut: rawTip.shortcut || rawTip.keys,
+    tip: rawTip.tip || rawTip.desc
+  };
 
-  const targetUrl = `https://keyversegames.com/?utm_source=social_auto&utm_medium=daily_tip&utm_campaign=tip_${dayOfYear}`;
+  const trackedUrl = `https://keyversegames.com/?utm_source=social_auto&utm_medium=daily_tip&utm_campaign=tip_${dayOfYear}`;
+  const targetUrl = trackedUrl;
   const imageUrl = `https://keyversegames.com/social-cards/tip-${tipIndex + 1}.png`;
-  const postText = buildPostText(tip, targetUrl);
-  const instagramCaption = buildInstagramCaption(tip, targetUrl, dayOfYear);
+  const postText = buildPostText(todayTip, trackedUrl);
+  const instagramCaption = buildInstagramCaption(todayTip, trackedUrl, dayOfYear);
 
   console.log(`========================================`);
   console.log(`Keyverse Social Promo Poster`);
   console.log(`Date: ${now.toISOString()}`);
   console.log(`Day of Year: ${dayOfYear}`);
-  console.log(`Tip #${tipIndex + 1}/${MAC_SHORTCUT_TIPS.length}: ${tip.title} (${tip.keys})`);
-  console.log(`Target URL: ${targetUrl}`);
+  console.log(`Tip #${tipIndex + 1}/${MAC_SHORTCUT_TIPS.length}: ${todayTip.title} (${todayTip.shortcut})`);
+  console.log(`Target URL: ${trackedUrl}`);
   console.log(`Instagram Card URL: ${imageUrl}`);
   console.log(`========================================\n`);
 
   // Execute posts in parallel across all supported platforms
   await Promise.allSettled([
-    postToDiscord(tip, targetUrl, dayOfYear),
-    postToBluesky(tip, targetUrl, postText),
+    postToDiscord(todayTip, trackedUrl, dayOfYear),
+    postToBluesky(todayTip, trackedUrl, postText),
     postToMastodon(postText),
-    postToTelegram(tip, targetUrl, dayOfYear),
-    postToInstagram(tip, dayOfYear, imageUrl, instagramCaption),
-    postToMultiSocialWebhook(tip, targetUrl, dayOfYear, postText, now, imageUrl, instagramCaption)
+    postToTelegram(todayTip, trackedUrl, dayOfYear),
+    postToInstagram(todayTip, dayOfYear, imageUrl, instagramCaption),
+    postToMultiSocialBridge(todayTip, trackedUrl, dayOfYear, postText, now, imageUrl, instagramCaption)
   ]);
 
   console.log('\nDaily promo posting run finished.');
