@@ -39,7 +39,7 @@ let tips: [ShortcutTip] = [
     ShortcutTip(index: 26, keys: "⌘ + H and ⌘ + Option + H", title: "Hide Window & Hide Others", category: "Window Management", desc: "Command (⌘) + H hides the active app instantly. Command (⌘) + Option + H hides every other app on your screen for a distraction-free workspace."),
     ShortcutTip(index: 27, keys: "Control + ⌘ + F", title: "Toggle Full Screen Mode", category: "Window Management", desc: "Expand your active window to a dedicated macOS full-screen Space with Control + Command (⌘) + F. Press it again to return cleanly to your desktop."),
     ShortcutTip(index: 28, keys: "⌘ + Shift + N", title: "Create New Folder in Finder", category: "Finder Mastery", desc: "Press Command (⌘) + Shift + N to create and name a new folder in your current Finder window instantly without touching the mouse or menus."),
-    ShortcutTip(index: 29, keys: "⌘ + K in Finder", title: "Connect to Network Server", category: "Network & System", desc: "Press Command (⌘) + K in Finder to open the Connect to Server dialog and mount SMB, AFP, or NFS network drives and shared storage volumes."),
+    ShortcutTip(index: 29, keys: "⌘ + K in Finder", title: "Connect to Server in Finder", category: "Network & System", desc: "Press Command (⌘) + K in Finder to open the Connect to Server dialog and mount shared network drives (smb:// or nfs://) without touching the Go menu."),
     ShortcutTip(index: 30, keys: "Option + Shift + Vol/Bright", title: "Fine-Grained Audio & Display Steps", category: "Hardware Control", desc: "Hold Option + Shift while pressing the Volume or Display Brightness keys to adjust levels in quarter-step increments for the perfect setting.")
 ]
 

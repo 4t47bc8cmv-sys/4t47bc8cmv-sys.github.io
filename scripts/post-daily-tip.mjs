@@ -196,9 +196,9 @@ const MAC_SHORTCUT_TIPS = [
   },
   {
     keys: '⌘ + K in Finder',
-    title: 'Connect to Network Server',
+    title: 'Connect to Server in Finder',
     category: 'Network & System',
-    desc: 'Press Command (⌘) + K in Finder to open the Connect to Server dialog and mount SMB, AFP, or NFS network drives and shared storage volumes.'
+    desc: 'Press Command (⌘) + K in Finder to open the Connect to Server dialog and mount shared network drives (smb:// or nfs://) without touching the Go menu.'
   },
   {
     keys: 'Option + Shift + Vol/Bright',

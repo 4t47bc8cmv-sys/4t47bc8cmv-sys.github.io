@@ -308,11 +308,14 @@ Volume 3 Game 1 trains the core navigation bindings of Finder: duplicating files
       { key: '⌘ Cmd + Down Arrow', action: 'Open Selected Item', context: 'Opens selected folder or launches highlighted document in default program.' },
       { key: '⌃ Ctrl + ⌘ Cmd + Up Arrow', action: 'Open Enclosing in New Window', context: 'Spawns a new Finder window focused on the parent directory.' },
       { key: '⌃ Ctrl + ⌘ Cmd + A', action: 'Create Alias', context: 'Generates a lightweight macOS symbolic link pointer to the original file.' },
-      { key: '⌃ Ctrl + ⌘ Cmd + T', action: 'Add to Sidebar', context: 'Pins selected directory to Finder left sidebar under Favorites.' }
+      { key: '⌃ Ctrl + ⌘ Cmd + T', action: 'Add to Sidebar', context: 'Pins selected directory to Finder left sidebar under Favorites.' },
+      { key: '⌘ Cmd + K', action: 'Connect to Server', context: 'Opens the Connect to Server dialog to mount shared network drives (smb:// or nfs://) without touching the Go menu.' }
     ],
     workflows: `The single most powerful navigation feature in Finder is "Go to Folder" (<kbd>⇧ Shift</kbd> + <kbd>⌘ Cmd</kbd> + <kbd>G</kbd>). When configuring developer tools or clearing application caches, pressing Shift+Cmd+G lets you type <code>~/Library/Application Support</code> or <code>/etc/hosts</code> with tab-completion, bypassing multiple nested folder clicks.
 
-When moving through deeply nested project folders, use <kbd>⌘ Cmd</kbd> + <kbd>[</kbd> and <kbd>⌘ Cmd</kbd> + <kbd>]</kbd> to step backward and forward through your browsing path like web browser history.`,
+When moving through deeply nested project folders, use <kbd>⌘ Cmd</kbd> + <kbd>[</kbd> and <kbd>⌘ Cmd</kbd> + <kbd>]</kbd> to step backward and forward through your browsing path like web browser history.
+
+For IT professionals and Mac power users working in office or home-lab environments, <kbd>⌘ Cmd</kbd> + <kbd>K</kbd> ("Connect to Server") is indispensable. Instead of clicking the Go menu, tapping Command+K in Finder immediately opens the server address dialog where you can mount shared network drives via <code>smb://</code> or <code>nfs://</code> in seconds.`,
     windowsMistakes: [
       'Clicking Enter to open folders: On Mac, pressing Enter/Return renames the folder. Press Command + Down Arrow to open folders or launch files.',
       'Clicking through user folders manually: Press Shift+Cmd+H to jump to Home, Shift+Cmd+O for Documents, and Shift+Cmd+I for iCloud Drive instantly.',
