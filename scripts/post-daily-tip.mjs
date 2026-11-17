@@ -538,6 +538,36 @@ async function postToInstagram(tip, dayOfYear, imageUrl, instagramCaption) {
   }
 }
 
+function sanitizeCardModifiers(text) {
+  return (text || '')
+    .replace(/⌘/g, 'Cmd')
+    .replace(/⌥/g, 'Opt')
+    .replace(/⌃/g, 'Ctrl')
+    .replace(/⇧/g, 'Shift')
+    .replace(/[ \t]{2,}/g, ' ')
+    .trim();
+}
+
+function wrapCardLines(text, maxChars = 16) {
+  const words = sanitizeCardModifiers(text).split(/\s+/).filter(Boolean);
+  const lines = [];
+  let current = '';
+
+  for (const word of words) {
+    if (!current) {
+      current = word;
+    } else if (current.length + 1 + word.length <= maxChars) {
+      current += ` ${word}`;
+    } else {
+      lines.push(current);
+      current = word;
+    }
+  }
+
+  if (current) lines.push(current);
+  return lines.join('\n');
+}
+
 async function postToMultiSocialBridge(todayTip, trackedUrl, dayOfYear, postText, dateObj = new Date(), staticCardUrl = '', instagramCaption = '') {
   const webhookUrl = process.env.MULTI_SOCIAL_WEBHOOK_URL;
   if (!webhookUrl || !webhookUrl.trim()) {
@@ -546,7 +576,9 @@ async function postToMultiSocialBridge(todayTip, trackedUrl, dayOfYear, postText
   }
 
   const date = dateObj.toISOString().split('T')[0];
-  const cardText = encodeURIComponent(`KEYVERSE MAC TIP\n\n${todayTip.shortcut}\n\n${todayTip.title}`);
+  const wrappedShortcut = wrapCardLines(todayTip.shortcut, 16);
+  const wrappedTitle = wrapCardLines(todayTip.title, 16);
+  const cardText = encodeURIComponent(`KEYVERSE MAC TIP\n\n${wrappedShortcut}\n\n${wrappedTitle}`);
   const imageUrl = `https://placehold.co/1080x1080/0b0e11/13f2b0.png?font=montserrat&text=${cardText}`;
 
   const payload = {
