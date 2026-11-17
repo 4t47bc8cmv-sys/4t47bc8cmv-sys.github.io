@@ -1,0 +1,24 @@
+name: Daily Mac Community Growth Radar
+
+on:
+  schedule:
+    - cron: '0 16 * * *'
+  workflow_dispatch:
+
+jobs:
+  growth-radar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run daily Mac community radar & Friday spotlight
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          MULTI_SOCIAL_WEBHOOK_URL: ${{ secrets.MULTI_SOCIAL_WEBHOOK_URL }}
+        run: node scripts/daily-growth-radar.mjs
