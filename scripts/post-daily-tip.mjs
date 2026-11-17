@@ -198,7 +198,7 @@ const MAC_SHORTCUT_TIPS = [
     keys: '⌘ + K in Finder',
     title: 'Connect to Server in Finder',
     category: 'Network & System',
-    desc: 'Press Command (⌘) + K in Finder to open the Connect to Server dialog and mount shared network drives (smb:// or nfs://) without touching the Go menu.'
+    desc: 'Press Command (⌘) + K in Finder to open a quick connection box to link your Mac to an office server, shared drive, or home storage box. Standard sharing (smb://) pops up a normal username/password login. Strict Linux/Unix sharing (nfs://server:/export) needs a colon before the folder path and has no password box—your Mac’s IP must be on the server’s VIP allow-list.'
   },
   {
     keys: 'Option + Shift + Vol/Bright',

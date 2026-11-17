@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HPCMTG7133"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HPCMTG7133');
+</script>
+
+<meta charset="UTF-8">
+<meta name="google-adsense-account" content="ca-pub-2120991969522232">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2120991969522232" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>macOS Finder &amp; Window Management Guide (with ⌘ + K Simulator) — Keyverse</title>
+<meta name="description" content="Master macOS Finder, Connect to Server (Command + K for smb:// and nfs:// shares), and window management shortcuts with our interactive simulator and plain-English guide.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=%2224%22 height=%2224%22 rx=%225%22 fill=%22%2313f2b0%22/><text x=%2212%22 y=%2217%22 font-size=%2214%22 text-anchor=%22middle%22 fill=%22%230b0e11%22 font-family=%22monospace%22 font-weight=%22700%22>K</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0e11;
+    --surface: #12161b;
+    --surface-2: #171c22;
+    --surface-3: #1e252d;
+    --border: #262d36;
+    --divider: #1d232a;
+    --text: #e7ecef;
+    --muted: #9aa5af;
+    --faint: #75828e;
+    --primary: #13f2b0;
+    --primary-hover: #4ff7c4;
+    --accent-2: #7c9dff;
+    --warn: #f9e2af;
+    --font-display: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  body {
+    min-height: 100vh;
+    font-family: var(--font-body);
+    background: var(--bg);
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(19, 242, 176, 0.08), transparent 40%),
+      radial-gradient(circle at 85% 20%, rgba(124, 157, 255, 0.07), transparent 45%);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 920px; margin-inline: auto; padding-inline: 1.5rem; }
+
+  header.site {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(11, 14, 17, 0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--divider);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; padding-block: 1rem; gap: 1rem; }
+  .logo { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; }
+  .logo-mark { width: 32px; height: 32px; border-radius: 0.5rem; background: var(--primary); color: #0b0e11; display: flex; align-items: center; justify-content: center; font-weight: 800; }
+  .nav-links { display: flex; gap: 1.5rem; font-size: 0.9rem; color: var(--muted); }
+  .nav-links a:hover { color: var(--primary); }
+
+  main { padding-block: 3rem 4rem; }
+  .kicker {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    color: var(--primary);
+    background: rgba(19, 242, 176, 0.12);
+    border: 1px solid rgba(19, 242, 176, 0.3);
+    padding: 0.3rem 0.85rem;
+    border-radius: 9999px;
+    margin-bottom: 1rem;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .lead { color: var(--muted); font-size: 1.05rem; max-width: 68ch; margin-bottom: 2.5rem; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  .card h2 {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    color: var(--primary);
+    margin-bottom: 0.9rem;
+  }
+  .card h3 {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--accent-2);
+    margin-top: 1.5rem;
+    margin-bottom: 0.6rem;
+  }
+  .card p { color: var(--muted); margin-bottom: 1rem; }
+  .card ul { padding-left: 1.4rem; color: var(--muted); margin-bottom: 1rem; }
+  .card li { margin-bottom: 0.6rem; }
+
+  kbd {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-bottom-width: 2px;
+    border-radius: 0.375rem;
+  }
+  code {
+    font-family: var(--font-display);
+    font-size: 0.88em;
+    color: var(--warn);
+    background: rgba(249, 226, 175, 0.08);
+    padding: 0.12rem 0.4rem;
+    border-radius: 0.3rem;
+  }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .compare-box {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+  }
+  .compare-box h4 {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .compare-box p { font-size: 0.9rem; margin-bottom: 0; }
+
+  /* INTERACTIVE ⌘ + K SIMULATOR */
+  .sim-shell {
+    background: #0d1117;
+    border: 1px solid rgba(19, 242, 176, 0.35);
+    border-radius: 0.9rem;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
+  }
+  .sim-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .sim-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .sim-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--primary);
+    color: #0b0e11;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.6rem 1.1rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: transform 140ms ease, background 140ms ease;
+  }
+  .sim-btn:hover { background: var(--primary-hover); transform: translateY(-1px); }
+
+  .sim-hint {
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .sim-status {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+  }
+  .step-pill {
+    padding: 0.3rem 0.75rem;
+    border-radius: 9999px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--faint);
+  }
+  .step-pill.done {
+    background: rgba(19, 242, 176, 0.14);
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .macos-dialog {
+    display: none;
+    background: #1a2029;
+    border: 1px solid #303a47;
+    border-radius: 0.85rem;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    animation: popIn 180ms ease-out;
+  }
+  .macos-dialog.open { display: block; }
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.97) translateY(6px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .macos-titlebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 1rem;
+    background: #222a35;
+    border-bottom: 1px solid #303a47;
+  }
+  .traffic-lights { display: flex; gap: 0.45rem; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; display: inline-block; }
+  .dot-red { background: #ff5f56; }
+  .dot-yellow { background: #ffbd2e; }
+  .dot-green { background: #27c93f; }
+  .macos-title { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+
+  .macos-body { padding: 1.25rem; }
+  .tab-row {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .proto-tab {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.5rem 0.9rem;
+    border-radius: 0.5rem;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 140ms ease;
+  }
+  .proto-tab.active {
+    background: rgba(19, 242, 176, 0.12);
+    border-color: var(--primary);
+    color: var(--primary);
+    font-weight: 700;
+  }
+
+  .address-bar {
+    background: #0b0e11;
+    border: 1px solid #303a47;
+    border-radius: 0.45rem;
+    padding: 0.6rem 0.85rem;
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .mock-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 0.6rem;
+    padding: 1rem;
+  }
+  .mock-panel-title {
+    font-family: var(--font-display);
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+  }
+  .mock-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 0.4rem;
+    padding: 0.45rem 0.75rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.84rem;
+  }
+  .mock-field span.label { color: var(--muted); }
+  .mock-field span.val { font-family: var(--font-display); color: var(--text); }
+
+  .sim-feedback {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.88rem;
+    display: none;
+  }
+  .sim-feedback.show {
+    display: block;
+    background: rgba(19, 242, 176, 0.12);
+    border: 1px solid rgba(19, 242, 176, 0.4);
+    color: var(--primary);
+  }
+
+  table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.9rem; }
+  th {
+    text-align: left;
+    padding: 0.65rem 0.8rem;
+    border-bottom: 2px solid var(--border);
+    color: var(--accent-2);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+  td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--divider); color: var(--muted); }
+  tr:last-child td { border-bottom: none; }
+
+  footer {
+    border-top: 1px solid var(--divider);
+    padding-block: 2rem;
+    color: var(--faint);
+    font-size: 0.85rem;
+  }
+  .footer-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .footer-links { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+  .footer-links a:hover { color: var(--primary); }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a href="../index.html" class="logo"><span class="logo-mark">K</span> Keyverse&trade;</a>
+    <nav class="nav-links" aria-label="Primary Navigation">
+      <a href="../index.html#games">Games</a>
+      <a href="../games/v3g1-finder-basics.html">Finder Drill</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <span class="kicker">● macOS Finder &amp; Network Mastery</span>
+  <h1>macOS Finder, Window Management &amp; Connect to Server (<kbd>⌘</kbd> + <kbd>K</kbd>)</h1>
+  <p class="lead">Learn how to mount office network drives, switch windows without touching the trackpad, and navigate Finder folders at full speed.</p>
+
+  <article class="card">
+    <h2>Connect to Server in Finder (<kbd>⌘</kbd> + <kbd>K</kbd>)</h2>
+    <p>Pressing <kbd>Command (⌘)</kbd> + <kbd>K</kbd> while Finder is active opens a quick connection box that links your Mac directly to an office server, shared team drive, or home storage box—without ever clicking the <strong>Go</strong> menu.</p>
+
+    <div class="compare-grid">
+      <div class="compare-box">
+        <h4>Standard Sharing: <code>smb://</code></h4>
+        <p>Works just like a normal login. Type the server address (for example, <code>smb://office-drive/shared</code>) and a standard macOS username and password box pops up.</p>
+      </div>
+      <div class="compare-box">
+        <h4>Strict Linux/Unix Sharing: <code>nfs://</code></h4>
+        <p>Requires a colon before the folder path (<code>nfs://lab-server:/export</code>) and has <strong>no password box</strong>—your Mac’s IP address has to be pre-approved on the server’s VIP allow-list before it connects.</p>
+      </div>
+    </div>
+
+    <!-- INTERACTIVE COMMAND + K SIMULATOR -->
+    <section class="sim-shell" id="cmd-k-sim" tabindex="0" aria-label="Interactive Command + K Connect to Server Simulator">
+      <div class="sim-header">
+        <div class="sim-title">🧪 Try Command (⌘) + K Right Here</div>
+        <button type="button" class="sim-btn" id="sim-trigger-btn">Simulate ⌘ + K</button>
+      </div>
+      <p class="sim-hint">Press <kbd>⌘</kbd> + <kbd>K</kbd> on your Mac keyboard (or <kbd>Ctrl</kbd> + <kbd>K</kbd> on Windows/Linux) anywhere on this page, or click <strong>Simulate ⌘ + K</strong> to open the Finder Connect to Server dialog.</p>
+
+      <div class="sim-status" aria-live="polite">
+        <span class="step-pill" id="pill-open">1. Trigger ⌘ + K</span>
+        <span class="step-pill" id="pill-smb">2. Test smb://</span>
+        <span class="step-pill" id="pill-nfs">3. Test nfs://</span>
+      </div>
+
+      <div class="macos-dialog" id="connect-dialog" role="dialog" aria-label="Connect to Server">
+        <div class="macos-titlebar">
+          <div class="traffic-lights" aria-hidden="true">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <span class="macos-title">Connect to Server</span>
+          <button type="button" id="close-dialog-btn" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;" aria-label="Close dialog">&times;</button>
+        </div>
+        <div class="macos-body">
+          <div class="tab-row" role="tablist">
+            <button type="button" class="proto-tab active" id="tab-smb" role="tab" aria-selected="true">smb://office-drive/shared</button>
+            <button type="button" class="proto-tab" id="tab-nfs" role="tab" aria-selected="false">nfs://lab-server:/export</button>
+          </div>
+
+          <div class="address-bar" id="dialog-address">smb://office-drive/shared</div>
+
+          <!-- SMB MOCK LOGIN -->
+          <div class="mock-panel" id="panel-smb">
+            <div class="mock-panel-title">🔐 Standard SMB Login Prompt</div>
+            <div class="mock-field"><span class="label">Connect As:</span><span class="val">Registered User</span></div>
+            <div class="mock-field"><span class="label">Name:</span><span class="val">alex.rivera</span></div>
+            <div class="mock-field"><span class="label">Password:</span><span class="val">••••••••••••</span></div>
+            <p style="font-size:0.84rem;margin:0.5rem 0 0;color:var(--muted);">✅ Standard Windows/Mac/NAS sharing: enter your username &amp; password and click Connect.</p>
+          </div>
+
+          <!-- NFS MOCK CHECK -->
+          <div class="mock-panel" id="panel-nfs" style="display:none;">
+            <div class="mock-panel-title">🛡️ Strict Linux/Unix NFS Check</div>
+            <div class="mock-field"><span class="label">Colon Path Syntax:</span><span class="val" style="color:var(--primary);">✓ Valid (lab-server:/export)</span></div>
+            <div class="mock-field"><span class="label">Password Prompt:</span><span class="val">None (IP-based auth)</span></div>
+            <div class="mock-field"><span class="label">VIP IP Allow-List:</span><span class="val" style="color:var(--primary);">✓ Mac IP Approved (192.168.1.42)</span></div>
+            <p style="font-size:0.84rem;margin:0.5rem 0 0;color:var(--muted);">✅ Notice the colon before <code>/export</code> and zero password prompt—NFS relies on your Mac’s IP being on the server’s allow-list.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="sim-feedback" id="sim-feedback" role="status"></div>
+    </section>
+  </article>
+
+  <article class="card">
+    <h2>Essential Finder &amp; Window Management Shortcuts</h2>
+    <p>Pair <kbd>Command (⌘)</kbd> + <kbd>K</kbd> with these everyday Finder and window shortcuts to eliminate trackpad drag-and-click friction:</p>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 34%;">Shortcut</th>
+          <th style="width: 66%;">Action &amp; Plain-English Use Case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><kbd>⌘</kbd> + <kbd>K</kbd></td>
+          <td><strong>Connect to Server:</strong> Open the server address box in Finder to mount <code>smb://</code> or <code>nfs://</code> network drives.</td>
+        </tr>
+        <tr>
+          <td><kbd>⌘</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd></td>
+          <td><strong>Go to Folder:</strong> Jump straight to any folder path (like <code>~/Library</code> or <code>/etc</code>) with tab-completion.</td>
+        </tr>
+        <tr>
+          <td><kbd>Space</kbd></td>
+          <td><strong>Quick Look:</strong> Preview any highlighted PDF, image, video, or code file instantly without opening an app.</td>
+        </tr>
+        <tr>
+          <td><kbd>⌘</kbd> + <kbd>H</kbd> / <kbd>Option</kbd> + <kbd>⌘</kbd> + <kbd>H</kbd></td>
+          <td><strong>Hide Window / Hide Others:</strong> Hide the current app, or hide every other open app for instant focus.</td>
+        </tr>
+        <tr>
+          <td><kbd>⌘</kbd> + <kbd>`</kbd></td>
+          <td><strong>Cycle App Windows:</strong> Switch cleanly between open windows of the same application.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Ready to Practice?</h3>
+    <p>Build permanent muscle memory in <a href="../games/v3g1-finder-basics.html" style="color:var(--primary);text-decoration:underline;">Volume 3 · Game 1: Finder Basics</a> or <a href="../games/v2g2-window-wrangling.html" style="color:var(--primary);text-decoration:underline;">Volume 2 · Game 2: Window Wrangling</a>.</p>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <span>Keyverse&trade; — a Mountain Rock State LLC production</span>
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="../privacy.html">Privacy</a>
+      <a href="../terms.html">Terms</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var dialog = document.getElementById('connect-dialog');
+  var triggerBtn = document.getElementById('sim-trigger-btn');
+  var closeBtn = document.getElementById('close-dialog-btn');
+  var tabSmb = document.getElementById('tab-smb');
+  var tabNfs = document.getElementById('tab-nfs');
+  var panelSmb = document.getElementById('panel-smb');
+  var panelNfs = document.getElementById('panel-nfs');
+  var addrBar = document.getElementById('dialog-address');
+  var feedback = document.getElementById('sim-feedback');
+
+  var pillOpen = document.getElementById('pill-open');
+  var pillSmb = document.getElementById('pill-smb');
+  var pillNfs = document.getElementById('pill-nfs');
+
+  var state = { opened: false, smb: false, nfs: false };
+
+  function updateFeedback(msg) {
+    if (state.opened && state.smb && state.nfs) {
+      feedback.textContent = '🎉 Awesome! You triggered Command (⌘) + K and tested both smb:// (login prompt) and nfs:// (colon path + VIP IP allow-list).';
+    } else {
+      feedback.textContent = msg;
+    }
+    feedback.classList.add('show');
+  }
+
+  function openSimulator(sourceLabel) {
+    dialog.classList.add('open');
+    state.opened = true;
+    state.smb = true;
+    pillOpen.classList.add('done');
+    pillSmb.classList.add('done');
+    updateFeedback('✅ ' + sourceLabel + ' opened the Finder Connect to Server dialog! Now click the nfs://lab-server:/export tab to compare.');
+  }
+
+  function selectProtocol(proto) {
+    var isSmb = proto === 'smb';
+    tabSmb.classList.toggle('active', isSmb);
+    tabNfs.classList.toggle('active', !isSmb);
+    tabSmb.setAttribute('aria-selected', String(isSmb));
+    tabNfs.setAttribute('aria-selected', String(!isSmb));
+    panelSmb.style.display = isSmb ? 'block' : 'none';
+    panelNfs.style.display = isSmb ? 'none' : 'block';
+    addrBar.textContent = isSmb ? 'smb://office-drive/shared' : 'nfs://lab-server:/export';
+
+    if (isSmb) {
+      state.smb = true;
+      pillSmb.classList.add('done');
+      updateFeedback('✅ Tested smb:// — standard login box with username & password.');
+    } else {
+      state.nfs = true;
+      pillNfs.classList.add('done');
+      updateFeedback('✅ Tested nfs:// — colon before /export and VIP IP allow-list verified (no password box).');
+    }
+  }
+
+  triggerBtn.addEventListener('click', function () {
+    openSimulator('Button click');
+  });
+
+  closeBtn.addEventListener('click', function () {
+    dialog.classList.remove('open');
+  });
+
+  tabSmb.addEventListener('click', function () { selectProtocol('smb'); });
+  tabNfs.addEventListener('click', function () { selectProtocol('nfs'); });
+
+  document.addEventListener('keydown', function (e) {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      e.stopPropagation();
+      openSimulator('Command (⌘) + K');
+    }
+  });
+})();
+</script>
+</body>
+</html>
