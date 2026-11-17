@@ -209,7 +209,11 @@ async function sendFridayChallengeSpotlight(now) {
   const weekNum = Math.ceil(((now - new Date(Date.UTC(now.getUTCFullYear(), 0, 1))) / 86400000 + 1) / 7);
   const pick = WEEKLY_CHALLENGES[(weekNum - 1) % WEEKLY_CHALLENGES.length];
   const challengeUrl = `https://keyversegames.com/${pick.gamePath}?challenge_score=1500&utm_source=social_auto&utm_medium=friday_spotlight&utm_campaign=challenge_w${weekNum}`;
+  const xTrackedUrl = 'https://keyversegames.com/?challenge_score=1500&utm_source=x&utm_medium=weekly_spotlight';
   const imageUrl = `https://keyversegames.com/social-cards/tip-${pick.cardIndex}.png`;
+
+  const xCaptionBase = `⚔️ Friday Mac Challenge: Can you beat 1,500 pts on ${pick.shortcut}?\n\nPlay free: ${xTrackedUrl}\n#MacTips #macOS`;
+  const xCaption = xCaptionBase.length <= 270 ? xCaptionBase : `${xCaptionBase.slice(0, 269)}…`;
 
   const caption = [
     `⚔️ Friday Mac Shortcut Challenge (Week ${weekNum}): ${pick.title}!`,
@@ -231,6 +235,8 @@ async function sendFridayChallengeSpotlight(now) {
     title: pick.title,
     challengeScore: 1500,
     trackedUrl: challengeUrl,
+    xTrackedUrl,
+    xCaption,
     guideUrl: pick.guideUrl,
     imageUrl,
     caption

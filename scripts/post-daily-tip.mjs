@@ -538,6 +538,17 @@ async function postToInstagram(tip, dayOfYear, imageUrl, instagramCaption) {
   }
 }
 
+function buildXCaption(todayTip, xTrackedUrl) {
+  const header = `💡 Mac Tip: ${todayTip.title}\nKeys: ${todayTip.shortcut}`;
+  const footer = `\n\n${xTrackedUrl}\n#MacTips #macOS`;
+  const maxDescLen = Math.max(0, 270 - header.length - footer.length - 2);
+  let desc = (todayTip.tip || todayTip.desc || '').trim();
+  if (desc.length > maxDescLen) {
+    desc = maxDescLen > 3 ? `${desc.slice(0, maxDescLen - 1).trimEnd()}…` : '';
+  }
+  return desc ? `${header}\n\n${desc}${footer}` : `${header}${footer}`;
+}
+
 async function postToMultiSocialBridge(todayTip, trackedUrl, dayOfYear, postText, dateObj = new Date(), staticCardUrl = '', instagramCaption = '') {
   const webhookUrl = process.env.MULTI_SOCIAL_WEBHOOK_URL;
   if (!webhookUrl || !webhookUrl.trim()) {
@@ -548,6 +559,8 @@ async function postToMultiSocialBridge(todayTip, trackedUrl, dayOfYear, postText
   const date = dateObj.toISOString().split('T')[0];
   const tipIndex = (dayOfYear - 1) % MAC_SHORTCUT_TIPS.length;
   const imageUrl = staticCardUrl || `https://keyversegames.com/social-cards/tip-${tipIndex + 1}.png`;
+  const xTrackedUrl = `https://keyversegames.com/?utm_source=x&utm_medium=daily_tip&utm_campaign=tip_${dayOfYear}`;
+  const xCaption = buildXCaption(todayTip, xTrackedUrl);
 
   const payload = {
     date,
@@ -556,6 +569,8 @@ async function postToMultiSocialBridge(todayTip, trackedUrl, dayOfYear, postText
     title: todayTip.title,
     tip: todayTip.tip,
     trackedUrl,
+    xTrackedUrl,
+    xCaption,
     imageUrl,
     caption: postText,
     staticCardUrl: staticCardUrl || imageUrl,
