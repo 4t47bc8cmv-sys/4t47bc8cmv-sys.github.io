@@ -30,88 +30,88 @@ const MAC_SHORTCUT_TIPS = [
     keys: '⌘ + Space',
     title: 'Spotlight Quick Launcher & Calculator',
     category: 'Navigation & Search',
-    desc: 'Stop hunting through folders or clicking menus. Press ⌘ + Space to launch apps, locate files, perform instant calculations like "125 * 1.15", or convert currencies on the fly.'
+    desc: 'Stop hunting through folders or clicking menus. Press Command (⌘) + Space to launch apps, locate files, perform instant calculations like "125 * 1.15", or convert currencies on the fly.'
   },
   {
     keys: '⌘ + Tab',
     title: 'Instant Application Switcher',
     category: 'Window & App Control',
-    desc: 'Cycle through running apps effortlessly. Hold ⌘ and tap Tab to move forward (or ` for backward). While holding ⌘, tap Q to quit the highlighted app or H to hide it.'
+    desc: 'Cycle through running apps effortlessly. Hold Command (⌘) and tap Tab to move forward (or ` for backward). While holding ⌘, tap Q to quit the highlighted app or H to hide it.'
   },
   {
     keys: '⌘ + Shift + 4, then Space',
     title: 'Pixel-Perfect Window Screenshot',
     category: 'Productivity & Screen Capture',
-    desc: 'Press ⌘ + Shift + 4, tap Spacebar, and hover over any open window or menu. Click to capture a crisp screenshot with a clean Apple drop shadow.'
+    desc: 'Press Command (⌘) + Shift + 4, tap Space, and hover over any open window or menu. Click to capture a crisp screenshot with a clean Apple drop shadow.'
   },
   {
     keys: '⌘ + Shift + 5',
     title: 'Screen Recording & Capture HUD',
     category: 'Productivity & Screen Capture',
-    desc: 'Summon the unified capture control bar. Record entire displays, selected portions, capture windows, and configure countdown timers or save locations with a single shortcut.'
+    desc: 'Press Command (⌘) + Shift + 5 to summon the unified capture control bar. Record entire displays, selected portions, capture windows, and set countdown timers.'
   },
   {
-    keys: '⌥ + ⌘ + Esc',
+    keys: 'Option + ⌘ + Esc',
     title: 'Force Quit Frozen Applications',
     category: 'System Control',
-    desc: 'When an app locks up with the spinning pinwheel, press Option + Command + Esc to open the Force Quit dialog and terminate it immediately without rebooting.'
+    desc: 'When an app locks up with the spinning pinwheel, press Option + Command (⌘) + Esc to open the Force Quit dialog and terminate it immediately without rebooting.'
   },
   {
     keys: '⌘ + W vs ⌘ + Q',
     title: 'Closing Windows vs Quitting Apps',
     category: 'App Management',
-    desc: '⌘ + W closes only the active tab or document window. ⌘ + Q completely quits the application process and frees up system memory.'
+    desc: 'Command (⌘) + W closes only the active tab or document window. Command (⌘) + Q completely quits the application process and frees up system memory.'
   },
   {
-    keys: '⌥ + ⌘ + C and ⌥ + ⌘ + V',
-    title: 'Copy & Paste Text Formatting / Style',
+    keys: 'Option + ⌘ + C / V',
+    title: 'Copy & Paste Text Formatting',
     category: 'Text & Typography',
-    desc: 'Copy styling (font family, weight, color, margins) from highlighted text in Pages, Keynote, TextEdit, or Mail with ⌥⌘C, then apply it onto target text with ⌥⌘V.'
+    desc: 'Copy styling (font family, weight, color, margins) from highlighted text in Pages, Keynote, TextEdit, or Mail with Option + Command (⌘) + C, then apply it with Option + ⌘ + V.'
   },
   {
-    keys: '⌃ + ⌘ + Space',
+    keys: 'Control + ⌘ + Space',
     title: 'Emoji & Symbol Viewer',
     category: 'Text Editing',
-    desc: 'Open macOS’s full Character Viewer palette anywhere you can type. Search emojis, Greek symbols, math operators, accents, and custom unicode symbols with ease.'
+    desc: "Press Control + Command (⌘) + Space anywhere you can type to open macOS's full Character Viewer palette for emojis, math operators, accents, and symbols."
   },
   {
-    keys: '⌘ + ⌥ + D',
+    keys: '⌘ + Option + D',
     title: 'Quickly Toggle the Dock',
     category: 'Desktop & Workspace',
-    desc: 'Instantly toggle hiding and showing the macOS Dock to reclaim vertical workspace on smaller MacBook laptop displays.'
+    desc: 'Press Command (⌘) + Option + D to instantly hide or show the macOS Dock and reclaim vertical workspace on smaller MacBook laptop displays.'
   },
   {
-    keys: '⌃ + ⌘ + Q',
+    keys: 'Control + ⌘ + Q',
     title: 'Lock Screen Instantly',
     category: 'Privacy & Security',
-    desc: 'Stepping away from your Mac? Press Control + Command + Q to lock your screen immediately without putting your computer to sleep or losing active tasks.'
+    desc: 'Stepping away from your Mac? Press Control + Command (⌘) + Q to lock your screen immediately without putting your computer to sleep or losing active tasks.'
   },
   {
     keys: '⌘ + Shift + .',
     title: 'Toggle Hidden Files & Dotfiles',
     category: 'Finder Mastery',
-    desc: 'Need to inspect .env, .git, or hidden system files? Press ⌘ + Shift + . (Period) inside Finder or Open/Save dialogs to toggle invisible files on and off.'
+    desc: 'Need to inspect .env, .git, or hidden system files? Press Command (⌘) + Shift + . (Period) inside Finder or Open/Save dialogs to toggle invisible files on and off.'
   },
   {
     keys: '⌘ + Shift + G',
     title: 'Finder "Go to Folder" Path Jump',
     category: 'Finder Mastery',
-    desc: 'Jump directly to UNIX directories like ~/Library, /usr/local, or /etc in Finder. Supports full shell tab-completion and tilde user shortcuts.'
+    desc: 'Press Command (⌘) + Shift + G in Finder to jump directly to UNIX directories like ~/Library, /usr/local, or /etc with full shell tab-completion.'
   },
   {
-    keys: '⌥ + Delete',
+    keys: 'Option + Delete',
     title: 'Delete Entire Word Backwards',
     category: 'Text Editing Speed',
-    desc: 'Stop tapping Backspace multiple times. Option + Delete removes the entire preceding word in one swift stroke across all Mac apps and browsers.'
+    desc: 'Stop tapping Delete multiple times. Option + Delete removes the entire preceding word in one swift stroke across all Mac apps and browsers.'
   },
   {
     keys: '⌘ + Delete',
     title: 'Delete Entire Line to Beginning',
     category: 'Text Editing Speed',
-    desc: 'Wipe out everything from your cursor to the beginning of the line instantly. Perfect for resetting command line prompts or retyping sentences.'
+    desc: 'Press Command (⌘) + Delete to wipe out everything from your cursor to the beginning of the line instantly—perfect for retyping sentences or clearing prompts.'
   },
   {
-    keys: 'Fn + Delete (or ⌃ + D)',
+    keys: 'Fn + Delete (or Control + D)',
     title: 'Forward Delete on Mac Keyboards',
     category: 'Text Editing Speed',
     desc: 'MacBook keyboards lack a dedicated Del key. Hold Fn and press Delete (or press Control + D) to delete characters to the right of the cursor.'
@@ -120,46 +120,46 @@ const MAC_SHORTCUT_TIPS = [
     keys: '⌘ + Up / Down Arrow',
     title: 'Jump to Top or Bottom of Page',
     category: 'Navigation',
-    desc: 'Navigate long documents, codebases, or web pages in an instant. ⌘ + Up arrow jumps to the top; ⌘ + Down arrow jumps to the bottom.'
+    desc: 'Navigate long documents, codebases, or web pages in an instant. Command (⌘) + Up Arrow jumps to the top; Command (⌘) + Down Arrow jumps to the bottom.'
   },
   {
-    keys: '⌥ + Left / Right Arrow',
+    keys: 'Option + Left / Right Arrow',
     title: 'Navigate Word by Word',
     category: 'Text Editing Speed',
-    desc: 'Hold Option and press Left or Right arrow to jump your cursor across words rather than single letters. Combine with Shift to highlight word-by-word.'
+    desc: 'Hold Option and press Left Arrow or Right Arrow to jump your cursor across whole words rather than single letters. Add Shift to highlight word-by-word.'
   },
   {
-    keys: 'Spacebar in Finder',
+    keys: 'Space in Finder',
     title: 'Quick Look Preview',
     category: 'Finder Mastery',
-    desc: 'Highlight any PDF, photo, video, or code file and tap Spacebar for an instant high-resolution preview without launching heavy desktop apps.'
+    desc: 'Highlight any PDF, photo, video, or code file in Finder and tap Space for an instant high-resolution preview without launching heavy desktop apps.'
   },
   {
     keys: '⌘ + Shift + T',
     title: 'Reopen Closed Browser Tab',
     category: 'Web Browsing',
-    desc: 'Accidentally closed an essential tab? ⌘ + Shift + T restores your last closed tab in Safari, Chrome, Edge, and Arc, retaining your browsing history.'
+    desc: 'Accidentally closed an essential tab? Command (⌘) + Shift + T restores your last closed tab in Safari, Chrome, Edge, and Arc with browsing history intact.'
   },
   {
-    keys: '⌘ + ⌥ + I',
+    keys: '⌘ + Option + I',
     title: 'Open Web Developer Tools',
     category: 'Developer & Power User',
-    desc: 'Inspect webpage elements, view JavaScript console output, and diagnose network requests with ⌘ + Option + I in all major macOS web browsers.'
+    desc: 'Inspect webpage elements, view JavaScript console output, and diagnose network requests with Command (⌘) + Option + I in all major macOS web browsers.'
   },
   {
-    keys: '⌘ + 1 / 2 / 3 / 4 in Finder',
+    keys: '⌘ + 1 / 2 / 3 / 4',
     title: 'Switch Finder Views in Seconds',
     category: 'Finder Mastery',
-    desc: 'Toggle Finder layout modes instantly: ⌘1 for Icon view, ⌘2 for List view, ⌘3 for Column view (the power user favorite), and ⌘4 for Gallery view.'
+    desc: 'Toggle Finder layout modes instantly: Command (⌘) + 1 for Icon view, ⌘ + 2 for List view, ⌘ + 3 for Column view, and ⌘ + 4 for Gallery view.'
   },
   {
-    keys: '⌘ + ⌥ + V in Finder',
+    keys: '⌘ + Option + V in Finder',
     title: 'Move File (Cut & Paste Equivalent)',
     category: 'Finder Mastery',
-    desc: 'Mac has no "Cut" shortcut for files, but it has something better: copy the file with ⌘C, navigate to the target folder, and press ⌥⌘V to move it there.'
+    desc: 'Mac has no Cut shortcut for files, but something better: copy a file with Command (⌘) + C, open the target folder, and press Option + ⌘ + V to move it there.'
   },
   {
-    keys: '⌥ + Drag',
+    keys: 'Option + Drag',
     title: 'Hold Option to Duplicate Anything',
     category: 'Productivity & Design',
     desc: 'Hold the Option key while dragging files in Finder, shapes in Figma/Keynote, or notes in Apple Notes to create a duplicate copy at the drop location.'
@@ -168,41 +168,41 @@ const MAC_SHORTCUT_TIPS = [
     keys: '⌘ + [ and ⌘ + ]',
     title: 'Back and Forward Navigation',
     category: 'Navigation',
-    desc: 'Go backward and forward across pages in Safari, Finder folder hierarchies, Xcode, and many native macOS apps without reaching for toolbar arrows.'
+    desc: 'Press Command (⌘) + [ or ⌘ + ] to go backward and forward across pages in Safari, Finder folder hierarchies, and Xcode without reaching for toolbar arrows.'
   },
   {
-    keys: '⌃ + Down Arrow',
-    title: 'App Exposé (All Windows of Current App)',
+    keys: 'Control + Down Arrow',
+    title: 'App Exposé (Active App Windows)',
     category: 'Window Management',
     desc: 'Have 6 Finder or browser windows open simultaneously? Control + Down Arrow tiles only the windows of the currently active app for quick selection.'
   },
   {
-    keys: '⌘ + H and ⌘ + ⌥ + H',
+    keys: '⌘ + H and ⌘ + Option + H',
     title: 'Hide Window & Hide Others',
     category: 'Window Management',
-    desc: '⌘ + H hides the active app instantly. ⌘ + Option + H hides every other app on your screen, instantly creating a distraction-free focused workspace.'
+    desc: 'Command (⌘) + H hides the active app instantly. Command (⌘) + Option + H hides every other app on your screen for a distraction-free workspace.'
   },
   {
-    keys: '⌃ + ⌘ + F',
+    keys: 'Control + ⌘ + F',
     title: 'Toggle Full Screen Mode',
     category: 'Window Management',
-    desc: 'Expand your active window to a dedicated macOS full-screen Space with ⌃⌘F. Press it again to return cleanly to your desktop layout.'
+    desc: 'Expand your active window to a dedicated macOS full-screen Space with Control + Command (⌘) + F. Press it again to return cleanly to your desktop.'
   },
   {
     keys: '⌘ + Shift + N',
     title: 'Create New Folder in Finder',
     category: 'Finder Mastery',
-    desc: 'Create and name a new folder in your current Finder window instantly without touching the mouse or context menus.'
+    desc: 'Press Command (⌘) + Shift + N to create and name a new folder in your current Finder window instantly without touching the mouse or menus.'
   },
   {
     keys: '⌘ + K in Finder',
     title: 'Connect to Network Server',
     category: 'Network & System',
-    desc: 'Open the Connect to Server dialog to mount SMB, AFP, or NFS network drives, NAS boxes, and shared office storage volumes.'
+    desc: 'Press Command (⌘) + K in Finder to open the Connect to Server dialog and mount SMB, AFP, or NFS network drives and shared storage volumes.'
   },
   {
-    keys: '⌥ + Shift + Volume / Brightness',
-    title: 'Fine-Grained Audio & Display Adjustments',
+    keys: 'Option + Shift + Vol/Bright',
+    title: 'Fine-Grained Audio & Display Steps',
     category: 'Hardware Control',
     desc: 'Hold Option + Shift while pressing the Volume or Display Brightness keys to adjust levels in quarter-step increments for the perfect setting.'
   }
@@ -538,36 +538,6 @@ async function postToInstagram(tip, dayOfYear, imageUrl, instagramCaption) {
   }
 }
 
-function sanitizeCardModifiers(text) {
-  return (text || '')
-    .replace(/⌘/g, 'Cmd')
-    .replace(/⌥/g, 'Opt')
-    .replace(/⌃/g, 'Ctrl')
-    .replace(/⇧/g, 'Shift')
-    .replace(/[ \t]{2,}/g, ' ')
-    .trim();
-}
-
-function wrapCardLines(text, maxChars = 16) {
-  const words = sanitizeCardModifiers(text).split(/\s+/).filter(Boolean);
-  const lines = [];
-  let current = '';
-
-  for (const word of words) {
-    if (!current) {
-      current = word;
-    } else if (current.length + 1 + word.length <= maxChars) {
-      current += ` ${word}`;
-    } else {
-      lines.push(current);
-      current = word;
-    }
-  }
-
-  if (current) lines.push(current);
-  return lines.join('\n');
-}
-
 async function postToMultiSocialBridge(todayTip, trackedUrl, dayOfYear, postText, dateObj = new Date(), staticCardUrl = '', instagramCaption = '') {
   const webhookUrl = process.env.MULTI_SOCIAL_WEBHOOK_URL;
   if (!webhookUrl || !webhookUrl.trim()) {
@@ -576,10 +546,8 @@ async function postToMultiSocialBridge(todayTip, trackedUrl, dayOfYear, postText
   }
 
   const date = dateObj.toISOString().split('T')[0];
-  const wrappedShortcut = wrapCardLines(todayTip.shortcut, 16);
-  const wrappedTitle = wrapCardLines(todayTip.title, 16);
-  const cardText = encodeURIComponent(`KEYVERSE MAC TIP\n\n${wrappedShortcut}\n\n${wrappedTitle}`);
-  const imageUrl = `https://placehold.co/1080x1080/0b0e11/13f2b0.png?font=montserrat&text=${cardText}`;
+  const tipIndex = (dayOfYear - 1) % MAC_SHORTCUT_TIPS.length;
+  const imageUrl = staticCardUrl || `https://keyversegames.com/social-cards/tip-${tipIndex + 1}.png`;
 
   const payload = {
     date,
