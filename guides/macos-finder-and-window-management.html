@@ -478,6 +478,27 @@
     <h3>Ready to Practice?</h3>
     <p>Build permanent muscle memory in <a href="../games/v3g1-finder-basics.html" style="color:var(--primary);text-decoration:underline;">Volume 3 · Game 1: Finder Basics</a> or <a href="../games/v2g2-window-wrangling.html" style="color:var(--primary);text-decoration:underline;">Volume 2 · Game 2: Window Wrangling</a>.</p>
   </article>
+
+  <article class="card">
+    <h2>Mastering Finder Views, Path Bars, and Moving Files</h2>
+    <p>Most Mac users treat Finder like a static folder window and never touch its keyboard-driven layout modes. Pressing <kbd>⌘</kbd> + <kbd>1</kbd> switches to Icon View for visual thumbnails, <kbd>⌘</kbd> + <kbd>2</kbd> switches to List View with expandable folder trees (tap the Right Arrow key to expand a folder inline), <kbd>⌘</kbd> + <kbd>3</kbd> opens Column View for rapid multi-level browsing, and <kbd>⌘</kbd> + <kbd>4</kbd> launches Gallery View for photo and video inspection.</p>
+
+    <h3>Reveal Where You Are &amp; Move Files Without Duplicating</h3>
+    <ul>
+      <li><strong>Breadcrumb Path Bar (<kbd>Option</kbd> + <kbd>⌘</kbd> + <kbd>P</kbd>):</strong> Displays your exact folder hierarchy along the bottom of the Finder window. You can drag files directly onto any parent folder in the breadcrumb bar to move them in one motion.</li>
+      <li><strong>Disk Space Status Bar (<kbd>⌘</kbd> + <kbd>/</kbd>):</strong> Shows how many items are in the current folder and exactly how much free SSD storage remains on your Mac.</li>
+      <li><strong>Cut &amp; Paste Files (<kbd>⌘</kbd> + <kbd>C</kbd>, then <kbd>Option</kbd> + <kbd>⌘</kbd> + <kbd>V</kbd>):</strong> Unlike Windows, macOS disables <kbd>⌘</kbd> + <kbd>X</kbd> on files so you can never accidentally lose a file if you forget to paste. Copy with <kbd>⌘</kbd> + <kbd>C</kbd>, navigate to the destination folder, and press <kbd>Option</kbd> + <kbd>⌘</kbd> + <kbd>V</kbd> to move the original cleanly.</li>
+      <li><strong>Show Hidden Dotfiles (<kbd>⌘</kbd> + <kbd>Shift</kbd> + <kbd>.</kbd>):</strong> Instantly reveals or hides Unix configuration files like <code>.env</code>, <code>.git</code>, and <code>.zshrc</code> inside any Finder window or Open/Save dialog.</li>
+    </ul>
+
+    <h3>Window Wrangling Without the Mouse</h3>
+    <p>When your screen fills up with overlapping Finder windows, browsers, and editors, three shortcuts restore order in under a second. Press <kbd>⌘</kbd> + <kbd>H</kbd> to hide the active app, or <kbd>Option</kbd> + <kbd>⌘</kbd> + <kbd>H</kbd> to hide every other app on your desktop except the one you are currently using. To cycle exclusively between multiple open windows of the same app (such as three Finder windows), press <kbd>⌘</kbd> + <kbd>`</kbd> (the backtick key right above <kbd>Tab</kbd>). Finally, press <kbd>Control</kbd> + <kbd>Down Arrow</kbd> for App Exposé to tile every open window of your current application side by side.</p>
+
+    <h3>Troubleshooting SMB vs. NFS Network Shares</h3>
+    <p>If <kbd>⌘</kbd> + <kbd>K</kbd> fails to mount a network share, check the protocol prefix first. Windows PCs, Synology/QNAP NAS boxes, and macOS File Sharing servers use <code>smb://hostname/sharename</code> and authenticate with your username and password. Linux and Unix servers using NFS require <code>nfs://hostname:/export/path</code>—note the colon before the export path—and validate your Mac’s local IP address against the server’s <code>/etc/exports</code> allow-list rather than prompting for a password.</p>
+
+    <p style="margin-top:1.25rem;font-size:0.9rem;"><a href="../index.html" style="color:var(--primary);text-decoration:underline;">← Back to Keyverse Home</a> · <a href="mac-shortcuts-for-beginners.html" style="color:var(--accent-2);text-decoration:underline;">Next: Mac Shortcuts for Beginners →</a></p>
+  </article>
 </main>
 
 <footer>

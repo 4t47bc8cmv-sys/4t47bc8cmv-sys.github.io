@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HPCMTG7133"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HPCMTG7133');
+</script>
+
+<meta charset="UTF-8">
+<meta name="google-adsense-account" content="ca-pub-2120991969522232">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2120991969522232" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>High-Speed Text Editing, Cursor Jumps, and Terminal Shortcuts on Mac — Keyverse</title>
+<meta name="description" content="Stop holding Backspace or reaching for the mouse while writing or coding on Mac. Master word jumps, line deletes, Emacs/Unix bindings, and Ctrl+T typo transposition.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=%2224%22 height=%2224%22 rx=%225%22 fill=%22%2313f2b0%22/><text x=%2212%22 y=%2217%22 font-size=%2214%22 text-anchor=%22middle%22 fill=%22%230b0e11%22 font-family=%22monospace%22 font-weight=%22700%22>K</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0e11;
+    --surface: #12161b;
+    --surface-2: #171c22;
+    --border: #262d36;
+    --divider: #1d232a;
+    --text: #e7ecef;
+    --muted: #9aa5af;
+    --faint: #75828e;
+    --primary: #13f2b0;
+    --accent-2: #7c9dff;
+    --warn: #f9e2af;
+    --font-display: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  body {
+    min-height: 100vh;
+    font-family: var(--font-body);
+    background: var(--bg);
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(19, 242, 176, 0.08), transparent 40%),
+      radial-gradient(circle at 85% 20%, rgba(124, 157, 255, 0.07), transparent 45%);
+    color: var(--text);
+    line-height: 1.75;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 920px; margin-inline: auto; padding-inline: 1.5rem; }
+  header.site {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(11, 14, 17, 0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--divider);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; padding-block: 1rem; gap: 1rem; }
+  .logo { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; }
+  .logo-mark { width: 32px; height: 32px; border-radius: 0.5rem; background: var(--primary); color: #0b0e11; display: flex; align-items: center; justify-content: center; font-weight: 800; }
+  .nav-links { display: flex; gap: 1.5rem; font-size: 0.9rem; color: var(--muted); }
+  .nav-links a:hover { color: var(--primary); }
+  .breadcrumbs { font-size: 0.84rem; color: var(--faint); margin-bottom: 1rem; font-family: var(--font-display); }
+  .breadcrumbs a { color: var(--primary); }
+  main { padding-block: 2.75rem 4rem; }
+  .kicker {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    color: var(--primary);
+    background: rgba(19, 242, 176, 0.12);
+    border: 1px solid rgba(19, 242, 176, 0.3);
+    padding: 0.3rem 0.85rem;
+    border-radius: 9999px;
+    margin-bottom: 1rem;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3vw, 2.45rem);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .lead { color: var(--muted); font-size: 1.05rem; max-width: 68ch; margin-bottom: 2.25rem; }
+  article.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+  article.card h2 {
+    font-family: var(--font-display);
+    font-size: 1.32rem;
+    color: var(--primary);
+    margin-bottom: 0.9rem;
+  }
+  article.card h3 {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--accent-2);
+    margin-top: 1.65rem;
+    margin-bottom: 0.6rem;
+  }
+  article.card p { color: var(--muted); margin-bottom: 1rem; }
+  article.card ul { padding-left: 1.4rem; color: var(--muted); margin-bottom: 1rem; }
+  article.card li { margin-bottom: 0.65rem; }
+  kbd {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-bottom-width: 2px;
+    border-radius: 0.375rem;
+  }
+  code {
+    font-family: var(--font-display);
+    font-size: 0.88em;
+    color: var(--warn);
+    background: rgba(249, 226, 175, 0.08);
+    padding: 0.12rem 0.4rem;
+    border-radius: 0.3rem;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 1.1rem 0 1.5rem; font-size: 0.9rem; }
+  th {
+    text-align: left;
+    padding: 0.65rem 0.8rem;
+    border-bottom: 2px solid var(--border);
+    color: var(--accent-2);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+  td { padding: 0.7rem 0.8rem; border-bottom: 1px solid var(--divider); color: var(--muted); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .cta-bar {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--divider);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.2rem;
+    border-radius: 0.5rem;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 0.86rem;
+  }
+  .btn-primary { background: var(--primary); color: #0b0e11; }
+  .btn-ghost { border: 1px solid var(--border); color: var(--text); }
+  footer {
+    border-top: 1px solid var(--divider);
+    padding-block: 2rem;
+    color: var(--faint);
+    font-size: 0.85rem;
+  }
+  .footer-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+  .footer-links { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+  .footer-links a:hover { color: var(--primary); }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap nav">
+    <a href="../index.html" class="logo"><span class="logo-mark">K</span> Keyverse&trade;</a>
+    <nav class="nav-links" aria-label="Primary Navigation">
+      <a href="../index.html#games">Games</a>
+      <a href="../index.html#guides">Guides</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="breadcrumbs"><a href="../index.html">Home</a> / <a href="../index.html#guides">Guides</a> / Text Editing & Terminal Essentials</div>
+  <span class="kicker">● Volume 4 Companion Guide</span>
+  <h1>High-Speed Text Editing, Cursor Jumps, and Terminal Shortcuts on Mac</h1>
+  <p class="lead">Every time your right hand leaves the keyboard to highlight a sentence or fix a typo with the trackpad, your brain loses momentum. Because macOS is built on a Unix foundation, it ships with two complementary text-navigation systems that work inside Notes, Mail, Slack, Safari, and Terminal alike.</p>
+  
+  <article class="card">
+    <h2>1. The Two-Tier Navigation Pattern: <kbd>Option</kbd> vs. <kbd>Command (⌘)</kbd></h2>
+    <p>Apple's text engine follows a wonderfully predictable rule across nearly every Mac app:</p>
+    <ul>
+      <li><strong><kbd>Option</kbd> + Arrow Keys = Word Level:</strong> <kbd>Option</kbd> + <kbd>Left Arrow</kbd> or <kbd>Right Arrow</kbd> hops your cursor one whole word at a time. <kbd>Option</kbd> + <kbd>Delete</kbd> erases the entire previous word cleanly.</li>
+      <li><strong><kbd>Command (⌘)</kbd> + Arrow Keys = Line &amp; Document Level:</strong> <kbd>⌘</kbd> + <kbd>Left Arrow</kbd> snaps to the start of the line, <kbd>⌘</kbd> + <kbd>Right Arrow</kbd> snaps to the end, and <kbd>⌘</kbd> + <kbd>Up Arrow</kbd> / <kbd>Down Arrow</kbd> jumps to the very top or bottom of the document.</li>
+      <li><strong>Add <kbd>Shift</kbd> to Any Jump = Instant Selection:</strong> Holding <kbd>Shift</kbd> while jumping highlights every word, line, or paragraph along the way—zero mouse dragging required.</li>
+    </ul>
+
+    <h2>2. Essential Text &amp; Terminal Shortcut Table</h2>
+    <table>
+      <thead>
+        <tr><th style="width:34%;">Shortcut</th><th style="width:26%;">Action</th><th style="width:40%;">Where It Works</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><kbd>Option</kbd> + <kbd>Left / Right Arrow</kbd></td><td>Jump by Word</td><td>Every Mac text box, browser, and IDE.</td></tr>
+        <tr><td><kbd>⌘</kbd> + <kbd>Left / Right Arrow</kbd></td><td>Line Start / End</td><td>Snaps cursor to the edge of the active line.</td></tr>
+        <tr><td><kbd>⌘</kbd> + <kbd>Up / Down Arrow</kbd></td><td>Document Top / Bottom</td><td>Leaps immediately to the first or last line.</td></tr>
+        <tr><td><kbd>Option</kbd> + <kbd>Delete</kbd></td><td>Delete Previous Word</td><td>Replaces repetitive tapping of the Delete key.</td></tr>
+        <tr><td><kbd>⌘</kbd> + <kbd>Delete</kbd></td><td>Delete to Line Start</td><td>Wipes the current line backward from your cursor.</td></tr>
+        <tr><td><kbd>Fn</kbd> + <kbd>Delete</kbd></td><td>Forward Delete</td><td>Deletes the character to the right of the cursor on MacBooks.</td></tr>
+        <tr><td><kbd>Option</kbd> + <kbd>⌘</kbd> + <kbd>Shift</kbd> + <kbd>V</kbd></td><td>Paste &amp; Match Style</td><td>Strips ugly web fonts/backgrounds when pasting into emails or docs.</td></tr>
+        <tr><td><kbd>Control</kbd> + <kbd>A</kbd> / <kbd>E</kbd></td><td>Line Start / End (Unix)</td><td>Works in Terminal AND almost every macOS text field without leaving home row!</td></tr>
+        <tr><td><kbd>Control</kbd> + <kbd>K</kbd></td><td>Kill to Line End</td><td>Deletes everything from your cursor to the end of the line.</td></tr>
+        <tr><td><kbd>Control</kbd> + <kbd>T</kbd></td><td>Transpose Characters</td><td>Swaps the two letters around your cursor—fixes typos like <code>teh</code> in one tap!</td></tr>
+        <tr><td><kbd>Control</kbd> + <kbd>C</kbd> / <kbd>L</kbd></td><td>Cancel / Clear Terminal</td><td>Stops a running command or clears the Terminal screen cleanly.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>3. Hidden Unix Superpowers Built Into Every Mac App</h3>
+    <p>Most Mac users are amazed to learn that classic Emacs/Readline shortcuts work globally in Apple Mail, Safari search bars, and Slack—not just in Terminal. If your hands are on the home row, <kbd>Control</kbd> + <kbd>A</kbd> jumps to the start of a line, <kbd>Control</kbd> + <kbd>E</kbd> jumps to the end, <kbd>Control</kbd> + <kbd>D</kbd> forward-deletes one character, and <kbd>Control</kbd> + <kbd>T</kbd> swaps two transposed letters in a split second.</p>
+    <p>Combine those with <kbd>Option</kbd> + <kbd>⌘</kbd> + <kbd>Shift</kbd> + <kbd>V</kbd> ("Paste and Match Style") whenever you copy quotes from a website into a report or email, and you will never waste time re-formatting pasted text again.</p>
+
+    <div class="cta-bar">
+      <a href="../games/v4g1-text-editing.html" class="btn btn-primary">Play Volume 4 · Text Editing →</a>
+      <a href="../games/v4g2-text-mastery.html" class="btn btn-ghost">Play Volume 4 · Text Mastery →</a>
+    </div>
+  </article>
+
+  <article class="card">
+    <h2>4. Putting Text &amp; Terminal Shortcuts Into Daily Practice</h2>
+    <p>To see how dramatically these shortcuts speed up real writing and coding, try this three-step editing drill the next time you draft an email or edit a configuration file:</p>
+    <ul>
+      <li><strong>Select Whole Sentences Without the Mouse:</strong> Place your cursor at the start of a line with <kbd>⌘</kbd> + <kbd>Left Arrow</kbd>, then hold <kbd>Shift</kbd> + <kbd>Option</kbd> + <kbd>Right Arrow</kbd> to highlight word by word—or <kbd>Shift</kbd> + <kbd>⌘</kbd> + <kbd>Down Arrow</kbd> to select everything from your cursor to the bottom of the document.</li>
+      <li><strong>Fix Swapped Letters in One Tap:</strong> Whenever you type <code>teh</code> or <code>adn</code>, place your cursor between the two swapped characters and tap <kbd>Control</kbd> + <kbd>T</kbd>. macOS transposes them immediately without erasing or retyping.</li>
+      <li><strong>Navigate Terminal Prompts Effortlessly:</strong> In macOS Terminal, iTerm2, or VS Code's integrated terminal, tap <kbd>Control</kbd> + <kbd>A</kbd> to jump back to the start of a long command to add <code>sudo</code>, <kbd>Control</kbd> + <kbd>E</kbd> to jump to the end, and <kbd>Control</kbd> + <kbd>L</kbd> to clear the screen while keeping your current command intact.</li>
+    </ul>
+
+    <h3>Why Practice Matters More Than Memorizing</h3>
+    <p>Text-editing shortcuts live in procedural memory: you only get faster when your fingers execute them automatically without conscious thought. Play through <a href="../games/v4g1-text-editing.html" style="color:var(--primary);text-decoration:underline;">Volume 4 · Game 1 (Text Editing)</a> and <a href="../games/v4g2-text-mastery.html" style="color:var(--primary);text-decoration:underline;">Volume 4 · Game 2 (Text Mastery)</a> for five minutes a day to turn cursor navigation into an effortless reflex.</p>
+  
+    <h3>Quick Text &amp; Terminal FAQ</h3>
+    <p><strong>What is the difference between <kbd>Control</kbd> + <kbd>C</kbd> in Terminal and <kbd>⌘</kbd> + <kbd>C</kbd>?</strong> In macOS Terminal, <kbd>⌘</kbd> + <kbd>C</kbd> copies selected text to your clipboard just like everywhere else on your Mac, whereas <kbd>Control</kbd> + <kbd>C</kbd> sends an interrupt signal (SIGINT) to stop a running terminal command.</p>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <span>Keyverse&trade; — a Mountain Rock State LLC production</span>
+    <div class="footer-links">
+      <a href="../index.html">Home</a>
+      <a href="../index.html#guides">Guides</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+      <a href="../privacy.html">Privacy</a>
+      <a href="../terms.html">Terms</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
