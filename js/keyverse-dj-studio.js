@@ -10,6 +10,9 @@
   const PATTERNS_KEY = 'keyverse_dj_patterns';
   const XP_KEY = 'keyverse_dj_xp';
   const XP_THRESHOLDS = [0, 10, 25, 45, 75]; // Lv 1..5
+  const SUPABASE_URL = 'https://ludisdvlhkheokhehzih.supabase.co';
+  const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_xpSiid3HEEUS1wCs2dTMQw_wr6NQVdM';
+  const GA_MEASUREMENT_ID = 'G-HPCMTG7133';
 
   const GENRES = {
     lofi: {
@@ -108,6 +111,111 @@
   let drawerOpen = false;
   let lastPlayheadStep = -1;
 
+  // Supabase Auth & Cloud Sync state
+  let sbClient = null;
+  let currentUser = null;
+  let syncTimer = null;
+  let unlockedTracked = false;
+  let xpPromptShown = false;
+
+  function trackGA(eventName, extraParams) {
+    try {
+      const payload = Object.assign({ send_to: GA_MEASUREMENT_ID }, extraParams || {});
+      if (typeof gtag === 'function') {
+        gtag('event', eventName, payload);
+      } else if (typeof global.gtag === 'function') {
+        global.gtag('event', eventName, payload);
+      }
+    } catch (_) {}
+  }
+
+  function getUserStorageKey() {
+    return currentUser && currentUser.id ? `keyverse_dj_state_${currentUser.id}` : null;
+  }
+
+  function applyDjState(dj) {
+    if (!dj || typeof dj !== 'object') return;
+    if (dj.genre && GENRES[dj.genre]) activeGenre = dj.genre;
+    if (dj.patterns && typeof dj.patterns === 'object') patternsByGenre = dj.patterns;
+    if (Array.isArray(dj.xp) && dj.xp.length === 4) {
+      trackXP = dj.xp.map((n) => Math.max(0, Number(n) || 0));
+    }
+  }
+
+  function exportDjState() {
+    return {
+      genre: activeGenre,
+      patterns: patternsByGenre,
+      xp: trackXP,
+      updatedAt: new Date().toISOString()
+    };
+  }
+
+  function saveUserStateAndSync() {
+    if (!currentUser) return;
+    const state = exportDjState();
+    const uKey = getUserStorageKey();
+    if (uKey) {
+      try { localStorage.setItem(uKey, JSON.stringify(state)); } catch (_) {}
+    }
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(() => {
+      if (!sbClient || !currentUser) return;
+      sbClient.auth.updateUser({ data: { keyverse_dj: state } }).catch(() => {});
+    }, 1200);
+  }
+
+  function hydrateForUser(user) {
+    currentUser = user || null;
+    if (currentUser) {
+      const metaDj = currentUser.user_metadata && currentUser.user_metadata.keyverse_dj;
+      if (metaDj) {
+        applyDjState(metaDj);
+      } else {
+        const uKey = getUserStorageKey();
+        if (uKey) {
+          try {
+            const local = localStorage.getItem(uKey);
+            if (local) applyDjState(JSON.parse(local));
+          } catch (_) {}
+        }
+      }
+      if (!unlockedTracked) {
+        unlockedTracked = true;
+        trackGA('dj_studio_unlocked', { user_id: currentUser.id });
+      }
+    }
+    updateAuthUI();
+    renderGrid();
+  }
+
+  function initSupabaseAuth() {
+    function attachClient() {
+      try {
+        if (!global.supabase) return;
+        sbClient = global.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+        sbClient.auth.getSession().then(({ data }) => {
+          hydrateForUser(data && data.session ? data.session.user : null);
+        }).catch(() => {});
+        sbClient.auth.onAuthStateChange((_evt, session) => {
+          hydrateForUser(session ? session.user : null);
+        });
+      } catch (_) {}
+    }
+
+    if (global.supabase) {
+      attachClient();
+      return;
+    }
+    if (document.querySelector('script[data-kv-supabase]')) return;
+    const s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js';
+    s.async = true;
+    s.setAttribute('data-kv-supabase', '1');
+    s.onload = attachClient;
+    document.head.appendChild(s);
+  }
+
   function loadStorage() {
     try {
       const g = localStorage.getItem(GENRE_KEY);
@@ -125,11 +233,15 @@
   }
 
   function savePatterns() {
+    if (!currentUser) return;
     try { localStorage.setItem(PATTERNS_KEY, JSON.stringify(patternsByGenre)); } catch (_) {}
+    saveUserStateAndSync();
   }
 
   function saveXP() {
+    if (!currentUser) return;
     try { localStorage.setItem(XP_KEY, JSON.stringify(trackXP)); } catch (_) {}
+    saveUserStateAndSync();
   }
 
   function getTrackLevel(idx) {
@@ -339,6 +451,14 @@
   }
 
   function grantShortcutXP(comboCount) {
+    if (!currentUser) {
+      if (comboCount >= 5 && !xpPromptShown) {
+        xpPromptShown = true;
+        showStudioToast('🔑 Sign in to save Instrument XP');
+      }
+      return;
+    }
+
     const bonus = comboCount >= 10 ? 4 : (comboCount >= 5 ? 3 : 1);
     const activeRows = comboCount >= 10 ? [0, 1, 2, 3] : (comboCount >= 6 ? [0, 1, 2] : (comboCount >= 3 ? [0, 1] : [0]));
     const targetRow = activeRows[comboCount % activeRows.length];
@@ -515,6 +635,63 @@
         transition: all 220ms ease;
       }
       #kv-dj-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+      #kv-dj-gate-modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(11, 14, 17, 0.88);
+        backdrop-filter: blur(8px);
+        z-index: 10020;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+      }
+      #kv-dj-gate-modal.open { display: flex; }
+      .kv-gate-card {
+        background: #12161b;
+        border: 1.5px solid #13f2b0;
+        border-radius: 16px;
+        padding: 26px 22px;
+        max-width: 420px;
+        width: 100%;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+      }
+      .kv-gate-card h3 {
+        font-family: 'JetBrains Mono', monospace;
+        color: #13f2b0;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+      }
+      .kv-gate-card p {
+        color: #9aa5af;
+        font-size: 0.9rem;
+        line-height: 1.55;
+        margin-bottom: 18px;
+      }
+      .kv-gate-actions { display: flex; flex-direction: column; gap: 10px; }
+      .kv-gate-login {
+        display: inline-block;
+        background: #13f2b0;
+        color: #0b0e11;
+        font-family: 'JetBrains Mono', monospace;
+        font-weight: 800;
+        font-size: 0.92rem;
+        padding: 12px 18px;
+        border-radius: 10px;
+        text-decoration: none;
+      }
+      .kv-user-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.75rem;
+        color: #9aa5af;
+        background: #171c22;
+        border: 1px solid #262d36;
+        border-radius: 999px;
+        padding: 3px 10px;
+      }
     `;
     document.head.appendChild(st);
   }
@@ -626,7 +803,52 @@
     });
   }
 
+  function updateAuthUI() {
+    const openBtn = document.getElementById('kv-studio-open-btn');
+    if (openBtn) {
+      openBtn.textContent = currentUser ? '🎛️ DJ Studio' : '🔒 DJ Studio (Login)';
+    }
+    const userBadge = document.getElementById('kv-studio-user-badge');
+    if (userBadge) {
+      if (currentUser) {
+        const label = currentUser.email || (currentUser.user_metadata && currentUser.user_metadata.nickname) || 'Signed In';
+        userBadge.innerHTML = `<span>👤 ${label}</span><button type="button" id="kv-studio-signout" style="background:none;border:none;color:#f38ba8;cursor:pointer;font-weight:700;font-size:0.74rem;">Sign Out</button>`;
+        const so = document.getElementById('kv-studio-signout');
+        if (so) {
+          so.onclick = async () => {
+            if (sbClient) await sbClient.auth.signOut().catch(() => {});
+            currentUser = null;
+            if (drawerOpen) toggleDrawer();
+            updateAuthUI();
+          };
+        }
+      } else {
+        userBadge.innerHTML = '';
+      }
+    }
+  }
+
+  function openGateModal() {
+    const modal = document.getElementById('kv-dj-gate-modal');
+    if (!modal) return;
+    const pauseBtn = document.getElementById('btn-pause');
+    if (pauseBtn && pauseBtn.textContent.includes('Pause')) pauseBtn.click();
+
+    const loginLink = document.getElementById('kv-gate-login-link');
+    if (loginLink) {
+      const redir = window.location.pathname + window.location.search;
+      loginLink.href = `/login.html?redirect=${encodeURIComponent(redir)}`;
+    }
+    modal.classList.add('open');
+    trackGA('dj_studio_login_prompt', { page: window.location.pathname });
+  }
+
   function toggleDrawer() {
+    if (!currentUser) {
+      openGateModal();
+      return;
+    }
+
     const drawer = document.getElementById('kv-dj-studio-drawer');
     if (!drawer) return;
     drawerOpen = !drawerOpen;
@@ -653,18 +875,37 @@
       const btn = document.createElement('button');
       btn.id = 'kv-studio-open-btn';
       btn.type = 'button';
-      btn.textContent = '🎛️ Studio';
+      btn.textContent = currentUser ? '🎛️ DJ Studio' : '🔒 DJ Studio (Login)';
       btn.onclick = toggleDrawer;
       bar.insertBefore(btn, bar.lastChild);
     }
+
+    const gate = document.createElement('div');
+    gate.id = 'kv-dj-gate-modal';
+    gate.setAttribute('role', 'dialog');
+    gate.setAttribute('aria-modal', 'true');
+    gate.innerHTML = `
+      <div class="kv-gate-card">
+        <h3>🎛️ Unlock Shortcut DJ Studio</h3>
+        <p>Create a free account &amp; sign in to unlock Shortcut DJ Studio, choose music genres, build custom 16-step beats, and level up your instruments across devices.</p>
+        <div class="kv-gate-actions">
+          <a id="kv-gate-login-link" class="kv-gate-login" href="/login.html">🔑 Sign In / Create Account</a>
+          <button type="button" id="kv-gate-close" class="kv-studio-btn">Maybe Later</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(gate);
+    document.getElementById('kv-gate-close').onclick = () => gate.classList.remove('open');
+    gate.addEventListener('click', (e) => { if (e.target === gate) gate.classList.remove('open'); });
 
     const drawer = document.createElement('section');
     drawer.id = 'kv-dj-studio-drawer';
     drawer.setAttribute('aria-label', 'Shortcut DJ Studio');
     drawer.innerHTML = `
       <div class="kv-studio-top">
-        <div style="font-family:'JetBrains Mono',monospace;font-weight:800;font-size:0.95rem;color:#13f2b0;">
-          🎛️ Shortcut DJ Studio <span style="color:#9aa5af;font-size:0.75rem;font-weight:500;">(Shortcuts level up your instruments!)</span>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <span style="font-family:'JetBrains Mono',monospace;font-weight:800;font-size:0.95rem;color:#13f2b0;">🎛️ Shortcut DJ Studio</span>
+          <span id="kv-studio-user-badge" class="kv-user-badge"></span>
         </div>
         <div class="kv-studio-controls">
           <select id="kv-studio-genre" class="kv-studio-select" aria-label="Music Genre"></select>
@@ -689,6 +930,7 @@
     sel.onchange = () => {
       activeGenre = sel.value;
       try { localStorage.setItem(GENRE_KEY, activeGenre); } catch (_) {}
+      saveUserStateAndSync();
       renderGrid();
     };
 
@@ -696,10 +938,12 @@
     document.getElementById('kv-studio-remix').onclick = remixPattern;
     document.getElementById('kv-studio-reset').onclick = resetPattern;
     document.getElementById('kv-studio-close').onclick = toggleDrawer;
+    updateAuthUI();
     renderGrid();
   }
 
   loadStorage();
+  initSupabaseAuth();
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', injectStudioUI);
   } else {

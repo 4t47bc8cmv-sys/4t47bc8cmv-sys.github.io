@@ -580,17 +580,28 @@
       box.style.display = "block";
     }
 
+    function getSafeRedirectUrl() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const raw = (params.get("redirect") || "").trim();
+        if (raw && raw.startsWith("/") && !raw.startsWith("//") && !raw.includes("\\")) {
+          return raw;
+        }
+      } catch (e) {}
+      return "/multiplayer/account.html";
+    }
+
     // Auto-redirect if session already exists
     if (supabase) {
       supabase.auth.getSession().then(({ data: { session } }) => {
         if (session && session.user) {
-          window.location.href = "/multiplayer/account.html";
+          window.location.href = getSafeRedirectUrl();
         }
       });
 
       supabase.auth.onAuthStateChange((event, session) => {
         if (session && session.user) {
-          window.location.href = "/multiplayer/account.html";
+          window.location.href = getSafeRedirectUrl();
         }
       });
     }
@@ -676,9 +687,9 @@
             // Non-blocking Discord signup notification
             notifySignupOnDiscord(email, email.split("@")[0]);
 
-            showStatus("success", "Passcode verified! Entering split-screen multiplayer…");
+            showStatus("success", "Passcode verified! Redirecting…");
             setTimeout(() => {
-              window.location.href = "/multiplayer/account.html";
+              window.location.href = getSafeRedirectUrl();
             }, 350);
             return;
           } else {
@@ -691,14 +702,14 @@
               password: password
             });
             if (error) throw error;
-            showStatus("success", "Signed in successfully! Opening dashboard…");
-            window.location.href = "/multiplayer/account.html";
+            showStatus("success", "Signed in successfully! Redirecting…");
+            window.location.href = getSafeRedirectUrl();
           }
         } else if (activeTab === "magic") {
           if (!supabase) {
             throw new Error("Supabase client is offline. You can use the Free Trial passcode above.");
           }
-          const redirectTo = window.location.origin + "/multiplayer/account.html";
+          const redirectTo = window.location.origin + getSafeRedirectUrl();
           const { error } = await supabase.auth.signInWithOtp({
             email: email,
             options: { emailRedirectTo: redirectTo }
