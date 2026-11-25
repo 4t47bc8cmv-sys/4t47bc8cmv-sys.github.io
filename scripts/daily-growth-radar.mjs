@@ -2,16 +2,20 @@
  * Keyverse Daily Mac Community Growth Radar & Weekly Challenge Spotlight
  *
  * Runs automatically via GitHub Actions at 16:00 UTC daily (or manually via workflow_dispatch).
- * 1. Searches public Bluesky & Mastodon for real conversations about #MacTips, Mac shortcuts, and Cmd-K / Command+K.
- * 2. Picks the top 3 conversations and posts a clickable digest + suggested helpful human reply to DISCORD_WEBHOOK_URL
- *    so you can reply manually in 30 seconds without risking automated spam bans.
+ * 100% READ-ONLY & BAN-PROOF: Never auto-replies to strangers.
+ * 1. Searches public Bluesky, Mastodon, Reddit (r/mac, r/MacOS, r/productivity), and Hacker News (Algolia)
+ *    for fresh questions about "Mac shortcuts", "keyboard shortcuts", "macOS tips", "#MacTips", and "Command+K".
+ * 2. Ranks and picks the top 3–5 highest-relevance conversations and posts direct links + a natural,
+ *    helpful, non-salesy human reply draft to DISCORD_WEBHOOK_URL.
  * 3. Every Friday (UTC day 5, or when FORCE_SPOTLIGHT=true), posts a playable Weekly Shortcut Challenge Spotlight
  *    (?challenge_score=1500 + UTM tags) to MULTI_SOCIAL_WEBHOOK_URL for Instagram + Facebook.
  *
  * Zero external dependencies — requires Node 20+.
  */
 
-const SEARCH_QUERIES = ['Mac shortcuts', '#MacTips', 'Command+K'];
+const SOCIAL_QUERIES = ['Mac shortcuts', '#MacTips', 'Command+K'];
+const COMMUNITY_QUERIES = ['Mac shortcuts', 'keyboard shortcuts', 'macOS tips'];
+const REDDIT_SUBREDDITS = ['mac', 'MacOS', 'productivity'];
 
 const WEEKLY_CHALLENGES = [
   {
@@ -59,6 +63,7 @@ function stripHtml(html) {
     .replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
+    .replace(/&#x27;/g, "'")
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -66,15 +71,38 @@ function stripHtml(html) {
 function buildSuggestedReply(postText) {
   const lower = postText.toLowerCase();
   if (lower.includes('cmd-k') || lower.includes('command+k') || lower.includes('smb') || lower.includes('nfs') || lower.includes('finder')) {
-    return 'Nice tip! In macOS Finder, Command (⌘) + K also opens Connect to Server for smb:// or nfs:// shares. We built a quick interactive ⌘+K simulator if anyone wants to practice it: https://keyversegames.com/guides/macos-finder-and-window-management.html';
+    return 'In macOS Finder, Command (⌘) + Shift + G jumps straight to any folder path (like ~/Library), and Command (⌘) + K opens Connect to Server for smb:// or nfs:// shares. If you ever want to drill Finder shortcuts interactively, there is a free browser trainer + ⌘+K sim at https://keyversegames.com/guides/macos-finder-and-window-management.html';
   }
-  if (lower.includes('windows') || lower.includes('switch')) {
-    return 'If you are switching from Windows to Mac, the biggest unlock is resting your thumb on Command (⌘) instead of reaching for Ctrl. Here is a side-by-side Windows-to-Mac shortcut map if helpful: https://keyversegames.com/guides/windows-to-mac-shortcut-switchers-guide.html';
+  if (lower.includes('windows') || lower.includes('switch') || lower.includes('ctrl')) {
+    return 'Coming from Windows, the biggest unlock is resting your thumb on Command (⌘) next to the Spacebar instead of reaching for Ctrl with your pinky—⌘+C/V/Z work just like Ctrl, ⌘+Space opens Spotlight, and ⌘+` cycles windows within the same app. This side-by-side Windows-to-Mac map is handy if you are adjusting: https://keyversegames.com/guides/windows-to-mac-shortcut-switchers-guide.html';
   }
   if (lower.includes('safari') || lower.includes('browser') || lower.includes('tab')) {
-    return 'Great shortcut! Command (⌘) + Shift + T to reopen closed tabs and Command (⌘) + L to jump to the URL bar save so much trackpad travel. You can drill them in 2 minutes at https://keyversegames.com/guides/safari-and-browser-productivity-shortcuts.html';
+    return 'Two huge time-savers on Mac browsers: Command (⌘) + Shift + T reopens your last closed tab, and Command (⌘) + L highlights the address bar immediately so you never need the trackpad. You can also practice those in a quick 2-minute drill at https://keyversegames.com/guides/safari-and-browser-productivity-shortcuts.html';
   }
-  return 'Love seeing Mac keyboard tips in the wild! Muscle memory beats cheat sheets every time—if you want a quick 2-minute browser drill to lock these in, check out https://keyversegames.com/';
+  if (lower.includes('text') || lower.includes('cursor') || lower.includes('word') || lower.includes('terminal')) {
+    return 'Try Option (⌥) + Left/Right Arrow to jump word-by-word and Command (⌘) + Left/Right Arrow to snap to the start or end of a line (add Shift to select as you go). Works across Notes, Mail, Slack, and most editors. More cursor tricks here if useful: https://keyversegames.com/guides/text-editing-and-terminal-essentials.html';
+  }
+  if (lower.includes('window') || lower.includes('hide') || lower.includes('quit') || lower.includes('close')) {
+    return 'On Mac, ⌘+W closes just the current window/tab, ⌘+H hides the app cleanly, and ⌘+Q quits it completely—plus ⌘+Option+M minimizes all windows of the front app. If you want to build muscle memory without a cheat sheet, Keyverse has free browser drills at https://keyversegames.com/';
+  }
+  return 'The fastest way to lock in Mac shortcuts is starting with just 4–5 high-frequency ones (⌘+Space for Spotlight, ⌘+Tab to switch apps, ⌘+W to close a tab, Option+Left/Right to jump words) until your thumb hits ⌘ automatically. If you want a quick interactive drill to practice them, https://keyversegames.com/ is free in the browser.';
+}
+
+function scoreConversation(item) {
+  const text = (item.text || '').toLowerCase();
+  let score = 0;
+
+  if (text.includes('?')) score += 25;
+  if (/\b(how do i|how to|anyone know|best way|tips|help|recommend|switch|new to mac)\b/.test(text)) score += 20;
+  if (text.includes('mac shortcut') || text.includes('keyboard shortcut') || text.includes('macos')) score += 18;
+  if (text.includes('command+k') || text.includes('cmd-k') || text.includes('finder') || text.includes('spotlight')) score += 12;
+
+  const ageHours = item.createdAt ? Math.max(0, (Date.now() - new Date(item.createdAt).getTime()) / 3600000) : 168;
+  if (ageHours <= 24) score += 25;
+  else if (ageHours <= 72) score += 15;
+  else if (ageHours <= 168) score += 6;
+
+  return score;
 }
 
 async function searchBluesky(query) {
@@ -125,24 +153,120 @@ async function searchMastodon(query) {
   }
 }
 
-async function collectTopConversations() {
-  const results = await Promise.all(
-    SEARCH_QUERIES.flatMap((q) => [searchBluesky(q), searchMastodon(q)])
-  );
+function parseRedditRss(xml, subreddit) {
+  const items = [];
+  const entryRe = /<entry>([\s\S]*?)<\/entry>/gi;
+  let m;
+  while ((m = entryRe.exec(xml)) !== null) {
+    const block = m[1];
+    const titleMatch = block.match(/<title>([\s\S]*?)<\/title>/i);
+    const linkMatch = block.match(/<link[^>]*href="([^"]+)"/i);
+    const authorMatch = block.match(/<name>([\s\S]*?)<\/name>/i);
+    const updatedMatch = block.match(/<updated>([\s\S]*?)<\/updated>/i);
+    const contentMatch = block.match(/<content[^>]*>([\s\S]*?)<\/content>/i);
+    const title = stripHtml(titleMatch ? titleMatch[1] : '');
+    const body = stripHtml(contentMatch ? contentMatch[1] : '');
+    const text = [title, body].filter(Boolean).join(' — ');
+    if (linkMatch && text.length > 20) {
+      items.push({
+        platform: `Reddit r/${subreddit}`,
+        author: authorMatch ? authorMatch[1].trim() : 'redditor',
+        text,
+        url: linkMatch[1],
+        createdAt: updatedMatch ? updatedMatch[1].trim() : ''
+      });
+    }
+  }
+  return items;
+}
 
+async function searchReddit(subreddit, query) {
+  const headers = {
+    Accept: 'application/json',
+    'User-Agent': 'KeyverseGrowthRadar/1.0 (read-only community digest)'
+  };
+  const jsonUrl = `https://www.reddit.com/r/${subreddit}/search.json?q=${encodeURIComponent(query)}&restrict_sr=1&sort=new&t=week&limit=6`;
+  try {
+    const res = await fetch(jsonUrl, { headers });
+    if (res.ok) {
+      const data = await res.json();
+      const children = data?.data?.children || [];
+      return children.map((c) => {
+        const d = c.data || {};
+        const text = [d.title || '', d.selftext || ''].map((s) => s.replace(/\s+/g, ' ').trim()).filter(Boolean).join(' — ');
+        return {
+          platform: `Reddit r/${subreddit}`,
+          author: d.author ? `u/${d.author}` : 'redditor',
+          text,
+          url: d.permalink ? `https://www.reddit.com${d.permalink}` : '',
+          createdAt: d.created_utc ? new Date(d.created_utc * 1000).toISOString() : ''
+        };
+      }).filter((item) => item.url && item.text.length > 20);
+    }
+
+    // Fallback to public RSS feed if JSON endpoint is rate-limited
+    const rssUrl = `https://www.reddit.com/r/${subreddit}/search.rss?q=${encodeURIComponent(query)}&restrict_sr=1&sort=new&t=week`;
+    const rssRes = await fetch(rssUrl, { headers: { 'User-Agent': headers['User-Agent'] } });
+    if (!rssRes.ok) return [];
+    const xml = await rssRes.text();
+    return parseRedditRss(xml, subreddit);
+  } catch (err) {
+    console.warn(`[Reddit Search] r/${subreddit} "${query}" failed:`, err.message);
+    return [];
+  }
+}
+
+async function searchHackerNews(query) {
+  const url = `https://hn.algolia.com/api/v1/search_by_date?query=${encodeURIComponent(query)}&tags=(story,ask_hn,comment)&hitsPerPage=8`;
+  try {
+    const res = await fetch(url, { headers: { Accept: 'application/json' } });
+    if (!res.ok) return [];
+    const data = await res.json();
+    const hits = Array.isArray(data.hits) ? data.hits : [];
+    return hits.map((h) => {
+      const rawText = h.title || h.story_title || '';
+      const comment = stripHtml(h.comment_text || h.story_text || '');
+      const text = [rawText, comment].filter(Boolean).join(' — ');
+      const itemId = h.objectID || h.story_id;
+      return {
+        platform: 'Hacker News',
+        author: h.author || 'hn_user',
+        text,
+        url: itemId ? `https://news.ycombinator.com/item?id=${itemId}` : '',
+        createdAt: h.created_at || ''
+      };
+    }).filter((item) => item.url && item.text.length > 25);
+  } catch (err) {
+    console.warn(`[HN Search] Query "${query}" failed:`, err.message);
+    return [];
+  }
+}
+
+async function collectTopConversations() {
+  const tasks = [
+    ...SOCIAL_QUERIES.flatMap((q) => [searchBluesky(q), searchMastodon(q)]),
+    ...COMMUNITY_QUERIES.flatMap((q) => [
+      searchHackerNews(q),
+      ...REDDIT_SUBREDDITS.map((sub) => searchReddit(sub, q))
+    ])
+  ];
+
+  const results = await Promise.all(tasks);
   const seenUrls = new Set();
   const merged = [];
+
   for (const list of results) {
     for (const item of list) {
-      if (!seenUrls.has(item.url) && !item.author.includes('keyverse')) {
+      if (!seenUrls.has(item.url) && !item.author.toLowerCase().includes('keyverse')) {
         seenUrls.add(item.url);
+        item.relevance = scoreConversation(item);
         merged.push(item);
       }
     }
   }
 
-  merged.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
-  return merged.slice(0, 3);
+  merged.sort((a, b) => (b.relevance - a.relevance) || (new Date(b.createdAt || 0) - new Date(a.createdAt || 0)));
+  return merged.slice(0, 5);
 }
 
 async function sendDiscordRadarDigest(conversations, dateStr) {
@@ -153,24 +277,29 @@ async function sendDiscordRadarDigest(conversations, dateStr) {
   }
 
   const fields = conversations.length > 0
-    ? conversations.map((c, idx) => ({
-        name: `${idx + 1}. [${c.platform}] ${c.author}`,
-        value: `**Post:** ${c.text.slice(0, 180)}${c.text.length > 180 ? '…' : ''}\n**Link:** ${c.url}\n**Suggested Reply:** ${buildSuggestedReply(c.text)}`
-      }))
+    ? conversations.map((c, idx) => {
+        const snippet = `${c.text.slice(0, 180)}${c.text.length > 180 ? '…' : ''}`;
+        const reply = buildSuggestedReply(c.text);
+        const value = `**Post:** ${snippet}\n**Link:** ${c.url}\n**Suggested Reply:** ${reply}`.slice(0, 1000);
+        return {
+          name: `${idx + 1}. [${c.platform}] ${c.author}`,
+          value
+        };
+      })
     : [{
         name: 'No fresh matches today',
-        value: 'No new public Bluesky/Mastodon posts matched today’s search queries. Try checking #MacTips manually.'
+        value: 'No new public Bluesky, Mastodon, Reddit, or Hacker News posts matched today’s Mac shortcut queries.'
       }];
 
   const payload = {
     username: 'Keyverse Growth Radar',
-    content: `📡 **Daily Mac Community Radar (${dateStr})** — Top ${conversations.length} conversations to join manually:`,
+    content: `📡 **Daily Mac Community Radar (${dateStr})** — Top ${conversations.length} conversations to join manually (100% read-only, zero auto-replies):`,
     embeds: [
       {
         title: 'Fresh Mac Shortcut & #MacTips Conversations',
         color: 1299120, // #13f2b0 Keyverse Mint
         fields,
-        footer: { text: 'Keyverse Growth Radar • Human-in-the-Loop Outreach (Zero Spam)' },
+        footer: { text: 'Keyverse Growth Radar • Bluesky + Mastodon + Reddit + HN (Human-in-the-Loop)' },
         timestamp: new Date().toISOString()
       }
     ]
