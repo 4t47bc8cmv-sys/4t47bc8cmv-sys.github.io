@@ -11,6 +11,7 @@
   const AMBIENT_ENABLED_KEY = 'keyverse_ambient_enabled';
   const AMBIENT_VOLUME_KEY = 'keyverse_ambient_volume';
   const GEO_CACHE_KEY = 'keyverse_geo_pack';
+  const MAX_SFX_DURATION = 4.0;
 
   const PACKS = {
     katana: {
@@ -104,16 +105,26 @@
     if (!buf || !audio) return false;
 
     try {
+      const startTime = audio.currentTime;
       const src = audio.createBufferSource();
       src.buffer = buf;
       src.playbackRate.value = playbackRate;
 
       const gain = audio.createGain();
-      gain.gain.setValueAtTime(gainVal, audio.currentTime);
+      gain.gain.setValueAtTime(gainVal, startTime);
 
       src.connect(gain);
       gain.connect(audio.destination);
-      src.start(0);
+
+      const effectiveDuration = buf.duration / Math.max(0.25, playbackRate);
+      if (effectiveDuration > MAX_SFX_DURATION) {
+        gain.gain.setValueAtTime(gainVal, startTime + MAX_SFX_DURATION - 0.15);
+        gain.gain.linearRampToValueAtTime(0, startTime + MAX_SFX_DURATION);
+        src.start(startTime);
+        src.stop(startTime + MAX_SFX_DURATION);
+      } else {
+        src.start(startTime);
+      }
       return true;
     } catch (_) {
       return false;
