@@ -62,6 +62,50 @@
   let noiseBuffer = null;
   let currentPack = 'cyber';
   let isMuted = false;
+  const sampleBuffers = {};
+  const preloadStarted = {};
+
+  function preloadPack(packId) {
+    if (!PACKS[packId] || preloadStarted[packId]) return;
+    const audio = ensureAudioContext();
+    if (!audio || typeof fetch !== 'function') return;
+
+    preloadStarted[packId] = true;
+    sampleBuffers[packId] = sampleBuffers[packId] || {};
+
+    ['hit', 'overdrive', 'miss'].forEach((slot) => {
+      const url = `../sounds/${packId}/${slot}.mp3`;
+      fetch(url)
+        .then((res) => (res.ok ? res.arrayBuffer() : null))
+        .then((buf) => (buf ? audio.decodeAudioData(buf) : null))
+        .then((decoded) => {
+          if (decoded) sampleBuffers[packId][slot] = decoded;
+        })
+        .catch(() => {});
+    });
+  }
+
+  function playSample(packId, slot, playbackRate = 1.0, gainVal = 0.85) {
+    const buf = sampleBuffers[packId] && sampleBuffers[packId][slot];
+    const audio = ensureAudioContext();
+    if (!buf || !audio) return false;
+
+    try {
+      const src = audio.createBufferSource();
+      src.buffer = buf;
+      src.playbackRate.value = playbackRate;
+
+      const gain = audio.createGain();
+      gain.gain.setValueAtTime(gainVal, audio.currentTime);
+
+      src.connect(gain);
+      gain.connect(audio.destination);
+      src.start(0);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
 
   function safeStorageGet(key) {
     try { return localStorage.getItem(key); } catch (_) { return null; }
@@ -136,6 +180,7 @@
 
   function unlockAudio() {
     ensureAudioContext();
+    preloadPack(currentPack);
   }
 
   function playNoise(duration, filterType, startFreq, endFreq, gainVal, qVal = 1.0, delay = 0) {
@@ -193,54 +238,61 @@
     return scale[idx];
   }
 
+  function playSynthHit(freq) {
+    if (currentPack === 'katana') {
+      playNoise(0.22, 'bandpass', 3200, 6400, 0.14, 4.5);
+      playTone('triangle', freq, freq * 1.02, 0.24, 0.18);
+      playTone('sine', 900, 260, 0.045, 0.16);
+    } else if (currentPack === 'anime') {
+      playTone('sine', freq * 0.72, freq, 0.14, 0.22);
+      playTone('triangle', freq * 1.5, freq * 2, 0.18, 0.12, 0.03);
+    } else if (currentPack === 'harbor') {
+      playTone('sine', freq, freq, 0.45, 0.2);
+      playTone('sine', freq * 2.4, freq * 2.4, 0.25, 0.07);
+      playTone('sine', freq * 3.9, freq * 3.9, 0.16, 0.04);
+    } else {
+      playNoise(0.03, 'highpass', 2400, 3200, 0.14, 1.0);
+      playTone('square', freq, freq * 1.05, 0.11, 0.09);
+      playTone('square', freq * 1.5, freq * 1.5, 0.11, 0.07, 0.05);
+    }
+  }
+
+  function playSynthOverdrive(freq) {
+    if (currentPack === 'katana') {
+      playNoise(0.55, 'bandpass', 950, 1450, 0.11, 6.0, 0.04);
+      playTone('triangle', freq * 0.5, freq, 0.45, 0.14, 0.05);
+    } else if (currentPack === 'anime') {
+      playTone('sawtooth', 140, 280, 0.4, 0.08, 0.02);
+      [1, 1.25, 1.5, 2].forEach((mult, i) => {
+        playTone('sine', freq * mult, freq * mult, 0.14, 0.1, 0.05 + i * 0.045);
+      });
+    } else if (currentPack === 'harbor') {
+      playTone('sawtooth', 110, 108, 0.65, 0.07, 0.04);
+      playTone('sawtooth', 165, 162, 0.65, 0.05, 0.04);
+      playNoise(0.7, 'lowpass', 900, 260, 0.13, 0.8, 0.02);
+    } else {
+      playTone('sawtooth', 110, 220, 0.35, 0.07, 0.02);
+      playTone('square', freq * 2, freq * 2, 0.18, 0.08, 0.09);
+    }
+  }
+
   function playCorrect(comboCount = 1) {
     if (isMuted) return;
     const audio = ensureAudioContext();
     if (!audio) return;
+    preloadPack(currentPack);
 
     const freq = getScaleFreq(currentPack, comboCount);
-    const isOverdrive = comboCount >= 5;
+    const pitchRate = 1.0 + Math.min(Math.max(0, comboCount), 12) * 0.045;
+    const isOverdriveMilestone = comboCount >= 5 && comboCount % 5 === 0;
 
-    if (currentPack === 'katana') {
-      // Metallic blade shing + bamboo clack
-      playNoise(0.22, 'bandpass', 3200, 6400, 0.14, 4.5);
-      playTone('triangle', freq, freq * 1.02, 0.24, 0.18);
-      playTone('sine', 900, 260, 0.045, 0.16);
-      if (isOverdrive) {
-        // Shakuhachi-style flute swell + sword unsheathe
-        playNoise(0.55, 'bandpass', 950, 1450, 0.11, 6.0, 0.04);
-        playTone('triangle', freq * 0.5, freq, 0.45, 0.14, 0.05);
-      }
-    } else if (currentPack === 'anime') {
-      // High-energy synth zwoop / arcade chime
-      playTone('sine', freq * 0.72, freq, 0.14, 0.22);
-      playTone('triangle', freq * 1.5, freq * 2, 0.18, 0.12, 0.03);
-      if (isOverdrive) {
-        // Charging-aura hum + sparkle burst
-        playTone('sawtooth', 140, 280, 0.4, 0.08, 0.02);
-        [1, 1.25, 1.5, 2].forEach((mult, i) => {
-          playTone('sine', freq * mult, freq * mult, 0.14, 0.1, 0.05 + i * 0.045);
-        });
-      }
-    } else if (currentPack === 'harbor') {
-      // Crisp brass ship-bell ding / sonar ping
-      playTone('sine', freq, freq, 0.45, 0.2);
-      playTone('sine', freq * 2.4, freq * 2.4, 0.25, 0.07);
-      playTone('sine', freq * 3.9, freq * 3.9, 0.16, 0.04);
-      if (isOverdrive) {
-        // Deep foghorn swell + ocean wave whoosh
-        playTone('sawtooth', 110, 108, 0.65, 0.07, 0.04);
-        playTone('sawtooth', 165, 162, 0.65, 0.05, 0.04);
-        playNoise(0.7, 'lowpass', 900, 260, 0.13, 0.8, 0.02);
-      }
-    } else {
-      // Retro Cyber: mechanical key-click + 8-bit synth blip
-      playNoise(0.03, 'highpass', 2400, 3200, 0.14, 1.0);
-      playTone('square', freq, freq * 1.05, 0.11, 0.09);
-      playTone('square', freq * 1.5, freq * 1.5, 0.11, 0.07, 0.05);
-      if (isOverdrive) {
-        playTone('sawtooth', 110, 220, 0.35, 0.07, 0.02);
-        playTone('square', freq * 2, freq * 2, 0.18, 0.08, 0.09);
+    if (!playSample(currentPack, 'hit', pitchRate, 0.82)) {
+      playSynthHit(freq);
+    }
+
+    if (isOverdriveMilestone) {
+      if (!playSample(currentPack, 'overdrive', 1.0, 0.78)) {
+        playSynthOverdrive(freq);
       }
     }
   }
@@ -249,21 +301,20 @@
     if (isMuted) return;
     const audio = ensureAudioContext();
     if (!audio) return;
+    preloadPack(currentPack);
+
+    if (playSample(currentPack, 'miss', 1.0, 0.85)) return;
 
     if (currentPack === 'katana') {
-      // Low taiko drum thud
       playTone('sine', 120, 42, 0.24, 0.32);
       playNoise(0.06, 'lowpass', 320, 110, 0.16, 1.0);
     } else if (currentPack === 'anime') {
-      // Comedic bonk / pitch-drop scratch
       playTone('triangle', 340, 92, 0.22, 0.24);
       playNoise(0.1, 'bandpass', 1400, 380, 0.12, 2.5);
     } else if (currentPack === 'harbor') {
-      // Heavy metallic anchor clank
       playTone('triangle', 185, 130, 0.26, 0.22);
       playTone('square', 277, 195, 0.18, 0.08);
     } else {
-      // Classic 8-bit buzz
       playTone('sawtooth', 145, 95, 0.2, 0.14);
     }
   }
@@ -442,6 +493,7 @@
       currentPack = sel.value;
       safeStorageSet(PACK_STORAGE_KEY, currentPack);
       unlockAudio();
+      preloadPack(currentPack);
       playCorrect(3);
     });
 
@@ -490,6 +542,7 @@
       if (!PACKS[packId]) return;
       currentPack = packId;
       safeStorageSet(PACK_STORAGE_KEY, packId);
+      preloadPack(packId);
       syncControlUI();
     },
     getPack: function () { return currentPack; },
