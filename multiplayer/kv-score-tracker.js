@@ -23,6 +23,57 @@
   let lastAccuracy = 100;
   let sessionScore = 0;
 
+  // Ghost DNA state
+  let ghostRun = { startedAt: null, steps: [] };
+  let activeGhost = null; // decoded { n, s, p, t }
+  let ghostReplayStarted = false;
+  let ghostReplayStartedAt = null;
+  let ghostTimers = [];
+  let ghostCompletedCount = 0;
+  let playerGhostCount = 0;
+  let ghostVerdictShown = false;
+
+  function encodeGhostDNA(dna) {
+    try {
+      const json = JSON.stringify(dna);
+      const b64 = btoa(unescape(encodeURIComponent(json)));
+      return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    } catch (_) {
+      return '';
+    }
+  }
+
+  function decodeGhostDNA(raw) {
+    try {
+      let b64 = (raw || '').replace(/-/g, '+').replace(/_/g, '/');
+      while (b64.length % 4) b64 += '=';
+      const json = decodeURIComponent(escape(atob(b64)));
+      const parsed = JSON.parse(json);
+      if (!parsed || !Array.isArray(parsed.t) || parsed.t.length === 0) return null;
+      return {
+        n: String(parsed.n || 'Friend').slice(0, 20),
+        s: Number(parsed.s) || 1000,
+        p: String(parsed.p || 'cyber'),
+        t: parsed.t.map((x) => Math.max(0, Number(x) || 0)).slice(0, 60)
+      };
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function getActiveGhostPayload() {
+    const player = getLocalPlayer();
+    const callsign = (player && player.nickname) ? player.nickname : 'Player';
+    const pack = (window.KeyverseAudio && window.KeyverseAudio.getPack) ? window.KeyverseAudio.getPack() : 'cyber';
+    const steps = ghostRun.steps.length > 0 ? ghostRun.steps : [750, 1450, 2200, 3050, 3800];
+    return encodeGhostDNA({
+      n: callsign,
+      s: getPlayerScore(),
+      p: pack,
+      t: steps
+    });
+  }
+
   function calculateBoardScore(payload) {
     const accuracy = payload.attempts > 0 ? (payload.correct / payload.attempts) : 1;
     const basePoints = Math.max(1, payload.correct || 5) * 200;
@@ -74,7 +125,9 @@
     }
 
     const separator = baseUrl.includes('?') ? '&' : '?';
-    return `${baseUrl}${separator}utm_source=viral_share&utm_medium=challenge_btn&utm_campaign=score_challenge&challenge_score=${encodeURIComponent(score)}`;
+    const ghostParam = getActiveGhostPayload();
+    const ghostSuffix = ghostParam ? `&ghost=${encodeURIComponent(ghostParam)}` : '';
+    return `${baseUrl}${separator}utm_source=viral_share&utm_medium=challenge_btn&utm_campaign=score_challenge&challenge_score=${encodeURIComponent(score)}${ghostSuffix}`;
   }
 
   function triggerGaEvent(gameTitle, score) {
@@ -293,6 +346,87 @@
       .kv-challenge-btn:active {
         transform: translateY(0) !important;
       }
+      .kv-ghost-hud {
+        background: rgba(18, 22, 27, 0.94);
+        border: 1px solid rgba(124, 157, 255, 0.45);
+        border-radius: 12px;
+        padding: 10px 14px;
+        margin-bottom: 12px;
+        text-align: left;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+      }
+      .kv-ghost-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.82rem;
+        font-weight: 800;
+        color: #cdd6f4;
+        margin-bottom: 8px;
+      }
+      .kv-ghost-track {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 5px;
+        font-size: 0.74rem;
+        font-family: 'JetBrains Mono', monospace;
+        color: #a6adc8;
+      }
+      .kv-ghost-bar-bg {
+        flex: 1;
+        height: 8px;
+        background: #181825;
+        border-radius: 999px;
+        overflow: hidden;
+        border: 1px solid #313244;
+      }
+      .kv-ghost-bar-you {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #13f2b0, #a6e3a1);
+        transition: width 180ms ease;
+      }
+      .kv-ghost-bar-rival {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #7c9dff, #cba6f7);
+        transition: width 180ms ease;
+      }
+      @keyframes kvGhostFloat {
+        0% { opacity: 0; transform: translate(-50%, 4px) scale(0.9); }
+        25% { opacity: 0.92; transform: translate(-50%, -8px) scale(1.05); }
+        100% { opacity: 0; transform: translate(-50%, -36px) scale(1); }
+      }
+      .kv-ghost-pulse-pop {
+        position: fixed;
+        pointer-events: none;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.82rem;
+        font-weight: 800;
+        color: #7c9dff;
+        background: rgba(18, 22, 27, 0.86);
+        border: 1px solid rgba(124, 157, 255, 0.65);
+        border-radius: 999px;
+        padding: 3px 9px;
+        z-index: 10001;
+        animation: kvGhostFloat 720ms ease-out forwards;
+      }
+      .kv-ghost-verdict {
+        background: rgba(124, 157, 255, 0.12);
+        border: 1px solid rgba(124, 157, 255, 0.45);
+        border-radius: 10px;
+        padding: 10px 12px;
+        margin-bottom: 12px;
+        font-size: 0.88rem;
+        font-weight: 800;
+        color: #cdd6f4;
+      }
+      .kv-ghost-verdict.win {
+        background: rgba(19, 242, 176, 0.12);
+        border-color: #13f2b0;
+        color: #13f2b0;
+      }
     `;
     document.head.appendChild(style);
   }
@@ -334,6 +468,10 @@
     try {
       const params = new URLSearchParams(window.location.search);
       const score = params.get('challenge_score');
+      const ghostRaw = params.get('ghost');
+      if (ghostRaw) {
+        activeGhost = decodeGhostDNA(ghostRaw);
+      }
       if (score) {
         renderChallengeBanner(score);
         if (!challengeOpenedTracked) {
@@ -351,7 +489,139 @@
           }
         }
       }
+      if (activeGhost) {
+        renderGhostHud();
+      }
     } catch (_) {}
+  }
+
+  function renderGhostHud() {
+    if (!activeGhost || document.getElementById('kv-ghost-hud')) return;
+    const gameScreen = document.getElementById('game-screen');
+    if (!gameScreen) return;
+
+    const hud = document.createElement('div');
+    hud.id = 'kv-ghost-hud';
+    hud.className = 'kv-ghost-hud';
+    const total = activeGhost.t.length;
+    hud.innerHTML = `
+      <div class="kv-ghost-head">
+        <span>👻 Racing ${activeGhost.n}'s Ghost</span>
+        <span style="color:#f9e2af;">${activeGhost.s.toLocaleString()} pts</span>
+      </div>
+      <div class="kv-ghost-track">
+        <span style="width:42px;color:#13f2b0;">YOU</span>
+        <div class="kv-ghost-bar-bg"><div class="kv-ghost-bar-you" id="kv-ghost-you-bar"></div></div>
+        <span id="kv-ghost-you-cnt" style="width:42px;text-align:right;">0/${total}</span>
+      </div>
+      <div class="kv-ghost-track">
+        <span style="width:42px;color:#7c9dff;">GHOST</span>
+        <div class="kv-ghost-bar-bg"><div class="kv-ghost-bar-rival" id="kv-ghost-rival-bar"></div></div>
+        <span id="kv-ghost-rival-cnt" style="width:42px;text-align:right;">0/${total}</span>
+      </div>
+    `;
+    gameScreen.insertBefore(hud, gameScreen.firstChild);
+  }
+
+  function updateGhostBars() {
+    if (!activeGhost) return;
+    const total = Math.max(1, activeGhost.t.length);
+    const youBar = document.getElementById('kv-ghost-you-bar');
+    const youCnt = document.getElementById('kv-ghost-you-cnt');
+    const rivBar = document.getElementById('kv-ghost-rival-bar');
+    const rivCnt = document.getElementById('kv-ghost-rival-cnt');
+
+    if (youBar) youBar.style.width = `${Math.min(100, Math.round((playerGhostCount / total) * 100))}%`;
+    if (youCnt) youCnt.textContent = `${Math.min(playerGhostCount, total)}/${total}`;
+    if (rivBar) rivBar.style.width = `${Math.min(100, Math.round((ghostCompletedCount / total) * 100))}%`;
+    if (rivCnt) rivCnt.textContent = `${Math.min(ghostCompletedCount, total)}/${total}`;
+  }
+
+  function spawnGhostPulse(idx) {
+    const card = document.querySelector('.card');
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const pop = document.createElement('div');
+    pop.className = 'kv-ghost-pulse-pop';
+    pop.textContent = idx >= 4 ? `👻 🔥 +1` : `👻 +1`;
+    pop.style.left = `${rect.left + rect.width * 0.78}px`;
+    pop.style.top = `${Math.max(48, rect.top + 36)}px`;
+    document.body.appendChild(pop);
+    setTimeout(() => pop.remove(), 750);
+  }
+
+  function startGhostReplay() {
+    if (!activeGhost || ghostReplayStarted) return;
+    ghostReplayStarted = true;
+    ghostReplayStartedAt = performance.now();
+    ghostCompletedCount = 0;
+    ghostTimers.forEach(clearTimeout);
+    ghostTimers = [];
+
+    try {
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'ghost_race_started', {
+          ghost_author: activeGhost.n,
+          ghost_steps: activeGhost.t.length,
+          send_to: GA_MEASUREMENT_ID
+        });
+      }
+    } catch (_) {}
+
+    activeGhost.t.forEach((ms, idx) => {
+      const tid = setTimeout(() => {
+        ghostCompletedCount = idx + 1;
+        updateGhostBars();
+        spawnGhostPulse(idx);
+      }, Math.max(50, ms));
+      ghostTimers.push(tid);
+    });
+  }
+
+  function showGhostVerdict(playerTimeMs) {
+    if (!activeGhost || ghostVerdictShown) return;
+    ghostVerdictShown = true;
+    const ghostTotalMs = activeGhost.t[activeGhost.t.length - 1] || 1000;
+    const diffSec = Math.abs((ghostTotalMs - playerTimeMs) / 1000).toFixed(1);
+    const won = playerTimeMs <= ghostTotalMs;
+
+    if (won) {
+      try {
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'ghost_race_won', {
+            ghost_author: activeGhost.n,
+            time_diff_sec: Number(diffSec),
+            send_to: GA_MEASUREMENT_ID
+          });
+        }
+      } catch (_) {}
+    }
+
+    const interstitial = document.getElementById('kv-interstitial');
+    if (!interstitial) return;
+    const card = interstitial.querySelector('div');
+    if (!card) return;
+
+    let verdictEl = document.getElementById('kv-ghost-verdict');
+    if (!verdictEl) {
+      verdictEl = document.createElement('div');
+      verdictEl.id = 'kv-ghost-verdict';
+      const challengeBtn = document.getElementById('kv-challenge-btn');
+      if (challengeBtn) {
+        card.insertBefore(verdictEl, challengeBtn);
+      } else {
+        card.appendChild(verdictEl);
+      }
+    }
+    verdictEl.className = won ? 'kv-ghost-verdict win' : 'kv-ghost-verdict';
+    verdictEl.textContent = won
+      ? `👻 GHOST DEFEATED by ${diffSec}s!`
+      : `👻 GHOST ESCAPED by ${diffSec}s — Rematch?`;
+
+    const challengeBtn = document.getElementById('kv-challenge-btn');
+    if (challengeBtn) {
+      challengeBtn.innerText = '⚔️ Send Your Ghost DNA Back';
+    }
   }
 
   function setupInterstitialViralElements() {
@@ -461,6 +731,7 @@
       lastAccuracy = calc.accuracy;
       sessionScore += lastScore;
       updateScoreUI(lastScore, lastAccuracy);
+      this.finishGhostRun();
 
       if (!player || !player.id) return; // standalone play, nothing to report to
 
@@ -492,6 +763,30 @@
       return getPlayerScore();
     },
 
+    /** Record a shortcut hit timestamp for Ghost DNA replay & racing. */
+    recordGhostStep(wasCorrect) {
+      if (!ghostRun.startedAt) {
+        ghostRun.startedAt = performance.now();
+      }
+      if (activeGhost && !ghostReplayStarted) {
+        startGhostReplay();
+      }
+      if (wasCorrect) {
+        const elapsed = Math.round(performance.now() - ghostRun.startedAt);
+        ghostRun.steps.push(elapsed);
+        playerGhostCount++;
+        updateGhostBars();
+      }
+    },
+
+    /** Finalize Ghost DNA race when a level/round completes. */
+    finishGhostRun() {
+      const elapsedMs = ghostReplayStartedAt ? (performance.now() - ghostReplayStartedAt) : (ghostRun.startedAt ? (performance.now() - ghostRun.startedAt) : 1000);
+      if (activeGhost) {
+        showGhostVerdict(elapsedMs);
+      }
+    },
+
     /** Programmatically trigger the challenge share dialog. */
     challengeFriend() {
       handleChallengeShare();
@@ -511,6 +806,14 @@
     if (existingChallengeBtn) {
       existingChallengeBtn.onclick = handleChallengeShare;
     }
+
+    // Start Ghost replay on the player's very first keypress in #game-screen
+    window.addEventListener('keydown', () => {
+      const gs = document.getElementById('game-screen');
+      if (!gs || gs.style.display !== 'block') return;
+      if (!ghostRun.startedAt) ghostRun.startedAt = performance.now();
+      if (activeGhost && !ghostReplayStarted) startGhostReplay();
+    }, { passive: true });
   }
 
   if (document.readyState === 'loading') {

@@ -1218,6 +1218,9 @@
         }
 
         window._kvCombo = isMatch ? (window._kvCombo || 0) + 1 : 0;
+        if (window.KVScoreTracker && window.KVScoreTracker.recordGhostStep) {
+            window.KVScoreTracker.recordGhostStep(isMatch);
+        }
         if (window.KeyverseAudio) {
             if (isMatch) {
                 window.KeyverseAudio.playCorrect(window._kvCombo);
@@ -1505,7 +1508,7 @@
             if (title) title.innerText = tt("interstitialTitle", "Level Complete!");
             if (body)  body.innerText  = tt("interstitialBody", "Nice work -- you're ready for the next level.");
             if (nextBtn) nextBtn.innerText = tt("interstitialNext", "Next Level →");
-            ov.style.display = "flex"; if (window.KeyverseAudio) window.KeyverseAudio.playWin();
+            ov.style.display = "flex"; if (window.KeyverseAudio) window.KeyverseAudio.playWin(); if (window.KVScoreTracker && window.KVScoreTracker.finishGhostRun) window.KVScoreTracker.finishGhostRun();
             const onNext = () => {
                 ov.style.display = "none";
                 if (nextBtn) nextBtn.removeEventListener("click", onNext);
