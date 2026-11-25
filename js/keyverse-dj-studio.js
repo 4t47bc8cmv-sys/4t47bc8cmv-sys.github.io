@@ -870,14 +870,19 @@
     if (document.getElementById('kv-dj-studio-drawer') || !document.body) return;
     injectStyles();
 
-    const bar = document.getElementById('kv-audio-bar');
-    if (bar && !document.getElementById('kv-studio-open-btn')) {
+    const slot = document.getElementById('kv-studio-btn-slot') || document.getElementById('kv-audio-bar');
+    if (slot && !document.getElementById('kv-studio-open-btn')) {
       const btn = document.createElement('button');
       btn.id = 'kv-studio-open-btn';
       btn.type = 'button';
+      btn.setAttribute('data-kv-tip', 'dj-studio');
       btn.textContent = currentUser ? '🎛️ DJ Studio' : '🔒 DJ Studio (Login)';
-      btn.onclick = toggleDrawer;
-      bar.insertBefore(btn, bar.lastChild);
+      btn.onclick = () => {
+        const pop = document.getElementById('kv-audio-popover');
+        if (pop) pop.classList.remove('open');
+        toggleDrawer();
+      };
+      slot.appendChild(btn);
     }
 
     const gate = document.createElement('div');

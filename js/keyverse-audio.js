@@ -835,41 +835,92 @@
         transition: box-shadow 220ms ease, border-color 220ms ease !important;
       }
       #kv-audio-bar {
-        position: fixed;
-        top: 14px;
-        left: 14px;
-        z-index: 9998;
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      #kv-audio-popover-btn {
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        background: rgba(24, 24, 37, 0.88);
-        border: 1px solid #45475a;
+        background: rgba(23, 28, 34, 0.92);
+        color: #e6edf3;
+        border: 1px solid #2b3544;
         border-radius: 999px;
-        padding: 4px 10px;
-        backdrop-filter: blur(8px);
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: border-color 0.15s, color 0.15s, background 0.15s;
+      }
+      #kv-audio-popover-btn:hover,
+      #kv-audio-popover-btn[aria-expanded="true"] {
+        border-color: #13f2b0;
+        color: #13f2b0;
+        background: rgba(19, 242, 176, 0.1);
+      }
+      #kv-audio-popover {
+        display: none;
+        position: fixed;
+        width: min(300px, calc(100vw - 24px));
+        background: #0f141b;
+        border: 1px solid #2b3544;
+        border-radius: 14px;
+        padding: 14px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.72);
+        z-index: 10030;
+        color: #e6edf3;
+        flex-direction: column;
+        gap: 10px;
+      }
+      #kv-audio-popover.open {
+        display: flex;
+      }
+      .kv-pop-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        font-size: 0.78rem;
+        color: #8b949e;
+        font-weight: 700;
       }
       #kv-sound-select {
-        background: transparent;
+        background: #171c22;
         color: #cdd6f4;
-        border: none;
+        border: 1px solid #2b3544;
+        border-radius: 8px;
+        padding: 5px 8px;
         font-size: 0.78rem;
         font-weight: 700;
         cursor: pointer;
         outline: none;
+        flex: 1;
       }
       #kv-sound-select option {
         background: #1e1e2e;
         color: #cdd6f4;
       }
       #kv-mute-btn {
-        background: transparent;
-        border: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(23, 28, 34, 0.92);
+        border: 1px solid #2b3544;
+        border-radius: 999px;
         color: #cdd6f4;
         font-size: 0.88rem;
         cursor: pointer;
-        padding: 2px 4px;
+        width: 34px;
+        height: 34px;
+        padding: 0;
         line-height: 1;
+        transition: border-color 0.15s;
+      }
+      #kv-mute-btn:hover {
+        border-color: #13f2b0;
       }
       #kv-ambient-btn {
         background: rgba(255, 255, 255, 0.04);
@@ -1102,12 +1153,88 @@
       }
     });
 
-    bar.appendChild(sel);
-    bar.appendChild(djBtn);
-    bar.appendChild(ambBtn);
-    bar.appendChild(ambVol);
+    const popBtn = document.createElement('button');
+    popBtn.id = 'kv-audio-popover-btn';
+    popBtn.type = 'button';
+    popBtn.setAttribute('aria-haspopup', 'true');
+    popBtn.setAttribute('aria-expanded', 'false');
+    popBtn.setAttribute('data-kv-tip', 'dj-studio');
+    popBtn.innerHTML = '🎛️ Audio &amp; DJ <span aria-hidden="true">▾</span>';
+
+    const popover = document.createElement('div');
+    popover.id = 'kv-audio-popover';
+    popover.setAttribute('role', 'region');
+    popover.setAttribute('aria-label', 'Audio and DJ Controls');
+
+    const packRow = document.createElement('div');
+    packRow.className = 'kv-pop-row';
+    const packLbl = document.createElement('span');
+    packLbl.textContent = 'Sound Pack';
+    packRow.appendChild(packLbl);
+    packRow.appendChild(sel);
+
+    const djAmbRow = document.createElement('div');
+    djAmbRow.className = 'kv-pop-row';
+    djAmbRow.appendChild(djBtn);
+    djAmbRow.appendChild(ambBtn);
+
+    const volRow = document.createElement('div');
+    volRow.className = 'kv-pop-row';
+    const volLbl = document.createElement('span');
+    volLbl.textContent = 'Ambience Vol';
+    ambVol.style.flex = '1';
+    volRow.appendChild(volLbl);
+    volRow.appendChild(ambVol);
+
+    const studioSlot = document.createElement('div');
+    studioSlot.id = 'kv-studio-btn-slot';
+    studioSlot.style.display = 'flex';
+    studioSlot.style.flexDirection = 'column';
+
+    popover.appendChild(packRow);
+    popover.appendChild(djAmbRow);
+    popover.appendChild(volRow);
+    popover.appendChild(studioSlot);
+
+    popBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const willOpen = !popover.classList.contains('open');
+      if (willOpen) {
+        const rect = popBtn.getBoundingClientRect();
+        const vw = global.innerWidth || document.documentElement.clientWidth;
+        const left = Math.max(12, Math.min(vw - 312, rect.right - 300));
+        popover.style.left = left + 'px';
+        popover.style.top = (rect.bottom + 8) + 'px';
+        popover.classList.add('open');
+        popBtn.setAttribute('aria-expanded', 'true');
+      } else {
+        popover.classList.remove('open');
+        popBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('click', (e) => {
+      if (popover.classList.contains('open') && !popover.contains(e.target) && e.target !== popBtn) {
+        popover.classList.remove('open');
+        popBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && popover.classList.contains('open')) {
+        popover.classList.remove('open');
+        popBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    bar.appendChild(popBtn);
     bar.appendChild(muteBtn);
-    document.body.appendChild(bar);
+    const slot = document.getElementById('kv-topbar-audio-slot');
+    if (slot) {
+      slot.appendChild(bar);
+    } else {
+      document.body.appendChild(bar);
+    }
+    document.body.appendChild(popover);
     syncControlUI();
   }
 
