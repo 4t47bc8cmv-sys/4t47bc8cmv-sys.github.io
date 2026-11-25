@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HPCMTG7133"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HPCMTG7133');
+</script>
+
+<meta charset="UTF-8">
+<meta name="google-adsense-account" content="ca-pub-2120991969522232">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2120991969522232" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desktop Meltdown: Survive a Hijacked Mac — Keyverse Arcade</title>
+<meta name="description" content="Survive a hijacked macOS desktop in Desktop Meltdown! Neutralize rogue popups (⌘+W), spyware beams (⌘+H), firewall breaches (⌘+Space), and frozen apps (⌘+Q) with Shortcut DJ and Ghost DNA.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22><rect width=%2224%22 height=%2224%22 rx=%225%22 fill=%22%2313f2b0%22/><text x=%2212%22 y=%2217%22 font-size=%2214%22 text-anchor=%22middle%22 fill=%22%230b0e11%22 font-family=%22monospace%22 font-weight=%22700%22>K</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0e11;
+    --surface: #12161b;
+    --surface-2: #171c22;
+    --border: #262d36;
+    --text: #e7ecef;
+    --muted: #9aa5af;
+    --primary: #13f2b0;
+    --accent-2: #7c9dff;
+    --danger: #ff5c77;
+    --warn: #f9e2af;
+    --font-display: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    min-height: 100vh;
+    font-family: var(--font-body);
+    background: var(--bg);
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(19, 242, 176, 0.1), transparent 40%),
+      radial-gradient(circle at 85% 20%, rgba(255, 92, 119, 0.08), transparent 45%);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 58px 16px 80px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 880px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+    position: relative;
+  }
+
+  .top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+  }
+  .top-nav a { color: var(--primary); text-decoration: none; font-weight: 700; }
+  .wave-pill {
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(124, 157, 255, 0.14);
+    border: 1px solid rgba(124, 157, 255, 0.4);
+    color: var(--accent-2);
+    font-weight: 800;
+  }
+
+  /* macOS DESKTOP ARENA */
+  .mac-desktop {
+    background: linear-gradient(145deg, #0d131a, #131b26 55%, #161426);
+    border: 1px solid #2b3544;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    min-height: 440px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mac-menubar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 8px 14px;
+    background: rgba(11, 14, 17, 0.9);
+    border-bottom: 1px solid #262d36;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+  }
+  .menu-left { display: flex; align-items: center; gap: 12px; font-weight: 700; }
+  .menu-stats { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  .integrity-wrap { display: flex; align-items: center; gap: 6px; }
+  .integrity-bar-bg {
+    width: 110px;
+    height: 10px;
+    background: #1d232a;
+    border: 1px solid #303a47;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .integrity-bar-fill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #13f2b0, #a6e3a1);
+    transition: width 160ms ease, background 200ms ease;
+  }
+
+  .workspace {
+    flex: 1;
+    position: relative;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 12px;
+    align-content: start;
+    min-height: 330px;
+  }
+
+  .threat-win {
+    background: rgba(23, 28, 34, 0.95);
+    border: 1.5px solid var(--danger);
+    border-radius: 10px;
+    padding: 10px 12px;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+    animation: spawnPop 160ms ease-out;
+    position: relative;
+    cursor: pointer;
+  }
+  .threat-win.type-spyware { border-color: #f9e2af; }
+  .threat-win.type-firewall { border-color: #7c9dff; }
+  .threat-win.type-frozen { border-color: #ff5c77; }
+  .threat-win.type-clone { border-color: #cba6f7; }
+  .threat-win.type-patch { border-color: #13f2b0; }
+
+  @keyframes spawnPop {
+    from { opacity: 0; transform: scale(0.9) translateY(8px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes shatterOut {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.08) rotate(3deg); filter: brightness(1.8); }
+    100% { opacity: 0; transform: scale(0.4) rotate(-8deg); }
+  }
+  .threat-win.shattering {
+    animation: shatterOut 220ms ease-in forwards;
+    pointer-events: none;
+  }
+
+  .threat-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-bottom: 6px;
+    font-family: var(--font-display);
+  }
+  .dots { display: flex; gap: 4px; }
+  .dots span { width: 8px; height: 8px; border-radius: 50%; background: #45475a; }
+  .dots span:first-child { background: #ff5f56; }
+  .threat-title {
+    font-family: var(--font-display);
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .threat-sub {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .threat-key {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: #0b0e11;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 800;
+  }
+  .threat-fuse {
+    height: 4px;
+    background: #1d232a;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .threat-fuse-fill {
+    height: 100%;
+    background: var(--danger);
+    width: 100%;
+    transition: width 100ms linear;
+  }
+
+  .mac-dock {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 8px 14px;
+    background: rgba(11, 14, 17, 0.78);
+    border-top: 1px solid #262d36;
+    font-size: 0.78rem;
+    font-family: var(--font-display);
+    color: var(--muted);
+  }
+  .dock-item {
+    padding: 4px 10px;
+    background: #171c22;
+    border: 1px solid #262d36;
+    border-radius: 8px;
+  }
+
+  .overlay-start {
+    position: absolute;
+    inset: 0;
+    background: rgba(11, 14, 17, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+    z-index: 10;
+  }
+  .overlay-start h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    color: var(--primary);
+    margin-bottom: 8px;
+  }
+  .overlay-start p {
+    color: var(--muted);
+    max-width: 52ch;
+    font-size: 0.92rem;
+    margin-bottom: 16px;
+  }
+  .btn-start {
+    background: var(--primary);
+    color: #0b0e11;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 26px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(19, 242, 176, 0.35);
+  }
+  .btn-start:hover { transform: translateY(-1px); }
+
+  .controls-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .msg-line {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  /* EDUCATIONAL GUIDE BELOW ARENA */
+  .game-guide {
+    width: 100%;
+    max-width: 880px;
+    margin-top: 32px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 24px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .game-guide h2 { font-family: var(--font-display); color: var(--primary); font-size: 1.3rem; margin-bottom: 10px; }
+  .game-guide h3 { font-family: var(--font-display); color: var(--accent-2); font-size: 1.05rem; margin: 18px 0 8px; }
+  .game-guide p { margin-bottom: 12px; font-size: 0.94rem; }
+  .game-guide table { width: 100%; border-collapse: collapse; margin: 14px 0 18px; font-size: 0.88rem; }
+  .game-guide th { text-align: left; padding: 9px 12px; border-bottom: 2px solid var(--border); color: var(--accent-2); font-family: var(--font-display); }
+  .game-guide td { padding: 9px 12px; border-bottom: 1px solid #1d232a; }
+  .game-guide kbd {
+    display: inline-block;
+    padding: 2px 6px;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .game-guide-nav {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 14px;
+    border-top: 1px solid #1d232a;
+    font-size: 0.86rem;
+  }
+  .game-guide-nav a { color: var(--primary); text-decoration: none; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="top-nav">
+    <a href="../index.html">← Keyverse Home</a>
+    <span class="wave-pill" id="wave-pill">Wave 1: Adware</span>
+    <span style="color:var(--warn);">Best: <strong id="best-score">0</strong></span>
+  </div>
+
+  <div id="game-screen" style="display:block;">
+    <div class="mac-desktop" id="mac-desktop">
+      <div class="mac-menubar">
+        <div class="menu-left">
+          <span> MacOS Defense</span>
+          <span id="timer-display" style="color:var(--accent-2);">0.0s</span>
+        </div>
+        <div class="menu-stats">
+          <div class="integrity-wrap">
+            <span>Integrity</span>
+            <div class="integrity-bar-bg"><div class="integrity-bar-fill" id="integrity-bar"></div></div>
+            <span id="integrity-pct">100%</span>
+          </div>
+          <span>Score: <strong id="score-display" style="color:var(--warn);">0</strong></span>
+          <span>Combo: <strong id="combo-display" style="color:var(--primary);">0x</strong></span>
+        </div>
+      </div>
+
+      <div class="workspace" id="workspace"></div>
+
+      <div class="mac-dock">
+        <span class="dock-item">📁 Finder</span>
+        <span class="dock-item">🔍 Spotlight (⌘+Space)</span>
+        <span class="dock-item">🛡️ Firewall</span>
+        <span class="dock-item">⚡ Activity</span>
+      </div>
+
+      <div class="overlay-start" id="start-overlay">
+        <h1>🔥 Desktop Meltdown</h1>
+        <p>Your Mac has been hijacked! Neutralize rogue popups, spyware beams, firewall breaches, and frozen apps using real Mac shortcuts before System Integrity hits 0%.</p>
+        <p style="font-size:0.82rem;color:#7c9dff;">Tip: Use <strong>⌘ + Key</strong> (or browser-safe fallback keys <strong>W, H, Space, Q, Z, C, V</strong>) or click any threat card!</p>
+        <button type="button" class="btn-start" id="btn-start">Start Survival Run →</button>
+      </div>
+    </div>
+
+    <div class="controls-bar">
+      <div class="msg-line" id="msg">Press Start to defend your Mac!</div>
+      <label style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;">
+        <input type="checkbox" id="fallback-toggle" checked />
+        <span>Browser-safe single-key fallback (W/H/Space/Q/Z/C/V)</span>
+      </label>
+    </div>
+  </div>
+</div>
+
+<!-- Game Over / Challenge Interstitial -->
+<div id="kv-interstitial" style="position:fixed;inset:0;background:rgba(11,14,17,0.94);display:none;align-items:center;justify-content:center;z-index:9999;padding:16px;">
+  <div style="background:#12161b;border:2px solid #13f2b0;border-radius:14px;padding:26px 22px;max-width:400px;width:100%;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.6);">
+    <div id="kv-int-title" style="color:#13f2b0;font-size:1.35rem;font-weight:900;margin-bottom:8px;font-family:'JetBrains Mono',monospace;">System Survived!</div>
+    <div id="kv-int-body" style="color:#9aa5af;font-size:0.92rem;line-height:1.45;margin-bottom:14px;">Your Mac held the line against the meltdown.</div>
+    <div id="kv-int-score-box" style="background:#171c22;border:1px solid #262d36;border-radius:10px;padding:10px 14px;margin-bottom:14px;display:flex;justify-content:space-around;align-items:center;">
+      <div>
+        <div style="font-size:0.7rem;color:#9aa5af;text-transform:uppercase;font-weight:700;">Final Score</div>
+        <div id="kv-int-score" style="font-size:1.5rem;font-weight:900;color:#f9e2af;margin-top:2px;">0</div>
+      </div>
+      <div style="width:1px;height:30px;background:#262d36;"></div>
+      <div>
+        <div style="font-size:0.7rem;color:#9aa5af;text-transform:uppercase;font-weight:700;">Survived</div>
+        <div id="kv-int-acc" style="font-size:1.5rem;font-weight:900;color:#13f2b0;margin-top:2px;">0.0s</div>
+      </div>
+    </div>
+    <button id="kv-challenge-btn" class="kv-challenge-btn" type="button">⚔️ Challenge a Friend</button>
+    <button id="kv-int-next" type="button" style="background:#13f2b0;color:#0b0e11;font-size:0.95rem;font-weight:800;border:none;border-radius:10px;padding:12px 24px;cursor:pointer;width:100%;font-family:'JetBrains Mono',monospace;">Play Again ↻</button>
+  </div>
+</div>
+
+<article class="game-guide">
+  <h2>Complete Guide to Desktop Meltdown Shortcuts</h2>
+  <p><em>Desktop Meltdown</em> turns five of the most important emergency and window-management shortcuts in macOS into high-speed survival reflexes. Instead of hunting for tiny red close buttons or clicking through menus while your screen fills up with distractions, each threat trains a real macOS command that you will use every day.</p>
+
+  <h3>Shortcut Reference &amp; Real-World Mac Workflows</h3>
+  <table>
+    <thead>
+      <tr><th>Shortcut</th><th>In-Game Threat</th><th>Real-World macOS Workflow</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><kbd>⌘</kbd> + <kbd>W</kbd></td><td>Rogue Popup Window</td><td>Closes the frontmost window or browser tab instantly without quitting the whole app.</td></tr>
+      <tr><td><kbd>⌘</kbd> + <kbd>H</kbd></td><td>Spyware Scanner Beam</td><td>Hides the active application cleanly when you need instant desktop focus.</td></tr>
+      <tr><td><kbd>⌘</kbd> + <kbd>Space</kbd></td><td>Firewall Breach Terminal</td><td>Summons Spotlight from anywhere on your Mac to launch apps, search files, or run quick math.</td></tr>
+      <tr><td><kbd>⌘</kbd> + <kbd>Q</kbd></td><td>Frozen Glitch App</td><td>Completely quits an application and frees up system memory (unlike clicking the red close dot).</td></tr>
+      <tr><td><kbd>⌘</kbd> + <kbd>Z</kbd></td><td>Corrupted File Clone</td><td>Undoes your last edit, deleted file, or accidental Finder rename in one tap.</td></tr>
+      <tr><td><kbd>⌘</kbd> + <kbd>C</kbd> / <kbd>V</kbd></td><td>Broken Security Key</td><td>Copies and pastes text, code, or files seamlessly across every macOS application.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Why Browser-Safe Fallback Keys Exist</h3>
+  <p>Web browsers reserve <kbd>⌘</kbd> + <kbd>W</kbd> (close tab) and <kbd>⌘</kbd> + <kbd>Q</kbd> (quit browser) at the OS level so websites cannot trap you inside a tab. That is why <em>Desktop Meltdown</em> supports both <kbd>Option</kbd> + Key and single-letter fallback keys (<kbd>W</kbd>, <kbd>H</kbd>, <kbd>Space</kbd>, <kbd>Q</kbd>, <kbd>Z</kbd>, <kbd>C</kbd>, <kbd>V</kbd>), plus clickable threat cards, so you build the exact mental association without accidentally closing your browser!</p>
+
+  <h3>Survival Waves, Shortcut DJ &amp; Ghost DNA Strategy</h3>
+  <p>Each survival run escalates across three waves: <strong>Wave 1: Adware</strong> gives you a comfortable 2.2-second spawn cadence to warm up your fingers; <strong>Wave 2: Kernel Panic</strong> (20 seconds+) accelerates spawns and shortens window fuses; and <strong>Wave 3: Full Meltdown</strong> (40 seconds+) tests whether your muscle memory holds under pressure. Keep your combo alive to unlock all four tiers of <strong>Shortcut DJ</strong>—hitting a 10x streak triggers God Mode hi-hats and pulsing equalizer bars.</p>
+  <p>Prioritize <strong>Frozen Glitch Apps</strong> (<kbd>⌘</kbd> + <kbd>Q</kbd>) first because they drain 15% System Integrity if they expire, and watch out for <strong>Broken Security Keys</strong> which require a two-step <kbd>C</kbd> then <kbd>V</kbd> patch. When your run finishes, click <strong>⚔️ Challenge a Friend</strong> to send your live <strong>Ghost DNA</strong> replay link so friends can race your exact keystroke timing.</p>
+
+  <h3>Tips for Windows Switchers</h3>
+  <p>On Windows, closing a window with <code>Alt + F4</code> usually quits the entire program. On macOS, <kbd>⌘</kbd> + <kbd>W</kbd> only closes the active window while <kbd>⌘</kbd> + <kbd>Q</kbd> quits the app completely—and <kbd>⌘</kbd> + <kbd>H</kbd> hides it instantaneously without closing anything.</p>
+
+  <div class="game-guide-nav">
+    <a href="../index.html">← Back to Keyverse Home</a>
+    <a href="../guides/macos-finder-and-window-management.html">Read Finder &amp; Window Guide</a>
+    <a href="../games/v2g2-window-wrangling.html">Play Window Wrangling</a>
+    <a href="../about.html">About</a>
+    <a href="../privacy.html">Privacy</a>
+  </div>
+</article>
+
+<script src="../js/keyverse-audio.js"></script>
+<script src="../multiplayer/kv-score-tracker.js"></script>
+<script>
+(function () {
+  const THREAT_TYPES = [
+    { id: 'popup', cls: 'type-popup', title: 'Rogue Adware Popup', sub: 'Close window immediately!', keyLabel: '⌘ + W (or W)', keys: ['w'], fuseMs: 5500, dmg: 10 },
+    { id: 'spyware', cls: 'type-spyware', title: 'Spyware Scanner Beam', sub: 'Hide active window!', keyLabel: '⌘ + H (or H)', keys: ['h'], fuseMs: 5200, dmg: 12 },
+    { id: 'firewall', cls: 'type-firewall', title: 'Firewall Breach Terminal', sub: 'Fire Spotlight blast!', keyLabel: '⌘ + Space (or Space)', keys: [' '], fuseMs: 5400, dmg: 12 },
+    { id: 'frozen', cls: 'type-frozen', title: 'Frozen Glitch App', sub: 'Force-quit process!', keyLabel: '⌘ + Q (or Q)', keys: ['q'], fuseMs: 5000, dmg: 15 },
+    { id: 'clone', cls: 'type-clone', title: 'Corrupted File Clone', sub: 'Undo & erase clone!', keyLabel: '⌘ + Z (or Z)', keys: ['z'], fuseMs: 5300, dmg: 11 },
+    { id: 'patch', cls: 'type-patch', title: 'Broken Security Key', sub: 'Copy & Paste patch!', keyLabel: '⌘ + C then V (or C/V)', keys: ['c', 'v'], fuseMs: 6500, dmg: 12 }
+  ];
+
+  const workspace = document.getElementById('workspace');
+  const startOverlay = document.getElementById('start-overlay');
+  const btnStart = document.getElementById('btn-start');
+  const msgEl = document.getElementById('msg');
+  const scoreEl = document.getElementById('score-display');
+  const comboEl = document.getElementById('combo-display');
+  const timerEl = document.getElementById('timer-display');
+  const waveEl = document.getElementById('wave-pill');
+  const integrityBar = document.getElementById('integrity-bar');
+  const integrityPct = document.getElementById('integrity-pct');
+  const bestEl = document.getElementById('best-score');
+  const fallbackToggle = document.getElementById('fallback-toggle');
+
+  let bestScore = parseInt(localStorage.getItem('kv_meltdown_best') || '0', 10) || 0;
+  bestEl.textContent = bestScore.toLocaleString();
+
+  let running = false;
+  let score = 0;
+  let combo = 0;
+  let integrity = 100;
+  let startTime = 0;
+  let threats = [];
+  let nextId = 1;
+  let spawnTimer = null;
+  let tickTimer = null;
+
+  function getWaveInfo(elapsedSec) {
+    if (elapsedSec >= 40) return { num: 3, label: 'Wave 3: Full Meltdown', interval: 1350 };
+    if (elapsedSec >= 20) return { num: 2, label: 'Wave 2: Kernel Panic', interval: 1750 };
+    return { num: 1, label: 'Wave 1: Adware', interval: 2250 };
+  }
+
+  function updateHUD() {
+    scoreEl.textContent = score.toLocaleString();
+    comboEl.textContent = `${combo}x`;
+    const pct = Math.max(0, Math.round(integrity));
+    integrityPct.textContent = `${pct}%`;
+    integrityBar.style.width = `${pct}%`;
+    integrityBar.style.background = pct > 50 ? 'linear-gradient(90deg, #13f2b0, #a6e3a1)' : (pct > 25 ? '#f9e2af' : '#ff5c77');
+  }
+
+  function spawnThreat() {
+    if (!running || threats.length >= 6) return;
+    const tpl = THREAT_TYPES[Math.floor(Math.random() * THREAT_TYPES.length)];
+    const id = nextId++;
+    const now = performance.now();
+
+    const el = document.createElement('div');
+    el.className = `threat-win ${tpl.cls}`;
+    el.dataset.id = String(id);
+    el.innerHTML = `
+      <div class="threat-bar">
+        <div class="dots"><span></span><span></span><span></span></div>
+        <span>PID #${100 + id}</span>
+      </div>
+      <div class="threat-title">${tpl.title}</div>
+      <div class="threat-sub">${tpl.sub}</div>
+      <span class="threat-key">${tpl.keyLabel}</span>
+      <div class="threat-fuse"><div class="threat-fuse-fill"></div></div>
+    `;
+
+    const threatObj = {
+      id,
+      tpl,
+      el,
+      stepIdx: 0,
+      spawnedAt: now,
+      fuseMs: Math.max(3000, tpl.fuseMs - Math.floor((now - startTime) / 1000) * 35)
+    };
+
+    el.addEventListener('click', () => handleThreatHit(threatObj));
+    workspace.appendChild(el);
+    threats.push(threatObj);
+  }
+
+  function handleThreatHit(threat) {
+    if (!running) return;
+    threat.stepIdx++;
+    if (threat.stepIdx < threat.tpl.keys.length) {
+      msgEl.textContent = `Patch staged! Now press V (or ⌘ + V) to apply!`;
+      return;
+    }
+
+    // Neutralized!
+    threats = threats.filter((t) => t.id !== threat.id);
+    threat.el.classList.add('shattering');
+    setTimeout(() => threat.el.remove(), 220);
+
+    combo++;
+    const pts = 100 + Math.min(combo, 10) * 20;
+    score += pts;
+    integrity = Math.min(100, integrity + 2);
+    msgEl.style.color = '#13f2b0';
+    msgEl.textContent = `✅ Neutralized ${threat.tpl.title} (+${pts})`;
+
+    if (window.KeyverseAudio) {
+      window.KeyverseAudio.playCorrect(combo);
+      window.KeyverseAudio.triggerVisualJuice('correct', combo, document.querySelector('.card'));
+    }
+    if (window.KVScoreTracker && window.KVScoreTracker.recordGhostStep) {
+      window.KVScoreTracker.recordGhostStep(true);
+    }
+    updateHUD();
+  }
+
+  function triggerMiss(reason) {
+    combo = 0;
+    msgEl.style.color = '#ff5c77';
+    msgEl.textContent = reason;
+    if (window.KeyverseAudio) {
+      window.KeyverseAudio.playMiss();
+      window.KeyverseAudio.triggerVisualJuice('miss', 0, document.querySelector('.card'));
+    }
+    if (window.KVScoreTracker && window.KVScoreTracker.recordGhostStep) {
+      window.KVScoreTracker.recordGhostStep(false);
+    }
+    updateHUD();
+  }
+
+  function endGame() {
+    running = false;
+    clearTimeout(spawnTimer);
+    clearInterval(tickTimer);
+
+    const elapsedSec = ((performance.now() - startTime) / 1000).toFixed(1);
+    if (score > bestScore) {
+      bestScore = score;
+      localStorage.setItem('kv_meltdown_best', String(bestScore));
+      bestEl.textContent = bestScore.toLocaleString();
+    }
+
+    const intScore = document.getElementById('kv-int-score');
+    const intAcc = document.getElementById('kv-int-acc');
+    if (intScore) intScore.textContent = score.toLocaleString();
+    if (intAcc) intAcc.textContent = `${elapsedSec}s`;
+
+    if (window.KeyverseAudio) {
+      window.KeyverseAudio.playWin();
+      if (window.KeyverseAudio.ShortcutDJ) window.KeyverseAudio.ShortcutDJ.stop();
+    }
+    if (window.KVScoreTracker && window.KVScoreTracker.finishGhostRun) {
+      window.KVScoreTracker.finishGhostRun();
+    }
+
+    const ov = document.getElementById('kv-interstitial');
+    if (ov) ov.style.display = 'flex';
+  }
+
+  function scheduleNextSpawn() {
+    if (!running) return;
+    const elapsedSec = (performance.now() - startTime) / 1000;
+    const wave = getWaveInfo(elapsedSec);
+    waveEl.textContent = wave.label;
+    spawnTimer = setTimeout(() => {
+      spawnThreat();
+      scheduleNextSpawn();
+    }, wave.interval);
+  }
+
+  function startGame() {
+    threats.forEach((t) => t.el.remove());
+    threats = [];
+    score = 0;
+    combo = 0;
+    integrity = 100;
+    startTime = performance.now();
+    running = true;
+    startOverlay.style.display = 'none';
+    const ov = document.getElementById('kv-interstitial');
+    if (ov) ov.style.display = 'none';
+    msgEl.style.color = '#13f2b0';
+    msgEl.textContent = 'Defend the Mac! Match shortcuts to active threats.';
+    updateHUD();
+
+    spawnThreat();
+    scheduleNextSpawn();
+
+    tickTimer = setInterval(() => {
+      if (!running) return;
+      const now = performance.now();
+      timerEl.textContent = `${((now - startTime) / 1000).toFixed(1)}s`;
+
+      for (let i = threats.length - 1; i >= 0; i--) {
+        const t = threats[i];
+        const age = now - t.spawnedAt;
+        const pctLeft = Math.max(0, 100 - (age / t.fuseMs) * 100);
+        const fuseFill = t.el.querySelector('.threat-fuse-fill');
+        if (fuseFill) fuseFill.style.width = `${pctLeft}%`;
+
+        if (age >= t.fuseMs) {
+          t.el.remove();
+          threats.splice(i, 1);
+          integrity -= t.tpl.dmg;
+          triggerMiss(`💥 ${t.tpl.title} breached! (-${t.tpl.dmg}% Integrity)`);
+          if (integrity <= 0) {
+            integrity = 0;
+            updateHUD();
+            endGame();
+            return;
+          }
+        }
+      }
+    }, 100);
+  }
+
+  btnStart.addEventListener('click', startGame);
+  document.getElementById('kv-int-next').addEventListener('click', startGame);
+
+  window.addEventListener('keydown', (e) => {
+    if (!running) return;
+    const key = e.key.toLowerCase();
+    const allowSingle = fallbackToggle.checked;
+    const hasMod = e.metaKey || e.altKey || e.ctrlKey;
+
+    if (!hasMod && !allowSingle) return;
+    if (!['w', 'h', ' ', 'q', 'z', 'c', 'v'].includes(key)) return;
+
+    if (hasMod || key === ' ') e.preventDefault();
+
+    const target = threats.find((t) => t.tpl.keys[t.stepIdx] === key);
+    if (target) {
+      handleThreatHit(target);
+    } else {
+      triggerMiss(`❌ No active threat needs "${key === ' ' ? 'Space' : key.toUpperCase()}"!`);
+    }
+  });
+})();
+</script>
+</body>
+</html>
