@@ -10,6 +10,7 @@
   const MUTE_STORAGE_KEY = 'keyverse_sound_muted';
   const AMBIENT_ENABLED_KEY = 'keyverse_ambient_enabled';
   const AMBIENT_VOLUME_KEY = 'keyverse_ambient_volume';
+  const DJ_ENABLED_KEY = 'keyverse_dj_enabled';
   const GEO_CACHE_KEY = 'keyverse_geo_pack';
   const MAX_SFX_DURATION = 4.0;
 
@@ -71,8 +72,259 @@
   let ambientNodes = [];
   let ambientRunningPack = null;
   let ambientStopTimer = null;
+  let djEnabled = true;
   const sampleBuffers = {};
   const preloadStarted = {};
+
+  // =========================================================================
+  // Shortcut DJ — 120 BPM 4-Tier Dynamic Stem Engine
+  // =========================================================================
+  const ShortcutDJ = (function () {
+    const STEP_SEC = 0.125; // 120 BPM 16th-note (60 / 120 / 4)
+    const LOOKAHEAD_SEC = 0.14;
+    const BASS_PATTERNS = {
+      katana: [73.42, 0, 0, 73.42, 0, 0, 77.78, 0, 110.0, 0, 73.42, 0, 0, 0, 110.0, 0],
+      anime:  [65.41, 0, 0, 98.0,  0, 0, 110.0, 0, 98.0,  0, 65.41, 0, 0, 98.0, 110.0, 0],
+      harbor: [55.0,  0, 0, 82.41, 0, 0, 92.5,  0, 82.41, 0, 55.0,  0, 0, 0, 82.41, 0],
+      cyber:  [82.41, 0, 82.41, 0, 98.0, 0, 110.0, 0, 82.41, 0, 123.47, 0, 110.0, 0, 98.0, 0]
+    };
+
+    let masterGain = null;
+    let tier = 0;
+    let currentStep = 0;
+    let nextStepTime = 0;
+    let timerId = null;
+
+    function ensureMaster() {
+      const audio = ensureAudioContext();
+      if (!audio) return null;
+      if (!masterGain) {
+        masterGain = audio.createGain();
+        masterGain.gain.setValueAtTime(getTargetGain(), audio.currentTime);
+        masterGain.connect(audio.destination);
+      }
+      return masterGain;
+    }
+
+    function getTargetGain() {
+      if (isMuted || !djEnabled || tier === 0 || (typeof document !== 'undefined' && document.hidden)) {
+        return 0;
+      }
+      return 0.85;
+    }
+
+    function syncGain(fadeSec = 0.25) {
+      if (!ctx || !masterGain) return;
+      const now = ctx.currentTime;
+      masterGain.gain.cancelScheduledValues(now);
+      masterGain.gain.setValueAtTime(masterGain.gain.value, now);
+      masterGain.gain.linearRampToValueAtTime(getTargetGain(), now + fadeSec);
+    }
+
+    function scheduleToneAt(when, wave, startFreq, endFreq, dur, vol, filterCutoff) {
+      const audio = ensureAudioContext();
+      const out = ensureMaster();
+      if (!audio || !out) return;
+
+      const osc = audio.createOscillator();
+      osc.type = wave;
+      osc.frequency.setValueAtTime(startFreq, when);
+      if (endFreq !== startFreq) {
+        osc.frequency.exponentialRampToValueAtTime(Math.max(25, endFreq), when + dur);
+      }
+
+      const gain = audio.createGain();
+      gain.gain.setValueAtTime(0.0001, when);
+      gain.gain.linearRampToValueAtTime(vol, when + 0.008);
+      gain.gain.exponentialRampToValueAtTime(0.0001, when + dur);
+
+      if (filterCutoff) {
+        const filter = audio.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(filterCutoff, when);
+        osc.connect(filter);
+        filter.connect(gain);
+      } else {
+        osc.connect(gain);
+      }
+
+      gain.connect(out);
+      osc.start(when);
+      osc.stop(when + dur + 0.02);
+    }
+
+    function scheduleHatAt(when, vol) {
+      const audio = ensureAudioContext();
+      const out = ensureMaster();
+      if (!audio || !out || !noiseBuffer) return;
+
+      const src = audio.createBufferSource();
+      src.buffer = noiseBuffer;
+      const hp = audio.createBiquadFilter();
+      hp.type = 'highpass';
+      hp.frequency.setValueAtTime(6800, when);
+
+      const gain = audio.createGain();
+      gain.gain.setValueAtTime(0.0001, when);
+      gain.gain.linearRampToValueAtTime(vol, when + 0.004);
+      gain.gain.exponentialRampToValueAtTime(0.0001, when + 0.055);
+
+      src.connect(hp);
+      hp.connect(gain);
+      gain.connect(out);
+      src.start(when);
+      src.stop(when + 0.065);
+    }
+
+    function scheduleStep(step, when) {
+      if (tier < 1 || isMuted || !djEnabled || (typeof document !== 'undefined' && document.hidden)) return;
+      const pack = PACKS[currentPack] || PACKS.cyber;
+
+      // Tier 1 (Combo 1-2+): Minimal pulse / heartbeat percussion
+      if (step % 4 === 0) {
+        if (currentPack === 'katana') {
+          scheduleToneAt(when, 'sine', 110, 44, 0.16, 0.2);
+        } else if (currentPack === 'anime') {
+          scheduleToneAt(when, 'sine', 135, 48, 0.14, 0.18);
+        } else if (currentPack === 'harbor') {
+          scheduleToneAt(when, 'sine', 95, 42, 0.18, 0.2);
+          if (step === 0) scheduleToneAt(when, 'sine', 440, 440, 0.22, 0.05);
+        } else {
+          scheduleToneAt(when, 'triangle', 150, 50, 0.12, 0.18);
+        }
+      }
+
+      // Tier 2 (Combo 3-5+): Bassline layer
+      if (tier >= 2) {
+        const bassNotes = BASS_PATTERNS[currentPack] || BASS_PATTERNS.cyber;
+        const bassFreq = bassNotes[step % 16];
+        if (bassFreq > 0) {
+          scheduleToneAt(when, 'sawtooth', bassFreq, bassFreq, 0.19, 0.075, 380);
+        }
+      }
+
+      // Tier 3 (Combo 6-9+): Lead melody arpeggio
+      if (tier >= 3 && step % 2 === 0) {
+        const arpIdx = (step / 2) % pack.scale.length;
+        const leadFreq = pack.scale[arpIdx];
+        const wave = currentPack === 'cyber' ? 'square' : (currentPack === 'anime' ? 'sawtooth' : (currentPack === 'katana' ? 'triangle' : 'sine'));
+        const cutoff = currentPack === 'anime' ? 1800 : null;
+        const vol = currentPack === 'cyber' ? 0.045 : 0.07;
+        scheduleToneAt(when, wave, leadFreq, leadFreq, 0.14, vol, cutoff);
+      }
+
+      // Tier 4 (Combo 10+ GOD MODE): Shimmering hi-hats + extra octave sparkle
+      if (tier >= 4) {
+        if (step % 2 === 1) {
+          scheduleHatAt(when, 0.075);
+        }
+        if (step === 0 || step === 8) {
+          const topFreq = pack.scale[pack.scale.length - 1] * 1.5;
+          scheduleToneAt(when, 'sine', topFreq, topFreq, 0.18, 0.05);
+        }
+      }
+    }
+
+    function schedulerTick() {
+      const audio = ensureAudioContext();
+      if (!audio || tier < 1 || isMuted || !djEnabled || document.hidden) return;
+      while (nextStepTime < audio.currentTime + LOOKAHEAD_SEC) {
+        scheduleStep(currentStep, nextStepTime);
+        nextStepTime += STEP_SEC;
+        currentStep = (currentStep + 1) % 16;
+      }
+    }
+
+    function ensureLoopRunning() {
+      const audio = ensureAudioContext();
+      if (!audio) return;
+      ensureMaster();
+      if (!timerId) {
+        nextStepTime = audio.currentTime + 0.03;
+        currentStep = 0;
+        timerId = setInterval(schedulerTick, 45);
+      }
+      syncGain(0.25);
+    }
+
+    function updateEqualizerUI() {
+      const card = document.querySelector('.card');
+      let eq = document.getElementById('kv-dj-eq');
+      const showEq = tier >= 4 && djEnabled && !isMuted;
+
+      if (!showEq) {
+        if (eq) eq.remove();
+        return;
+      }
+
+      if (!card) return;
+      if (!eq) {
+        eq = document.createElement('div');
+        eq.id = 'kv-dj-eq';
+        eq.setAttribute('aria-hidden', 'true');
+        for (let i = 0; i < 14; i++) {
+          const bar = document.createElement('span');
+          bar.style.animationDelay = `${(i % 7) * 70}ms`;
+          eq.appendChild(bar);
+        }
+        card.appendChild(eq);
+      }
+      const pack = PACKS[currentPack] || PACKS.cyber;
+      eq.querySelectorAll('span').forEach((b, idx) => {
+        b.style.background = idx % 2 === 0 ? pack.accent : pack.secondary;
+      });
+    }
+
+    function updateCombo(comboCount) {
+      const nextTier = comboCount >= 10 ? 4 : (comboCount >= 6 ? 3 : (comboCount >= 3 ? 2 : (comboCount >= 1 ? 1 : 0)));
+      tier = nextTier;
+      if (tier >= 1 && djEnabled && !isMuted) {
+        ensureLoopRunning();
+      } else {
+        syncGain(0.2);
+      }
+      updateEqualizerUI();
+    }
+
+    function onMiss() {
+      // Vinyl record-scratch / pitch-drop effect + strip back down to Tier 1
+      if (!isMuted && djEnabled) {
+        playTone('sawtooth', 480, 75, 0.22, 0.14);
+        playNoise(0.2, 'bandpass', 1500, 160, 0.14, 3.0);
+      }
+      tier = 1;
+      syncGain(0.08);
+      updateEqualizerUI();
+    }
+
+    function onVisibilityChange() {
+      if (document.hidden) {
+        syncGain(0.25);
+      } else if (tier >= 1 && djEnabled && !isMuted) {
+        ensureLoopRunning();
+      }
+    }
+
+    function stop() {
+      tier = 0;
+      if (timerId) {
+        clearInterval(timerId);
+        timerId = null;
+      }
+      syncGain(0.2);
+      updateEqualizerUI();
+    }
+
+    return {
+      updateCombo,
+      onMiss,
+      onVisibilityChange,
+      syncGain,
+      updateEqualizerUI,
+      stop,
+      getTier: () => tier
+    };
+  })();
 
   function preloadPack(packId) {
     if (!PACKS[packId] || preloadStarted[packId]) return;
@@ -486,6 +738,8 @@
     const pitchRate = 1.0 + Math.min(Math.max(0, comboCount), 12) * 0.045;
     const isOverdriveMilestone = comboCount >= 5 && comboCount % 5 === 0;
 
+    ShortcutDJ.updateCombo(comboCount);
+
     if (!playSample(currentPack, 'hit', pitchRate, 0.82)) {
       playSynthHit(freq);
     }
@@ -502,6 +756,8 @@
     const audio = ensureAudioContext();
     if (!audio) return;
     preloadPack(currentPack);
+
+    ShortcutDJ.onMiss();
 
     if (playSample(currentPack, 'miss', 1.0, 0.85)) return;
 
@@ -628,6 +884,43 @@
         cursor: pointer;
         accent-color: #13f2b0;
       }
+      #kv-dj-btn {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid #45475a;
+        border-radius: 999px;
+        color: #a6adc8;
+        font-size: 0.72rem;
+        font-weight: 700;
+        cursor: pointer;
+        padding: 3px 8px;
+        line-height: 1.2;
+        transition: all 150ms ease;
+      }
+      #kv-dj-btn.active {
+        color: #f9e2af;
+        border-color: #f9e2af;
+        background: rgba(249, 226, 175, 0.12);
+      }
+      @keyframes kvEqPulse {
+        0%, 100% { height: 5px; opacity: 0.65; }
+        50% { height: 22px; opacity: 1; }
+      }
+      #kv-dj-eq {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 5px;
+        height: 24px;
+        margin-top: 12px;
+        padding-top: 4px;
+      }
+      #kv-dj-eq span {
+        display: inline-block;
+        width: 6px;
+        height: 8px;
+        border-radius: 3px;
+        animation: kvEqPulse 380ms ease-in-out infinite;
+      }
     `;
     document.head.appendChild(style);
   }
@@ -689,6 +982,7 @@
     const muteBtn = document.getElementById('kv-mute-btn');
     const ambBtn = document.getElementById('kv-ambient-btn');
     const ambVol = document.getElementById('kv-ambient-vol');
+    const djBtn = document.getElementById('kv-dj-btn');
     if (sel) sel.value = currentPack;
     if (muteBtn) {
       muteBtn.textContent = isMuted ? '🔇' : '🔊';
@@ -702,6 +996,11 @@
     if (ambVol) {
       ambVol.value = String(ambientVolume);
       ambVol.style.accentColor = (PACKS[currentPack] && PACKS[currentPack].accent) || '#13f2b0';
+    }
+    if (djBtn) {
+      djBtn.classList.toggle('active', djEnabled);
+      djBtn.textContent = djEnabled ? '🎛️ DJ Mode' : '🎛️ DJ Off';
+      djBtn.setAttribute('aria-pressed', String(djEnabled));
     }
   }
 
@@ -729,6 +1028,7 @@
       unlockAudio();
       preloadPack(currentPack);
       syncControlUI();
+      ShortcutDJ.updateEqualizerUI();
       playCorrect(3);
       if (ambientEnabled && !isMuted) {
         startAmbient(currentPack);
@@ -763,6 +1063,17 @@
       updateAmbientVolume(0.08);
     });
 
+    const djBtn = document.createElement('button');
+    djBtn.id = 'kv-dj-btn';
+    djBtn.type = 'button';
+    djBtn.addEventListener('click', () => {
+      djEnabled = !djEnabled;
+      safeStorageSet(DJ_ENABLED_KEY, String(djEnabled));
+      syncControlUI();
+      ShortcutDJ.syncGain(0.2);
+      ShortcutDJ.updateEqualizerUI();
+    });
+
     const muteBtn = document.createElement('button');
     muteBtn.id = 'kv-mute-btn';
     muteBtn.type = 'button';
@@ -770,6 +1081,8 @@
       isMuted = !isMuted;
       safeStorageSet(MUTE_STORAGE_KEY, String(isMuted));
       syncControlUI();
+      ShortcutDJ.syncGain(0.2);
+      ShortcutDJ.updateEqualizerUI();
       if (!isMuted) {
         unlockAudio();
         playCorrect(1);
@@ -780,6 +1093,7 @@
     });
 
     bar.appendChild(sel);
+    bar.appendChild(djBtn);
     bar.appendChild(ambBtn);
     bar.appendChild(ambVol);
     bar.appendChild(muteBtn);
@@ -791,6 +1105,8 @@
     currentPack = detectDefaultPack();
     isMuted = safeStorageGet(MUTE_STORAGE_KEY) === 'true';
     ambientEnabled = safeStorageGet(AMBIENT_ENABLED_KEY) === 'true';
+    const savedDj = safeStorageGet(DJ_ENABLED_KEY);
+    djEnabled = savedDj === null ? true : savedDj === 'true';
     const savedVol = parseInt(safeStorageGet(AMBIENT_VOLUME_KEY), 10);
     if (!isNaN(savedVol) && savedVol >= 0 && savedVol <= 100) {
       ambientVolume = savedVol;
@@ -801,6 +1117,7 @@
     });
 
     document.addEventListener('visibilitychange', () => {
+      ShortcutDJ.onVisibilityChange();
       if (document.hidden) {
         updateAmbientVolume(0.4);
       } else if (ambientEnabled && !isMuted) {
@@ -826,12 +1143,14 @@
     playMiss,
     playWin,
     triggerVisualJuice,
+    ShortcutDJ,
     setPack: function (packId) {
       if (!PACKS[packId]) return;
       currentPack = packId;
       safeStorageSet(PACK_STORAGE_KEY, packId);
       preloadPack(packId);
       syncControlUI();
+      ShortcutDJ.updateEqualizerUI();
       if (ambientEnabled && !isMuted) {
         startAmbient(packId);
       }
