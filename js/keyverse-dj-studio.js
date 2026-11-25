@@ -940,6 +940,12 @@
     document.getElementById('kv-studio-close').onclick = toggleDrawer;
     updateAuthUI();
     renderGrid();
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('open_dj') === '1') {
+        setTimeout(() => { toggleDrawer(); }, 180);
+      }
+    } catch (_) {}
   }
 
   loadStorage();
