@@ -8,6 +8,8 @@
 
   const PACK_STORAGE_KEY = 'keyverse_sound_pack';
   const MUTE_STORAGE_KEY = 'keyverse_sound_muted';
+  const AMBIENT_ENABLED_KEY = 'keyverse_ambient_enabled';
+  const AMBIENT_VOLUME_KEY = 'keyverse_ambient_volume';
   const GEO_CACHE_KEY = 'keyverse_geo_pack';
 
   const PACKS = {
@@ -62,6 +64,12 @@
   let noiseBuffer = null;
   let currentPack = 'cyber';
   let isMuted = false;
+  let ambientEnabled = false;
+  let ambientVolume = 25;
+  let ambientGain = null;
+  let ambientNodes = [];
+  let ambientRunningPack = null;
+  let ambientStopTimer = null;
   const sampleBuffers = {};
   const preloadStarted = {};
 
@@ -73,13 +81,18 @@
     preloadStarted[packId] = true;
     sampleBuffers[packId] = sampleBuffers[packId] || {};
 
-    ['hit', 'overdrive', 'miss'].forEach((slot) => {
+    ['hit', 'overdrive', 'miss', 'ambient'].forEach((slot) => {
       const url = `../sounds/${packId}/${slot}.mp3`;
       fetch(url)
         .then((res) => (res.ok ? res.arrayBuffer() : null))
         .then((buf) => (buf ? audio.decodeAudioData(buf) : null))
         .then((decoded) => {
-          if (decoded) sampleBuffers[packId][slot] = decoded;
+          if (decoded) {
+            sampleBuffers[packId][slot] = decoded;
+            if (slot === 'ambient' && ambientEnabled && !isMuted && currentPack === packId) {
+              startAmbient(packId);
+            }
+          }
         })
         .catch(() => {});
     });
@@ -181,6 +194,182 @@
   function unlockAudio() {
     ensureAudioContext();
     preloadPack(currentPack);
+    if (ambientEnabled && !isMuted && !document.hidden && !ambientRunningPack) {
+      startAmbient(currentPack);
+    }
+  }
+
+  function getEffectiveAmbientGain() {
+    if (isMuted || !ambientEnabled || (typeof document !== 'undefined' && document.hidden)) {
+      return 0;
+    }
+    return (Math.max(0, Math.min(100, ambientVolume)) / 100) * 0.45;
+  }
+
+  function ensureAmbientGain() {
+    const audio = ensureAudioContext();
+    if (!audio) return null;
+    if (!ambientGain) {
+      ambientGain = audio.createGain();
+      ambientGain.gain.setValueAtTime(0, audio.currentTime);
+      ambientGain.connect(audio.destination);
+    }
+    return ambientGain;
+  }
+
+  function clearAmbientNodes() {
+    ambientNodes.forEach((node) => {
+      try { if (typeof node.stop === 'function') node.stop(); } catch (_) {}
+      try { node.disconnect(); } catch (_) {}
+    });
+    ambientNodes = [];
+    ambientRunningPack = null;
+  }
+
+  function updateAmbientVolume(fadeSec = 0.12) {
+    const audio = ensureAudioContext();
+    const master = ensureAmbientGain();
+    if (!audio || !master) return;
+    const now = audio.currentTime;
+    const target = getEffectiveAmbientGain();
+    master.gain.cancelScheduledValues(now);
+    master.gain.setValueAtTime(master.gain.value, now);
+    master.gain.linearRampToValueAtTime(target, now + fadeSec);
+  }
+
+  function stopAmbient() {
+    if (!ctx || !ambientGain) {
+      clearAmbientNodes();
+      return;
+    }
+    const now = ctx.currentTime;
+    ambientGain.gain.cancelScheduledValues(now);
+    ambientGain.gain.setValueAtTime(ambientGain.gain.value, now);
+    ambientGain.gain.linearRampToValueAtTime(0, now + 0.4);
+    clearTimeout(ambientStopTimer);
+    ambientStopTimer = setTimeout(clearAmbientNodes, 430);
+  }
+
+  function startAmbient(packId = currentPack) {
+    if (!ambientEnabled || isMuted || (typeof document !== 'undefined' && document.hidden)) return;
+    const audio = ensureAudioContext();
+    const master = ensureAmbientGain();
+    if (!audio || !master) return;
+
+    preloadPack(packId);
+    clearTimeout(ambientStopTimer);
+
+    const switchDelay = ambientNodes.length > 0 ? 410 : 0;
+    if (ambientNodes.length > 0) {
+      const now = audio.currentTime;
+      master.gain.cancelScheduledValues(now);
+      master.gain.setValueAtTime(master.gain.value, now);
+      master.gain.linearRampToValueAtTime(0, now + 0.4);
+    }
+
+    setTimeout(() => {
+      clearAmbientNodes();
+      if (!ambientEnabled || isMuted || document.hidden) return;
+
+      const sampleBuf = sampleBuffers[packId] && sampleBuffers[packId].ambient;
+      if (sampleBuf) {
+        const src = audio.createBufferSource();
+        src.buffer = sampleBuf;
+        src.loop = true;
+        src.connect(master);
+        src.start(0);
+        ambientNodes.push(src);
+      } else if (noiseBuffer) {
+        if (packId === 'katana') {
+          // Soft rain-like filtered noise + subtle D3 bamboo drone
+          const src = audio.createBufferSource();
+          src.buffer = noiseBuffer;
+          src.loop = true;
+          const filter = audio.createBiquadFilter();
+          filter.type = 'bandpass';
+          filter.frequency.value = 780;
+          filter.Q.value = 0.7;
+          const subGain = audio.createGain();
+          subGain.gain.value = 0.25;
+          src.connect(filter);
+          filter.connect(subGain);
+          subGain.connect(master);
+          src.start(0);
+
+          const drone = audio.createOscillator();
+          drone.type = 'sine';
+          drone.frequency.value = 146.83;
+          const dGain = audio.createGain();
+          dGain.gain.value = 0.08;
+          drone.connect(dGain);
+          dGain.connect(master);
+          drone.start(0);
+          ambientNodes.push(src, filter, subGain, drone, dGain);
+        } else if (packId === 'harbor') {
+          // Gentle ocean swell via LFO-modulated lowpass noise
+          const src = audio.createBufferSource();
+          src.buffer = noiseBuffer;
+          src.loop = true;
+          const filter = audio.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.value = 360;
+          const lfo = audio.createOscillator();
+          lfo.type = 'sine';
+          lfo.frequency.value = 0.14;
+          const lfoGain = audio.createGain();
+          lfoGain.gain.value = 160;
+          lfo.connect(lfoGain);
+          lfoGain.connect(filter.frequency);
+          const subGain = audio.createGain();
+          subGain.gain.value = 0.35;
+          src.connect(filter);
+          filter.connect(subGain);
+          subGain.connect(master);
+          src.start(0);
+          lfo.start(0);
+          ambientNodes.push(src, filter, lfo, lfoGain, subGain);
+        } else if (packId === 'anime') {
+          // Warm lo-fi synth pad chord
+          const filter = audio.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.value = 540;
+          const subGain = audio.createGain();
+          subGain.gain.value = 0.07;
+          filter.connect(subGain);
+          subGain.connect(master);
+          ambientNodes.push(filter, subGain);
+          [261.63, 329.63, 392.0].forEach((freq) => {
+            const osc = audio.createOscillator();
+            osc.type = 'triangle';
+            osc.frequency.value = freq;
+            osc.connect(filter);
+            osc.start(0);
+            ambientNodes.push(osc);
+          });
+        } else {
+          // Subtle neon cyber hum
+          const filter = audio.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.value = 260;
+          const subGain = audio.createGain();
+          subGain.gain.value = 0.08;
+          filter.connect(subGain);
+          subGain.connect(master);
+          ambientNodes.push(filter, subGain);
+          [110.0, 165.0].forEach((freq) => {
+            const osc = audio.createOscillator();
+            osc.type = 'triangle';
+            osc.frequency.value = freq;
+            osc.connect(filter);
+            osc.start(0);
+            ambientNodes.push(osc);
+          });
+        }
+      }
+
+      ambientRunningPack = packId;
+      updateAmbientVolume(0.4);
+    }, switchDelay);
   }
 
   function playNoise(duration, filterType, startFreq, endFreq, gainVal, qVal = 1.0, delay = 0) {
@@ -405,6 +594,29 @@
         padding: 2px 4px;
         line-height: 1;
       }
+      #kv-ambient-btn {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid #45475a;
+        border-radius: 999px;
+        color: #a6adc8;
+        font-size: 0.72rem;
+        font-weight: 700;
+        cursor: pointer;
+        padding: 3px 8px;
+        line-height: 1.2;
+        transition: all 150ms ease;
+      }
+      #kv-ambient-btn.active {
+        color: #13f2b0;
+        border-color: #13f2b0;
+        background: rgba(19, 242, 176, 0.12);
+      }
+      #kv-ambient-vol {
+        width: 56px;
+        height: 4px;
+        cursor: pointer;
+        accent-color: #13f2b0;
+      }
     `;
     document.head.appendChild(style);
   }
@@ -464,10 +676,21 @@
   function syncControlUI() {
     const sel = document.getElementById('kv-sound-select');
     const muteBtn = document.getElementById('kv-mute-btn');
+    const ambBtn = document.getElementById('kv-ambient-btn');
+    const ambVol = document.getElementById('kv-ambient-vol');
     if (sel) sel.value = currentPack;
     if (muteBtn) {
       muteBtn.textContent = isMuted ? '🔇' : '🔊';
       muteBtn.setAttribute('aria-label', isMuted ? 'Unmute Sound' : 'Mute Sound');
+    }
+    if (ambBtn) {
+      ambBtn.classList.toggle('active', ambientEnabled);
+      ambBtn.textContent = ambientEnabled ? '🎧 Ambience On' : '🎧 Ambience';
+      ambBtn.setAttribute('aria-pressed', String(ambientEnabled));
+    }
+    if (ambVol) {
+      ambVol.value = String(ambientVolume);
+      ambVol.style.accentColor = (PACKS[currentPack] && PACKS[currentPack].accent) || '#13f2b0';
     }
   }
 
@@ -494,7 +717,39 @@
       safeStorageSet(PACK_STORAGE_KEY, currentPack);
       unlockAudio();
       preloadPack(currentPack);
+      syncControlUI();
       playCorrect(3);
+      if (ambientEnabled && !isMuted) {
+        startAmbient(currentPack);
+      }
+    });
+
+    const ambBtn = document.createElement('button');
+    ambBtn.id = 'kv-ambient-btn';
+    ambBtn.type = 'button';
+    ambBtn.addEventListener('click', () => {
+      ambientEnabled = !ambientEnabled;
+      safeStorageSet(AMBIENT_ENABLED_KEY, String(ambientEnabled));
+      syncControlUI();
+      if (ambientEnabled && !isMuted) {
+        unlockAudio();
+        startAmbient(currentPack);
+      } else {
+        stopAmbient();
+      }
+    });
+
+    const ambVol = document.createElement('input');
+    ambVol.id = 'kv-ambient-vol';
+    ambVol.type = 'range';
+    ambVol.min = '0';
+    ambVol.max = '100';
+    ambVol.value = String(ambientVolume);
+    ambVol.setAttribute('aria-label', 'Ambient Volume');
+    ambVol.addEventListener('input', () => {
+      ambientVolume = parseInt(ambVol.value, 10) || 0;
+      safeStorageSet(AMBIENT_VOLUME_KEY, String(ambientVolume));
+      updateAmbientVolume(0.08);
     });
 
     const muteBtn = document.createElement('button');
@@ -507,10 +762,15 @@
       if (!isMuted) {
         unlockAudio();
         playCorrect(1);
+        if (ambientEnabled) startAmbient(currentPack);
+      } else {
+        updateAmbientVolume(0.2);
       }
     });
 
     bar.appendChild(sel);
+    bar.appendChild(ambBtn);
+    bar.appendChild(ambVol);
     bar.appendChild(muteBtn);
     document.body.appendChild(bar);
     syncControlUI();
@@ -519,9 +779,26 @@
   function init() {
     currentPack = detectDefaultPack();
     isMuted = safeStorageGet(MUTE_STORAGE_KEY) === 'true';
+    ambientEnabled = safeStorageGet(AMBIENT_ENABLED_KEY) === 'true';
+    const savedVol = parseInt(safeStorageGet(AMBIENT_VOLUME_KEY), 10);
+    if (!isNaN(savedVol) && savedVol >= 0 && savedVol <= 100) {
+      ambientVolume = savedVol;
+    }
 
     ['keydown', 'pointerdown', 'click'].forEach((evt) => {
       global.addEventListener(evt, unlockAudio, { once: true, passive: true });
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        updateAmbientVolume(0.4);
+      } else if (ambientEnabled && !isMuted) {
+        if (!ambientRunningPack) {
+          startAmbient(currentPack);
+        } else {
+          updateAmbientVolume(0.4);
+        }
+      }
     });
 
     if (document.readyState === 'loading') {
@@ -544,6 +821,9 @@
       safeStorageSet(PACK_STORAGE_KEY, packId);
       preloadPack(packId);
       syncControlUI();
+      if (ambientEnabled && !isMuted) {
+        startAmbient(packId);
+      }
     },
     getPack: function () { return currentPack; },
     isMuted: function () { return isMuted; }
