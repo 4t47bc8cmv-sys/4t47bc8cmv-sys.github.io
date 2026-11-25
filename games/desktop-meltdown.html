@@ -322,6 +322,53 @@
     cursor: pointer;
   }
   .hud-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+  .mode-btn-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .btn-secondary {
+    background: #171c22;
+    color: var(--text);
+    border: 1.5px solid var(--accent-2);
+    border-radius: 10px;
+    padding: 12px 22px;
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 140ms ease, border-color 140ms ease;
+  }
+  .btn-secondary:hover { transform: translateY(-1px); border-color: var(--primary); color: var(--primary); }
+
+  .practice-bar {
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 8px 14px;
+    background: rgba(19, 242, 176, 0.1);
+    border-bottom: 1px solid rgba(19, 242, 176, 0.35);
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    color: var(--primary);
+    font-weight: 700;
+  }
+  .practice-bar.show { display: flex; }
+
+  .practice-callout {
+    grid-column: 1 / -1;
+    background: rgba(23, 28, 34, 0.95);
+    border: 1px solid rgba(124, 157, 255, 0.45);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 0.88rem;
+    color: var(--text);
+  }
+  .practice-callout strong { color: var(--primary); }
   .btn-start {
     background: var(--primary);
     color: #0b0e11;
@@ -425,6 +472,11 @@
         </div>
       </div>
 
+      <div class="practice-bar" id="practice-bar">
+        <span id="practice-progress">Practice Progress: 0 / 6 Threats Learned</span>
+        <button type="button" class="hud-btn" id="btn-skip-survival" style="border-color:var(--primary);color:var(--primary);">Skip to Survival →</button>
+      </div>
+
       <div class="workspace" id="workspace"></div>
 
       <div class="shortcut-legend" aria-label="Shortcut Quick Reference">
@@ -456,8 +508,20 @@
           <div class="brief-item"><strong>📄 Corrupted Clone</strong><span>⌘ + Z (or Z)</span></div>
           <div class="brief-item"><strong>🔑 Broken Security Key</strong><span>⌘ + C → V (or C → V)</span></div>
         </div>
-        <p style="font-size:0.78rem;color:#7c9dff;margin-bottom:14px;">Browser-safe single-key fallback (W/H/Space/Q/Z/C/V) is enabled below so Chrome won't close your tab. Press <strong>Enter</strong> or <strong>Space</strong> to start!</p>
-        <button type="button" class="btn-start" id="btn-start">▶ Start Survival</button>
+        <p style="font-size:0.78rem;color:#7c9dff;margin-bottom:14px;">Browser-safe single-key fallback (W/H/Space/Q/Z/C/V) is enabled below so Chrome won't close your tab.</p>
+        <div class="mode-btn-row">
+          <button type="button" class="btn-start" id="btn-practice">🎯 Slow Practice (Recommended First)</button>
+          <button type="button" class="btn-secondary" id="btn-start">🔥 Start Survival Mode</button>
+        </div>
+      </div>
+
+      <div class="overlay-start" id="practice-done-overlay" style="display:none;">
+        <h1>🎉 Practice Complete!</h1>
+        <p>Awesome work! You learned all 6 Mac defense shortcuts with zero pressure. Ready to test your speed against the clock?</p>
+        <div class="mode-btn-row">
+          <button type="button" class="btn-start" id="btn-ready-survival">🔥 I'm Ready — Start Survival Mode</button>
+          <button type="button" class="btn-secondary" id="btn-practice-again">↻ Practice Again</button>
+        </div>
       </div>
     </div>
 
@@ -535,18 +599,25 @@
 <script>
 (function () {
   const THREAT_TYPES = [
-    { id: 'popup', cls: 'type-popup', title: '🪟 Rogue Adware Popup', sub: 'Close window immediately!', keyLabel: '⌘ + W (or W)', keys: ['w'], fuseMs: 9000, dmg: 8 },
-    { id: 'spyware', cls: 'type-spyware', title: '👁️ Spyware Scanner Beam', sub: 'Hide active window!', keyLabel: '⌘ + H (or H)', keys: ['h'], fuseMs: 8800, dmg: 10 },
-    { id: 'firewall', cls: 'type-firewall', title: '🔥 Firewall Breach Terminal', sub: 'Fire Spotlight blast!', keyLabel: '⌘ + Space (or Space)', keys: [' '], fuseMs: 9000, dmg: 10 },
-    { id: 'frozen', cls: 'type-frozen', title: '🧊 Frozen Glitch App', sub: 'Force-quit process!', keyLabel: '⌘ + Q (or Q)', keys: ['q'], fuseMs: 8500, dmg: 12 },
-    { id: 'clone', cls: 'type-clone', title: '📄 Corrupted File Clone', sub: 'Undo & erase clone!', keyLabel: '⌘ + Z (or Z)', keys: ['z'], fuseMs: 8800, dmg: 9 },
-    { id: 'patch', cls: 'type-patch', title: '🔑 Broken Security Key', sub: 'Copy & Paste patch!', keyLabel: '⌘ + C then V (or C → V)', keys: ['c', 'v'], fuseMs: 10500, dmg: 10 }
+    { id: 'popup', cls: 'type-popup', title: '🪟 Rogue Adware Popup', sub: 'Close window immediately!', keyLabel: '⌘ + W (or W)', keys: ['w'], fuseMs: 9000, dmg: 8, guide: 'In macOS, Command (⌘) + W closes the active window or popup tab cleanly without quitting the whole app.' },
+    { id: 'spyware', cls: 'type-spyware', title: '👁️ Spyware Scanner Beam', sub: 'Hide active window!', keyLabel: '⌘ + H (or H)', keys: ['h'], fuseMs: 8800, dmg: 10, guide: 'Command (⌘) + H instantly hides the frontmost application off-screen so you can regain desktop focus.' },
+    { id: 'firewall', cls: 'type-firewall', title: '🔥 Firewall Breach Terminal', sub: 'Fire Spotlight blast!', keyLabel: '⌘ + Space (or Space)', keys: [' '], fuseMs: 9000, dmg: 10, guide: 'Command (⌘) + Space opens Spotlight Search from anywhere on your Mac to launch apps or search files in milliseconds.' },
+    { id: 'frozen', cls: 'type-frozen', title: '🧊 Frozen Glitch App', sub: 'Force-quit process!', keyLabel: '⌘ + Q (or Q)', keys: ['q'], fuseMs: 8500, dmg: 12, guide: 'Command (⌘) + Q completely quits a running application and frees up memory (unlike clicking the red close dot).' },
+    { id: 'clone', cls: 'type-clone', title: '📄 Corrupted File Clone', sub: 'Undo & erase clone!', keyLabel: '⌘ + Z (or Z)', keys: ['z'], fuseMs: 8800, dmg: 9, guide: 'Command (⌘) + Z undoes your last edit, deleted text, or accidental Finder file rename.' },
+    { id: 'patch', cls: 'type-patch', title: '🔑 Broken Security Key', sub: 'Copy & Paste patch!', keyLabel: '⌘ + C then V (or C → V)', keys: ['c', 'v'], fuseMs: 10500, dmg: 10, guide: 'Command (⌘) + C copies the patch and Command (⌘) + V pastes it right into place.' }
   ];
 
   const workspace = document.getElementById('workspace');
   const startOverlay = document.getElementById('start-overlay');
+  const practiceDoneOverlay = document.getElementById('practice-done-overlay');
+  const practiceBar = document.getElementById('practice-bar');
+  const practiceProgressEl = document.getElementById('practice-progress');
   const countdownOverlay = document.getElementById('countdown-overlay');
+  const btnPractice = document.getElementById('btn-practice');
   const btnStart = document.getElementById('btn-start');
+  const btnReadySurvival = document.getElementById('btn-ready-survival');
+  const btnPracticeAgain = document.getElementById('btn-practice-again');
+  const btnSkipSurvival = document.getElementById('btn-skip-survival');
   const btnPause = document.getElementById('btn-pause');
   const btnHelp = document.getElementById('btn-help');
   const msgEl = document.getElementById('msg');
@@ -562,6 +633,9 @@
   let bestScore = parseInt(localStorage.getItem('kv_meltdown_best') || '0', 10) || 0;
   bestEl.textContent = bestScore.toLocaleString();
 
+  let mode = 'idle'; // 'idle' | 'practice' | 'survival'
+  let practiceIdx = 0;
+  let practiceWaitingNext = false;
   let running = false;
   let paused = false;
   let countdownActive = false;
@@ -594,11 +668,10 @@
     integrityBar.style.background = pct > 50 ? 'linear-gradient(90deg, #13f2b0, #a6e3a1)' : (pct > 25 ? '#f9e2af' : '#ff5c77');
   }
 
-  function spawnThreat() {
-    if (!running || threats.length >= 6) return;
-    const tpl = THREAT_TYPES[Math.floor(Math.random() * THREAT_TYPES.length)];
+  function spawnThreat(forcedTpl = null) {
+    if (!running || (!forcedTpl && threats.length >= 6)) return;
+    const tpl = forcedTpl || THREAT_TYPES[Math.floor(Math.random() * THREAT_TYPES.length)];
     const id = nextId++;
-    const now = performance.now();
 
     const el = document.createElement('div');
     el.className = `threat-win ${tpl.cls}`;
@@ -606,12 +679,12 @@
     el.innerHTML = `
       <div class="threat-bar">
         <div class="dots"><span></span><span></span><span></span></div>
-        <span>PID #${100 + id}</span>
+        <span>${mode === 'practice' ? 'PRACTICE' : 'PID #' + (100 + id)}</span>
       </div>
       <div class="threat-title">${tpl.title}</div>
       <div class="threat-sub">${tpl.sub}</div>
       <span class="threat-key">${tpl.keyLabel}</span>
-      <div class="threat-fuse"><div class="threat-fuse-fill"></div></div>
+      ${mode === 'practice' ? '' : '<div class="threat-fuse"><div class="threat-fuse-fill"></div></div>'}
     `;
 
     const threatObj = {
@@ -629,9 +702,10 @@
   }
 
   function handleThreatHit(threat) {
-    if (!running) return;
+    if (!running || practiceWaitingNext) return;
     threat.stepIdx++;
     if (threat.stepIdx < threat.tpl.keys.length) {
+      msgEl.style.color = '#f9e2af';
       msgEl.textContent = `Patch staged! Now press V (or ⌘ + V) to apply!`;
       return;
     }
@@ -642,20 +716,80 @@
     setTimeout(() => threat.el.remove(), 220);
 
     combo++;
+    if (window.KeyverseAudio) {
+      window.KeyverseAudio.playCorrect(combo);
+      window.KeyverseAudio.triggerVisualJuice('correct', combo, document.querySelector('.card'));
+    }
+
+    if (mode === 'practice') {
+      practiceIdx++;
+      practiceProgressEl.textContent = `Practice Progress: ${practiceIdx} / ${THREAT_TYPES.length} Threats Learned`;
+      msgEl.style.color = '#13f2b0';
+      msgEl.textContent = `✅ Cleared! Ready for the next threat...`;
+      practiceWaitingNext = true;
+
+      setTimeout(() => {
+        practiceWaitingNext = false;
+        if (mode !== 'practice') return;
+        if (practiceIdx >= THREAT_TYPES.length) {
+          running = false;
+          workspace.innerHTML = '';
+          practiceDoneOverlay.style.display = 'flex';
+          if (window.KeyverseAudio) window.KeyverseAudio.playWin();
+        } else {
+          spawnPracticeThreat();
+        }
+      }, 900);
+      return;
+    }
+
     const pts = 100 + Math.min(combo, 10) * 20;
     score += pts;
     integrity = Math.min(100, integrity + 2);
     msgEl.style.color = '#13f2b0';
     msgEl.textContent = `✅ Neutralized ${threat.tpl.title} (+${pts})`;
 
-    if (window.KeyverseAudio) {
-      window.KeyverseAudio.playCorrect(combo);
-      window.KeyverseAudio.triggerVisualJuice('correct', combo, document.querySelector('.card'));
-    }
     if (window.KVScoreTracker && window.KVScoreTracker.recordGhostStep) {
       window.KVScoreTracker.recordGhostStep(true);
     }
     updateHUD();
+  }
+
+  function spawnPracticeThreat() {
+    workspace.innerHTML = '';
+    threats = [];
+    const tpl = THREAT_TYPES[practiceIdx];
+    const callout = document.createElement('div');
+    callout.className = 'practice-callout';
+    callout.innerHTML = `<strong>Guided Practice (${practiceIdx + 1}/${THREAT_TYPES.length}):</strong> ${tpl.guide} <br><span style="color:#f9e2af;">Press <strong>${tpl.keyLabel}</strong> (or click the card) to clear it!</span>`;
+    workspace.appendChild(callout);
+    spawnThreat(tpl);
+  }
+
+  function startPractice() {
+    if (countdownActive) return;
+    clearTimeout(spawnTimer);
+    clearInterval(tickTimer);
+    mode = 'practice';
+    practiceIdx = 0;
+    practiceWaitingNext = false;
+    running = true;
+    paused = false;
+    score = 0;
+    combo = 0;
+    integrity = 100;
+    startOverlay.style.display = 'none';
+    practiceDoneOverlay.style.display = 'none';
+    const ov = document.getElementById('kv-interstitial');
+    if (ov) ov.style.display = 'none';
+    practiceBar.classList.add('show');
+    practiceProgressEl.textContent = `Practice Progress: 0 / ${THREAT_TYPES.length} Threats Learned`;
+    waveEl.textContent = 'Slow Practice';
+    timerEl.textContent = 'Untimed';
+    msgEl.style.color = '#13f2b0';
+    msgEl.textContent = 'Take your time — System Integrity is locked at 100%.';
+    updateHUD();
+    spawnPracticeThreat();
   }
 
   function triggerMiss(reason) {
@@ -784,10 +918,14 @@
 
   function startGame() {
     if (countdownActive) return;
-    threats.forEach((t) => t.el.remove());
+    workspace.innerHTML = '';
     threats = [];
     clearTimeout(spawnTimer);
     clearInterval(tickTimer);
+    mode = 'survival';
+    practiceWaitingNext = false;
+    practiceBar.classList.remove('show');
+    practiceDoneOverlay.style.display = 'none';
     score = 0;
     combo = 0;
     integrity = 100;
@@ -812,7 +950,7 @@
   }
 
   function togglePause(showHelpOverlay = false) {
-    if (!running) return;
+    if (!running || mode !== 'survival') return;
     paused = !paused;
     if (paused) {
       clearTimeout(spawnTimer);
@@ -825,13 +963,17 @@
     } else {
       lastTickAt = performance.now();
       btnPause.textContent = '⏸ Pause';
-      btnStart.textContent = '▶ Start Survival';
+      btnStart.textContent = '🔥 Start Survival Mode';
       startOverlay.style.display = 'none';
       msgEl.textContent = 'Defend the Mac! Match shortcuts to active threats.';
       scheduleNextSpawn();
     }
   }
 
+  btnPractice.addEventListener('click', startPractice);
+  btnPracticeAgain.addEventListener('click', startPractice);
+  btnSkipSurvival.addEventListener('click', startGame);
+  btnReadySurvival.addEventListener('click', startGame);
   btnStart.addEventListener('click', () => {
     if (paused) {
       togglePause(false);
