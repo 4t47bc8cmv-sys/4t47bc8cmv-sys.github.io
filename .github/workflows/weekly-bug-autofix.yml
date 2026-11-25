@@ -1,0 +1,36 @@
+name: Weekly Bug Checker & Auto-Fixer
+
+on:
+  schedule:
+    - cron: '0 12 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  weekly-bug-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run weekly bug checker & auto-fixer
+        run: node scripts/weekly-bug-check.mjs
+
+      - name: Auto-commit and push safe fixes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add sitemap.xml
+            git commit -m "Auto-fix weekly Keyverse health check"
+            git push
+          else
+            echo "No auto-fixes needed."
+          fi
