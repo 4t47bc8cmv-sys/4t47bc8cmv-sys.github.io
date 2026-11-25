@@ -252,10 +252,76 @@
   }
   .overlay-start p {
     color: var(--muted);
-    max-width: 52ch;
-    font-size: 0.92rem;
-    margin-bottom: 16px;
+    max-width: 56ch;
+    font-size: 0.9rem;
+    margin-bottom: 12px;
   }
+  .briefing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+    gap: 8px;
+    width: 100%;
+    max-width: 680px;
+    margin-bottom: 14px;
+    text-align: left;
+  }
+  .brief-item {
+    background: rgba(23, 28, 34, 0.95);
+    border: 1px solid #2b3544;
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 0.78rem;
+  }
+  .brief-item strong { display: block; color: var(--text); font-size: 0.8rem; margin-bottom: 2px; }
+  .brief-item span { color: var(--primary); font-family: var(--font-display); font-weight: 700; }
+
+  .countdown-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(11, 14, 17, 0.72);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 11;
+    font-family: var(--font-display);
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--primary);
+    text-shadow: 0 0 28px rgba(19, 242, 176, 0.65);
+  }
+
+  .shortcut-legend {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 6px 12px;
+    background: rgba(18, 22, 27, 0.92);
+    border-top: 1px solid #262d36;
+    font-family: var(--font-display);
+    font-size: 0.73rem;
+    color: var(--muted);
+  }
+  .legend-chip {
+    background: #171c22;
+    border: 1px solid #2b3544;
+    border-radius: 6px;
+    padding: 2px 8px;
+  }
+  .legend-chip strong { color: var(--primary); }
+
+  .hud-btn {
+    background: #171c22;
+    border: 1px solid #2b3544;
+    color: var(--text);
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .hud-btn:hover { border-color: var(--primary); color: var(--primary); }
   .btn-start {
     background: var(--primary);
     color: #0b0e11;
@@ -333,8 +399,12 @@
 <div class="card">
   <div class="top-nav">
     <a href="../index.html">← Keyverse Home</a>
-    <span class="wave-pill" id="wave-pill">Wave 1: Adware</span>
-    <span style="color:var(--warn);">Best: <strong id="best-score">0</strong></span>
+    <span class="wave-pill" id="wave-pill">Wave 1: Warm-Up</span>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <button type="button" class="hud-btn" id="btn-pause" title="Pause / Resume (Esc)">⏸ Pause</button>
+      <button type="button" class="hud-btn" id="btn-help" title="How to Play">? Help</button>
+      <span style="color:var(--warn);">Best: <strong id="best-score">0</strong></span>
+    </div>
   </div>
 
   <div id="game-screen" style="display:block;">
@@ -357,6 +427,15 @@
 
       <div class="workspace" id="workspace"></div>
 
+      <div class="shortcut-legend" aria-label="Shortcut Quick Reference">
+        <span class="legend-chip"><strong>W</strong> / ⌘+W · Popup</span>
+        <span class="legend-chip"><strong>H</strong> / ⌘+H · Spyware</span>
+        <span class="legend-chip"><strong>Space</strong> / ⌘+Space · Firewall</span>
+        <span class="legend-chip"><strong>Q</strong> / ⌘+Q · Frozen App</span>
+        <span class="legend-chip"><strong>Z</strong> / ⌘+Z · Clone</span>
+        <span class="legend-chip"><strong>C→V</strong> · Security Patch</span>
+      </div>
+
       <div class="mac-dock">
         <span class="dock-item">📁 Finder</span>
         <span class="dock-item">🔍 Spotlight (⌘+Space)</span>
@@ -364,11 +443,21 @@
         <span class="dock-item">⚡ Activity</span>
       </div>
 
+      <div class="countdown-overlay" id="countdown-overlay" aria-live="assertive">3</div>
+
       <div class="overlay-start" id="start-overlay">
         <h1>🔥 Desktop Meltdown</h1>
-        <p>Your Mac has been hijacked! Neutralize rogue popups, spyware beams, firewall breaches, and frozen apps using real Mac shortcuts before System Integrity hits 0%.</p>
-        <p style="font-size:0.82rem;color:#7c9dff;">Tip: Use <strong>⌘ + Key</strong> (or browser-safe fallback keys <strong>W, H, Space, Q, Z, C, V</strong>) or click any threat card!</p>
-        <button type="button" class="btn-start" id="btn-start">Start Survival Run →</button>
+        <p>Your Mac is under attack! Press the matching keyboard shortcut shown on each rogue window to destroy it before your System Integrity hits 0%.</p>
+        <div class="briefing-grid">
+          <div class="brief-item"><strong>🪟 Rogue Popup</strong><span>⌘ + W (or W)</span></div>
+          <div class="brief-item"><strong>👁️ Spyware Beam</strong><span>⌘ + H (or H)</span></div>
+          <div class="brief-item"><strong>🔥 Firewall Breach</strong><span>⌘ + Space (or Space)</span></div>
+          <div class="brief-item"><strong>🧊 Frozen Glitch App</strong><span>⌘ + Q (or Q)</span></div>
+          <div class="brief-item"><strong>📄 Corrupted Clone</strong><span>⌘ + Z (or Z)</span></div>
+          <div class="brief-item"><strong>🔑 Broken Security Key</strong><span>⌘ + C → V (or C → V)</span></div>
+        </div>
+        <p style="font-size:0.78rem;color:#7c9dff;margin-bottom:14px;">Browser-safe single-key fallback (W/H/Space/Q/Z/C/V) is enabled below so Chrome won't close your tab. Press <strong>Enter</strong> or <strong>Space</strong> to start!</p>
+        <button type="button" class="btn-start" id="btn-start">▶ Start Survival</button>
       </div>
     </div>
 
@@ -446,17 +535,20 @@
 <script>
 (function () {
   const THREAT_TYPES = [
-    { id: 'popup', cls: 'type-popup', title: 'Rogue Adware Popup', sub: 'Close window immediately!', keyLabel: '⌘ + W (or W)', keys: ['w'], fuseMs: 5500, dmg: 10 },
-    { id: 'spyware', cls: 'type-spyware', title: 'Spyware Scanner Beam', sub: 'Hide active window!', keyLabel: '⌘ + H (or H)', keys: ['h'], fuseMs: 5200, dmg: 12 },
-    { id: 'firewall', cls: 'type-firewall', title: 'Firewall Breach Terminal', sub: 'Fire Spotlight blast!', keyLabel: '⌘ + Space (or Space)', keys: [' '], fuseMs: 5400, dmg: 12 },
-    { id: 'frozen', cls: 'type-frozen', title: 'Frozen Glitch App', sub: 'Force-quit process!', keyLabel: '⌘ + Q (or Q)', keys: ['q'], fuseMs: 5000, dmg: 15 },
-    { id: 'clone', cls: 'type-clone', title: 'Corrupted File Clone', sub: 'Undo & erase clone!', keyLabel: '⌘ + Z (or Z)', keys: ['z'], fuseMs: 5300, dmg: 11 },
-    { id: 'patch', cls: 'type-patch', title: 'Broken Security Key', sub: 'Copy & Paste patch!', keyLabel: '⌘ + C then V (or C/V)', keys: ['c', 'v'], fuseMs: 6500, dmg: 12 }
+    { id: 'popup', cls: 'type-popup', title: '🪟 Rogue Adware Popup', sub: 'Close window immediately!', keyLabel: '⌘ + W (or W)', keys: ['w'], fuseMs: 9000, dmg: 8 },
+    { id: 'spyware', cls: 'type-spyware', title: '👁️ Spyware Scanner Beam', sub: 'Hide active window!', keyLabel: '⌘ + H (or H)', keys: ['h'], fuseMs: 8800, dmg: 10 },
+    { id: 'firewall', cls: 'type-firewall', title: '🔥 Firewall Breach Terminal', sub: 'Fire Spotlight blast!', keyLabel: '⌘ + Space (or Space)', keys: [' '], fuseMs: 9000, dmg: 10 },
+    { id: 'frozen', cls: 'type-frozen', title: '🧊 Frozen Glitch App', sub: 'Force-quit process!', keyLabel: '⌘ + Q (or Q)', keys: ['q'], fuseMs: 8500, dmg: 12 },
+    { id: 'clone', cls: 'type-clone', title: '📄 Corrupted File Clone', sub: 'Undo & erase clone!', keyLabel: '⌘ + Z (or Z)', keys: ['z'], fuseMs: 8800, dmg: 9 },
+    { id: 'patch', cls: 'type-patch', title: '🔑 Broken Security Key', sub: 'Copy & Paste patch!', keyLabel: '⌘ + C then V (or C → V)', keys: ['c', 'v'], fuseMs: 10500, dmg: 10 }
   ];
 
   const workspace = document.getElementById('workspace');
   const startOverlay = document.getElementById('start-overlay');
+  const countdownOverlay = document.getElementById('countdown-overlay');
   const btnStart = document.getElementById('btn-start');
+  const btnPause = document.getElementById('btn-pause');
+  const btnHelp = document.getElementById('btn-help');
   const msgEl = document.getElementById('msg');
   const scoreEl = document.getElementById('score-display');
   const comboEl = document.getElementById('combo-display');
@@ -471,19 +563,26 @@
   bestEl.textContent = bestScore.toLocaleString();
 
   let running = false;
+  let paused = false;
+  let countdownActive = false;
   let score = 0;
   let combo = 0;
   let integrity = 100;
-  let startTime = 0;
+  let activeElapsedMs = 0;
+  let lastTickAt = 0;
   let threats = [];
   let nextId = 1;
   let spawnTimer = null;
   let tickTimer = null;
 
   function getWaveInfo(elapsedSec) {
-    if (elapsedSec >= 40) return { num: 3, label: 'Wave 3: Full Meltdown', interval: 1350 };
-    if (elapsedSec >= 20) return { num: 2, label: 'Wave 2: Kernel Panic', interval: 1750 };
-    return { num: 1, label: 'Wave 1: Adware', interval: 2250 };
+    if (elapsedSec >= 90) {
+      const extra = Math.min(300, Math.floor((elapsedSec - 90) * 10));
+      return { num: 4, label: 'Wave 4: Full Meltdown', interval: Math.max(1200, 1500 - extra) };
+    }
+    if (elapsedSec >= 55) return { num: 3, label: 'Wave 3: Kernel Panic', interval: 2200 };
+    if (elapsedSec >= 25) return { num: 2, label: 'Wave 2: Adware', interval: 3200 };
+    return { num: 1, label: 'Wave 1: Warm-Up', interval: 4700 };
   }
 
   function updateHUD() {
@@ -520,8 +619,8 @@
       tpl,
       el,
       stepIdx: 0,
-      spawnedAt: now,
-      fuseMs: Math.max(3000, tpl.fuseMs - Math.floor((now - startTime) / 1000) * 35)
+      ageMs: 0,
+      fuseMs: Math.max(4000, tpl.fuseMs - Math.floor(activeElapsedMs / 1000) * 30)
     };
 
     el.addEventListener('click', () => handleThreatHit(threatObj));
@@ -575,10 +674,11 @@
 
   function endGame() {
     running = false;
+    paused = false;
     clearTimeout(spawnTimer);
     clearInterval(tickTimer);
 
-    const elapsedSec = ((performance.now() - startTime) / 1000).toFixed(1);
+    const elapsedSec = (activeElapsedMs / 1000).toFixed(1);
     if (score > bestScore) {
       bestScore = score;
       localStorage.setItem('kv_meltdown_best', String(bestScore));
@@ -603,47 +703,70 @@
   }
 
   function scheduleNextSpawn() {
-    if (!running) return;
-    const elapsedSec = (performance.now() - startTime) / 1000;
+    if (!running || paused) return;
+    const elapsedSec = activeElapsedMs / 1000;
     const wave = getWaveInfo(elapsedSec);
     waveEl.textContent = wave.label;
     spawnTimer = setTimeout(() => {
+      if (!running || paused) return;
       spawnThreat();
       scheduleNextSpawn();
     }, wave.interval);
   }
 
-  function startGame() {
-    threats.forEach((t) => t.el.remove());
-    threats = [];
-    score = 0;
-    combo = 0;
-    integrity = 100;
-    startTime = performance.now();
-    running = true;
-    startOverlay.style.display = 'none';
-    const ov = document.getElementById('kv-interstitial');
-    if (ov) ov.style.display = 'none';
-    msgEl.style.color = '#13f2b0';
-    msgEl.textContent = 'Defend the Mac! Match shortcuts to active threats.';
-    updateHUD();
+  function runCountdown(onDone) {
+    countdownActive = true;
+    let count = 3;
+    countdownOverlay.textContent = String(count);
+    countdownOverlay.style.display = 'flex';
+    const iv = setInterval(() => {
+      count--;
+      if (count > 0) {
+        countdownOverlay.textContent = String(count);
+      } else if (count === 0) {
+        countdownOverlay.textContent = 'GO!';
+      } else {
+        clearInterval(iv);
+        countdownOverlay.style.display = 'none';
+        countdownActive = false;
+        onDone();
+      }
+    }, 650);
+  }
 
+  function startLoop() {
+    lastTickAt = performance.now();
     spawnThreat();
     scheduleNextSpawn();
 
     tickTimer = setInterval(() => {
-      if (!running) return;
+      if (!running || paused) return;
       const now = performance.now();
-      timerEl.textContent = `${((now - startTime) / 1000).toFixed(1)}s`;
+      const dt = now - lastTickAt;
+      lastTickAt = now;
+      activeElapsedMs += dt;
+      timerEl.textContent = `${(activeElapsedMs / 1000).toFixed(1)}s`;
+
+      // Gentle continuous integrity drain (1.2%/s per active threat)
+      if (threats.length > 0) {
+        integrity -= threats.length * 1.2 * (dt / 1000);
+        updateHUD();
+        if (integrity <= 0) {
+          integrity = 0;
+          updateHUD();
+          endGame();
+          return;
+        }
+      }
 
       for (let i = threats.length - 1; i >= 0; i--) {
         const t = threats[i];
-        const age = now - t.spawnedAt;
-        const pctLeft = Math.max(0, 100 - (age / t.fuseMs) * 100);
+        t.ageMs += dt;
+        const pctLeft = Math.max(0, 100 - (t.ageMs / t.fuseMs) * 100);
         const fuseFill = t.el.querySelector('.threat-fuse-fill');
         if (fuseFill) fuseFill.style.width = `${pctLeft}%`;
 
-        if (age >= t.fuseMs) {
+        if (t.ageMs >= t.fuseMs) {
           t.el.remove();
           threats.splice(i, 1);
           integrity -= t.tpl.dmg;
@@ -659,12 +782,93 @@
     }, 100);
   }
 
-  btnStart.addEventListener('click', startGame);
+  function startGame() {
+    if (countdownActive) return;
+    threats.forEach((t) => t.el.remove());
+    threats = [];
+    clearTimeout(spawnTimer);
+    clearInterval(tickTimer);
+    score = 0;
+    combo = 0;
+    integrity = 100;
+    activeElapsedMs = 0;
+    paused = false;
+    running = false;
+    btnPause.textContent = '⏸ Pause';
+    startOverlay.style.display = 'none';
+    const ov = document.getElementById('kv-interstitial');
+    if (ov) ov.style.display = 'none';
+    waveEl.textContent = 'Wave 1: Warm-Up';
+    timerEl.textContent = '0.0s';
+    msgEl.style.color = '#13f2b0';
+    msgEl.textContent = 'Get ready...';
+    updateHUD();
+
+    runCountdown(() => {
+      running = true;
+      msgEl.textContent = 'Defend the Mac! Match shortcuts to active threats.';
+      startLoop();
+    });
+  }
+
+  function togglePause(showHelpOverlay = false) {
+    if (!running) return;
+    paused = !paused;
+    if (paused) {
+      clearTimeout(spawnTimer);
+      btnPause.textContent = '▶ Resume';
+      msgEl.textContent = '⏸ Game Paused';
+      if (showHelpOverlay) {
+        btnStart.textContent = '▶ Resume Survival';
+        startOverlay.style.display = 'flex';
+      }
+    } else {
+      lastTickAt = performance.now();
+      btnPause.textContent = '⏸ Pause';
+      btnStart.textContent = '▶ Start Survival';
+      startOverlay.style.display = 'none';
+      msgEl.textContent = 'Defend the Mac! Match shortcuts to active threats.';
+      scheduleNextSpawn();
+    }
+  }
+
+  btnStart.addEventListener('click', () => {
+    if (paused) {
+      togglePause(false);
+    } else {
+      startGame();
+    }
+  });
+  btnPause.addEventListener('click', () => togglePause(false));
+  btnHelp.addEventListener('click', () => {
+    if (running && !paused) {
+      togglePause(true);
+    } else if (!running) {
+      btnStart.textContent = '▶ Start Survival';
+      startOverlay.style.display = 'flex';
+    }
+  });
   document.getElementById('kv-int-next').addEventListener('click', startGame);
 
   window.addEventListener('keydown', (e) => {
-    if (!running) return;
     const key = e.key.toLowerCase();
+
+    if (startOverlay.style.display !== 'none' && !countdownActive) {
+      if (key === 'enter' || key === ' ') {
+        e.preventDefault();
+        if (paused) togglePause(false);
+        else startGame();
+      }
+      return;
+    }
+
+    if (key === 'escape' && running) {
+      e.preventDefault();
+      togglePause(false);
+      return;
+    }
+
+    if (!running || paused) return;
     const allowSingle = fallbackToggle.checked;
     const hasMod = e.metaKey || e.altKey || e.ctrlKey;
 
