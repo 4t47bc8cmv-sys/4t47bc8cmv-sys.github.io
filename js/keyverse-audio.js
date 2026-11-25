@@ -178,6 +178,10 @@
 
     function scheduleStep(step, when) {
       if (tier < 1 || isMuted || !djEnabled || (typeof document !== 'undefined' && document.hidden)) return;
+      if (global.KeyverseDJStudio && global.KeyverseDJStudio.isReady && global.KeyverseDJStudio.isReady()) {
+        global.KeyverseDJStudio.playGameplayStep(step, when, tier);
+        return;
+      }
       const pack = PACKS[currentPack] || PACKS.cyber;
 
       // Tier 1 (Combo 1-2+): Minimal pulse / heartbeat percussion
@@ -228,9 +232,12 @@
     function schedulerTick() {
       const audio = ensureAudioContext();
       if (!audio || tier < 1 || isMuted || !djEnabled || document.hidden) return;
+      const stepSec = (global.KeyverseDJStudio && global.KeyverseDJStudio.getStepDuration)
+        ? global.KeyverseDJStudio.getStepDuration()
+        : STEP_SEC;
       while (nextStepTime < audio.currentTime + LOOKAHEAD_SEC) {
         scheduleStep(currentStep, nextStepTime);
-        nextStepTime += STEP_SEC;
+        nextStepTime += stepSec;
         currentStep = (currentStep + 1) % 16;
       }
     }
@@ -739,6 +746,9 @@
     const isOverdriveMilestone = comboCount >= 5 && comboCount % 5 === 0;
 
     ShortcutDJ.updateCombo(comboCount);
+    if (global.KeyverseDJStudio && global.KeyverseDJStudio.grantShortcutXP) {
+      global.KeyverseDJStudio.grantShortcutXP(comboCount);
+    }
 
     if (!playSample(currentPack, 'hit', pitchRate, 0.82)) {
       playSynthHit(freq);
@@ -1144,6 +1154,13 @@
     playWin,
     triggerVisualJuice,
     ShortcutDJ,
+    _internal: {
+      ensureAudioContext,
+      getNoiseBuffer: function () { return noiseBuffer; },
+      isMuted: function () { return isMuted; },
+      isDjEnabled: function () { return djEnabled; },
+      unlockAudio
+    },
     setPack: function (packId) {
       if (!PACKS[packId]) return;
       currentPack = packId;
